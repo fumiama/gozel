@@ -22,16 +22,27 @@ func infh(name string) string {
 func scanheader(name string, scan *bufio.Scanner) {
 	ln := 0
 	var regionfile *os.File
+	symtab := map[string]symbol{
+		"ZE_APICALL":   symbol{symbolTypeConst, "ZE_APICALL", []string{""}},
+		"ZE_APIEXPORT": symbol{symbolTypeConst, "ZE_APIEXPORT", []string{""}},
+		"ZE_DLLEXPORT": symbol{symbolTypeConst, "ZE_DLLEXPORT", []string{""}},
+	}
 	for scan.Scan() {
 		ln++
 		t := scan.Text()
 		switch {
+		// pragma start
 		case strings.HasPrefix(t, "#pragma region "):
 			region := strings.TrimSpace(t[15:])
 			if region == "" {
 				panic(fmt.Sprintf("%s L%d: unexpected empty region", name, ln))
 			}
 			fmt.Println(infh(name), "scanning region", region)
+			_ = os.RemoveAll(name)
+			err := os.MkdirAll(name, 0755)
+			if err != nil {
+				panic(fmt.Sprintf("%s L%d: cannot create region folder %s, err: %v", name, ln, region, err))
+			}
 			f, err := os.Create(path.Join(name, region+".go"))
 			if err != nil {
 				panic(fmt.Sprintf("%s L%d: cannot create region %s, err: %v", name, ln, region, err))
@@ -40,10 +51,63 @@ func scanheader(name string, scan *bufio.Scanner) {
 			f.WriteString(name)
 			f.WriteString("\n")
 			regionfile = f
+		// block barrier
+		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
+			regionfile.WriteString(t)
+			regionfile.WriteString("\n")
+			ln = scanblocks(name, scan, regionfile, ln, symtab)
+		// pragma end
 		case strings.HasPrefix(t, "#pragma endregion"):
 			fmt.Println(infh(name), "close region", regionfile.Name())
 			_ = regionfile.Close()
 			regionfile = nil
 		}
 	}
+}
+
+func scanblocks(
+	name string, scan *bufio.Scanner, f *os.File,
+	ln int, symtab map[string]symbol,
+) int {
+	sb := strings.Builder{}
+	skip2nextblk := false
+	isinifndef := false
+	for scan.Scan() {
+		ln++
+		t := scan.Text()
+		switch {
+		// block barrier
+		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
+			if sb.Len() != 0 {
+				panic(fmt.Sprintf("%s L%d: unexpected non-0 sb at block end: %s", name, ln, &sb))
+			}
+			f.WriteString(t)
+			f.WriteString("\n")
+			skip2nextblk = false
+		case skip2nextblk:
+			continue
+		// is definition's comment
+		case strings.HasPrefix(t, "/// "):
+			sb.WriteString(t)
+			sb.WriteString("\n")
+		case strings.HasPrefix(t, "#if"):
+			if len(t) <= 8 {
+				panic(fmt.Sprintf("%s L%d: unexpected short #if", name, ln))
+			}
+			if t[3] == ' ' { // is platform related judgement
+				skip2nextblk = true
+				continue
+			}
+			if t[:8] != "#ifndef " {
+				panic(fmt.Sprintf("%s L%d: unexpected #if type %s", name, ln, t))
+			}
+			isinifndef = true
+			sname := strings.TrimSpace(t[8:])
+			tab, ok := symtab[sname]
+			if ok {
+				//TODO: skip2 endif
+			}
+		}
+	}
+	return ln
 }
