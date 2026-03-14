@@ -6,6 +6,20 @@ import (
 	"strings"
 )
 
+var (
+	errIsConstReplace = errors.New("is const replace")
+	errNoSuchSymbol   = errors.New("no such sybmol")
+)
+
+type symbolTable map[string]symbol
+
+func (st symbolTable) apply(t string) string {
+	for _, s := range st {
+		t = s.replace(t)
+	}
+	return t
+}
+
 type symbolType uintptr
 
 const (
@@ -26,13 +40,62 @@ type symbol struct {
 	fields []string
 }
 
-func (s *symbol) replace(txt string, args ...string) (string, error) {
+func newsymbolconst(name, val string) symbol {
+	return symbol{
+		stype:  symbolTypeConst,
+		name:   name,
+		fields: []string{val},
+	}
+}
+
+func newsymbolfunc(name, paras, evals string) symbol {
+	return symbol{
+		stype:  symbolTypeConst,
+		name:   name,
+		fields: []string{paras, evals},
+	}
+}
+
+func (s *symbol) extractfirstfunc(txt string) (args []string, a, b int, err error) {
+	if s.stype == symbolTypeConst {
+		return nil, 0, 0, errIsConstReplace
+	}
+	a = strings.Index(txt, s.name)
+	if a < 0 {
+		return nil, 0, 0, errNoSuchSymbol
+	}
+	str, off, err := getinside0brakets(txt[a:])
+	if err != nil {
+		return nil, 0, 0, err
+	}
+	args = strings.Split(str, ",")
+	for i, arg := range args {
+		args[i] = strings.TrimSpace(arg)
+	}
+	return args, a, a + off, nil
+}
+
+func (s *symbol) replace(txt string) string {
 	switch s.stype {
 	case symbolTypeConst:
-		return strings.ReplaceAll(txt, s.name, s.fields[0]), nil
+		return strings.ReplaceAll(txt, s.name, s.fields[0])
 	case symbolTypeFunc:
-		//TODO: finish
-		return "", nil
+		paras := strings.Split(s.fields[0], ",")
+		for {
+			args, a, b, err := s.extractfirstfunc(txt)
+			if err == errNoSuchSymbol {
+				return txt
+			}
+			if len(paras) != len(args) {
+				panic("args " + strings.Join(args, ", ") + " count " + strconv.Itoa(len(args)) + " is different from recorded " + s.fields[0])
+			}
+			txts := []string{txt[:a], txt[a:b], txt[b:]}
+			for i, p := range paras {
+				txts[1] = strings.ReplaceAll(txts[1], strings.TrimSpace(p), args[i])
+			}
+			txts[1] = strings.ReplaceAll(txts[1], s.name, "")
+			txt = strings.Join(txts, "")
+		}
 	}
-	return "", errors.New("unsupported symbol type " + strconv.Itoa(int(s.stype)))
+	panic("unsupported symbol type " + strconv.Itoa(int(s.stype)))
 }

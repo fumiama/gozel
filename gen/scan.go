@@ -22,7 +22,7 @@ func infh(name string) string {
 func scanheader(name string, scan *bufio.Scanner) {
 	ln := 0
 	var regionfile *os.File
-	symtab := map[string]symbol{
+	symtab := symbolTable{
 		"ZE_APICALL":   symbol{symbolTypeConst, "ZE_APICALL", []string{""}},
 		"ZE_APIEXPORT": symbol{symbolTypeConst, "ZE_APIEXPORT", []string{""}},
 		"ZE_DLLEXPORT": symbol{symbolTypeConst, "ZE_DLLEXPORT", []string{""}},
@@ -67,23 +67,28 @@ func scanheader(name string, scan *bufio.Scanner) {
 
 func scanblocks(
 	name string, scan *bufio.Scanner, f *os.File,
-	ln int, symtab map[string]symbol,
+	ln int, symtab symbolTable,
 ) int {
 	sb := strings.Builder{}
-	skip2nextblk := false
-	isinifndef := false
+	skip2nextblk := false //TODO: check logic
+	ifdepth := 0
+	isparsing := func() bool {
+		//TODO: more condition
+		return ifdepth > 0
+	}
 	for scan.Scan() {
 		ln++
 		t := scan.Text()
 		switch {
-		// block barrier
-		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
+		// block end
+		case t == "":
+			if isparsing() {
+				continue
+			}
 			if sb.Len() != 0 {
 				panic(fmt.Sprintf("%s L%d: unexpected non-0 sb at block end: %s", name, ln, &sb))
 			}
-			f.WriteString(t)
-			f.WriteString("\n")
-			skip2nextblk = false
+			return ln
 		case skip2nextblk:
 			continue
 		// is definition's comment
@@ -101,12 +106,20 @@ func scanblocks(
 			if t[:8] != "#ifndef " {
 				panic(fmt.Sprintf("%s L%d: unexpected #if type %s", name, ln, t))
 			}
-			isinifndef = true
 			sname := strings.TrimSpace(t[8:])
-			tab, ok := symtab[sname]
+			_, ok := symtab[sname]
 			if ok {
-				//TODO: skip2 endif
+				ln = skip2endif(scan, ln)
+				continue
 			}
+			ifdepth++
+		case strings.HasPrefix(t, "#endif"):
+			ifdepth--
+			if ifdepth < 0 {
+				panic(fmt.Sprintf("%s L%d: unexpected unpaired #endif", name, ln))
+			}
+		case strings.HasPrefix(t, "#define"):
+
 		}
 	}
 	return ln
