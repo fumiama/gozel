@@ -22,6 +22,7 @@ func main() {
 	if strings.HasPrefix(*spec, "v") {
 		ver := (*spec)[1:]
 		u := fmt.Sprintf("https://github.com/oneapi-src/level-zero/releases/download/v%s/level-zero-win-sdk-%s.zip", ver, ver)
+		fmt.Println("[main] downloading spec from", u)
 		resp, err := http.Get(u)
 		if err != nil {
 			panic(err)
@@ -37,6 +38,7 @@ func main() {
 		}
 		specdir = r
 	} else {
+		fmt.Println("[main] reading local spec from", *spec)
 		specdir = os.DirFS(*spec)
 	}
 
@@ -45,7 +47,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	scanheader("core", bufio.NewScanner(f))
+	scanHeader("core", bufio.NewScanner(f))
 	_ = f.Close()
 	fmt.Println("[main] finish parsing core")
 
@@ -54,7 +56,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	scanheader("rntm", bufio.NewScanner(f))
+	scanHeader("rntm", bufio.NewScanner(f))
 	_ = f.Close()
 	fmt.Println("[main] finish parsing runtime")
 
@@ -63,7 +65,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	scanheader("sysm", bufio.NewScanner(f))
+	scanHeader("sysm", bufio.NewScanner(f))
 	_ = f.Close()
 	fmt.Println("[main] finish parsing sysman")
 
@@ -72,7 +74,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	scanheader("tols", bufio.NewScanner(f))
+	scanHeader("tols", bufio.NewScanner(f))
 	_ = f.Close()
 	fmt.Println("[main] finish parsing tools")
 }

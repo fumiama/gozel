@@ -40,7 +40,7 @@ type symbol struct {
 	fields []string
 }
 
-func newsymbolconst(name, val string) symbol {
+func newSymbolConst(name, val string) symbol {
 	return symbol{
 		stype:  symbolTypeConst,
 		name:   name,
@@ -48,7 +48,7 @@ func newsymbolconst(name, val string) symbol {
 	}
 }
 
-func newsymbolfunc(name, paras, evals string) symbol {
+func newSymbolFunc(name, paras, evals string) symbol {
 	return symbol{
 		stype:  symbolTypeConst,
 		name:   name,
@@ -56,7 +56,7 @@ func newsymbolfunc(name, paras, evals string) symbol {
 	}
 }
 
-func (s *symbol) extractfirstfunc(txt string) (args []string, a, b int, err error) {
+func (s *symbol) extract1stFunc(txt string) (args []string, a, b int, err error) {
 	if s.stype == symbolTypeConst {
 		return nil, 0, 0, errIsConstReplace
 	}
@@ -64,7 +64,7 @@ func (s *symbol) extractfirstfunc(txt string) (args []string, a, b int, err erro
 	if a < 0 {
 		return nil, 0, 0, errNoSuchSymbol
 	}
-	str, off, err := getinside0brakets(txt[a:])
+	str, off, err := getInsideRoundBrakets(txt[a:])
 	if err != nil {
 		return nil, 0, 0, err
 	}
@@ -82,7 +82,7 @@ func (s *symbol) replace(txt string) string {
 	case symbolTypeFunc:
 		paras := strings.Split(s.fields[0], ",")
 		for {
-			args, a, b, err := s.extractfirstfunc(txt)
+			args, a, b, err := s.extract1stFunc(txt)
 			if err == errNoSuchSymbol {
 				return txt
 			}
