@@ -82,7 +82,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 }
 
 func checkSymbolName(
-	symtab symbolTable, ln int, name, sname string,
+	symtab symbolTable, ln int, name, sname, goname string,
 	sb *strings.Builder, f *os.File, eq func() symbol) {
 	if _, ok := symtab[sname]; ok {
 		panic(fmt.Sprintf("%s L%d: func #define %s has been defined", name, ln, sname))
@@ -91,7 +91,11 @@ func checkSymbolName(
 	if sb.Len() == 0 {
 		panic(fmt.Sprintf("%s L%d: unexpected non-comment for symbol %s", name, ln, sname))
 	}
-	f.WriteString(sb.String())
+	brief := " " + goname
+	if goname != sname {
+		brief = fmt.Sprint(brief, " (", sname, ")")
+	}
+	f.WriteString(strings.Replace(sb.String(), "/ @brief", brief, 1))
 	sb.Reset()
 }
 
@@ -156,7 +160,7 @@ func scanBlocks(
 				}
 				sname := strings.TrimSpace(argseval[0])
 				val := strings.TrimSpace(argseval[1])
-				checkSymbolName(symtab, ln, name, sname, &sb, f, func() symbol {
+				checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() symbol {
 					return newSymbolConst(sname, val)
 				})
 				f.WriteString("const ")
@@ -177,7 +181,7 @@ func scanBlocks(
 			sname = strings.TrimSpace(sname)
 			args = strings.TrimSpace(args)
 			eval := strings.TrimSpace(argseval[n+1:])
-			checkSymbolName(symtab, ln, name, sname, &sb, f, func() symbol {
+			checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() symbol {
 				return newSymbolFunc(sname, args, eval)
 			})
 			f.WriteString("func ")
@@ -212,7 +216,7 @@ func scanBlocks(
 			sname := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(typs[1]), ";"))
 			val := us2camel(strings.TrimSuffix(sname, "_t"))
 			origtyp := strings.TrimSuffix(strings.TrimSpace(typs[0]), "_t")
-			checkSymbolName(symtab, ln, name, sname, &sb, f, func() symbol {
+			checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() symbol {
 				return newSymbolConst(sname, val)
 			})
 			f.WriteString("type ")

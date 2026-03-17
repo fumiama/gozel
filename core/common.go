@@ -13,72 +13,72 @@
 
 package core
 
-/// @brief Generates generic 'oneAPI' API versions
+// ZE_MAKE_VERSION Generates generic 'oneAPI' API versions
 func ZE_MAKE_VERSION[T ~int | ~uint64 | ~uintptr](_major T, _minor T) T {
 	return (( _major << 16 )|( _minor & 0x0000ffff))
 }
 
-/// @brief Extracts 'oneAPI' API major version
+// ZE_MAJOR_VERSION Extracts 'oneAPI' API major version
 func ZE_MAJOR_VERSION[T ~int | ~uint64 | ~uintptr](_ver T) T {
 	return ( _ver >> 16 )
 }
 
-/// @brief Extracts 'oneAPI' API minor version
+// ZE_MINOR_VERSION Extracts 'oneAPI' API minor version
 func ZE_MINOR_VERSION[T ~int | ~uint64 | ~uintptr](_ver T) T {
 	return ( _ver & 0x0000ffff )
 }
 
-/// @brief compiler-independent type
+// ZeBool (ze_bool_t) compiler-independent type
 type ZeBool uint8
 
-/// @brief Handle of a driver instance
+// ZeDriverHandle (ze_driver_handle_t) Handle of a driver instance
 type ZeDriverHandle uintptr
 
-/// @brief Handle of driver's device object
+// ZeDeviceHandle (ze_device_handle_t) Handle of driver's device object
 type ZeDeviceHandle uintptr
 
-/// @brief Handle of driver's context object
+// ZeContextHandle (ze_context_handle_t) Handle of driver's context object
 type ZeContextHandle uintptr
 
-/// @brief Handle of driver's command queue object
+// ZeCommandQueueHandle (ze_command_queue_handle_t) Handle of driver's command queue object
 type ZeCommandQueueHandle uintptr
 
-/// @brief Handle of driver's command list object
+// ZeCommandListHandle (ze_command_list_handle_t) Handle of driver's command list object
 type ZeCommandListHandle uintptr
 
-/// @brief Handle of driver's fence object
+// ZeFenceHandle (ze_fence_handle_t) Handle of driver's fence object
 type ZeFenceHandle uintptr
 
-/// @brief Handle of driver's event pool object
+// ZeEventPoolHandle (ze_event_pool_handle_t) Handle of driver's event pool object
 type ZeEventPoolHandle uintptr
 
-/// @brief Handle of driver's event object
+// ZeEventHandle (ze_event_handle_t) Handle of driver's event object
 type ZeEventHandle uintptr
 
-/// @brief Handle of driver's image object
+// ZeImageHandle (ze_image_handle_t) Handle of driver's image object
 type ZeImageHandle uintptr
 
-/// @brief Handle of driver's module object
+// ZeModuleHandle (ze_module_handle_t) Handle of driver's module object
 type ZeModuleHandle uintptr
 
-/// @brief Handle of module's build log object
+// ZeModuleBuildLogHandle (ze_module_build_log_handle_t) Handle of module's build log object
 type ZeModuleBuildLogHandle uintptr
 
-/// @brief Handle of driver's kernel object
+// ZeKernelHandle (ze_kernel_handle_t) Handle of driver's kernel object
 type ZeKernelHandle uintptr
 
-/// @brief Handle of driver's sampler object
+// ZeSamplerHandle (ze_sampler_handle_t) Handle of driver's sampler object
 type ZeSamplerHandle uintptr
 
-/// @brief Handle of physical memory object
+// ZePhysicalMemHandle (ze_physical_mem_handle_t) Handle of physical memory object
 type ZePhysicalMemHandle uintptr
 
-/// @brief Handle of driver's fabric vertex object
+// ZeFabricVertexHandle (ze_fabric_vertex_handle_t) Handle of driver's fabric vertex object
 type ZeFabricVertexHandle uintptr
 
-/// @brief Handle of driver's fabric edge object
+// ZeFabricEdgeHandle (ze_fabric_edge_handle_t) Handle of driver's fabric edge object
 type ZeFabricEdgeHandle uintptr
 
-/// @brief Maximum IPC handle size
+// ZE_MAX_IPC_HANDLE_SIZE Maximum IPC handle size
 const ZE_MAX_IPC_HANDLE_SIZE = 64
 
