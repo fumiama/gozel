@@ -251,6 +251,27 @@ func scanBlocks(
 								fsb.WriteString(us2camel(strings.TrimSuffix(strings.TrimSpace(vname), ";")))
 								fsb.WriteString(" byte")
 							}
+						case strings.Contains(stat, "_t "):
+							tname, remains, ok := strings.Cut(stat, "_t ")
+							if !ok {
+								panic(fmt.Sprintf("%s L%d: unexpected statement %s", name, ln, stat))
+							}
+							szc, sz := "", ""
+							vname, szc, ok = strings.Cut(remains, "[")
+							vname = us2camel(strings.TrimSpace(vname))
+							if ok { // is array
+								sz, c, _ = strings.Cut(szc, "//")
+								fsb.WriteString("\t")
+								fsb.WriteString(vname)
+								fsb.WriteString(" [")
+								fsb.WriteString(strings.TrimSuffix(strings.TrimSpace(sz), ";"))
+								fsb.WriteString(strings.TrimSpace(tname))
+							} else {
+								vname, c, _ = strings.Cut(vname, "//")
+								fsb.WriteString(us2camel(strings.TrimSuffix(strings.TrimSpace(vname), ";")))
+								fsb.WriteString(" ")
+								fsb.WriteString(strings.TrimSpace(tname))
+							}
 						default:
 							panic(fmt.Sprintf("%s L%d: unexpected statement %s", name, ln, stat))
 						}

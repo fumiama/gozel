@@ -325,17 +325,17 @@ const (
 // ZeExternalMemoryTypeFlags (ze_external_memory_type_flags_t) External memory type flags
 type ZeExternalMemoryTypeFlags uint32
 const (
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD ZeExternalMemoryTypeFlags = (( 1 << 0 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD an opaque POSIX file descriptor handle
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF ZeExternalMemoryTypeFlags = (( 1 << 1 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF a file descriptor handle for a Linux dma_buf
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 ZeExternalMemoryTypeFlags = (( 1 << 2 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 an NT handle
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT ZeExternalMemoryTypeFlags = (( 1 << 3 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT a global share (KMT) handle
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE ZeExternalMemoryTypeFlags = (( 1 << 4 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE an NT handle referring to a Direct3D 10 or 11 texture resource
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT ZeExternalMemoryTypeFlags = (( 1 << 5 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT a global share (KMT) handle referring to a Direct3D 10 or 11 texture
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD ZeExternalMemoryTypeFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD an opaque POSIX file descriptor handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF ZeExternalMemoryTypeFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF a file descriptor handle for a Linux dma_buf
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 ZeExternalMemoryTypeFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 an NT handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT ZeExternalMemoryTypeFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT a global share (KMT) handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE ZeExternalMemoryTypeFlags = /* ZE_BIT(4) */(( 1 << 4 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE an NT handle referring to a Direct3D 10 or 11 texture resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT ZeExternalMemoryTypeFlags = /* ZE_BIT(5) */(( 1 << 5 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT a global share (KMT) handle referring to a Direct3D 10 or 11 texture
 
 	///< resource
 
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP ZeExternalMemoryTypeFlags = (( 1 << 6 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP an NT handle referring to a Direct3D 12 heap resource
-	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE ZeExternalMemoryTypeFlags = (( 1 << 7 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE an NT handle referring to a Direct3D 12 committed resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP ZeExternalMemoryTypeFlags = /* ZE_BIT(6) */(( 1 << 6 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP an NT handle referring to a Direct3D 12 heap resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE ZeExternalMemoryTypeFlags = /* ZE_BIT(7) */(( 1 << 7 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE an NT handle referring to a Direct3D 12 committed resource
 	ZE_EXTERNAL_MEMORY_TYPE_FLAG_FORCE_UINT32 ZeExternalMemoryTypeFlags = 0x7fffffff	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_EXTERNAL_MEMORY_TYPE_FLAG_* ENUMs
 
 )
@@ -366,4 +366,10 @@ const (
 
 // ZE_MAX_UUID_SIZE Maximum universal unique id (UUID) size in bytes
 const ZE_MAX_UUID_SIZE = 16
+
+// ZeUuid (ze_uuid_t) Universal unique id (UUID)
+type ZeUuid struct {
+	Id [ZE_MAX_UUID_SIZE]uint8	// Id [out] opaque data representing a UUID
+
+}
 

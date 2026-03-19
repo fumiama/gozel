@@ -81,19 +81,22 @@ func (s *symbol) replace(txt string) string {
 		return strings.ReplaceAll(txt, s.name, s.fields[0])
 	case symbolTypeFunc:
 		paras := strings.Split(s.fields[0], ",")
+		txts := []string{}
 		for {
 			args, a, b, err := s.extract1stFunc(txt)
 			if err == errNoSuchSymbol {
-				return txt
+				txts = append(txts, txt)
+				return strings.Join(txts, "")
 			}
 			if len(paras) != len(args) {
 				panic("args " + strings.Join(args, ", ") + " count " + strconv.Itoa(len(args)) + " is different from recorded " + s.fields[0])
 			}
-			txts := []string{txt[:a], "(", s.fields[1], txt[b:]}
+			n := len(txts)
+			txts = append(txts, []string{txt[:a], "/* ", txt[a:b], ") */(", s.fields[1]}...)
 			for i, p := range paras {
-				txts[2] = strings.ReplaceAll(txts[2], strings.TrimSpace(p), args[i])
+				txts[n+4] = strings.ReplaceAll(txts[n+4], strings.TrimSpace(p), args[i])
 			}
-			txt = strings.Join(txts, "")
+			txt = txt[b:]
 		}
 	}
 	panic("unsupported symbol type " + strconv.Itoa(int(s.stype)))
