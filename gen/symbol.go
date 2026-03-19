@@ -50,7 +50,7 @@ func newSymbolConst(name, val string) symbol {
 
 func newSymbolFunc(name, paras, evals string) symbol {
 	return symbol{
-		stype:  symbolTypeConst,
+		stype:  symbolTypeFunc,
 		name:   name,
 		fields: []string{paras, evals},
 	}
@@ -89,11 +89,10 @@ func (s *symbol) replace(txt string) string {
 			if len(paras) != len(args) {
 				panic("args " + strings.Join(args, ", ") + " count " + strconv.Itoa(len(args)) + " is different from recorded " + s.fields[0])
 			}
-			txts := []string{txt[:a], txt[a:b], txt[b:]}
+			txts := []string{txt[:a], "(", s.fields[1], txt[b:]}
 			for i, p := range paras {
-				txts[1] = strings.ReplaceAll(txts[1], strings.TrimSpace(p), args[i])
+				txts[2] = strings.ReplaceAll(txts[2], strings.TrimSpace(p), args[i])
 			}
-			txts[1] = strings.ReplaceAll(txts[1], s.name, "")
 			txt = strings.Join(txts, "")
 		}
 	}

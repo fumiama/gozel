@@ -14,17 +14,17 @@
 package core
 
 // ZE_MAKE_VERSION Generates generic 'oneAPI' API versions
-func ZE_MAKE_VERSION[T ~int | ~uint64 | ~uintptr](_major T, _minor T) T {
+func ZE_MAKE_VERSION[T ~int| ~uint32 | ~uint64 | ~uintptr](_major T, _minor T) T {
 	return (( _major << 16 )|( _minor & 0x0000ffff))
 }
 
 // ZE_MAJOR_VERSION Extracts 'oneAPI' API major version
-func ZE_MAJOR_VERSION[T ~int | ~uint64 | ~uintptr](_ver T) T {
+func ZE_MAJOR_VERSION[T ~int| ~uint32 | ~uint64 | ~uintptr](_ver T) T {
 	return ( _ver >> 16 )
 }
 
 // ZE_MINOR_VERSION Extracts 'oneAPI' API minor version
-func ZE_MINOR_VERSION[T ~int | ~uint64 | ~uintptr](_ver T) T {
+func ZE_MINOR_VERSION[T ~int| ~uint32 | ~uint64 | ~uintptr](_ver T) T {
 	return ( _ver & 0x0000ffff )
 }
 
@@ -81,4 +81,289 @@ type ZeFabricEdgeHandle uintptr
 
 // ZE_MAX_IPC_HANDLE_SIZE Maximum IPC handle size
 const ZE_MAX_IPC_HANDLE_SIZE = 64
+
+// ZeIpcMemHandle (ze_ipc_mem_handle_t) IPC handle to a memory allocation
+type ZeIpcMemHandle struct {
+	Data [ZE_MAX_IPC_HANDLE_SIZE]byte	// Data [out] Opaque data representing an IPC handle
+
+}
+
+// ZeIpcEventPoolHandle (ze_ipc_event_pool_handle_t) IPC handle to a event pool allocation
+type ZeIpcEventPoolHandle struct {
+	Data [ZE_MAX_IPC_HANDLE_SIZE]byte	// Data [out] Opaque data representing an IPC handle
+
+}
+
+// ZE_BIT Generic macro for enumerator bit masks
+func ZE_BIT[T ~int| ~uint32 | ~uint64 | ~uintptr](_i T) T {
+	return ( 1 << _i )
+}
+
+// ZeResult (ze_result_t) Defines Return/Error codes
+type ZeResult uintptr
+const (
+	ZE_RESULT_SUCCESS ZeResult = 0	// ZE_RESULT_SUCCESS [Core] success
+	ZE_RESULT_NOT_READY ZeResult = 1	// ZE_RESULT_NOT_READY [Core] synchronization primitive not signaled
+	ZE_RESULT_ERROR_DEVICE_LOST ZeResult = 0x70000001	// ZE_RESULT_ERROR_DEVICE_LOST [Core] device hung, reset, was removed, or driver update occurred
+	ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY ZeResult = 0x70000002	// ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY [Core] insufficient host memory to satisfy call
+	ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY ZeResult = 0x70000003	// ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY [Core] insufficient device memory to satisfy call
+	ZE_RESULT_ERROR_MODULE_BUILD_FAILURE ZeResult = 0x70000004	// ZE_RESULT_ERROR_MODULE_BUILD_FAILURE [Core] error occurred when building module, see build log for details
+	ZE_RESULT_ERROR_MODULE_LINK_FAILURE ZeResult = 0x70000005	// ZE_RESULT_ERROR_MODULE_LINK_FAILURE [Core] error occurred when linking modules, see build log for details
+	ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET ZeResult = 0x70000006	// ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET [Core] device requires a reset
+	ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE ZeResult = 0x70000007	// ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE [Core] device currently in low power state
+	ZE_RESULT_EXP_ERROR_DEVICE_IS_NOT_VERTEX ZeResult = 0x7ff00001	// ZE_RESULT_EXP_ERROR_DEVICE_IS_NOT_VERTEX [Core, Experimental] device is not represented by a fabric vertex
+	ZE_RESULT_EXP_ERROR_VERTEX_IS_NOT_DEVICE ZeResult = 0x7ff00002	// ZE_RESULT_EXP_ERROR_VERTEX_IS_NOT_DEVICE [Core, Experimental] fabric vertex does not represent a device
+	ZE_RESULT_EXP_ERROR_REMOTE_DEVICE ZeResult = 0x7ff00003	// ZE_RESULT_EXP_ERROR_REMOTE_DEVICE [Core, Experimental] fabric vertex represents a remote device or
+
+	///< subdevice
+
+	ZE_RESULT_EXP_ERROR_OPERANDS_INCOMPATIBLE ZeResult = 0x7ff00004	// ZE_RESULT_EXP_ERROR_OPERANDS_INCOMPATIBLE [Core, Experimental] operands of comparison are not compatible
+	ZE_RESULT_EXP_RTAS_BUILD_RETRY ZeResult = 0x7ff00005	// ZE_RESULT_EXP_RTAS_BUILD_RETRY [Core, Experimental] ray tracing acceleration structure build
+
+	///< operation failed due to insufficient resources, retry with a larger
+	///< acceleration structure buffer allocation
+
+	ZE_RESULT_EXP_RTAS_BUILD_DEFERRED ZeResult = 0x7ff00006	// ZE_RESULT_EXP_RTAS_BUILD_DEFERRED [Core, Experimental] ray tracing acceleration structure build
+
+	///< operation deferred to parallel operation join
+
+	ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS ZeResult = 0x70010000	// ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS [Sysman] access denied due to permission level
+	ZE_RESULT_ERROR_NOT_AVAILABLE ZeResult = 0x70010001	// ZE_RESULT_ERROR_NOT_AVAILABLE [Sysman] resource already in use and simultaneous access not allowed
+
+	///< or resource was removed
+
+	ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE ZeResult = 0x70020000	// ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE [Common] external required dependency is unavailable or missing
+	ZE_RESULT_WARNING_DROPPED_DATA ZeResult = 0x70020001	// ZE_RESULT_WARNING_DROPPED_DATA [Tools] data may have been dropped
+	ZE_RESULT_ERROR_UNINITIALIZED ZeResult = 0x78000001	// ZE_RESULT_ERROR_UNINITIALIZED [Validation] driver is not initialized
+	ZE_RESULT_ERROR_UNSUPPORTED_VERSION ZeResult = 0x78000002	// ZE_RESULT_ERROR_UNSUPPORTED_VERSION [Validation] generic error code for unsupported versions
+	ZE_RESULT_ERROR_UNSUPPORTED_FEATURE ZeResult = 0x78000003	// ZE_RESULT_ERROR_UNSUPPORTED_FEATURE [Validation] generic error code for unsupported features
+	ZE_RESULT_ERROR_INVALID_ARGUMENT ZeResult = 0x78000004	// ZE_RESULT_ERROR_INVALID_ARGUMENT [Validation] generic error code for invalid arguments
+	ZE_RESULT_ERROR_INVALID_NULL_HANDLE ZeResult = 0x78000005	// ZE_RESULT_ERROR_INVALID_NULL_HANDLE [Validation] handle argument is not valid
+	ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE ZeResult = 0x78000006	// ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE [Validation] object pointed to by handle still in-use by device
+	ZE_RESULT_ERROR_INVALID_NULL_POINTER ZeResult = 0x78000007	// ZE_RESULT_ERROR_INVALID_NULL_POINTER [Validation] pointer argument may not be nullptr
+	ZE_RESULT_ERROR_INVALID_SIZE ZeResult = 0x78000008	// ZE_RESULT_ERROR_INVALID_SIZE [Validation] size argument is invalid (e.g., must not be zero)
+	ZE_RESULT_ERROR_UNSUPPORTED_SIZE ZeResult = 0x78000009	// ZE_RESULT_ERROR_UNSUPPORTED_SIZE [Validation] size argument is not supported by the device (e.g., too
+
+	///< large)
+
+	ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT ZeResult = 0x7800000a	// ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT [Validation] alignment argument is not supported by the device (e.g.,
+
+	///< too small)
+
+	ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT ZeResult = 0x7800000b	// ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT [Validation] synchronization object in invalid state
+	ZE_RESULT_ERROR_INVALID_ENUMERATION ZeResult = 0x7800000c	// ZE_RESULT_ERROR_INVALID_ENUMERATION [Validation] enumerator argument is not valid
+	ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION ZeResult = 0x7800000d	// ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION [Validation] enumerator argument is not supported by the device
+	ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT ZeResult = 0x7800000e	// ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT [Validation] image format is not supported by the device
+	ZE_RESULT_ERROR_INVALID_NATIVE_BINARY ZeResult = 0x7800000f	// ZE_RESULT_ERROR_INVALID_NATIVE_BINARY [Validation] native binary is not supported by the device
+	ZE_RESULT_ERROR_INVALID_GLOBAL_NAME ZeResult = 0x78000010	// ZE_RESULT_ERROR_INVALID_GLOBAL_NAME [Validation] global variable is not found in the module
+	ZE_RESULT_ERROR_INVALID_KERNEL_NAME ZeResult = 0x78000011	// ZE_RESULT_ERROR_INVALID_KERNEL_NAME [Validation] kernel name is not found in the module
+	ZE_RESULT_ERROR_INVALID_FUNCTION_NAME ZeResult = 0x78000012	// ZE_RESULT_ERROR_INVALID_FUNCTION_NAME [Validation] function name is not found in the module
+	ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION ZeResult = 0x78000013	// ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION [Validation] group size dimension is not valid for the kernel or
+
+	///< device
+
+	ZE_RESULT_ERROR_INVALID_GLOBAL_WIDTH_DIMENSION ZeResult = 0x78000014	// ZE_RESULT_ERROR_INVALID_GLOBAL_WIDTH_DIMENSION [Validation] global width dimension is not valid for the kernel or
+
+	///< device
+
+	ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_INDEX ZeResult = 0x78000015	// ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_INDEX [Validation] kernel argument index is not valid for kernel
+	ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_SIZE ZeResult = 0x78000016	// ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_SIZE [Validation] kernel argument size does not match kernel
+	ZE_RESULT_ERROR_INVALID_KERNEL_ATTRIBUTE_VALUE ZeResult = 0x78000017	// ZE_RESULT_ERROR_INVALID_KERNEL_ATTRIBUTE_VALUE [Validation] value of kernel attribute is not valid for the kernel or
+
+	///< device
+
+	ZE_RESULT_ERROR_INVALID_MODULE_UNLINKED ZeResult = 0x78000018	// ZE_RESULT_ERROR_INVALID_MODULE_UNLINKED [Validation] module with imports needs to be linked before kernels can
+
+	///< be created from it.
+
+	ZE_RESULT_ERROR_INVALID_COMMAND_LIST_TYPE ZeResult = 0x78000019	// ZE_RESULT_ERROR_INVALID_COMMAND_LIST_TYPE [Validation] command list type does not match command queue type
+	ZE_RESULT_ERROR_OVERLAPPING_REGIONS ZeResult = 0x7800001a	// ZE_RESULT_ERROR_OVERLAPPING_REGIONS [Validation] copy operations do not support overlapping regions of
+
+	///< memory
+
+	ZE_RESULT_WARNING_ACTION_REQUIRED ZeResult = 0x7800001b	// ZE_RESULT_WARNING_ACTION_REQUIRED [Sysman] an action is required to complete the desired operation
+	ZE_RESULT_ERROR_INVALID_KERNEL_HANDLE ZeResult = 0x7800001c	// ZE_RESULT_ERROR_INVALID_KERNEL_HANDLE [Core, Validation] kernel handle is invalid for the operation
+	ZE_RESULT_EXT_RTAS_BUILD_RETRY ZeResult = 0x7800001d	// ZE_RESULT_EXT_RTAS_BUILD_RETRY [Core, Extension] ray tracing acceleration structure build operation
+
+	///< failed due to insufficient resources, retry with a larger acceleration
+	///< structure buffer allocation
+
+	ZE_RESULT_EXT_RTAS_BUILD_DEFERRED ZeResult = 0x7800001e	// ZE_RESULT_EXT_RTAS_BUILD_DEFERRED [Core, Extension] ray tracing acceleration structure build operation
+
+	///< deferred to parallel operation join
+
+	ZE_RESULT_EXT_ERROR_OPERANDS_INCOMPATIBLE ZeResult = 0x7800001f	// ZE_RESULT_EXT_ERROR_OPERANDS_INCOMPATIBLE [Core, Extension] operands of comparison are not compatible
+	ZE_RESULT_ERROR_SURVIVABILITY_MODE_DETECTED ZeResult = 0x78000020	// ZE_RESULT_ERROR_SURVIVABILITY_MODE_DETECTED [Sysman] device is in survivability mode, firmware update needed
+	ZE_RESULT_ERROR_ADDRESS_NOT_FOUND ZeResult = 0x78000021	// ZE_RESULT_ERROR_ADDRESS_NOT_FOUND [Core] address not found within specified or current context
+	ZE_RESULT_ERROR_UNKNOWN ZeResult = 0x7ffffffe	// ZE_RESULT_ERROR_UNKNOWN [Core] unknown or internal error
+	ZE_RESULT_FORCE_UINT32 ZeResult = 0x7fffffff	// ZE_RESULT_FORCE_UINT32 Value marking end of ZE_RESULT_* ENUMs
+
+)
+
+// ZeStructureType (ze_structure_type_t) Defines structure types
+type ZeStructureType uintptr
+const (
+	ZE_STRUCTURE_TYPE_DRIVER_PROPERTIES ZeStructureType = 0x1	// ZE_STRUCTURE_TYPE_DRIVER_PROPERTIES ::ze_driver_properties_t
+	ZE_STRUCTURE_TYPE_DRIVER_IPC_PROPERTIES ZeStructureType = 0x2	// ZE_STRUCTURE_TYPE_DRIVER_IPC_PROPERTIES ::ze_driver_ipc_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_PROPERTIES ZeStructureType = 0x3	// ZE_STRUCTURE_TYPE_DEVICE_PROPERTIES ::ze_device_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_COMPUTE_PROPERTIES ZeStructureType = 0x4	// ZE_STRUCTURE_TYPE_DEVICE_COMPUTE_PROPERTIES ::ze_device_compute_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_MODULE_PROPERTIES ZeStructureType = 0x5	// ZE_STRUCTURE_TYPE_DEVICE_MODULE_PROPERTIES ::ze_device_module_properties_t
+	ZE_STRUCTURE_TYPE_COMMAND_QUEUE_GROUP_PROPERTIES ZeStructureType = 0x6	// ZE_STRUCTURE_TYPE_COMMAND_QUEUE_GROUP_PROPERTIES ::ze_command_queue_group_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_MEMORY_PROPERTIES ZeStructureType = 0x7	// ZE_STRUCTURE_TYPE_DEVICE_MEMORY_PROPERTIES ::ze_device_memory_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_MEMORY_ACCESS_PROPERTIES ZeStructureType = 0x8	// ZE_STRUCTURE_TYPE_DEVICE_MEMORY_ACCESS_PROPERTIES ::ze_device_memory_access_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_CACHE_PROPERTIES ZeStructureType = 0x9	// ZE_STRUCTURE_TYPE_DEVICE_CACHE_PROPERTIES ::ze_device_cache_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_IMAGE_PROPERTIES ZeStructureType = 0xa	// ZE_STRUCTURE_TYPE_DEVICE_IMAGE_PROPERTIES ::ze_device_image_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_P2P_PROPERTIES ZeStructureType = 0xb	// ZE_STRUCTURE_TYPE_DEVICE_P2P_PROPERTIES ::ze_device_p2p_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_EXTERNAL_MEMORY_PROPERTIES ZeStructureType = 0xc	// ZE_STRUCTURE_TYPE_DEVICE_EXTERNAL_MEMORY_PROPERTIES ::ze_device_external_memory_properties_t
+	ZE_STRUCTURE_TYPE_CONTEXT_DESC ZeStructureType = 0xd	// ZE_STRUCTURE_TYPE_CONTEXT_DESC ::ze_context_desc_t
+	ZE_STRUCTURE_TYPE_COMMAND_QUEUE_DESC ZeStructureType = 0xe	// ZE_STRUCTURE_TYPE_COMMAND_QUEUE_DESC ::ze_command_queue_desc_t
+	ZE_STRUCTURE_TYPE_COMMAND_LIST_DESC ZeStructureType = 0xf	// ZE_STRUCTURE_TYPE_COMMAND_LIST_DESC ::ze_command_list_desc_t
+	ZE_STRUCTURE_TYPE_EVENT_POOL_DESC ZeStructureType = 0x10	// ZE_STRUCTURE_TYPE_EVENT_POOL_DESC ::ze_event_pool_desc_t
+	ZE_STRUCTURE_TYPE_EVENT_DESC ZeStructureType = 0x11	// ZE_STRUCTURE_TYPE_EVENT_DESC ::ze_event_desc_t
+	ZE_STRUCTURE_TYPE_FENCE_DESC ZeStructureType = 0x12	// ZE_STRUCTURE_TYPE_FENCE_DESC ::ze_fence_desc_t
+	ZE_STRUCTURE_TYPE_IMAGE_DESC ZeStructureType = 0x13	// ZE_STRUCTURE_TYPE_IMAGE_DESC ::ze_image_desc_t
+	ZE_STRUCTURE_TYPE_IMAGE_PROPERTIES ZeStructureType = 0x14	// ZE_STRUCTURE_TYPE_IMAGE_PROPERTIES ::ze_image_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_MEM_ALLOC_DESC ZeStructureType = 0x15	// ZE_STRUCTURE_TYPE_DEVICE_MEM_ALLOC_DESC ::ze_device_mem_alloc_desc_t
+	ZE_STRUCTURE_TYPE_HOST_MEM_ALLOC_DESC ZeStructureType = 0x16	// ZE_STRUCTURE_TYPE_HOST_MEM_ALLOC_DESC ::ze_host_mem_alloc_desc_t
+	ZE_STRUCTURE_TYPE_MEMORY_ALLOCATION_PROPERTIES ZeStructureType = 0x17	// ZE_STRUCTURE_TYPE_MEMORY_ALLOCATION_PROPERTIES ::ze_memory_allocation_properties_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_DESC ZeStructureType = 0x18	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_DESC ::ze_external_memory_export_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMPORT_FD ZeStructureType = 0x19	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMPORT_FD ::ze_external_memory_import_fd_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_FD ZeStructureType = 0x1a	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_FD ::ze_external_memory_export_fd_t
+	ZE_STRUCTURE_TYPE_MODULE_DESC ZeStructureType = 0x1b	// ZE_STRUCTURE_TYPE_MODULE_DESC ::ze_module_desc_t
+	ZE_STRUCTURE_TYPE_MODULE_PROPERTIES ZeStructureType = 0x1c	// ZE_STRUCTURE_TYPE_MODULE_PROPERTIES ::ze_module_properties_t
+	ZE_STRUCTURE_TYPE_KERNEL_DESC ZeStructureType = 0x1d	// ZE_STRUCTURE_TYPE_KERNEL_DESC ::ze_kernel_desc_t
+	ZE_STRUCTURE_TYPE_KERNEL_PROPERTIES ZeStructureType = 0x1e	// ZE_STRUCTURE_TYPE_KERNEL_PROPERTIES ::ze_kernel_properties_t
+	ZE_STRUCTURE_TYPE_SAMPLER_DESC ZeStructureType = 0x1f	// ZE_STRUCTURE_TYPE_SAMPLER_DESC ::ze_sampler_desc_t
+	ZE_STRUCTURE_TYPE_PHYSICAL_MEM_DESC ZeStructureType = 0x20	// ZE_STRUCTURE_TYPE_PHYSICAL_MEM_DESC ::ze_physical_mem_desc_t
+	ZE_STRUCTURE_TYPE_KERNEL_PREFERRED_GROUP_SIZE_PROPERTIES ZeStructureType = 0x21	// ZE_STRUCTURE_TYPE_KERNEL_PREFERRED_GROUP_SIZE_PROPERTIES ::ze_kernel_preferred_group_size_properties_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMPORT_WIN32 ZeStructureType = 0x22	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_IMPORT_WIN32 ::ze_external_memory_import_win32_handle_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_WIN32 ZeStructureType = 0x23	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMORY_EXPORT_WIN32 ::ze_external_memory_export_win32_handle_t
+	ZE_STRUCTURE_TYPE_DEVICE_RAYTRACING_EXT_PROPERTIES ZeStructureType = 0x00010001	// ZE_STRUCTURE_TYPE_DEVICE_RAYTRACING_EXT_PROPERTIES ::ze_device_raytracing_ext_properties_t
+	ZE_STRUCTURE_TYPE_RAYTRACING_MEM_ALLOC_EXT_DESC ZeStructureType = 0x10002	// ZE_STRUCTURE_TYPE_RAYTRACING_MEM_ALLOC_EXT_DESC ::ze_raytracing_mem_alloc_ext_desc_t
+	ZE_STRUCTURE_TYPE_FLOAT_ATOMIC_EXT_PROPERTIES ZeStructureType = 0x10003	// ZE_STRUCTURE_TYPE_FLOAT_ATOMIC_EXT_PROPERTIES ::ze_float_atomic_ext_properties_t
+	ZE_STRUCTURE_TYPE_CACHE_RESERVATION_EXT_DESC ZeStructureType = 0x10004	// ZE_STRUCTURE_TYPE_CACHE_RESERVATION_EXT_DESC ::ze_cache_reservation_ext_desc_t
+	ZE_STRUCTURE_TYPE_EU_COUNT_EXT ZeStructureType = 0x10005	// ZE_STRUCTURE_TYPE_EU_COUNT_EXT ::ze_eu_count_ext_t
+	ZE_STRUCTURE_TYPE_SRGB_EXT_DESC ZeStructureType = 0x10006	// ZE_STRUCTURE_TYPE_SRGB_EXT_DESC ::ze_srgb_ext_desc_t
+	ZE_STRUCTURE_TYPE_LINKAGE_INSPECTION_EXT_DESC ZeStructureType = 0x10007	// ZE_STRUCTURE_TYPE_LINKAGE_INSPECTION_EXT_DESC ::ze_linkage_inspection_ext_desc_t
+	ZE_STRUCTURE_TYPE_PCI_EXT_PROPERTIES ZeStructureType = 0x10008	// ZE_STRUCTURE_TYPE_PCI_EXT_PROPERTIES ::ze_pci_ext_properties_t
+	ZE_STRUCTURE_TYPE_DRIVER_MEMORY_FREE_EXT_PROPERTIES ZeStructureType = 0x10009	// ZE_STRUCTURE_TYPE_DRIVER_MEMORY_FREE_EXT_PROPERTIES ::ze_driver_memory_free_ext_properties_t
+	ZE_STRUCTURE_TYPE_MEMORY_FREE_EXT_DESC ZeStructureType = 0x1000a	// ZE_STRUCTURE_TYPE_MEMORY_FREE_EXT_DESC ::ze_memory_free_ext_desc_t
+	ZE_STRUCTURE_TYPE_MEMORY_COMPRESSION_HINTS_EXT_DESC ZeStructureType = 0x1000b	// ZE_STRUCTURE_TYPE_MEMORY_COMPRESSION_HINTS_EXT_DESC ::ze_memory_compression_hints_ext_desc_t
+	ZE_STRUCTURE_TYPE_IMAGE_ALLOCATION_EXT_PROPERTIES ZeStructureType = 0x1000c	// ZE_STRUCTURE_TYPE_IMAGE_ALLOCATION_EXT_PROPERTIES ::ze_image_allocation_ext_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_LUID_EXT_PROPERTIES ZeStructureType = 0x1000d	// ZE_STRUCTURE_TYPE_DEVICE_LUID_EXT_PROPERTIES ::ze_device_luid_ext_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_MEMORY_EXT_PROPERTIES ZeStructureType = 0x1000e	// ZE_STRUCTURE_TYPE_DEVICE_MEMORY_EXT_PROPERTIES ::ze_device_memory_ext_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_IP_VERSION_EXT ZeStructureType = 0x1000f	// ZE_STRUCTURE_TYPE_DEVICE_IP_VERSION_EXT ::ze_device_ip_version_ext_t
+	ZE_STRUCTURE_TYPE_IMAGE_VIEW_PLANAR_EXT_DESC ZeStructureType = 0x10010	// ZE_STRUCTURE_TYPE_IMAGE_VIEW_PLANAR_EXT_DESC ::ze_image_view_planar_ext_desc_t
+	ZE_STRUCTURE_TYPE_EVENT_QUERY_KERNEL_TIMESTAMPS_EXT_PROPERTIES ZeStructureType = 0x10011	// ZE_STRUCTURE_TYPE_EVENT_QUERY_KERNEL_TIMESTAMPS_EXT_PROPERTIES ::ze_event_query_kernel_timestamps_ext_properties_t
+	ZE_STRUCTURE_TYPE_EVENT_QUERY_KERNEL_TIMESTAMPS_RESULTS_EXT_PROPERTIES ZeStructureType = 0x10012	// ZE_STRUCTURE_TYPE_EVENT_QUERY_KERNEL_TIMESTAMPS_RESULTS_EXT_PROPERTIES ::ze_event_query_kernel_timestamps_results_ext_properties_t
+	ZE_STRUCTURE_TYPE_KERNEL_MAX_GROUP_SIZE_EXT_PROPERTIES ZeStructureType = 0x10013	// ZE_STRUCTURE_TYPE_KERNEL_MAX_GROUP_SIZE_EXT_PROPERTIES ::ze_kernel_max_group_size_ext_properties_t
+	ZE_STRUCTURE_TYPE_IMAGE_FORMAT_SUPPORT_EXT_PROPERTIES ZeStructureType = 0x10014	// ZE_STRUCTURE_TYPE_IMAGE_FORMAT_SUPPORT_EXT_PROPERTIES ::ze_image_format_support_ext_properties_t
+	ZE_STRUCTURE_TYPE_RELAXED_ALLOCATION_LIMITS_EXP_DESC ZeStructureType = 0x00020001	// ZE_STRUCTURE_TYPE_RELAXED_ALLOCATION_LIMITS_EXP_DESC ::ze_relaxed_allocation_limits_exp_desc_t
+	ZE_STRUCTURE_TYPE_MODULE_PROGRAM_EXP_DESC ZeStructureType = 0x00020002	// ZE_STRUCTURE_TYPE_MODULE_PROGRAM_EXP_DESC ::ze_module_program_exp_desc_t
+	ZE_STRUCTURE_TYPE_SCHEDULING_HINT_EXP_PROPERTIES ZeStructureType = 0x00020003	// ZE_STRUCTURE_TYPE_SCHEDULING_HINT_EXP_PROPERTIES ::ze_scheduling_hint_exp_properties_t
+	ZE_STRUCTURE_TYPE_SCHEDULING_HINT_EXP_DESC ZeStructureType = 0x00020004	// ZE_STRUCTURE_TYPE_SCHEDULING_HINT_EXP_DESC ::ze_scheduling_hint_exp_desc_t
+	ZE_STRUCTURE_TYPE_IMAGE_VIEW_PLANAR_EXP_DESC ZeStructureType = 0x00020005	// ZE_STRUCTURE_TYPE_IMAGE_VIEW_PLANAR_EXP_DESC ::ze_image_view_planar_exp_desc_t
+	ZE_STRUCTURE_TYPE_DEVICE_PROPERTIES_1_2 ZeStructureType = 0x00020006	// ZE_STRUCTURE_TYPE_DEVICE_PROPERTIES_1_2 ::ze_device_properties_t
+	ZE_STRUCTURE_TYPE_IMAGE_MEMORY_EXP_PROPERTIES ZeStructureType = 0x00020007	// ZE_STRUCTURE_TYPE_IMAGE_MEMORY_EXP_PROPERTIES ::ze_image_memory_properties_exp_t
+	ZE_STRUCTURE_TYPE_POWER_SAVING_HINT_EXP_DESC ZeStructureType = 0x00020008	// ZE_STRUCTURE_TYPE_POWER_SAVING_HINT_EXP_DESC ::ze_context_power_saving_hint_exp_desc_t
+	ZE_STRUCTURE_TYPE_COPY_BANDWIDTH_EXP_PROPERTIES ZeStructureType = 0x00020009	// ZE_STRUCTURE_TYPE_COPY_BANDWIDTH_EXP_PROPERTIES ::ze_copy_bandwidth_exp_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_P2P_BANDWIDTH_EXP_PROPERTIES ZeStructureType = 0x0002000A	// ZE_STRUCTURE_TYPE_DEVICE_P2P_BANDWIDTH_EXP_PROPERTIES ::ze_device_p2p_bandwidth_exp_properties_t
+	ZE_STRUCTURE_TYPE_FABRIC_VERTEX_EXP_PROPERTIES ZeStructureType = 0x0002000B	// ZE_STRUCTURE_TYPE_FABRIC_VERTEX_EXP_PROPERTIES ::ze_fabric_vertex_exp_properties_t
+	ZE_STRUCTURE_TYPE_FABRIC_EDGE_EXP_PROPERTIES ZeStructureType = 0x0002000C	// ZE_STRUCTURE_TYPE_FABRIC_EDGE_EXP_PROPERTIES ::ze_fabric_edge_exp_properties_t
+	ZE_STRUCTURE_TYPE_MEMORY_SUB_ALLOCATIONS_EXP_PROPERTIES ZeStructureType = 0x0002000D	// ZE_STRUCTURE_TYPE_MEMORY_SUB_ALLOCATIONS_EXP_PROPERTIES ::ze_memory_sub_allocations_exp_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXP_DESC ZeStructureType = 0x0002000E	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXP_DESC ::ze_rtas_builder_exp_desc_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_BUILD_OP_EXP_DESC ZeStructureType = 0x0002000F	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_BUILD_OP_EXP_DESC ::ze_rtas_builder_build_op_exp_desc_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXP_PROPERTIES ZeStructureType = 0x00020010	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXP_PROPERTIES ::ze_rtas_builder_exp_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_PARALLEL_OPERATION_EXP_PROPERTIES ZeStructureType = 0x00020011	// ZE_STRUCTURE_TYPE_RTAS_PARALLEL_OPERATION_EXP_PROPERTIES ::ze_rtas_parallel_operation_exp_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_DEVICE_EXP_PROPERTIES ZeStructureType = 0x00020012	// ZE_STRUCTURE_TYPE_RTAS_DEVICE_EXP_PROPERTIES ::ze_rtas_device_exp_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_GEOMETRY_AABBS_EXP_CB_PARAMS ZeStructureType = 0x00020013	// ZE_STRUCTURE_TYPE_RTAS_GEOMETRY_AABBS_EXP_CB_PARAMS ::ze_rtas_geometry_aabbs_exp_cb_params_t
+	ZE_STRUCTURE_TYPE_COUNTER_BASED_EVENT_POOL_EXP_DESC ZeStructureType = 0x00020014	// ZE_STRUCTURE_TYPE_COUNTER_BASED_EVENT_POOL_EXP_DESC ::ze_event_pool_counter_based_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_LIST_EXP_PROPERTIES ZeStructureType = 0x00020015	// ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_LIST_EXP_PROPERTIES ::ze_mutable_command_list_exp_properties_t
+	ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_LIST_EXP_DESC ZeStructureType = 0x00020016	// ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_LIST_EXP_DESC ::ze_mutable_command_list_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_ID_EXP_DESC ZeStructureType = 0x00020017	// ZE_STRUCTURE_TYPE_MUTABLE_COMMAND_ID_EXP_DESC ::ze_mutable_command_id_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_COMMANDS_EXP_DESC ZeStructureType = 0x00020018	// ZE_STRUCTURE_TYPE_MUTABLE_COMMANDS_EXP_DESC ::ze_mutable_commands_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_KERNEL_ARGUMENT_EXP_DESC ZeStructureType = 0x00020019	// ZE_STRUCTURE_TYPE_MUTABLE_KERNEL_ARGUMENT_EXP_DESC ::ze_mutable_kernel_argument_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_GROUP_COUNT_EXP_DESC ZeStructureType = 0x0002001A	// ZE_STRUCTURE_TYPE_MUTABLE_GROUP_COUNT_EXP_DESC ::ze_mutable_group_count_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_GROUP_SIZE_EXP_DESC ZeStructureType = 0x0002001B	// ZE_STRUCTURE_TYPE_MUTABLE_GROUP_SIZE_EXP_DESC ::ze_mutable_group_size_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_GLOBAL_OFFSET_EXP_DESC ZeStructureType = 0x0002001C	// ZE_STRUCTURE_TYPE_MUTABLE_GLOBAL_OFFSET_EXP_DESC ::ze_mutable_global_offset_exp_desc_t
+	ZE_STRUCTURE_TYPE_PITCHED_ALLOC_DEVICE_EXP_PROPERTIES ZeStructureType = 0x0002001D	// ZE_STRUCTURE_TYPE_PITCHED_ALLOC_DEVICE_EXP_PROPERTIES ::ze_device_pitched_alloc_exp_properties_t
+	ZE_STRUCTURE_TYPE_BINDLESS_IMAGE_EXP_DESC ZeStructureType = 0x0002001E	// ZE_STRUCTURE_TYPE_BINDLESS_IMAGE_EXP_DESC ::ze_image_bindless_exp_desc_t
+	ZE_STRUCTURE_TYPE_PITCHED_IMAGE_EXP_DESC ZeStructureType = 0x0002001F	// ZE_STRUCTURE_TYPE_PITCHED_IMAGE_EXP_DESC ::ze_image_pitched_exp_desc_t
+	ZE_STRUCTURE_TYPE_MUTABLE_GRAPH_ARGUMENT_EXP_DESC ZeStructureType = 0x00020020	// ZE_STRUCTURE_TYPE_MUTABLE_GRAPH_ARGUMENT_EXP_DESC ::ze_mutable_graph_argument_exp_desc_t
+	ZE_STRUCTURE_TYPE_INIT_DRIVER_TYPE_DESC ZeStructureType = 0x00020021	// ZE_STRUCTURE_TYPE_INIT_DRIVER_TYPE_DESC ::ze_init_driver_type_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_EXT_DESC ZeStructureType = 0x00020022	// ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_EXT_DESC ::ze_external_semaphore_ext_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_WIN32_EXT_DESC ZeStructureType = 0x00020023	// ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_WIN32_EXT_DESC ::ze_external_semaphore_win32_ext_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_FD_EXT_DESC ZeStructureType = 0x00020024	// ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_FD_EXT_DESC ::ze_external_semaphore_fd_ext_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_SIGNAL_PARAMS_EXT ZeStructureType = 0x00020025	// ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_SIGNAL_PARAMS_EXT ::ze_external_semaphore_signal_params_ext_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_WAIT_PARAMS_EXT ZeStructureType = 0x00020026	// ZE_STRUCTURE_TYPE_EXTERNAL_SEMAPHORE_WAIT_PARAMS_EXT ::ze_external_semaphore_wait_params_ext_t
+	ZE_STRUCTURE_TYPE_DRIVER_DDI_HANDLES_EXT_PROPERTIES ZeStructureType = 0x00020027	// ZE_STRUCTURE_TYPE_DRIVER_DDI_HANDLES_EXT_PROPERTIES ::ze_driver_ddi_handles_ext_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_CACHELINE_SIZE_EXT ZeStructureType = 0x00020028	// ZE_STRUCTURE_TYPE_DEVICE_CACHELINE_SIZE_EXT ::ze_device_cache_line_size_ext_t
+	ZE_STRUCTURE_TYPE_DEVICE_VECTOR_WIDTH_PROPERTIES_EXT ZeStructureType = 0x00020029	// ZE_STRUCTURE_TYPE_DEVICE_VECTOR_WIDTH_PROPERTIES_EXT ::ze_device_vector_width_properties_ext_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXT_DESC ZeStructureType = 0x00020030	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXT_DESC ::ze_rtas_builder_ext_desc_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_BUILD_OP_EXT_DESC ZeStructureType = 0x00020031	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_BUILD_OP_EXT_DESC ::ze_rtas_builder_build_op_ext_desc_t
+	ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXT_PROPERTIES ZeStructureType = 0x00020032	// ZE_STRUCTURE_TYPE_RTAS_BUILDER_EXT_PROPERTIES ::ze_rtas_builder_ext_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_PARALLEL_OPERATION_EXT_PROPERTIES ZeStructureType = 0x00020033	// ZE_STRUCTURE_TYPE_RTAS_PARALLEL_OPERATION_EXT_PROPERTIES ::ze_rtas_parallel_operation_ext_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_DEVICE_EXT_PROPERTIES ZeStructureType = 0x00020034	// ZE_STRUCTURE_TYPE_RTAS_DEVICE_EXT_PROPERTIES ::ze_rtas_device_ext_properties_t
+	ZE_STRUCTURE_TYPE_RTAS_GEOMETRY_AABBS_EXT_CB_PARAMS ZeStructureType = 0x00020035	// ZE_STRUCTURE_TYPE_RTAS_GEOMETRY_AABBS_EXT_CB_PARAMS ::ze_rtas_geometry_aabbs_ext_cb_params_t
+	ZE_STRUCTURE_TYPE_COMMAND_LIST_APPEND_PARAM_COOPERATIVE_DESC ZeStructureType = 0x00020036	// ZE_STRUCTURE_TYPE_COMMAND_LIST_APPEND_PARAM_COOPERATIVE_DESC ::ze_command_list_append_launch_kernel_param_cooperative_desc_t
+	ZE_STRUCTURE_TYPE_EXTERNAL_MEMMAP_SYSMEM_EXT_DESC ZeStructureType = 0x00020037	// ZE_STRUCTURE_TYPE_EXTERNAL_MEMMAP_SYSMEM_EXT_DESC ::ze_external_memmap_sysmem_ext_desc_t
+	ZE_STRUCTURE_TYPE_PITCHED_ALLOC_2DIMAGE_LINEAR_PITCH_EXP_INFO ZeStructureType = 0x00020038	// ZE_STRUCTURE_TYPE_PITCHED_ALLOC_2DIMAGE_LINEAR_PITCH_EXP_INFO ::ze_pitched_alloc_2dimage_linear_pitch_exp_info_t
+	ZE_STRUCTURE_TYPE_KERNEL_ALLOCATION_PROPERTIES ZeStructureType = 0x00020039	// ZE_STRUCTURE_TYPE_KERNEL_ALLOCATION_PROPERTIES ::ze_kernel_allocation_exp_properties_t
+	ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_DESC ZeStructureType = 0x0002003A	// ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_DESC ::ze_event_counter_based_desc_t
+	ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_EXTERNAL_SYNC_ALLOCATION_DESC ZeStructureType = 0x0002003B	// ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_EXTERNAL_SYNC_ALLOCATION_DESC ::ze_event_counter_based_external_sync_allocation_desc_t
+	ZE_STRUCTURE_TYPE_EVENT_SYNC_MODE_DESC ZeStructureType = 0x0002003C	// ZE_STRUCTURE_TYPE_EVENT_SYNC_MODE_DESC ::ze_event_sync_mode_desc_t
+	ZE_STRUCTURE_TYPE_IPC_MEM_HANDLE_TYPE_EXT_DESC ZeStructureType = 0x0002003D	// ZE_STRUCTURE_TYPE_IPC_MEM_HANDLE_TYPE_EXT_DESC ::ze_ipc_mem_handle_type_ext_desc_t
+	ZE_STRUCTURE_TYPE_DEVICE_EVENT_PROPERTIES ZeStructureType = 0x0002003E	// ZE_STRUCTURE_TYPE_DEVICE_EVENT_PROPERTIES ::ze_device_event_properties_t
+	ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_EXTERNAL_AGGREGATE_STORAGE_DESC ZeStructureType = 0x0002003F	// ZE_STRUCTURE_TYPE_EVENT_COUNTER_BASED_EXTERNAL_AGGREGATE_STORAGE_DESC ::ze_event_counter_based_external_aggregate_storage_desc_t
+	ZE_STRUCTURE_TYPE_PHYSICAL_MEM_PROPERTIES ZeStructureType = 0x00020040	// ZE_STRUCTURE_TYPE_PHYSICAL_MEM_PROPERTIES ::ze_physical_mem_properties_t
+	ZE_STRUCTURE_TYPE_DEVICE_USABLEMEM_SIZE_EXT_PROPERTIES ZeStructureType = 0x00020041	// ZE_STRUCTURE_TYPE_DEVICE_USABLEMEM_SIZE_EXT_PROPERTIES ::ze_device_usablemem_size_ext_properties_t
+	ZE_STRUCTURE_TYPE_CUSTOM_PITCH_EXP_DESC ZeStructureType = 0x00020042	// ZE_STRUCTURE_TYPE_CUSTOM_PITCH_EXP_DESC ::ze_custom_pitch_exp_desc_t
+	ZE_STRUCTURE_TYPE_FORCE_UINT32 ZeStructureType = 0x7fffffff	// ZE_STRUCTURE_TYPE_FORCE_UINT32 Value marking end of ZE_STRUCTURE_TYPE_* ENUMs
+
+)
+
+// ZeExternalMemoryTypeFlags (ze_external_memory_type_flags_t) External memory type flags
+type ZeExternalMemoryTypeFlags uint32
+const (
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD ZeExternalMemoryTypeFlags = (( 1 << 0 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_FD an opaque POSIX file descriptor handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF ZeExternalMemoryTypeFlags = (( 1 << 1 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_DMA_BUF a file descriptor handle for a Linux dma_buf
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 ZeExternalMemoryTypeFlags = (( 1 << 2 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32 an NT handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT ZeExternalMemoryTypeFlags = (( 1 << 3 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT a global share (KMT) handle
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE ZeExternalMemoryTypeFlags = (( 1 << 4 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE an NT handle referring to a Direct3D 10 or 11 texture resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT ZeExternalMemoryTypeFlags = (( 1 << 5 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D11_TEXTURE_KMT a global share (KMT) handle referring to a Direct3D 10 or 11 texture
+
+	///< resource
+
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP ZeExternalMemoryTypeFlags = (( 1 << 6 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_HEAP an NT handle referring to a Direct3D 12 heap resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE ZeExternalMemoryTypeFlags = (( 1 << 7 ))	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_D3D12_RESOURCE an NT handle referring to a Direct3D 12 committed resource
+	ZE_EXTERNAL_MEMORY_TYPE_FLAG_FORCE_UINT32 ZeExternalMemoryTypeFlags = 0x7fffffff	// ZE_EXTERNAL_MEMORY_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_EXTERNAL_MEMORY_TYPE_FLAG_* ENUMs
+
+)
+
+// ZeBandwidthUnit (ze_bandwidth_unit_t) Bandwidth unit
+type ZeBandwidthUnit uintptr
+const (
+	ZE_BANDWIDTH_UNIT_UNKNOWN ZeBandwidthUnit = 0	// ZE_BANDWIDTH_UNIT_UNKNOWN The unit used for bandwidth is unknown
+	ZE_BANDWIDTH_UNIT_BYTES_PER_NANOSEC ZeBandwidthUnit = 1	// ZE_BANDWIDTH_UNIT_BYTES_PER_NANOSEC Bandwidth is provided in bytes/nanosec
+	ZE_BANDWIDTH_UNIT_BYTES_PER_CLOCK ZeBandwidthUnit = 2	// ZE_BANDWIDTH_UNIT_BYTES_PER_CLOCK Bandwidth is provided in bytes/clock
+	ZE_BANDWIDTH_UNIT_FORCE_UINT32 ZeBandwidthUnit = 0x7fffffff	// ZE_BANDWIDTH_UNIT_FORCE_UINT32 Value marking end of ZE_BANDWIDTH_UNIT_* ENUMs
+
+)
+
+// ZeLatencyUnit (ze_latency_unit_t) Latency unit
+type ZeLatencyUnit uintptr
+const (
+	ZE_LATENCY_UNIT_UNKNOWN ZeLatencyUnit = 0	// ZE_LATENCY_UNIT_UNKNOWN The unit used for latency is unknown
+	ZE_LATENCY_UNIT_NANOSEC ZeLatencyUnit = 1	// ZE_LATENCY_UNIT_NANOSEC Latency is provided in nanosecs
+	ZE_LATENCY_UNIT_CLOCK ZeLatencyUnit = 2	// ZE_LATENCY_UNIT_CLOCK Latency is provided in clocks
+	ZE_LATENCY_UNIT_HOP ZeLatencyUnit = 3	// ZE_LATENCY_UNIT_HOP Latency is provided in hops (normalized so that the lowest latency
+
+	///< link has a latency of 1 hop)
+
+	ZE_LATENCY_UNIT_FORCE_UINT32 ZeLatencyUnit = 0x7fffffff	// ZE_LATENCY_UNIT_FORCE_UINT32 Value marking end of ZE_LATENCY_UNIT_* ENUMs
+
+)
+
+// ZE_MAX_UUID_SIZE Maximum universal unique id (UUID) size in bytes
+const ZE_MAX_UUID_SIZE = 16
 
