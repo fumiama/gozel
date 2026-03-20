@@ -11,13 +11,18 @@ var (
 	errNoSuchSymbol   = errors.New("no such sybmol")
 )
 
-type symbolTable map[string]symbol
+type symbolTable map[string]*symbol
 
 func (st symbolTable) apply(t string) string {
 	for _, s := range st {
 		t = s.replace(t)
 	}
 	return t
+}
+
+func (st symbolTable) contains(name string) bool {
+	_, ok := st[name]
+	return ok
 }
 
 type symbolType uintptr
@@ -40,16 +45,16 @@ type symbol struct {
 	fields []string
 }
 
-func newSymbolConst(name, val string) symbol {
-	return symbol{
+func newSymbolConst(name, val string) *symbol {
+	return &symbol{
 		stype:  symbolTypeConst,
 		name:   name,
 		fields: []string{val},
 	}
 }
 
-func newSymbolFunc(name, paras, evals string) symbol {
-	return symbol{
+func newSymbolFunc(name, paras, evals string) *symbol {
+	return &symbol{
 		stype:  symbolTypeFunc,
 		name:   name,
 		fields: []string{paras, evals},

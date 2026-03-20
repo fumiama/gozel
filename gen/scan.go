@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -11,6 +12,14 @@ import (
 
 const (
 	numbergenerics = "~int| ~uint32 | ~uint64 | ~uintptr"
+)
+
+var (
+	typemap = map[string]string{
+		"char":        "byte",
+		"void*":       "unsafe.Pointer",
+		"const void*": "unsafe.Pointer",
+	}
 )
 
 var infhcache = make(map[string]string, 1024)
@@ -28,12 +37,17 @@ func scanHeader(name string, scan *bufio.Scanner) {
 	ln := 0
 	var regionfile *os.File
 	symtab := symbolTable{
-		"ZE_APICALL":   symbol{symbolTypeConst, "ZE_APICALL", []string{""}},
-		"ZE_APIEXPORT": symbol{symbolTypeConst, "ZE_APIEXPORT", []string{""}},
-		"ZE_DLLEXPORT": symbol{symbolTypeConst, "ZE_DLLEXPORT", []string{""}},
+		"ZE_APICALL":   &symbol{symbolTypeConst, "ZE_APICALL", []string{""}},
+		"ZE_APIEXPORT": &symbol{symbolTypeConst, "ZE_APIEXPORT", []string{""}},
+		"ZE_DLLEXPORT": &symbol{symbolTypeConst, "ZE_DLLEXPORT", []string{""}},
 	}
 	fileheadersb := strings.Builder{}
 	region := ""
+	_ = os.RemoveAll(name)
+	err := os.MkdirAll(name, 0755)
+	if err != nil {
+		panic(fmt.Sprintf("%s L%d: cannot create region folder %s, err: %v", name, ln, region, err))
+	}
 	for scan.Scan() {
 		ln++
 		t := scan.Text()
@@ -49,11 +63,6 @@ func scanHeader(name string, scan *bufio.Scanner) {
 				panic(fmt.Sprintf("%s L%d: unexpected empty region", name, ln))
 			}
 			fmt.Println(infh(name), "scanning region", region)
-			_ = os.RemoveAll(name)
-			err := os.MkdirAll(name, 0755)
-			if err != nil {
-				panic(fmt.Sprintf("%s L%d: cannot create region folder %s, err: %v", name, ln, region, err))
-			}
 			f, err := os.Create(path.Join(name, region+".go"))
 			if err != nil {
 				panic(fmt.Sprintf("%s L%d: cannot create region %s, err: %v", name, ln, region, err))
@@ -63,7 +72,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 			f.WriteString("\n")
 			f.WriteString("package ")
 			f.WriteString(name)
-			f.WriteString("\n\n")
+			f.WriteString("\n\nimport (\n\t\"unsafe\"\n)\n\n")
 			regionfile = f
 		// block barrier
 		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
@@ -88,7 +97,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 
 func checkSymbolName(
 	symtab symbolTable, ln int, name, sname, goname string,
-	sb *strings.Builder, f *os.File, eq func() symbol) bool {
+	sb *strings.Builder, f *os.File, eq func() *symbol) bool {
 	if _, ok := symtab[sname]; ok {
 		panic(fmt.Sprintf("%s L%d: func #define %s has been defined", name, ln, sname))
 	}
@@ -131,7 +140,7 @@ func scanBlocks(
 				continue
 			}
 			if sb.Len() != 0 {
-				panic(fmt.Sprintf("%s L%d: unexpected non-0 sb at block end: %s", name, ln, &sb))
+				fmt.Printf("[warn] %s L%d: non-0 sb at block end: %s\n", name, ln, &sb)
 			}
 			return ln
 		case skip2nextblk:
@@ -171,7 +180,7 @@ func scanBlocks(
 				}
 				sname := strings.TrimSpace(argseval[0])
 				val := strings.TrimSpace(argseval[1])
-				checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() symbol {
+				checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() *symbol {
 					return newSymbolConst(sname, val)
 				})
 				f.WriteString("const ")
@@ -192,7 +201,7 @@ func scanBlocks(
 			sname = strings.TrimSpace(sname)
 			args = strings.TrimSpace(args)
 			eval := strings.TrimSpace(argseval[n+1:])
-			checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() symbol {
+			checkSymbolName(symtab, ln, name, sname, sname, &sb, f, func() *symbol {
 				return newSymbolFunc(sname, args, eval)
 			})
 			f.WriteString("func ")
@@ -220,7 +229,7 @@ func scanBlocks(
 				}
 				switch {
 				case strings.Contains(lines[0], " struct "):
-					fsb := strings.Builder{}
+					fsb := bytes.NewBuffer(make([]byte, 0, 256))
 					for i, stat := range lines[2:] {
 						if strings.HasPrefix(stat, "}") {
 							lines = lines[2+i:]
@@ -234,49 +243,76 @@ func scanBlocks(
 						vname := ""
 						c := ""
 						switch {
-						case strings.HasPrefix(stat, "char"):
-							szc, sz := "", ""
+						case strings.HasPrefix(stat, "char ") || strings.HasPrefix(stat, "void* ") ||
+							strings.HasPrefix(stat, "const void*"):
+							remains, sz := "", ""
 							ok := false
-							vname, szc, ok = strings.Cut(stat[4:], "[")
+							remains, c, ok = strings.Cut(stat, ";")
+							if !ok {
+								panic(fmt.Sprintf("%s L%d: unsupported non-end line %s", name, ln, stat))
+							}
+							c = strings.TrimPrefix(strings.TrimSpace(c), "//")
+							remains = strings.TrimSpace(remains)
+							i := strings.LastIndex(remains, " ")
+							vname = remains[i+1:]
+							tn := strings.TrimSpace(remains[:i])
+							tname, ok := typemap[tn]
+							if !ok {
+								panic(fmt.Sprintf("%s L%d: unsupported type %s", name, ln, tname))
+							}
+							vname, sz, ok = strings.Cut(vname, "[")
 							vname = us2camel(strings.TrimSpace(vname))
+							fsb.WriteString("\t")
 							if ok { // is array
-								sz, c, _ = strings.Cut(szc, "//")
-								fsb.WriteString("\t")
 								fsb.WriteString(vname)
 								fsb.WriteString(" [")
-								fsb.WriteString(strings.TrimSuffix(strings.TrimSpace(sz), ";"))
-								fsb.WriteString("byte")
+								fsb.WriteString(sz)
+								fsb.WriteString(tname)
 							} else {
-								vname, c, _ = strings.Cut(vname, "//")
-								fsb.WriteString(us2camel(strings.TrimSuffix(strings.TrimSpace(vname), ";")))
-								fsb.WriteString(" byte")
+								fsb.WriteString(vname)
+								fsb.WriteString(" ")
+								fsb.WriteString(tname)
 							}
 						case strings.Contains(stat, "_t "):
-							tname, remains, ok := strings.Cut(stat, "_t ")
+							remains, sz := "", ""
+							ok := false
+							remains, c, ok = strings.Cut(stat, ";")
+							if !ok {
+								panic(fmt.Sprintf("%s L%d: unsupported non-end line %s", name, ln, stat))
+							}
+							c = strings.TrimPrefix(strings.TrimSpace(c), "//")
+							tname, remains, ok := strings.Cut(remains, "_t ")
 							if !ok {
 								panic(fmt.Sprintf("%s L%d: unexpected statement %s", name, ln, stat))
 							}
-							szc, sz := "", ""
-							vname, szc, ok = strings.Cut(remains, "[")
+							tname = strings.TrimSpace(tname)
+							k := tname + "_t"
+							if symtab.contains(k) {
+								tname = symtab[k].replace(k)
+							}
+							vname, sz, ok = strings.Cut(remains, "[")
 							vname = us2camel(strings.TrimSpace(vname))
+							fsb.WriteString("\t")
 							if ok { // is array
-								sz, c, _ = strings.Cut(szc, "//")
-								fsb.WriteString("\t")
 								fsb.WriteString(vname)
 								fsb.WriteString(" [")
-								fsb.WriteString(strings.TrimSuffix(strings.TrimSpace(sz), ";"))
-								fsb.WriteString(strings.TrimSpace(tname))
+								fsb.WriteString(sz)
+								fsb.WriteString(tname)
 							} else {
-								vname, c, _ = strings.Cut(vname, "//")
-								fsb.WriteString(us2camel(strings.TrimSuffix(strings.TrimSpace(vname), ";")))
+								fsb.WriteString(vname)
 								fsb.WriteString(" ")
-								fsb.WriteString(strings.TrimSpace(tname))
+								fsb.WriteString(tname)
 							}
+						case strings.HasPrefix(stat, "///< "):
+							fsb.Truncate(fsb.Len() - 1)
+							fsb.WriteString(stat[4:])
 						default:
 							panic(fmt.Sprintf("%s L%d: unexpected statement %s", name, ln, stat))
 						}
-						fsb.WriteString("\t// ")
-						fsb.WriteString(strings.Replace(c, "/<", vname, 1))
+						if c != "" {
+							fsb.WriteString("\t// ")
+							fsb.WriteString(strings.Replace(c, "/<", vname, 1))
+						}
 					}
 					if len(lines) != 1 {
 						panic(fmt.Sprintf("%s L%d: unexpected len > 1 last lines %s", name, ln, strings.Join(lines, "\n")))
@@ -286,13 +322,13 @@ func scanBlocks(
 					}
 					sname := strings.TrimSuffix(strings.TrimSpace(lines[0][1:]), ";")
 					val := us2camel(strings.TrimSuffix(sname, "_t"))
-					checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() symbol {
+					checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() *symbol {
 						return newSymbolConst(sname, val)
 					})
 					f.WriteString("type ")
 					f.WriteString(val)
 					f.WriteString(" struct {")
-					f.WriteString(fsb.String())
+					_, _ = io.Copy(f, fsb)
 					f.WriteString("\n}\n\n")
 					continue
 				case strings.Contains(lines[0], " enum "):
@@ -339,7 +375,7 @@ func scanBlocks(
 					}
 					sname := strings.TrimSuffix(strings.TrimSpace(lines[0][1:]), ";")
 					val := us2camel(strings.TrimSuffix(sname, "_t"))
-					redirect := checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() symbol {
+					redirect := checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() *symbol {
 						return newSymbolConst(sname, val)
 					})
 					replaces := ""
@@ -370,7 +406,12 @@ func scanBlocks(
 			if strings.TrimSpace(typs[0]) == "struct" {
 				if len(typs) != 3 || !strings.Contains(typs[1], "handle_t") ||
 					!strings.Contains(typs[2], "*") {
-					panic(fmt.Sprintf("%s L%d: unexpected single typdef line %s", name, ln, t))
+					if symtab.contains(strings.TrimSuffix(typs[2], ";")) {
+						fmt.Printf("[warn] %s L%d: skip duplicated single typdef %s\n", name, ln, strings.Join(typs, "_____"))
+					} else {
+						fmt.Printf("[warn] %s L%d: skip future expected single typdef %s\n", name, ln, strings.Join(typs, "_____"))
+					}
+					continue
 				}
 				typs = typs[1:]
 				typs[0] = "uintptr"
@@ -382,7 +423,7 @@ func scanBlocks(
 			sname := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(typs[1]), ";"))
 			val := us2camel(strings.TrimSuffix(sname, "_t"))
 			origtyp := strings.TrimSuffix(strings.TrimSpace(typs[0]), "_t")
-			checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() symbol {
+			checkSymbolName(symtab, ln, name, sname, val, &sb, f, func() *symbol {
 				return newSymbolConst(sname, val)
 			})
 			f.WriteString("type ")
@@ -390,6 +431,8 @@ func scanBlocks(
 			f.WriteString(" ")
 			f.WriteString(origtyp)
 			f.WriteString("\n\n")
+		default:
+			panic(fmt.Sprintf("%s L%d: unexpected line %s", name, ln, t))
 		}
 	}
 	return ln

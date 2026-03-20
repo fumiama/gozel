@@ -59,7 +59,8 @@ func get1sentence(firstln string, scan *bufio.Scanner, ln int) (string, int) {
 		ln++
 		if strings.Contains(t, "{") {
 			bracedepth++
-		} else if strings.Contains(t, "}") {
+		}
+		if strings.Contains(t, "}") {
 			bracedepth--
 		}
 		sb.WriteString(t)

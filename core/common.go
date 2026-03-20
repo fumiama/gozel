@@ -13,6 +13,10 @@
 
 package core
 
+import (
+	"unsafe"
+)
+
 // ZE_MAKE_VERSION Generates generic 'oneAPI' API versions
 func ZE_MAKE_VERSION[T ~int| ~uint32 | ~uint64 | ~uintptr](_major T, _minor T) T {
 	return (( _major << 16 )|( _minor & 0x0000ffff))
@@ -370,6 +374,33 @@ const ZE_MAX_UUID_SIZE = 16
 // ZeUuid (ze_uuid_t) Universal unique id (UUID)
 type ZeUuid struct {
 	Id [ZE_MAX_UUID_SIZE]uint8	// Id [out] opaque data representing a UUID
+
+}
+
+// ZeBaseCbParams (ze_base_cb_params_t) Base for all callback function parameter types
+type ZeBaseCbParams struct {
+	Stype ZeStructureType	// Stype [in] type of this structure
+	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+
+}
+
+// ZeBaseProperties (ze_base_properties_t) Base for all properties types
+type ZeBaseProperties struct {
+	Stype ZeStructureType	// Stype [in] type of this structure
+	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+
+}
+
+// ZeBaseDesc (ze_base_desc_t) Base for all descriptor types
+type ZeBaseDesc struct {
+	Stype ZeStructureType	// Stype [in] type of this structure
+	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+
+}
+
+// ZeIpcEventCounterBasedHandle (ze_ipc_event_counter_based_handle_t) IPC handle to counter based event
+type ZeIpcEventCounterBasedHandle struct {
+	Data [ZE_MAX_IPC_HANDLE_SIZE]byte	// Data [out] Opaque data representing an IPC handle
 
 }
 
