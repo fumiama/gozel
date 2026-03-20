@@ -1,3 +1,3 @@
 package gozel
 
-//go:generate go run ./gen -spec ./spec
+//go:generate go run ./cmd/gen -spec ./spec
