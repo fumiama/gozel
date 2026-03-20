@@ -21,18 +21,18 @@ var (
 	procMap     = map[string]*syscall.Proc{}
 )
 
-// Init load lib using syscall.
-func Init() error {
+func init() {
+	if libZeLoader != nil {
+		return
+	}
 	h, err := syscall.LoadLibrary(zeLibraryName)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	libZeLoader = &syscall.DLL{Handle: h, Name: zeLibraryName}
-
-	return nil
 }
 
-// Register a process for calling.
+// Register a process for calling. For generated init only. Not thread-safe.
 func Register(name string) error {
 	if libZeLoader == nil {
 		return ErrZeCallNotInit
@@ -45,7 +45,7 @@ func Register(name string) error {
 	return nil
 }
 
-// Call invokes a registered proc by name.
+// Call invokes a registered proc by name. For generated call only.
 // The go:uintptrescapes directive tells the compiler that args may contain
 // pointers converted to uintptr, so the GC will keep them alive during the call.
 //
