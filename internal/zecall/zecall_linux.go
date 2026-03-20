@@ -3,10 +3,12 @@ package zecall
 import (
 	"errors"
 	"syscall"
+
+	"github.com/ebitengine/purego"
 )
 
 const (
-	zeLibraryName = "ze_loader.dll"
+	zeLibraryName = "libze_loader.so"
 )
 
 var (
@@ -17,31 +19,31 @@ var (
 )
 
 var (
-	libZeLoader *syscall.DLL
-	procMap     = map[string]*syscall.Proc{}
+	libZeLoader uintptr
+	procMap     = map[string]uintptr{}
 )
 
 func init() {
-	if libZeLoader != nil {
+	if libZeLoader != 0 {
 		return
 	}
-	h, err := syscall.LoadLibrary(zeLibraryName)
+	h, err := purego.Dlopen(zeLibraryName, purego.RTLD_LAZY|purego.RTLD_GLOBAL)
 	if err != nil {
 		panic(err)
 	}
-	libZeLoader = &syscall.DLL{Handle: h, Name: zeLibraryName}
+	libZeLoader = h
 }
 
 // Register a process for calling. For generated init only. Not thread-safe.
 func Register(name string) error {
-	if libZeLoader == nil {
+	if libZeLoader == 0 {
 		return ErrZeCallNotInit
 	}
-	proc, err := libZeLoader.FindProc(name)
+	sym, err := purego.Dlsym(libZeLoader, name)
 	if err != nil {
 		return err
 	}
-	procMap[name] = proc
+	procMap[name] = sym
 	return nil
 }
 
@@ -55,9 +57,13 @@ func Call(name string, args ...uintptr) (r1, r2 uintptr, err error) {
 	if !ok {
 		return 0, 0, ErrNoSuchProcess
 	}
-	r1, r2, err = fn.Call(args...)
+	var errno uintptr
+	r1, r2, errno = purego.SyscallN(fn, args...)
 	if r1 == 0 {
-		err = nil
+		return
+	}
+	if errno != 0 {
+		err = syscall.Errno(errno)
 	}
 	return
 }
