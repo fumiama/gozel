@@ -10,9 +10,9 @@ const (
 )
 
 var (
-	// ErrZeCallNotInit please call Init() first
+	// ErrZeCallNotInit please call Init() first.
 	ErrZeCallNotInit = errors.New("zecall not init")
-	// ErrNoSuchProcess please register the process first
+	// ErrNoSuchProcess please register the process first.
 	ErrNoSuchProcess = errors.New("no such process")
 )
 
@@ -21,7 +21,7 @@ var (
 	procMap     = map[string]*syscall.Proc{}
 )
 
-// Init load lib using syscall
+// Init load lib using syscall.
 func Init() error {
 	h, err := syscall.LoadLibrary(zeLibraryName)
 	if err != nil {
@@ -32,7 +32,7 @@ func Init() error {
 	return nil
 }
 
-// Register a process for calling
+// Register a process for calling.
 func Register(name string) error {
 	if libZeLoader == nil {
 		return ErrZeCallNotInit
@@ -45,7 +45,11 @@ func Register(name string) error {
 	return nil
 }
 
-// Call a process
+// Call invokes a registered proc by name.
+// The go:uintptrescapes directive tells the compiler that args may contain
+// pointers converted to uintptr, so the GC will keep them alive during the call.
+//
+//go:uintptrescapes
 func Call(name string, args ...uintptr) (r1, r2 uintptr, err error) {
 	fn, ok := procMap[name]
 	if !ok {
