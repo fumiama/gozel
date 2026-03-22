@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"errors"
+	"fmt"
 	"strings"
 	"unicode"
 )
@@ -47,7 +48,7 @@ func getInsideRoundBrakets(txt string) (string, int, error) {
 }
 
 func get1sentence(firstln string, scan *bufio.Scanner, ln int) (string, int) {
-	if strings.Contains(firstln, ";") {
+	if strings.Contains(firstln, ";") && !strings.HasPrefix(strings.TrimSpace(firstln), "//") {
 		return firstln, ln
 	}
 	bracedepth := 0
@@ -64,11 +65,23 @@ func get1sentence(firstln string, scan *bufio.Scanner, ln int) (string, int) {
 			bracedepth--
 		}
 		sb.WriteString(t)
-		if strings.Contains(t, ";") && bracedepth == 0 {
+		content, _, _ := strings.Cut(t, "//")
+		if strings.Contains(content, ";") && bracedepth == 0 {
 			return sb.String(), ln
 		}
 	}
 	return "", -1
+}
+
+func scanln(name string, scan *bufio.Scanner, ln *int) (s string, isfin bool) {
+	if !scan.Scan() {
+		panic(fmt.Sprintf("%s L%d: unexpected EOF", name, *ln))
+	}
+	(*ln)++
+	s = scan.Text()
+	content, _, _ := strings.Cut(s, "//")
+	isfin = strings.Contains(content, ";")
+	return
 }
 
 func us2camel(t string) string {

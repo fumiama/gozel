@@ -1,19 +1,11 @@
 package zecall
 
 import (
-	"errors"
 	"syscall"
 )
 
 const (
 	zeLibraryName = "ze_loader.dll"
-)
-
-var (
-	// ErrZeCallNotInit please call Init() first.
-	ErrZeCallNotInit = errors.New("zecall not init")
-	// ErrNoSuchProcess please register the process first.
-	ErrNoSuchProcess = errors.New("no such process")
 )
 
 var (
@@ -45,12 +37,12 @@ func Register(name string) error {
 	return nil
 }
 
-// Call invokes a registered proc by name. For generated call only.
+// Syscall invokes a registered proc by name. For generated call only.
 // The go:uintptrescapes directive tells the compiler that args may contain
 // pointers converted to uintptr, so the GC will keep them alive during the call.
 //
 //go:uintptrescapes
-func Call(name string, args ...uintptr) (r1, r2 uintptr, err error) {
+func Syscall(name string, args ...uintptr) (r1, r2 uintptr, err error) {
 	fn, ok := procMap[name]
 	if !ok {
 		return 0, 0, ErrNoSuchProcess

@@ -39,23 +39,35 @@ const (
 	symbolTypeFunc
 )
 
+type symbolSubType uintptr
+
+const (
+	symbolSubTypeDefine symbolSubType = iota
+	symbolSubTypeEmptyStruct
+	symbolSubTypeLargeStruct
+	symbolSubTypeEnum
+)
+
 type symbol struct {
 	stype  symbolType
+	sstype symbolSubType
 	name   string
 	fields []string
 }
 
-func newSymbolConst(name, val string) *symbol {
+func newSymbolConst(name, val string, sstype symbolSubType) *symbol {
 	return &symbol{
 		stype:  symbolTypeConst,
+		sstype: sstype,
 		name:   name,
 		fields: []string{val},
 	}
 }
 
-func newSymbolFunc(name, paras, evals string) *symbol {
+func newSymbolFunc(name, paras, evals string, sstype symbolSubType) *symbol {
 	return &symbol{
 		stype:  symbolTypeFunc,
+		sstype: sstype,
 		name:   name,
 		fields: []string{paras, evals},
 	}
