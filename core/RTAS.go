@@ -456,3 +456,482 @@ type ZeRtasGeometryAabbsExtCbParams struct {
 
 }
 
+// ZeRtasGeometryAabbsCbExt (ze_rtas_geometry_aabbs_cb_ext_t) Callback function pointer type to return AABBs for a range of
+///        procedural primitives
+// gozel warn: please use C function pointer loaded from C library!
+type ZeRtasGeometryAabbsCbExt uintptr
+
+// ZeRtasBuilderProceduralGeometryInfoExt (ze_rtas_builder_procedural_geometry_info_ext_t) Ray tracing acceleration structure builder procedural primitives
+///        geometry info
+/// 
+/// @details
+///     - A host-side bounds callback function is invoked by the acceleration
+///       structure builder to query the bounds of procedural primitives on
+///       demand. The callback is passed some `pGeomUserPtr` that can point to
+///       an application-side representation of the procedural primitives.
+///       Further, a second `pBuildUserPtr`, which is set by a parameter to
+///       ::zeRTASBuilderBuildExt, is passed to the callback. This allows the
+///       build to change the bounds of the procedural geometry, for example, to
+///       build a BVH only over a short time range to implement multi-segment
+///       motion blur.
+type ZeRtasBuilderProceduralGeometryInfoExt struct {
+	Geometrytype ZeRtasBuilderPackedGeometryTypeExt	// Geometrytype [in] geometry type, must be ::ZE_RTAS_BUILDER_GEOMETRY_TYPE_EXT_PROCEDURAL
+	Geometryflags ZeRtasBuilderPackedGeometryExtFlags	// Geometryflags [in] 0 or some combination of ::ze_rtas_builder_geometry_ext_flag_t bits representing the geometry flags for all primitives of this geometry
+	Geometrymask uint8	// Geometrymask [in] 8-bit geometry mask for ray masking
+	Reserved uint8	// Reserved [in] reserved for future use
+	Primcount uint32	// Primcount [in] number of primitives in geometry
+	Pfngetboundscb ZeRtasGeometryAabbsCbExt	// Pfngetboundscb [in] pointer to callback function to get the axis-aligned bounding-box for a range of primitives
+	Pgeomuserptr unsafe.Pointer	// Pgeomuserptr [in] user data pointer passed to callback
+
+}
+
+// ZeRtasBuilderInstanceGeometryInfoExt (ze_rtas_builder_instance_geometry_info_ext_t) Ray tracing acceleration structure builder instance geometry info
+type ZeRtasBuilderInstanceGeometryInfoExt struct {
+	Geometrytype ZeRtasBuilderPackedGeometryTypeExt	// Geometrytype [in] geometry type, must be ::ZE_RTAS_BUILDER_GEOMETRY_TYPE_EXT_INSTANCE
+	Instanceflags ZeRtasBuilderPackedInstanceExtFlags	// Instanceflags [in] 0 or some combination of ::ze_rtas_builder_geometry_ext_flag_t bits representing the geometry flags for all primitives of this geometry
+	Geometrymask uint8	// Geometrymask [in] 8-bit geometry mask for ray masking
+	Transformformat ZeRtasBuilderPackedInputDataFormatExt	// Transformformat [in] format of the specified transformation
+	Instanceuserid uint32	// Instanceuserid [in] user-specified identifier for the instance
+	Ptransform unsafe.Pointer	// Ptransform [in] object-to-world instance transformation in specified format
+	Pbounds *ZeRtasAabbExt	// Pbounds [in] object-space axis-aligned bounding-box of the instanced acceleration structure
+	Paccelerationstructure unsafe.Pointer	// Paccelerationstructure [in] device pointer to acceleration structure to instantiate
+
+}
+
+// ZeRtasBuilderBuildOpExtDesc (ze_rtas_builder_build_op_ext_desc_t) 
+type ZeRtasBuilderBuildOpExtDesc struct {
+	Stype ZeStructureType	// Stype [in] type of this structure
+	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Rtasformat ZeRtasFormatExt	// Rtasformat [in] ray tracing acceleration structure format
+	Buildquality ZeRtasBuilderBuildQualityHintExt	// Buildquality [in] acceleration structure build quality hint
+	Buildflags ZeRtasBuilderBuildOpExtFlags	// Buildflags [in] 0 or some combination of ::ze_rtas_builder_build_op_ext_flag_t flags
+	Ppgeometries **ZeRtasBuilderGeometryInfoExt	// Ppgeometries [in][optional][range(0, `numGeometries`)] NULL or a valid array of pointers to geometry infos
+	Numgeometries uint32	// Numgeometries [in] number of geometries in geometry infos array, can be zero when `ppGeometries` is NULL
+
+}
+
+// ZeRTASBuilderCreateExt Creates a ray tracing acceleration structure builder object
+/// 
+/// @details
+///     - The application may call this function from simultaneous threads.
+///     - The implementation of this function must be thread-safe.
+///     - The implementation must support ::ZE_RTAS_EXT_NAME extension.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hDriver`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == pDescriptor`
+///         + `nullptr == phBuilder`
+///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+///         + `::ZE_RTAS_BUILDER_EXT_VERSION_CURRENT < pDescriptor->builderVersion`
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+func ZeRTASBuilderCreateExt(
+	hDriver ZeDriverHandle,	// hDriver [in] handle of driver object
+	pDescriptor *ZeRtasBuilderExtDesc,	// pDescriptor [in] pointer to builder descriptor
+	phBuilder *ZeRtasBuilderExtHandle,	// phBuilder [out] handle of builder object
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASBuilderCreateExt", uintptr(hDriver), uintptr(unsafe.Pointer(pDescriptor)), uintptr(unsafe.Pointer(phBuilder)))
+}
+
+// ZeRTASBuilderGetBuildPropertiesExt Retrieves ray tracing acceleration structure builder properties
+/// 
+/// @details
+///     - The application may call this function from simultaneous threads.
+///     - The implementation of this function must be thread-safe.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hBuilder`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == pBuildOpDescriptor`
+///         + `nullptr == pProperties`
+///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+///         + `::ZE_RTAS_FORMAT_EXT_MAX < pBuildOpDescriptor->rtasFormat`
+///         + `::ZE_RTAS_BUILDER_BUILD_QUALITY_HINT_EXT_HIGH < pBuildOpDescriptor->buildQuality`
+///         + `0x3 < pBuildOpDescriptor->buildFlags`
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+func ZeRTASBuilderGetBuildPropertiesExt(
+	hBuilder ZeRtasBuilderExtHandle,	// hBuilder [in] handle of builder object
+	pBuildOpDescriptor *ZeRtasBuilderBuildOpExtDesc,	// pBuildOpDescriptor [in] pointer to build operation descriptor
+	pProperties *ZeRtasBuilderExtProperties,	// pProperties [in,out] query result for builder properties
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASBuilderGetBuildPropertiesExt", uintptr(hBuilder), uintptr(unsafe.Pointer(pBuildOpDescriptor)), uintptr(unsafe.Pointer(pProperties)))
+}
+
+// ZeDriverRTASFormatCompatibilityCheckExt Checks ray tracing acceleration structure format compatibility
+/// 
+/// @details
+///     - The application may call this function from simultaneous threads.
+///     - The implementation of this function must be thread-safe.
+/// 
+/// @returns
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hDriver`
+///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+///         + `::ZE_RTAS_FORMAT_EXT_MAX < rtasFormatA`
+///         + `::ZE_RTAS_FORMAT_EXT_MAX < rtasFormatB`
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+///     - ::ZE_RESULT_SUCCESS
+///         + An acceleration structure built with `rtasFormatA` is compatible with devices that report `rtasFormatB`.
+///     - ::ZE_RESULT_EXT_ERROR_OPERANDS_INCOMPATIBLE
+///         + An acceleration structure built with `rtasFormatA` is **not** compatible with devices that report `rtasFormatB`.
+func ZeDriverRTASFormatCompatibilityCheckExt(
+	hDriver ZeDriverHandle,	// hDriver [in] handle of driver object
+	rtasFormatA ZeRtasFormatExt,	// rtasFormatA [in] operand A
+	rtasFormatB ZeRtasFormatExt,	// rtasFormatB [in] operand B
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeDriverRTASFormatCompatibilityCheckExt", uintptr(hDriver), uintptr(rtasFormatA), uintptr(rtasFormatB))
+}
+
+// ZeRTASBuilderBuildExt Build ray tracing acceleration structure
+/// 
+/// @details
+///     - This function builds an acceleration structure of the scene consisting
+///       of the specified geometry information and writes the acceleration
+///       structure to the provided destination buffer. All types of geometries
+///       can get freely mixed inside a scene.
+///     - Before an acceleration structure can be built, the user must allocate
+///       the memory for the acceleration structure buffer and scratch buffer
+///       using sizes queried with the ::zeRTASBuilderGetBuildPropertiesExt function.
+///     - When using the "worst-case" size for the acceleration structure
+///       buffer, the acceleration structure construction will never fail with ::ZE_RESULT_EXT_RTAS_BUILD_RETRY.
+///     - When using the "expected" size for the acceleration structure buffer,
+///       the acceleration structure construction may fail with
+///       ::ZE_RESULT_EXT_RTAS_BUILD_RETRY. If this happens, the user may resize
+///       their acceleration structure buffer using the returned
+///       `*pRtasBufferSizeBytes` value, which will be updated with an improved
+///       size estimate that will likely result in a successful build.
+///     - The acceleration structure construction is run on the host and is
+///       synchronous, thus after the function returns with a successful result,
+///       the acceleration structure may be used.
+///     - All provided data buffers must be host-accessible. The referenced
+///       scene data (index- and vertex- buffers) have to be accessible from the
+///       host, and will **not** be referenced by the build acceleration structure.
+///     - The acceleration structure buffer is typicall a host allocation that
+///       is later manually copied to a device allocation. Alternatively one can
+///       also use a shared USM allocation as acceration structure buffer and
+///       skip the copy.
+///     - A successfully constructed acceleration structure is entirely
+///       self-contained. There is no requirement for input data to persist
+///       beyond build completion.
+///     - A successfully constructed acceleration structure is non-copyable.
+///     - Acceleration structure construction may be parallelized by passing a
+///       valid handle to a parallel operation object and joining that parallel
+///       operation using ::zeRTASParallelOperationJoinExt with user-provided
+///       worker threads.
+///     - A successfully constructed acceleration structure is generally
+///       non-copyable. It can only get copied from host to device using the
+///       special ::zeRTASBuilderCommandListAppendCopyExt function.
+///     - **Additional Notes**
+///        - "The geometry infos array, geometry infos, and scratch buffer must
+///       all be standard host memory allocations."
+///        - "A pointer to a geometry info can be a null pointer, in which case
+///       the geometry is treated as empty."
+///        - "If no parallel operation handle is provided, the build is run
+///       sequentially on the current thread."
+///        - "A parallel operation object may only be associated with a single
+///       acceleration structure build at a time."
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hBuilder`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == pBuildOpDescriptor`
+///         + `nullptr == pScratchBuffer`
+///         + `nullptr == pRtasBuffer`
+///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+///         + `::ZE_RTAS_FORMAT_EXT_MAX < pBuildOpDescriptor->rtasFormat`
+///         + `::ZE_RTAS_BUILDER_BUILD_QUALITY_HINT_EXT_HIGH < pBuildOpDescriptor->buildQuality`
+///         + `0x3 < pBuildOpDescriptor->buildFlags`
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+///     - ::ZE_RESULT_EXT_RTAS_BUILD_DEFERRED
+///         + Acceleration structure build completion is deferred to parallel operation join.
+///     - ::ZE_RESULT_EXT_RTAS_BUILD_RETRY
+///         + Acceleration structure build failed due to insufficient resources, retry the build operation with a larger acceleration structure buffer allocation.
+///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+///         + Acceleration structure build failed due to parallel operation object participation in another build operation.
+func ZeRTASBuilderBuildExt(
+	hBuilder ZeRtasBuilderExtHandle,	// hBuilder [in] handle of builder object
+	pBuildOpDescriptor *ZeRtasBuilderBuildOpExtDesc,	// pBuildOpDescriptor [in] pointer to build operation descriptor
+	pScratchBuffer unsafe.Pointer,	// pScratchBuffer [in][range(0, `scratchBufferSizeBytes`)] scratch buffer to be used during acceleration structure construction
+	scratchBufferSizeBytes uintptr,	// scratchBufferSizeBytes [in] size of scratch buffer, in bytes
+	pRtasBuffer unsafe.Pointer,	// pRtasBuffer [in] pointer to destination buffer
+	rtasBufferSizeBytes uintptr,	// rtasBufferSizeBytes [in] destination buffer size, in bytes
+	hParallelOperation ZeRtasParallelOperationExtHandle,	// hParallelOperation [in][optional] handle to parallel operation object
+	pBuildUserPtr unsafe.Pointer,	// pBuildUserPtr [in][optional] pointer passed to callbacks
+	pBounds *ZeRtasAabbExt,	// pBounds [in,out][optional] pointer to destination address for acceleration structure bounds
+	pRtasBufferSizeBytes *uintptr,	// pRtasBufferSizeBytes [out][optional] updated acceleration structure size requirement, in bytes
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASBuilderBuildExt", uintptr(hBuilder), uintptr(unsafe.Pointer(pBuildOpDescriptor)), uintptr(unsafe.Pointer(pScratchBuffer)), uintptr(scratchBufferSizeBytes), uintptr(unsafe.Pointer(pRtasBuffer)), uintptr(rtasBufferSizeBytes), uintptr(hParallelOperation), uintptr(unsafe.Pointer(pBuildUserPtr)), uintptr(unsafe.Pointer(pBounds)), uintptr(unsafe.Pointer(pRtasBufferSizeBytes)))
+}
+
+// ZeRTASBuilderCommandListAppendCopyExt Copies a ray tracing acceleration structure (RTAS) from host to device
+///        memory.
+/// 
+/// @details
+///     - The memory pointed to by srcptr must be host memory containing a valid
+///       ray tracing acceleration structure.
+///     - The number of bytes to copy must be larger or equal to the size of the
+///       ray tracing acceleration structure.
+///     - The application must ensure the memory pointed to by dstptr and srcptr
+///       is accessible by the device on which the command list was created.
+///     - The implementation must not access the memory pointed to by dstptr and
+///       srcptr as they are free to be modified by either the Host or device up
+///       until execution.
+///     - The application must ensure the events are accessible by the device on
+///       which the command list was created.
+///     - The application must ensure the command list and events were created,
+///       and the memory was allocated, on the same context.
+///     - The application must **not** call this function from simultaneous
+///       threads with the same command list handle.
+///     - The implementation of this function should be lock-free.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hCommandList`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == dstptr`
+///         + `nullptr == srcptr`
+///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+///     - ::ZE_RESULT_ERROR_INVALID_SIZE
+///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+func ZeRTASBuilderCommandListAppendCopyExt(
+	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of command list
+	dstptr unsafe.Pointer,	// dstptr [in] pointer to destination in device memory to copy the ray tracing acceleration structure to
+	srcptr unsafe.Pointer,	// srcptr [in] pointer to a valid source ray tracing acceleration structure in host memory to copy from
+	size uintptr,	// size [in] size in bytes to copy
+	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASBuilderCommandListAppendCopyExt", uintptr(hCommandList), uintptr(unsafe.Pointer(dstptr)), uintptr(unsafe.Pointer(srcptr)), uintptr(size), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
+}
+
+// ZeRTASBuilderDestroyExt Destroys a ray tracing acceleration structure builder object
+/// 
+/// @details
+///     - The implementation of this function may immediately release any
+///       internal Host and Device resources associated with this builder.
+///     - The application must **not** call this function from simultaneous
+///       threads with the same builder handle.
+///     - The implementation of this function must be thread-safe.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hBuilder`
+///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+func ZeRTASBuilderDestroyExt(
+	hBuilder ZeRtasBuilderExtHandle,	// hBuilder [in][release] handle of builder object to destroy
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASBuilderDestroyExt", uintptr(hBuilder))
+}
+
+// ZeRTASParallelOperationCreateExt Creates a ray tracing acceleration structure builder parallel
+///        operation object
+/// 
+/// @details
+///     - The application may call this function from simultaneous threads.
+///     - The implementation of this function must be thread-safe.
+///     - The implementation must support ::ZE_RTAS_EXT_NAME extension.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hDriver`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == phParallelOperation`
+func ZeRTASParallelOperationCreateExt(
+	hDriver ZeDriverHandle,	// hDriver [in] handle of driver object
+	phParallelOperation *ZeRtasParallelOperationExtHandle,	// phParallelOperation [out] handle of parallel operation object
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASParallelOperationCreateExt", uintptr(hDriver), uintptr(unsafe.Pointer(phParallelOperation)))
+}
+
+// ZeRTASParallelOperationGetPropertiesExt Retrieves ray tracing acceleration structure builder parallel
+///        operation properties
+/// 
+/// @details
+///     - The application must first bind the parallel operation object to a
+///       build operation before it may query the parallel operation properties.
+///       In other words, the application must first call
+///       ::zeRTASBuilderBuildExt with **hParallelOperation** before calling
+///       this function.
+///     - The application may call this function from simultaneous threads.
+///     - The implementation of this function must be thread-safe.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hParallelOperation`
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+///         + `nullptr == pProperties`
+func ZeRTASParallelOperationGetPropertiesExt(
+	hParallelOperation ZeRtasParallelOperationExtHandle,	// hParallelOperation [in] handle of parallel operation object
+	pProperties *ZeRtasParallelOperationExtProperties,	// pProperties [in,out] query result for parallel operation properties
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASParallelOperationGetPropertiesExt", uintptr(hParallelOperation), uintptr(unsafe.Pointer(pProperties)))
+}
+
+// ZeRTASParallelOperationJoinExt Joins a parallel build operation
+/// 
+/// @details
+///     - All worker threads return the same error code for the parallel build
+///       operation upon build completion
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hParallelOperation`
+func ZeRTASParallelOperationJoinExt(
+	hParallelOperation ZeRtasParallelOperationExtHandle,	// hParallelOperation [in] handle of parallel operation object
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASParallelOperationJoinExt", uintptr(hParallelOperation))
+}
+
+// ZeRTASParallelOperationDestroyExt Destroys a ray tracing acceleration structure builder parallel
+///        operation object
+/// 
+/// @details
+///     - The implementation of this function may immediately release any
+///       internal Host and Device resources associated with this parallel
+///       operation.
+///     - The application must **not** call this function from simultaneous
+///       threads with the same parallel operation handle.
+///     - The implementation of this function must be thread-safe.
+/// 
+/// @returns
+///     - ::ZE_RESULT_SUCCESS
+///     - ::ZE_RESULT_ERROR_UNINITIALIZED
+///     - ::ZE_RESULT_ERROR_DEVICE_LOST
+///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+///     - ::ZE_RESULT_ERROR_UNKNOWN
+///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+///         + `nullptr == hParallelOperation`
+func ZeRTASParallelOperationDestroyExt(
+	hParallelOperation ZeRtasParallelOperationExtHandle,	// hParallelOperation [in][release] handle of parallel operation object to destroy
+) (ZeResult, error) {
+	return zecall.Call[ZeResult]("zeRTASParallelOperationDestroyExt", uintptr(hParallelOperation))
+}
+

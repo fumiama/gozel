@@ -46,6 +46,7 @@ const (
 	symbolSubTypeEmptyStruct
 	symbolSubTypeLargeStruct
 	symbolSubTypeEnum
+	symbolSubTypeFuncPtr
 )
 
 type symbol struct {

@@ -17,38 +17,67 @@ const (
 
 var (
 	typemap = map[string]string{
-		"char":         "byte",
-		"char*":        "*byte",
-		"const char*":  "*byte",
-		"char**":       "**byte",
-		"const char**": "**byte",
+		"char":          "byte",
+		"char*":         "*byte",
+		"const char*":   "*byte",
+		"char**":        "**byte",
+		"const char**":  "**byte",
+		"char***":       "***byte",
+		"const char***": "***byte",
 
-		"void*":        "unsafe.Pointer",
-		"void *":       "unsafe.Pointer",
-		"const void*":  "unsafe.Pointer",
-		"void**":       "*unsafe.Pointer",
-		"void **":      "*unsafe.Pointer",
-		"const void**": "*unsafe.Pointer",
+		"void*":         "unsafe.Pointer",
+		"void *":        "unsafe.Pointer",
+		"const void*":   "unsafe.Pointer",
+		"void**":        "*unsafe.Pointer",
+		"void **":       "*unsafe.Pointer",
+		"const void**":  "*unsafe.Pointer",
+		"void***":       "**unsafe.Pointer",
+		"void ***":      "**unsafe.Pointer",
+		"const void***": "**unsafe.Pointer",
 
-		"size_t":  "uintptr",
-		"size_t*": "*uintptr",
+		"size_t":   "uintptr",
+		"size_t*":  "*uintptr",
+		"size_t *": "*uintptr",
 
-		"int": "int32",
+		"int":          "int32",
+		"unsigned int": "uint32",
 
 		"float":  "float32",
 		"double": "float64",
 	}
 	unsafeExcludeRegions = map[string]struct{}{
-		"globaloffset": {},
+		"bfloat16conversions": {},
+		"globaloffset":        {},
+		"linkonceodr":         {},
+		"subgroups":           {},
 	}
 	zecallExcludeRegions = map[string]struct{}{
-		"CacheLineSize":      {},
-		"common":             {},
-		"driverDDIHandles":   {},
-		"floatAtomics":       {},
-		"program":            {},
-		"raytracing":         {},
-		"relaxedAllocLimits": {},
+		"bandwidth":                    {},
+		"bfloat16conversions":          {},
+		"CacheLineSize":                {},
+		"callbacks":                    {},
+		"common":                       {},
+		"counterbasedeventpool":        {},
+		"deviceipversion":              {},
+		"deviceLUID":                   {},
+		"deviceusablememproperties":    {},
+		"driverDDIHandles":             {},
+		"EUCount":                      {},
+		"externalMemMap":               {},
+		"floatAtomics":                 {},
+		"imageFormatSupport":           {},
+		"imageviewplanar":              {},
+		"kernelMaxGroupSizeProperties": {},
+		"linkonceodr":                  {},
+		"memoryCompressionHints":       {},
+		"memoryProperties":             {},
+		"powersavinghint":              {},
+		"program":                      {},
+		"raytracing":                   {},
+		"relaxedAllocLimits":           {},
+		"SRGB":                         {},
+		"subAllocationsProperties":     {},
+		"subgroups":                    {},
 	}
 )
 
@@ -102,14 +131,22 @@ func scanHeader(name string, scan *bufio.Scanner) {
 			f.WriteString("\n")
 			f.WriteString("package ")
 			f.WriteString(name)
-			f.WriteString("\n\nimport (")
+			f.WriteString("\n\n")
+			noimport := true
+			sb := strings.Builder{}
+			sb.WriteString("import (")
 			if _, ok := unsafeExcludeRegions[region]; !ok {
-				f.WriteString("\n\t\"unsafe\"\n")
+				sb.WriteString("\n\t\"unsafe\"\n")
+				noimport = false
 			}
 			if _, ok := zecallExcludeRegions[region]; !ok {
-				f.WriteString("\n\t\"github.com/fumiama/gozel/internal/zecall\"\n")
+				sb.WriteString("\n\t\"github.com/fumiama/gozel/internal/zecall\"\n")
+				noimport = false
 			}
-			f.WriteString(")\n\n")
+			sb.WriteString(")\n\n")
+			if !noimport {
+				f.WriteString(sb.String())
+			}
 			regionfile = f
 		// block barrier
 		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
@@ -123,7 +160,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 			regionfile = nil
 		// skip outer #
 		case strings.HasPrefix(t, "#") || t == "" || strings.HasPrefix(t, "// ") ||
-			strings.HasPrefix(t, "extern "):
+			strings.Contains(t, `extern "C"`):
 			fmt.Println("  [scan] skip", t)
 			continue
 		default:
@@ -274,6 +311,30 @@ func scanTypedef(
 	ln = newln
 	if strings.Contains(s, "\n") { // multi-line typedef
 		lines := strings.Split(s, "\n")
+		if strings.Contains(lines[0], " (*") || strings.Contains(lines[0], "ZE_APICALL") { // is func ptr typedef
+			_, remains, ok := strings.Cut(lines[0], " (*")
+			if !ok {
+				_, remains, ok = strings.Cut(lines[0], "ZE_APICALL")
+				if !ok {
+					panic(fmt.Sprintf("%s L%d: unexpected func typdef line %s", name, ln, firstln))
+				}
+			}
+			fnname, _, _ := strings.Cut(strings.TrimPrefix(strings.TrimSpace(remains), "*"), "_t")
+			fnname = strings.TrimSpace(fnname)
+			if fnname == "" {
+				panic(fmt.Sprintf("%s L%d: unexpected func typdef line %s", name, ln, firstln))
+			}
+			goname := us2camel(fnname)
+			fnname += "_t"
+			checkSymbolName(symtab, ln, name, fnname, goname, sb, f, func() *symbol {
+				return newSymbolConst(fnname, goname, symbolSubTypeFuncPtr)
+			})
+			f.WriteString("// gozel warn: please use C function pointer loaded from C library!\n")
+			f.WriteString("type ")
+			f.WriteString(goname)
+			f.WriteString(" uintptr\n\n")
+			return ln
+		}
 		if len(lines) < 4 {
 			panic(fmt.Sprintf("%s L%d: unexpected short multi typdef line %s", name, ln, firstln))
 		}
@@ -303,7 +364,10 @@ func scanTypedef(
 					strings.HasPrefix(stat, "const void* ") || strings.HasPrefix(stat, "int ") ||
 					strings.HasPrefix(stat, "const void** ") || strings.HasPrefix(stat, "const char* ") ||
 					strings.HasPrefix(stat, "const char** ") || strings.HasPrefix(stat, "float ") ||
-					strings.HasPrefix(stat, "double "):
+					strings.HasPrefix(stat, "double ") || strings.HasPrefix(stat, "void** ") ||
+					strings.HasPrefix(stat, "const void*** ") || strings.HasPrefix(stat, "void*** ") ||
+					strings.HasPrefix(stat, "const char*** ") || strings.HasPrefix(stat, "char** ") ||
+					strings.HasPrefix(stat, "char*** "):
 					remains, sz := "", ""
 					ok := false
 					remains, c, ok = strings.Cut(stat, ";")
@@ -546,7 +610,7 @@ func scanTypedef(
 	}
 	sname := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(typs[1]), ";"))
 	val := us2camel(strings.TrimSuffix(sname, "_t"))
-	origtyp := strings.TrimSuffix(strings.TrimSpace(typs[0]), "_t")
+	origtyp := strings.TrimSuffix(symtab.apply(strings.TrimSpace(typs[0])), "_t")
 	checkSymbolName(symtab, ln, name, sname, val, sb, f, func() *symbol {
 		return newSymbolConst(sname, val, symbolSubTypeEmptyStruct)
 	})
