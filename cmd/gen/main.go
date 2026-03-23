@@ -42,6 +42,8 @@ func main() {
 		specdir = os.DirFS(*spec)
 	}
 
+	defer closeAPI()
+
 	fmt.Println("[main] parsing core APIs...")
 	f, err := specdir.Open("include/level_zero/ze_api.h")
 	if err != nil {

@@ -1,15 +1,25 @@
 package main
 
 import (
+	"bytes"
 	"errors"
+	"regexp"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 var (
 	errIsConstReplace = errors.New("is const replace")
 	errNoSuchSymbol   = errors.New("no such sybmol")
 )
+
+var symtab = symbolTable{
+	"ZE_APICALL":   &symbol{symbolTypeConst, symbolSubTypeDefine, "ZE_APICALL", []string{""}},
+	"ZE_APIEXPORT": &symbol{symbolTypeConst, symbolSubTypeDefine, "ZE_APIEXPORT", []string{""}},
+	"ZE_DLLEXPORT": &symbol{symbolTypeConst, symbolSubTypeDefine, "ZE_DLLEXPORT", []string{""}},
+	"~(0ULL":       &symbol{symbolTypeConst, symbolSubTypeDefine, "~(0ULL", []string{"(^uint64(0)"}},
+}
 
 type symbolTable map[string]*symbol
 
@@ -96,7 +106,18 @@ func (s *symbol) extract1stFunc(txt string) (args []string, a, b int, err error)
 func (s *symbol) replace(txt string) string {
 	switch s.stype {
 	case symbolTypeConst:
-		return strings.ReplaceAll(txt, s.name, s.fields[0])
+		escapes := regexp.QuoteMeta(s.name)
+		re := regexp.MustCompile(`(` + escapes + `[^\w_])|(` + escapes + `$)`)
+		return string(re.ReplaceAllFunc([]byte(txt), func(b []byte) []byte {
+			last := rune(b[len(b)-1])
+			if unicode.IsLetter(last) || last == '_' {
+				return []byte(s.fields[0])
+			}
+			buf := bytes.NewBuffer(make([]byte, 0, 128))
+			buf.WriteString(s.fields[0])
+			buf.WriteByte(b[len(b)-1])
+			return buf.Bytes()
+		}))
 	case symbolTypeFunc:
 		paras := strings.Split(s.fields[0], ",")
 		txts := []string{}

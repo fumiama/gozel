@@ -3,14 +3,13 @@ package main
 import (
 	"fmt"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/ze"
 )
 
 func main() {
-	err := gozel.InitZe()
+	hs, err := ze.InitGPUDrivers()
 	if err != nil {
 		panic(err)
 	}
-	desc := gozel.GPGPUDriverTypeDesc()
-	fmt.Println(gozel.InitDrivers(&desc))
+	fmt.Println(hs)
 }
