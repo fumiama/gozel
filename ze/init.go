@@ -1,10 +1,15 @@
 package ze
 
 import (
+	"unsafe"
+
 	"github.com/fumiama/gozel"
 )
 
-func initDrivers(flags gozel.ZeInitDriverTypeFlags) ([]gozel.ZeDriverHandle, error) {
+// DriverHandle is a handle to a Level Zero driver instance.
+type DriverHandle gozel.ZeDriverHandle
+
+func initDrivers(flags gozel.ZeInitDriverTypeFlags) ([]DriverHandle, error) {
 	var count uint32
 	desc := &gozel.ZeInitDriverTypeDesc{
 		Stype: gozel.ZE_STRUCTURE_TYPE_INIT_DRIVER_TYPE_DESC,
@@ -17,8 +22,8 @@ func initDrivers(flags gozel.ZeInitDriverTypeFlags) ([]gozel.ZeDriverHandle, err
 	if err != nil {
 		return nil, err
 	}
-	handles := make([]gozel.ZeDriverHandle, count)
-	_, err = gozel.ZeInitDrivers(&count, &handles[0], desc)
+	handles := make([]DriverHandle, count)
+	_, err = gozel.ZeInitDrivers(&count, (*gozel.ZeDriverHandle)(unsafe.Pointer(&handles[0])), desc)
 	if err != nil {
 		return nil, err
 	}
@@ -28,13 +33,13 @@ func initDrivers(flags gozel.ZeInitDriverTypeFlags) ([]gozel.ZeDriverHandle, err
 // InitGPUDrivers calls zeInitDrivers with ZE_INIT_DRIVER_TYPE_FLAG_GPU from ze_loader.dll.
 // On success pCount contains the number of drivers and phDrivers (if non-nil)
 // is filled with driver handles.
-func InitGPUDrivers() ([]gozel.ZeDriverHandle, error) {
+func InitGPUDrivers() ([]DriverHandle, error) {
 	return initDrivers(gozel.ZE_INIT_DRIVER_TYPE_FLAG_GPU)
 }
 
 // InitNPUDrivers calls zeInitDrivers with ZE_INIT_DRIVER_TYPE_FLAG_NPU from ze_loader.dll.
 // On success pCount contains the number of drivers and phDrivers (if non-nil)
 // is filled with driver handles.
-func InitNPUDrivers() ([]gozel.ZeDriverHandle, error) {
+func InitNPUDrivers() ([]DriverHandle, error) {
 	return initDrivers(gozel.ZE_INIT_DRIVER_TYPE_FLAG_NPU)
 }

@@ -4,6 +4,7 @@ import (
 	"errors"
 	"math"
 	"reflect"
+	"strconv"
 )
 
 type ReturnTypes interface {
@@ -18,8 +19,8 @@ type ReturnTypes interface {
 //go:uintptrescapes
 func Call[T ReturnTypes](name string, args ...uintptr) (r T, err error) {
 	r1, r2, err := Syscall(name, args...)
-	if err != nil {
-		return
+	if r1 != 0 {
+		err = errors.New("zecall " + name + ": non-zero return value 0x" + strconv.FormatUint(uint64(r1), 16))
 	}
 	k := reflect.TypeOf(r).Kind()
 	switch k {
