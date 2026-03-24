@@ -15,7 +15,7 @@ import (
 //go:generate sycl-post-link -symbols -split=auto -o device_func.table device_func.bc
 //go:generate llvm-spirv -o device_func.spv device_func_0.bc
 //go:generate clang++ -target spir64-unknown-unknown -S -emit-llvm -x ir device_func_0.bc -o device_func.ll
-//go:generate go run ../../func2kernel device_func.ll device_kern.ll
+//go:generate go run ../../cmd/func2kernel device_func.ll device_kern.ll
 //go:generate clang++ -target spir64-unknown-unknown -c -emit-llvm -x ir device_kern.ll -o device_kern.bc
 //go:generate llvm-spirv -o main.spv device_kern.bc
 //go:generate clang++ -target spir64-unknown-unknown -S -emit-llvm -x ir device_kern.bc -o main.ll
