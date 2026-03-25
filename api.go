@@ -19,7 +19,7 @@ import (
 	"github.com/fumiama/gozel/internal/zecall"
 )
 
-const debug = true
+const debug = false
 
 func init() {
 
