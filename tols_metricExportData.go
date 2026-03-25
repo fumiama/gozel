@@ -24,10 +24,11 @@ const ZET_EXPORT_METRICS_DATA_EXP_NAME = "ZET_experimental_metric_export_data"
 
 // ZetExportMetricDataExpVersion (zet_export_metric_data_exp_version_t) Exporting Metrics Data Experimental Extension Version(s)
 type ZetExportMetricDataExpVersion uintptr
+
 const (
-	ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0 ZetExportMetricDataExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0 version 1.0
-	ZET_EXPORT_METRIC_DATA_EXP_VERSION_CURRENT ZetExportMetricDataExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_EXPORT_METRIC_DATA_EXP_VERSION_CURRENT latest known version
-	ZET_EXPORT_METRIC_DATA_EXP_VERSION_FORCE_UINT32 ZetExportMetricDataExpVersion = 0x7fffffff	// ZET_EXPORT_METRIC_DATA_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_EXPORT_METRIC_DATA_EXP_VERSION_* ENUMs
+	ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0          ZetExportMetricDataExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0 version 1.0
+	ZET_EXPORT_METRIC_DATA_EXP_VERSION_CURRENT      ZetExportMetricDataExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_EXPORT_METRIC_DATA_EXP_VERSION_CURRENT latest known version
+	ZET_EXPORT_METRIC_DATA_EXP_VERSION_FORCE_UINT32 ZetExportMetricDataExpVersion = 0x7fffffff                                                   // ZET_EXPORT_METRIC_DATA_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_EXPORT_METRIC_DATA_EXP_VERSION_* ENUMs
 
 )
 
@@ -39,99 +40,98 @@ const ZET_MAX_METRIC_EXPORT_DATA_ELEMENT_DESCRIPTION_EXP = 256
 
 // ZetMetricCalculateExpDesc (zet_metric_calculate_exp_desc_t) Metrics calculation descriptor
 type ZetMetricCalculateExpDesc struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Rawreportskipcount uint32	// Rawreportskipcount [in] number of reports to skip during calculation
+	Stype              ZetStructureType // Stype [in] type of this structure
+	Pnext              unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Rawreportskipcount uint32           // Rawreportskipcount [in] number of reports to skip during calculation
 
 }
 
 // ZetMetricGroupGetExportDataExp Export Metrics Data for system independent calculation.
-/// 
-/// @details
-///     - This function exports raw data and necessary information to perform
-///       metrics calculation of collected data in a different system than where
-///       data was collected, which may or may not have accelerators.
-///     - Implementations can choose to describe the data arrangement of the
-///       exported data, using any mechanism which allows users to read and
-///       process them.
-///     - The application may call this function from simultaneous threads.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricGroup`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pRawData`
-///         + `nullptr == pExportDataSize`
+// /
+// / @details
+// /     - This function exports raw data and necessary information to perform
+// /       metrics calculation of collected data in a different system than where
+// /       data was collected, which may or may not have accelerators.
+// /     - Implementations can choose to describe the data arrangement of the
+// /       exported data, using any mechanism which allows users to read and
+// /       process them.
+// /     - The application may call this function from simultaneous threads.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricGroup`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pRawData`
+// /         + `nullptr == pExportDataSize`
 func ZetMetricGroupGetExportDataExp(
-	hMetricGroup ZetMetricGroupHandle,	// hMetricGroup [in] handle of the metric group
-	pRawData *uint8,	// pRawData [in] buffer of raw data
-	rawDataSize uintptr,	// rawDataSize [in] size in bytes of raw data buffer
-	pExportDataSize *uintptr,	// pExportDataSize [in,out] size in bytes of export data buffer if size is zero, then the driver shall update the value with the number of bytes necessary to store the exported data. if size is greater than required, then the driver shall update the value with the actual number of bytes necessary to store the exported data.
-	pExportData *uint8,	// pExportData [in,out][optional][range(0, *pExportDataSize)] buffer of exported data.
+	hMetricGroup ZetMetricGroupHandle, // hMetricGroup [in] handle of the metric group
+	pRawData *uint8, // pRawData [in] buffer of raw data
+	rawDataSize uintptr, // rawDataSize [in] size in bytes of raw data buffer
+	pExportDataSize *uintptr, // pExportDataSize [in,out] size in bytes of export data buffer if size is zero, then the driver shall update the value with the number of bytes necessary to store the exported data. if size is greater than required, then the driver shall update the value with the actual number of bytes necessary to store the exported data.
+	pExportData *uint8, // pExportData [in,out][optional][range(0, *pExportDataSize)] buffer of exported data.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricGroupGetExportDataExp", uintptr(hMetricGroup), uintptr(unsafe.Pointer(pRawData)), uintptr(rawDataSize), uintptr(unsafe.Pointer(pExportDataSize)), uintptr(unsafe.Pointer(pExportData)))
 }
 
 // ZetMetricGroupCalculateMetricExportDataExp Calculate one or more sets of metric values from exported raw data.
-/// 
-/// @details
-///     - Calculate metrics values using exported data returned by
-///       ::zetMetricGroupGetExportDataExp.
-///     - This function is similar to
-///       ::zetMetricGroupCalculateMultipleMetricValuesExp except it would
-///       calculate from exported metric data.
-///     - This function could be used to calculate metrics on a system different
-///       from where the metric raw data was collected.
-///     - The application may call this function from simultaneous threads.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZET_METRIC_GROUP_CALCULATION_TYPE_MAX_METRIC_VALUES < type`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pExportData`
-///         + `nullptr == pCalculateDescriptor`
-///         + `nullptr == pSetCount`
-///         + `nullptr == pTotalMetricValueCount`
+// /
+// / @details
+// /     - Calculate metrics values using exported data returned by
+// /       ::zetMetricGroupGetExportDataExp.
+// /     - This function is similar to
+// /       ::zetMetricGroupCalculateMultipleMetricValuesExp except it would
+// /       calculate from exported metric data.
+// /     - This function could be used to calculate metrics on a system different
+// /       from where the metric raw data was collected.
+// /     - The application may call this function from simultaneous threads.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZET_METRIC_GROUP_CALCULATION_TYPE_MAX_METRIC_VALUES < type`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pExportData`
+// /         + `nullptr == pCalculateDescriptor`
+// /         + `nullptr == pSetCount`
+// /         + `nullptr == pTotalMetricValueCount`
 func ZetMetricGroupCalculateMetricExportDataExp(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	typ ZetMetricGroupCalculationType,	// typ [in] calculation type to be applied on raw data
-	exportDataSize uintptr,	// exportDataSize [in] size in bytes of exported data buffer
-	pExportData *uint8,	// pExportData [in][range(0, exportDataSize)] buffer of exported data to calculate
-	pCalculateDescriptor *ZetMetricCalculateExpDesc,	// pCalculateDescriptor [in] descriptor specifying calculation specific parameters
-	pSetCount *uint32,	// pSetCount [in,out] pointer to number of metric sets. if count is zero, then the driver shall update the value with the total number of metric sets to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be calculated.
-	pTotalMetricValueCount *uint32,	// pTotalMetricValueCount [in,out] pointer to number of the total number of metric values calculated, for all metric sets. if count is zero, then the driver shall update the value with the total number of metric values to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric values to be calculated.
-	pMetricCounts *uint32,	// pMetricCounts [in,out][optional][range(0, *pSetCount)] buffer of metric counts per metric set.
-	pMetricValues *ZetTypedValue,	// pMetricValues [in,out][optional][range(0, *pTotalMetricValueCount)] buffer of calculated metrics. if count is less than the number available in the raw data buffer, then driver shall only calculate that number of metric values.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	typ ZetMetricGroupCalculationType, // typ [in] calculation type to be applied on raw data
+	exportDataSize uintptr, // exportDataSize [in] size in bytes of exported data buffer
+	pExportData *uint8, // pExportData [in][range(0, exportDataSize)] buffer of exported data to calculate
+	pCalculateDescriptor *ZetMetricCalculateExpDesc, // pCalculateDescriptor [in] descriptor specifying calculation specific parameters
+	pSetCount *uint32, // pSetCount [in,out] pointer to number of metric sets. if count is zero, then the driver shall update the value with the total number of metric sets to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be calculated.
+	pTotalMetricValueCount *uint32, // pTotalMetricValueCount [in,out] pointer to number of the total number of metric values calculated, for all metric sets. if count is zero, then the driver shall update the value with the total number of metric values to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric values to be calculated.
+	pMetricCounts *uint32, // pMetricCounts [in,out][optional][range(0, *pSetCount)] buffer of metric counts per metric set.
+	pMetricValues *ZetTypedValue, // pMetricValues [in,out][optional][range(0, *pTotalMetricValueCount)] buffer of calculated metrics. if count is less than the number available in the raw data buffer, then driver shall only calculate that number of metric values.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricGroupCalculateMetricExportDataExp", uintptr(hDriver), uintptr(typ), uintptr(exportDataSize), uintptr(unsafe.Pointer(pExportData)), uintptr(unsafe.Pointer(pCalculateDescriptor)), uintptr(unsafe.Pointer(pSetCount)), uintptr(unsafe.Pointer(pTotalMetricValueCount)), uintptr(unsafe.Pointer(pMetricCounts)), uintptr(unsafe.Pointer(pMetricValues)))
 }
-

@@ -21,15 +21,16 @@ import (
 
 // ZesDiagResult (zes_diag_result_t) Diagnostic results
 type ZesDiagResult uintptr
+
 const (
-	ZES_DIAG_RESULT_NO_ERRORS ZesDiagResult = 0	// ZES_DIAG_RESULT_NO_ERRORS Diagnostic completed without finding errors to repair
-	ZES_DIAG_RESULT_ABORT ZesDiagResult = 1	// ZES_DIAG_RESULT_ABORT Diagnostic had problems running tests
-	ZES_DIAG_RESULT_FAIL_CANT_REPAIR ZesDiagResult = 2	// ZES_DIAG_RESULT_FAIL_CANT_REPAIR Diagnostic had problems setting up repairs
-	ZES_DIAG_RESULT_REBOOT_FOR_REPAIR ZesDiagResult = 3	// ZES_DIAG_RESULT_REBOOT_FOR_REPAIR Diagnostics found errors, setup for repair and reboot is required to
+	ZES_DIAG_RESULT_NO_ERRORS         ZesDiagResult = 0 // ZES_DIAG_RESULT_NO_ERRORS Diagnostic completed without finding errors to repair
+	ZES_DIAG_RESULT_ABORT             ZesDiagResult = 1 // ZES_DIAG_RESULT_ABORT Diagnostic had problems running tests
+	ZES_DIAG_RESULT_FAIL_CANT_REPAIR  ZesDiagResult = 2 // ZES_DIAG_RESULT_FAIL_CANT_REPAIR Diagnostic had problems setting up repairs
+	ZES_DIAG_RESULT_REBOOT_FOR_REPAIR ZesDiagResult = 3 // ZES_DIAG_RESULT_REBOOT_FOR_REPAIR Diagnostics found errors, setup for repair and reboot is required to
 
 	///< complete the process
 
-	ZES_DIAG_RESULT_FORCE_UINT32 ZesDiagResult = 0x7fffffff	// ZES_DIAG_RESULT_FORCE_UINT32 Value marking end of ZES_DIAG_RESULT_* ENUMs
+	ZES_DIAG_RESULT_FORCE_UINT32 ZesDiagResult = 0x7fffffff // ZES_DIAG_RESULT_FORCE_UINT32 Value marking end of ZES_DIAG_RESULT_* ENUMs
 
 )
 
@@ -41,161 +42,160 @@ const ZES_DIAG_LAST_TEST_INDEX = 0xFFFFFFFF
 
 // ZesDiagTest (zes_diag_test_t) Diagnostic test
 type ZesDiagTest struct {
-	Index uint32	// Index [out] Index of the test
-	Name [ZES_STRING_PROPERTY_SIZE]byte	// Name [out] Name of the test
+	Index uint32                         // Index [out] Index of the test
+	Name  [ZES_STRING_PROPERTY_SIZE]byte // Name [out] Name of the test
 
 }
 
 // ZesDiagProperties (zes_diag_properties_t) Diagnostics test suite properties
 type ZesDiagProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Onsubdevice ZeBool	// Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
-	Subdeviceid uint32	// Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
-	Name [ZES_STRING_PROPERTY_SIZE]byte	// Name [out] Name of the diagnostics test suite
-	Havetests ZeBool	// Havetests [out] Indicates if this test suite has individual tests which can be run separately (use the function ::zesDiagnosticsGetTests() to get the list of these tests)
+	Stype       ZesStructureType               // Stype [in] type of this structure
+	Pnext       unsafe.Pointer                 // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Onsubdevice ZeBool                         // Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
+	Subdeviceid uint32                         // Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
+	Name        [ZES_STRING_PROPERTY_SIZE]byte // Name [out] Name of the diagnostics test suite
+	Havetests   ZeBool                         // Havetests [out] Indicates if this test suite has individual tests which can be run separately (use the function ::zesDiagnosticsGetTests() to get the list of these tests)
 
 }
 
 // ZesDeviceEnumDiagnosticTestSuites Get handle of diagnostics test suites
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDeviceEnumDiagnosticTestSuites(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	pCount *uint32,	// pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
-	phDiagnostics *ZesDiagHandle,	// phDiagnostics [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	pCount *uint32, // pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
+	phDiagnostics *ZesDiagHandle, // phDiagnostics [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceEnumDiagnosticTestSuites", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phDiagnostics)))
 }
 
 // ZesDiagnosticsGetProperties Get properties of a diagnostics test suite
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDiagnostics`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDiagnostics`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pProperties`
 func ZesDiagnosticsGetProperties(
-	hDiagnostics ZesDiagHandle,	// hDiagnostics [in] Handle for the component.
-	pProperties *ZesDiagProperties,	// pProperties [in,out] Structure describing the properties of a diagnostics test suite
+	hDiagnostics ZesDiagHandle, // hDiagnostics [in] Handle for the component.
+	pProperties *ZesDiagProperties, // pProperties [in,out] Structure describing the properties of a diagnostics test suite
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDiagnosticsGetProperties", uintptr(hDiagnostics), uintptr(unsafe.Pointer(pProperties)))
 }
 
 // ZesDiagnosticsGetTests Get individual tests that can be run separately. Not all test suites
-///        permit running individual tests, check the `haveTests` member of
-///        ::zes_diag_properties_t.
-/// 
-/// @details
-///     - The list of available tests is returned in order of increasing test
-///       index (see the `index` member of ::zes_diag_test_t).
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDiagnostics`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /        permit running individual tests, check the `haveTests` member of
+// /        ::zes_diag_properties_t.
+// /
+// / @details
+// /     - The list of available tests is returned in order of increasing test
+// /       index (see the `index` member of ::zes_diag_test_t).
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDiagnostics`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDiagnosticsGetTests(
-	hDiagnostics ZesDiagHandle,	// hDiagnostics [in] Handle for the component.
-	pCount *uint32,	// pCount [in,out] pointer to the number of tests. if count is zero, then the driver shall update the value with the total number of tests that are available. if count is greater than the number of tests that are available, then the driver shall update the value with the correct number of tests.
-	pTests *ZesDiagTest,	// pTests [in,out][optional][range(0, *pCount)] array of information about individual tests sorted by increasing value of the `index` member of ::zes_diag_test_t. if count is less than the number of tests that are available, then the driver shall only retrieve that number of tests.
+	hDiagnostics ZesDiagHandle, // hDiagnostics [in] Handle for the component.
+	pCount *uint32, // pCount [in,out] pointer to the number of tests. if count is zero, then the driver shall update the value with the total number of tests that are available. if count is greater than the number of tests that are available, then the driver shall update the value with the correct number of tests.
+	pTests *ZesDiagTest, // pTests [in,out][optional][range(0, *pCount)] array of information about individual tests sorted by increasing value of the `index` member of ::zes_diag_test_t. if count is less than the number of tests that are available, then the driver shall only retrieve that number of tests.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDiagnosticsGetTests", uintptr(hDiagnostics), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pTests)))
 }
 
 // ZesDiagnosticsRunTests Run a diagnostics test suite, either all tests or a subset of tests.
-/// 
-/// @details
-///     - WARNING: Running diagnostics may destroy current device state
-///       information. Gracefully close any running workloads before initiating.
-///     - To run all tests in a test suite, set start =
-///       ::ZES_DIAG_FIRST_TEST_INDEX and end = ::ZES_DIAG_LAST_TEST_INDEX.
-///     - If the test suite permits running individual tests, the `haveTests`
-///       member of ::zes_diag_properties_t will be true. In this case, the
-///       function ::zesDiagnosticsGetTests() can be called to get the list of
-///       tests and corresponding indices that can be supplied to the arguments
-///       start and end in this function.
-///     - This function will block until the diagnostics have completed and
-///       force reset based on result
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDiagnostics`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pResult`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to perform diagnostics.
+// /
+// / @details
+// /     - WARNING: Running diagnostics may destroy current device state
+// /       information. Gracefully close any running workloads before initiating.
+// /     - To run all tests in a test suite, set start =
+// /       ::ZES_DIAG_FIRST_TEST_INDEX and end = ::ZES_DIAG_LAST_TEST_INDEX.
+// /     - If the test suite permits running individual tests, the `haveTests`
+// /       member of ::zes_diag_properties_t will be true. In this case, the
+// /       function ::zesDiagnosticsGetTests() can be called to get the list of
+// /       tests and corresponding indices that can be supplied to the arguments
+// /       start and end in this function.
+// /     - This function will block until the diagnostics have completed and
+// /       force reset based on result
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDiagnostics`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pResult`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to perform diagnostics.
 func ZesDiagnosticsRunTests(
-	hDiagnostics ZesDiagHandle,	// hDiagnostics [in] Handle for the component.
-	startIndex uint32,	// startIndex [in] The index of the first test to run. Set to ::ZES_DIAG_FIRST_TEST_INDEX to start from the beginning.
-	endIndex uint32,	// endIndex [in] The index of the last test to run. Set to ::ZES_DIAG_LAST_TEST_INDEX to complete all tests after the start test.
-	pResult *ZesDiagResult,	// pResult [in,out] The result of the diagnostics
+	hDiagnostics ZesDiagHandle, // hDiagnostics [in] Handle for the component.
+	startIndex uint32, // startIndex [in] The index of the first test to run. Set to ::ZES_DIAG_FIRST_TEST_INDEX to start from the beginning.
+	endIndex uint32, // endIndex [in] The index of the last test to run. Set to ::ZES_DIAG_LAST_TEST_INDEX to complete all tests after the start test.
+	pResult *ZesDiagResult, // pResult [in,out] The result of the diagnostics
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDiagnosticsRunTests", uintptr(hDiagnostics), uintptr(startIndex), uintptr(endIndex), uintptr(unsafe.Pointer(pResult)))
 }
-

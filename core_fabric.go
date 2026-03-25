@@ -24,10 +24,11 @@ const ZE_FABRIC_EXP_NAME = "ZE_experimental_fabric"
 
 // ZeFabricExpVersion (ze_fabric_exp_version_t) Fabric Topology Discovery Extension Version(s)
 type ZeFabricExpVersion uintptr
+
 const (
-	ZE_FABRIC_EXP_VERSION_1_0 ZeFabricExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_FABRIC_EXP_VERSION_1_0 version 1.0
-	ZE_FABRIC_EXP_VERSION_CURRENT ZeFabricExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_FABRIC_EXP_VERSION_CURRENT latest known version
-	ZE_FABRIC_EXP_VERSION_FORCE_UINT32 ZeFabricExpVersion = 0x7fffffff	// ZE_FABRIC_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_FABRIC_EXP_VERSION_* ENUMs
+	ZE_FABRIC_EXP_VERSION_1_0          ZeFabricExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_FABRIC_EXP_VERSION_1_0 version 1.0
+	ZE_FABRIC_EXP_VERSION_CURRENT      ZeFabricExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_FABRIC_EXP_VERSION_CURRENT latest known version
+	ZE_FABRIC_EXP_VERSION_FORCE_UINT32 ZeFabricExpVersion = 0x7fffffff                                                   // ZE_FABRIC_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_FABRIC_EXP_VERSION_* ENUMs
 
 )
 
@@ -36,337 +37,338 @@ const ZE_MAX_FABRIC_EDGE_MODEL_EXP_SIZE = 256
 
 // ZeFabricVertexExpType (ze_fabric_vertex_exp_type_t) Fabric Vertex types
 type ZeFabricVertexExpType uintptr
+
 const (
-	ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN ZeFabricVertexExpType = 0	// ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN Fabric vertex type is unknown
-	ZE_FABRIC_VERTEX_EXP_TYPE_DEVICE ZeFabricVertexExpType = 1	// ZE_FABRIC_VERTEX_EXP_TYPE_DEVICE Fabric vertex represents a device
-	ZE_FABRIC_VERTEX_EXP_TYPE_SUBDEVICE ZeFabricVertexExpType = 2	// ZE_FABRIC_VERTEX_EXP_TYPE_SUBDEVICE Fabric vertex represents a subdevice
-	ZE_FABRIC_VERTEX_EXP_TYPE_SWITCH ZeFabricVertexExpType = 3	// ZE_FABRIC_VERTEX_EXP_TYPE_SWITCH Fabric vertex represents a switch
-	ZE_FABRIC_VERTEX_EXP_TYPE_FORCE_UINT32 ZeFabricVertexExpType = 0x7fffffff	// ZE_FABRIC_VERTEX_EXP_TYPE_FORCE_UINT32 Value marking end of ZE_FABRIC_VERTEX_EXP_TYPE_* ENUMs
+	ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN      ZeFabricVertexExpType = 0          // ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN Fabric vertex type is unknown
+	ZE_FABRIC_VERTEX_EXP_TYPE_DEVICE       ZeFabricVertexExpType = 1          // ZE_FABRIC_VERTEX_EXP_TYPE_DEVICE Fabric vertex represents a device
+	ZE_FABRIC_VERTEX_EXP_TYPE_SUBDEVICE    ZeFabricVertexExpType = 2          // ZE_FABRIC_VERTEX_EXP_TYPE_SUBDEVICE Fabric vertex represents a subdevice
+	ZE_FABRIC_VERTEX_EXP_TYPE_SWITCH       ZeFabricVertexExpType = 3          // ZE_FABRIC_VERTEX_EXP_TYPE_SWITCH Fabric vertex represents a switch
+	ZE_FABRIC_VERTEX_EXP_TYPE_FORCE_UINT32 ZeFabricVertexExpType = 0x7fffffff // ZE_FABRIC_VERTEX_EXP_TYPE_FORCE_UINT32 Value marking end of ZE_FABRIC_VERTEX_EXP_TYPE_* ENUMs
 
 )
 
 // ZeFabricEdgeExpDuplexity (ze_fabric_edge_exp_duplexity_t) Fabric edge duplexity
 type ZeFabricEdgeExpDuplexity uintptr
+
 const (
-	ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN ZeFabricEdgeExpDuplexity = 0	// ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN Fabric edge duplexity is unknown
-	ZE_FABRIC_EDGE_EXP_DUPLEXITY_HALF_DUPLEX ZeFabricEdgeExpDuplexity = 1	// ZE_FABRIC_EDGE_EXP_DUPLEXITY_HALF_DUPLEX Fabric edge is half duplex, i.e. stated bandwidth is obtained in only
+	ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN     ZeFabricEdgeExpDuplexity = 0 // ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN Fabric edge duplexity is unknown
+	ZE_FABRIC_EDGE_EXP_DUPLEXITY_HALF_DUPLEX ZeFabricEdgeExpDuplexity = 1 // ZE_FABRIC_EDGE_EXP_DUPLEXITY_HALF_DUPLEX Fabric edge is half duplex, i.e. stated bandwidth is obtained in only
 
 	///< one direction at time
 
-	ZE_FABRIC_EDGE_EXP_DUPLEXITY_FULL_DUPLEX ZeFabricEdgeExpDuplexity = 2	// ZE_FABRIC_EDGE_EXP_DUPLEXITY_FULL_DUPLEX Fabric edge is full duplex, i.e. stated bandwidth is supported in both
+	ZE_FABRIC_EDGE_EXP_DUPLEXITY_FULL_DUPLEX ZeFabricEdgeExpDuplexity = 2 // ZE_FABRIC_EDGE_EXP_DUPLEXITY_FULL_DUPLEX Fabric edge is full duplex, i.e. stated bandwidth is supported in both
 
 	///< directions simultaneously
 
-	ZE_FABRIC_EDGE_EXP_DUPLEXITY_FORCE_UINT32 ZeFabricEdgeExpDuplexity = 0x7fffffff	// ZE_FABRIC_EDGE_EXP_DUPLEXITY_FORCE_UINT32 Value marking end of ZE_FABRIC_EDGE_EXP_DUPLEXITY_* ENUMs
+	ZE_FABRIC_EDGE_EXP_DUPLEXITY_FORCE_UINT32 ZeFabricEdgeExpDuplexity = 0x7fffffff // ZE_FABRIC_EDGE_EXP_DUPLEXITY_FORCE_UINT32 Value marking end of ZE_FABRIC_EDGE_EXP_DUPLEXITY_* ENUMs
 
 )
 
 // ZeFabricVertexPciExpAddress (ze_fabric_vertex_pci_exp_address_t) PCI address
-/// 
-/// @details
-///     - A PCI BDF address is the bus:device:function address of the device and
-///       is useful for locating the device in the PCI switch fabric.
+// /
+// / @details
+// /     - A PCI BDF address is the bus:device:function address of the device and
+// /       is useful for locating the device in the PCI switch fabric.
 type ZeFabricVertexPciExpAddress struct {
-	Domain uint32	// Domain [out] PCI domain number
-	Bus uint32	// Bus [out] PCI BDF bus number
-	Device uint32	// Device [out] PCI BDF device number
-	Function uint32	// Function [out] PCI BDF function number
+	Domain   uint32 // Domain [out] PCI domain number
+	Bus      uint32 // Bus [out] PCI BDF bus number
+	Device   uint32 // Device [out] PCI BDF device number
+	Function uint32 // Function [out] PCI BDF function number
 
 }
 
 // ZeFabricVertexExpProperties (ze_fabric_vertex_exp_properties_t) Fabric Vertex properties
 type ZeFabricVertexExpProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Uuid ZeUuid	// Uuid [out] universal unique identifier. If the vertex is co-located with a device/subdevice, then this uuid will match that of the corresponding device/subdevice
-	Type ZeFabricVertexExpType	// Type [out] does the fabric vertex represent a device, subdevice, or switch?
-	Remote ZeBool	// Remote [out] does the fabric vertex live on the local node or on a remote node?
-	Address ZeFabricVertexPciExpAddress	// Address [out] B/D/F address of fabric vertex & associated device/subdevice if available
+	Stype   ZeStructureType             // Stype [in] type of this structure
+	Pnext   unsafe.Pointer              // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Uuid    ZeUuid                      // Uuid [out] universal unique identifier. If the vertex is co-located with a device/subdevice, then this uuid will match that of the corresponding device/subdevice
+	Type    ZeFabricVertexExpType       // Type [out] does the fabric vertex represent a device, subdevice, or switch?
+	Remote  ZeBool                      // Remote [out] does the fabric vertex live on the local node or on a remote node?
+	Address ZeFabricVertexPciExpAddress // Address [out] B/D/F address of fabric vertex & associated device/subdevice if available
 
 }
 
 // ZeFabricEdgeExpProperties (ze_fabric_edge_exp_properties_t) Fabric Edge properties
 type ZeFabricEdgeExpProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Uuid ZeUuid	// Uuid [out] universal unique identifier.
-	Model [ZE_MAX_FABRIC_EDGE_MODEL_EXP_SIZE]byte	// Model [out] Description of fabric edge technology. Will be set to the string "unkown" if this cannot be determined for this edge
-	Bandwidth uint32	// Bandwidth [out] design bandwidth
-	Bandwidthunit ZeBandwidthUnit	// Bandwidthunit [out] bandwidth unit
-	Latency uint32	// Latency [out] design latency
-	Latencyunit ZeLatencyUnit	// Latencyunit [out] latency unit
-	Duplexity ZeFabricEdgeExpDuplexity	// Duplexity [out] Duplexity of the fabric edge
+	Stype         ZeStructureType                         // Stype [in] type of this structure
+	Pnext         unsafe.Pointer                          // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Uuid          ZeUuid                                  // Uuid [out] universal unique identifier.
+	Model         [ZE_MAX_FABRIC_EDGE_MODEL_EXP_SIZE]byte // Model [out] Description of fabric edge technology. Will be set to the string "unkown" if this cannot be determined for this edge
+	Bandwidth     uint32                                  // Bandwidth [out] design bandwidth
+	Bandwidthunit ZeBandwidthUnit                         // Bandwidthunit [out] bandwidth unit
+	Latency       uint32                                  // Latency [out] design latency
+	Latencyunit   ZeLatencyUnit                           // Latencyunit [out] latency unit
+	Duplexity     ZeFabricEdgeExpDuplexity                // Duplexity [out] Duplexity of the fabric edge
 
 }
 
 // ZeFabricVertexGetExp Retrieves fabric vertices within a driver
-/// 
-/// @details
-///     - A fabric vertex represents either a device or a switch connected to
-///       other fabric vertices.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - A fabric vertex represents either a device or a switch connected to
+// /       other fabric vertices.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeFabricVertexGetExp(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	pCount *uint32,	// pCount [in,out] pointer to the number of fabric vertices. if count is zero, then the driver shall update the value with the total number of fabric vertices available. if count is greater than the number of fabric vertices available, then the driver shall update the value with the correct number of fabric vertices available.
-	phVertices *ZeFabricVertexHandle,	// phVertices [in,out][optional][range(0, *pCount)] array of handle of fabric vertices. if count is less than the number of fabric vertices available, then driver shall only retrieve that number of fabric vertices.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	pCount *uint32, // pCount [in,out] pointer to the number of fabric vertices. if count is zero, then the driver shall update the value with the total number of fabric vertices available. if count is greater than the number of fabric vertices available, then the driver shall update the value with the correct number of fabric vertices available.
+	phVertices *ZeFabricVertexHandle, // phVertices [in,out][optional][range(0, *pCount)] array of handle of fabric vertices. if count is less than the number of fabric vertices available, then driver shall only retrieve that number of fabric vertices.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricVertexGetExp", uintptr(hDriver), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phVertices)))
 }
 
 // ZeFabricVertexGetSubVerticesExp Retrieves a fabric sub-vertex from a fabric vertex
-/// 
-/// @details
-///     - Multiple calls to this function will return identical fabric vertex
-///       handles, in the same order.
-///     - The number of handles returned from this function is affected by the
-///       `ZE_AFFINITY_MASK` environment variable.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hVertex`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - Multiple calls to this function will return identical fabric vertex
+// /       handles, in the same order.
+// /     - The number of handles returned from this function is affected by the
+// /       `ZE_AFFINITY_MASK` environment variable.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hVertex`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeFabricVertexGetSubVerticesExp(
-	hVertex ZeFabricVertexHandle,	// hVertex [in] handle of the fabric vertex object
-	pCount *uint32,	// pCount [in,out] pointer to the number of sub-vertices. if count is zero, then the driver shall update the value with the total number of sub-vertices available. if count is greater than the number of sub-vertices available, then the driver shall update the value with the correct number of sub-vertices available.
-	phSubvertices *ZeFabricVertexHandle,	// phSubvertices [in,out][optional][range(0, *pCount)] array of handle of sub-vertices. if count is less than the number of sub-vertices available, then driver shall only retrieve that number of sub-vertices.
+	hVertex ZeFabricVertexHandle, // hVertex [in] handle of the fabric vertex object
+	pCount *uint32, // pCount [in,out] pointer to the number of sub-vertices. if count is zero, then the driver shall update the value with the total number of sub-vertices available. if count is greater than the number of sub-vertices available, then the driver shall update the value with the correct number of sub-vertices available.
+	phSubvertices *ZeFabricVertexHandle, // phSubvertices [in,out][optional][range(0, *pCount)] array of handle of sub-vertices. if count is less than the number of sub-vertices available, then driver shall only retrieve that number of sub-vertices.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricVertexGetSubVerticesExp", uintptr(hVertex), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phSubvertices)))
 }
 
 // ZeFabricVertexGetPropertiesExp Retrieves properties of the fabric vertex.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hVertex`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pVertexProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hVertex`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pVertexProperties`
 func ZeFabricVertexGetPropertiesExp(
-	hVertex ZeFabricVertexHandle,	// hVertex [in] handle of the fabric vertex
-	pVertexProperties *ZeFabricVertexExpProperties,	// pVertexProperties [in,out] query result for fabric vertex properties
+	hVertex ZeFabricVertexHandle, // hVertex [in] handle of the fabric vertex
+	pVertexProperties *ZeFabricVertexExpProperties, // pVertexProperties [in,out] query result for fabric vertex properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricVertexGetPropertiesExp", uintptr(hVertex), uintptr(unsafe.Pointer(pVertexProperties)))
 }
 
 // ZeFabricVertexGetDeviceExp Returns device handle from fabric vertex handle.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hVertex`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phDevice`
-///     - ::ZE_RESULT_EXP_ERROR_VERTEX_IS_NOT_DEVICE
-///         + Provided fabric vertex handle does not correspond to a device or subdevice.
-///     - ::ZE_RESULT_EXP_ERROR_REMOTE_DEVICE
-///         + Provided fabric vertex handle corresponds to remote device or subdevice.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hVertex`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phDevice`
+// /     - ::ZE_RESULT_EXP_ERROR_VERTEX_IS_NOT_DEVICE
+// /         + Provided fabric vertex handle does not correspond to a device or subdevice.
+// /     - ::ZE_RESULT_EXP_ERROR_REMOTE_DEVICE
+// /         + Provided fabric vertex handle corresponds to remote device or subdevice.
 func ZeFabricVertexGetDeviceExp(
-	hVertex ZeFabricVertexHandle,	// hVertex [in] handle of the fabric vertex
-	phDevice *ZeDeviceHandle,	// phDevice [out] device handle corresponding to fabric vertex
+	hVertex ZeFabricVertexHandle, // hVertex [in] handle of the fabric vertex
+	phDevice *ZeDeviceHandle, // phDevice [out] device handle corresponding to fabric vertex
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricVertexGetDeviceExp", uintptr(hVertex), uintptr(unsafe.Pointer(phDevice)))
 }
 
 // ZeDeviceGetFabricVertexExp Returns fabric vertex handle from device handle.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phVertex`
-///     - ::ZE_RESULT_EXP_ERROR_DEVICE_IS_NOT_VERTEX
-///         + Provided device handle does not correspond to a fabric vertex.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phVertex`
+// /     - ::ZE_RESULT_EXP_ERROR_DEVICE_IS_NOT_VERTEX
+// /         + Provided device handle does not correspond to a fabric vertex.
 func ZeDeviceGetFabricVertexExp(
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	phVertex *ZeFabricVertexHandle,	// phVertex [out] fabric vertex handle corresponding to device
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	phVertex *ZeFabricVertexHandle, // phVertex [out] fabric vertex handle corresponding to device
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDeviceGetFabricVertexExp", uintptr(hDevice), uintptr(unsafe.Pointer(phVertex)))
 }
 
 // ZeFabricEdgeGetExp Retrieves all fabric edges between provided pair of fabric vertices
-/// 
-/// @details
-///     - A fabric edge represents one or more physical links between two fabric
-///       vertices.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hVertexA`
-///         + `nullptr == hVertexB`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - A fabric edge represents one or more physical links between two fabric
+// /       vertices.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hVertexA`
+// /         + `nullptr == hVertexB`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeFabricEdgeGetExp(
-	hVertexA ZeFabricVertexHandle,	// hVertexA [in] handle of first fabric vertex instance
-	hVertexB ZeFabricVertexHandle,	// hVertexB [in] handle of second fabric vertex instance
-	pCount *uint32,	// pCount [in,out] pointer to the number of fabric edges. if count is zero, then the driver shall update the value with the total number of fabric edges available. if count is greater than the number of fabric edges available, then the driver shall update the value with the correct number of fabric edges available.
-	phEdges *ZeFabricEdgeHandle,	// phEdges [in,out][optional][range(0, *pCount)] array of handle of fabric edges. if count is less than the number of fabric edges available, then driver shall only retrieve that number of fabric edges.
+	hVertexA ZeFabricVertexHandle, // hVertexA [in] handle of first fabric vertex instance
+	hVertexB ZeFabricVertexHandle, // hVertexB [in] handle of second fabric vertex instance
+	pCount *uint32, // pCount [in,out] pointer to the number of fabric edges. if count is zero, then the driver shall update the value with the total number of fabric edges available. if count is greater than the number of fabric edges available, then the driver shall update the value with the correct number of fabric edges available.
+	phEdges *ZeFabricEdgeHandle, // phEdges [in,out][optional][range(0, *pCount)] array of handle of fabric edges. if count is less than the number of fabric edges available, then driver shall only retrieve that number of fabric edges.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricEdgeGetExp", uintptr(hVertexA), uintptr(hVertexB), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phEdges)))
 }
 
 // ZeFabricEdgeGetVerticesExp Retrieves fabric vertices connected by a fabric edge
-/// 
-/// @details
-///     - A fabric vertex represents either a device or a switch connected to
-///       other fabric vertices via a fabric edge.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hEdge`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phVertexA`
-///         + `nullptr == phVertexB`
+// /
+// / @details
+// /     - A fabric vertex represents either a device or a switch connected to
+// /       other fabric vertices via a fabric edge.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hEdge`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phVertexA`
+// /         + `nullptr == phVertexB`
 func ZeFabricEdgeGetVerticesExp(
-	hEdge ZeFabricEdgeHandle,	// hEdge [in] handle of the fabric edge instance
-	phVertexA *ZeFabricVertexHandle,	// phVertexA [out] fabric vertex connected to one end of the given fabric edge.
-	phVertexB *ZeFabricVertexHandle,	// phVertexB [out] fabric vertex connected to other end of the given fabric edge.
+	hEdge ZeFabricEdgeHandle, // hEdge [in] handle of the fabric edge instance
+	phVertexA *ZeFabricVertexHandle, // phVertexA [out] fabric vertex connected to one end of the given fabric edge.
+	phVertexB *ZeFabricVertexHandle, // phVertexB [out] fabric vertex connected to other end of the given fabric edge.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricEdgeGetVerticesExp", uintptr(hEdge), uintptr(unsafe.Pointer(phVertexA)), uintptr(unsafe.Pointer(phVertexB)))
 }
 
 // ZeFabricEdgeGetPropertiesExp Retrieves properties of the fabric edge.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hEdge`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pEdgeProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hEdge`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pEdgeProperties`
 func ZeFabricEdgeGetPropertiesExp(
-	hEdge ZeFabricEdgeHandle,	// hEdge [in] handle of the fabric edge
-	pEdgeProperties *ZeFabricEdgeExpProperties,	// pEdgeProperties [in,out] query result for fabric edge properties
+	hEdge ZeFabricEdgeHandle, // hEdge [in] handle of the fabric edge
+	pEdgeProperties *ZeFabricEdgeExpProperties, // pEdgeProperties [in,out] query result for fabric edge properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeFabricEdgeGetPropertiesExp", uintptr(hEdge), uintptr(unsafe.Pointer(pEdgeProperties)))
 }
-

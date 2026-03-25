@@ -24,67 +24,67 @@ const ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_NAME = "ZES_extension_pci_link_speed_down
 
 // ZesPciLinkSpeedDowngradeExtVersion (zes_pci_link_speed_downgrade_ext_version_t) PCI Link Speed Downgrade Extension Version(s)
 type ZesPciLinkSpeedDowngradeExtVersion uintptr
+
 const (
-	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0 ZesPciLinkSpeedDowngradeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0 version 1.0
-	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_CURRENT ZesPciLinkSpeedDowngradeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_CURRENT latest known version
-	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_FORCE_UINT32 ZesPciLinkSpeedDowngradeExtVersion = 0x7fffffff	// ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_* ENUMs
+	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0          ZesPciLinkSpeedDowngradeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0 version 1.0
+	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_CURRENT      ZesPciLinkSpeedDowngradeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_CURRENT latest known version
+	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_FORCE_UINT32 ZesPciLinkSpeedDowngradeExtVersion = 0x7fffffff                                                   // ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_* ENUMs
 
 )
 
 // ZesPciLinkSpeedDowngradeExtState (zes_pci_link_speed_downgrade_ext_state_t) Query PCIe downgrade status.
-/// 
-/// @details
-///     - This structure can be passed in the 'pNext' of ::zes_pci_state_t
+// /
+// / @details
+// /     - This structure can be passed in the 'pNext' of ::zes_pci_state_t
 type ZesPciLinkSpeedDowngradeExtState struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Pcilinkspeeddowngradestatus ZeBool	// Pcilinkspeeddowngradestatus [out] Returns the current PCIe downgrade status.
+	Stype                       ZesStructureType // Stype [in] type of this structure
+	Pnext                       unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Pcilinkspeeddowngradestatus ZeBool           // Pcilinkspeeddowngradestatus [out] Returns the current PCIe downgrade status.
 
 }
 
 // ZesPciLinkSpeedDowngradeExtProperties (zes_pci_link_speed_downgrade_ext_properties_t) Query PCIe downgrade capability.
-/// 
-/// @details
-///     - This structure can be passed in the 'pNext' of ::zes_pci_properties_t
+// /
+// / @details
+// /     - This structure can be passed in the 'pNext' of ::zes_pci_properties_t
 type ZesPciLinkSpeedDowngradeExtProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Pcilinkspeedupdatecapable ZeBool	// Pcilinkspeedupdatecapable [out] Returns if PCIe downgrade capability is available.
-	Maxpcigensupported int32	// Maxpcigensupported [out] Returns the max supported PCIe generation of the device. -1 indicates the information is not available
+	Stype                     ZesStructureType // Stype [in] type of this structure
+	Pnext                     unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Pcilinkspeedupdatecapable ZeBool           // Pcilinkspeedupdatecapable [out] Returns if PCIe downgrade capability is available.
+	Maxpcigensupported        int32            // Maxpcigensupported [out] Returns the max supported PCIe generation of the device. -1 indicates the information is not available
 
 }
 
 // ZesDevicePciLinkSpeedUpdateExt Update PCI Link Speed (Downgrade or Upgrade (restore to its default
-///        speed))
-/// 
-/// @details
-///     - This function allows updating the PCI link speed to downgrade or
-///       upgrade (restore to its default speed) the connection.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pendingAction`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to perform this operation.
+// /        speed))
+// /
+// / @details
+// /     - This function allows updating the PCI link speed to downgrade or
+// /       upgrade (restore to its default speed) the connection.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pendingAction`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to perform this operation.
 func ZesDevicePciLinkSpeedUpdateExt(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	shouldDowngrade ZeBool,	// shouldDowngrade [in] boolean value to decide whether to perform PCIe downgrade(true) or set to default speed(false)
-	pendingAction *ZesDeviceAction,	// pendingAction [out] Pending action
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	shouldDowngrade ZeBool, // shouldDowngrade [in] boolean value to decide whether to perform PCIe downgrade(true) or set to default speed(false)
+	pendingAction *ZesDeviceAction, // pendingAction [out] Pending action
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDevicePciLinkSpeedUpdateExt", uintptr(hDevice), uintptr(shouldDowngrade), uintptr(unsafe.Pointer(pendingAction)))
 }
-

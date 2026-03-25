@@ -24,88 +24,88 @@ const ZES_SYSMAN_DEVICE_MAPPING_EXP_NAME = "ZES_experimental_sysman_device_mappi
 
 // ZesSysmanDeviceMappingExpVersion (zes_sysman_device_mapping_exp_version_t) Sysman Device Mapping Extension Version(s)
 type ZesSysmanDeviceMappingExpVersion uintptr
+
 const (
-	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0 ZesSysmanDeviceMappingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0 version 1.0
-	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_CURRENT ZesSysmanDeviceMappingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_CURRENT latest known version
-	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_FORCE_UINT32 ZesSysmanDeviceMappingExpVersion = 0x7fffffff	// ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_* ENUMs
+	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0          ZesSysmanDeviceMappingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0 version 1.0
+	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_CURRENT      ZesSysmanDeviceMappingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_CURRENT latest known version
+	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_FORCE_UINT32 ZesSysmanDeviceMappingExpVersion = 0x7fffffff                                                   // ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_* ENUMs
 
 )
 
 // ZesSubdeviceExpProperties (zes_subdevice_exp_properties_t) Sub Device Properties
 type ZesSubdeviceExpProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Subdeviceid uint32	// Subdeviceid [out] this gives the ID of the sub device
-	Uuid ZesUuid	// Uuid [out] universal unique identifier of the sub device.
+	Stype       ZesStructureType // Stype [in] type of this structure
+	Pnext       unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Subdeviceid uint32           // Subdeviceid [out] this gives the ID of the sub device
+	Uuid        ZesUuid          // Uuid [out] universal unique identifier of the sub device.
 
 }
 
 // ZesDeviceGetSubDevicePropertiesExp Retrieves sub device properties for the given sysman device handle
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDeviceGetSubDevicePropertiesExp(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	pCount *uint32,	// pCount [in,out] pointer to the number of sub devices. if count is zero, then the driver shall update the value with the total number of sub devices currently attached to the device. if count is greater than the number of sub devices currently attached to the device, then the driver shall update the value with the correct number of sub devices.
-	pSubdeviceProps *ZesSubdeviceExpProperties,	// pSubdeviceProps [in,out][optional][range(0, *pCount)] array of sub device property structures. if count is less than the number of sysman sub devices available, then the driver shall only retrieve that number of sub device property structures.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	pCount *uint32, // pCount [in,out] pointer to the number of sub devices. if count is zero, then the driver shall update the value with the total number of sub devices currently attached to the device. if count is greater than the number of sub devices currently attached to the device, then the driver shall update the value with the correct number of sub devices.
+	pSubdeviceProps *ZesSubdeviceExpProperties, // pSubdeviceProps [in,out][optional][range(0, *pCount)] array of sub device property structures. if count is less than the number of sysman sub devices available, then the driver shall only retrieve that number of sub device property structures.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceGetSubDevicePropertiesExp", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pSubdeviceProps)))
 }
 
 // ZesDriverGetDeviceByUuidExp Retrieves sysman device and subdevice index for the given UUID and
-///        sysman driver
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phDevice`
-///         + `nullptr == onSubdevice`
-///         + `nullptr == subdeviceId`
+// /        sysman driver
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phDevice`
+// /         + `nullptr == onSubdevice`
+// /         + `nullptr == subdeviceId`
 func ZesDriverGetDeviceByUuidExp(
-	hDriver ZesDriverHandle,	// hDriver [in] handle of the sysman driver instance
-	uuid *ZesUuid,	// uuid [in] universal unique identifier. (gozel hack: converted to a hidden pointer from a struct value)
-	phDevice *ZesDeviceHandle,	// phDevice [out] Sysman handle of the device.
-	onSubdevice *ZeBool,	// onSubdevice [out] True if the UUID belongs to the sub-device; false means that UUID belongs to the root device.
-	subdeviceId *uint32,	// subdeviceId [out] If onSubdevice is true, this gives the ID of the sub-device
+	hDriver ZesDriverHandle, // hDriver [in] handle of the sysman driver instance
+	uuid *ZesUuid, // uuid [in] universal unique identifier. (gozel hack: converted to a hidden pointer from a struct value)
+	phDevice *ZesDeviceHandle, // phDevice [out] Sysman handle of the device.
+	onSubdevice *ZeBool, // onSubdevice [out] True if the UUID belongs to the sub-device; false means that UUID belongs to the root device.
+	subdeviceId *uint32, // subdeviceId [out] If onSubdevice is true, this gives the ID of the sub-device
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDriverGetDeviceByUuidExp", uintptr(hDriver), uintptr(unsafe.Pointer(uuid)), uintptr(unsafe.Pointer(phDevice)), uintptr(unsafe.Pointer(onSubdevice)), uintptr(unsafe.Pointer(subdeviceId)))
 }
-

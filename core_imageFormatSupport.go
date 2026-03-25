@@ -22,27 +22,27 @@ const ZE_IMAGE_FORMAT_SUPPORT_EXT_NAME = "ZE_extension_image_format_support"
 
 // ZeImageFormatSupportExtVersion (ze_image_format_support_ext_version_t) Image Format Support Extension Version(s)
 type ZeImageFormatSupportExtVersion uintptr
+
 const (
-	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0 ZeImageFormatSupportExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0 version 1.0
-	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_CURRENT ZeImageFormatSupportExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_CURRENT latest known version
-	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_FORCE_UINT32 ZeImageFormatSupportExtVersion = 0x7fffffff	// ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_* ENUMs
+	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0          ZeImageFormatSupportExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0 version 1.0
+	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_CURRENT      ZeImageFormatSupportExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_CURRENT latest known version
+	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_FORCE_UINT32 ZeImageFormatSupportExtVersion = 0x7fffffff                                                   // ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_* ENUMs
 
 )
 
 // ZeImageFormatSupportExtProperties (ze_image_format_support_ext_properties_t) Image format support query properties
-/// 
-/// @details
-///     - This structure may be passed to ::zeImageGetProperties via the pNext
-///       member of ::ze_image_properties_t.
-///     - The implementation shall populate the supported field based on the
-///       ::ze_image_desc_t and ::ze_device_handle_t passed to
-///       ::zeImageGetProperties.
-///     - This provides a mechanism to query format support without requiring
-///       image creation.
+// /
+// / @details
+// /     - This structure may be passed to ::zeImageGetProperties via the pNext
+// /       member of ::ze_image_properties_t.
+// /     - The implementation shall populate the supported field based on the
+// /       ::ze_image_desc_t and ::ze_device_handle_t passed to
+// /       ::zeImageGetProperties.
+// /     - This provides a mechanism to query format support without requiring
+// /       image creation.
 type ZeImageFormatSupportExtProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Supported ZeBool	// Supported [out] boolean flag indicating whether the image format is supported on the queried device
+	Stype     ZeStructureType // Stype [in] type of this structure
+	Pnext     unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Supported ZeBool          // Supported [out] boolean flag indicating whether the image format is supported on the queried device
 
 }
-

@@ -24,74 +24,75 @@ const ZE_IPC_MEM_HANDLE_TYPE_EXT_NAME = "ZE_extension_ipc_mem_handle_type"
 
 // ZeIpcMemHandleTypeExtVersion (ze_ipc_mem_handle_type_ext_version_t) IPC Memory Handle Type Extension Version(s)
 type ZeIpcMemHandleTypeExtVersion uintptr
+
 const (
-	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0 ZeIpcMemHandleTypeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0 version 1.0
-	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_CURRENT ZeIpcMemHandleTypeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_CURRENT latest known version
-	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_FORCE_UINT32 ZeIpcMemHandleTypeExtVersion = 0x7fffffff	// ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_* ENUMs
+	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0          ZeIpcMemHandleTypeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0 version 1.0
+	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_CURRENT      ZeIpcMemHandleTypeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_CURRENT latest known version
+	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_FORCE_UINT32 ZeIpcMemHandleTypeExtVersion = 0x7fffffff                                                   // ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_* ENUMs
 
 )
 
 // ZeIpcMemHandleTypeFlags (ze_ipc_mem_handle_type_flags_t) Supported IPC memory handle type flags
 type ZeIpcMemHandleTypeFlags uint32
+
 const (
-	ZE_IPC_MEM_HANDLE_TYPE_FLAG_DEFAULT ZeIpcMemHandleTypeFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_IPC_MEM_HANDLE_TYPE_FLAG_DEFAULT Local IPC memory handle type for use within the same machine.
-	ZE_IPC_MEM_HANDLE_TYPE_FLAG_FABRIC_ACCESSIBLE ZeIpcMemHandleTypeFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_IPC_MEM_HANDLE_TYPE_FLAG_FABRIC_ACCESSIBLE Fabric accessible IPC memory handle type for use across machines via a
+	ZE_IPC_MEM_HANDLE_TYPE_FLAG_DEFAULT           ZeIpcMemHandleTypeFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_IPC_MEM_HANDLE_TYPE_FLAG_DEFAULT Local IPC memory handle type for use within the same machine.
+	ZE_IPC_MEM_HANDLE_TYPE_FLAG_FABRIC_ACCESSIBLE ZeIpcMemHandleTypeFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_IPC_MEM_HANDLE_TYPE_FLAG_FABRIC_ACCESSIBLE Fabric accessible IPC memory handle type for use across machines via a
 
 	///< supported fabric.
 
-	ZE_IPC_MEM_HANDLE_TYPE_FLAG_FORCE_UINT32 ZeIpcMemHandleTypeFlags = 0x7fffffff	// ZE_IPC_MEM_HANDLE_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_MEM_HANDLE_TYPE_FLAG_* ENUMs
+	ZE_IPC_MEM_HANDLE_TYPE_FLAG_FORCE_UINT32 ZeIpcMemHandleTypeFlags = 0x7fffffff // ZE_IPC_MEM_HANDLE_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_MEM_HANDLE_TYPE_FLAG_* ENUMs
 
 )
 
 // ZeIpcMemHandleTypeExtDesc (ze_ipc_mem_handle_type_ext_desc_t) ['IPC Memory Handle Type Extension Descriptor', 'Used in
-///        ::zeMemGetIpcHandleWithProperties, ::zeMemAllocDevice, and
-///        ::zeMemAllocHost, ::zePhysicalMemCreate to specify the IPC memory
-///        handle type to create for this allocation.']
+// /        ::zeMemGetIpcHandleWithProperties, ::zeMemAllocDevice, and
+// /        ::zeMemAllocHost, ::zePhysicalMemCreate to specify the IPC memory
+// /        handle type to create for this allocation.']
 type ZeIpcMemHandleTypeExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Typeflags ZeIpcMemHandleTypeFlags	// Typeflags [in] valid combination of ::ze_ipc_mem_handle_type_flag_t
+	Stype     ZeStructureType         // Stype [in] type of this structure
+	Pnext     unsafe.Pointer          // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Typeflags ZeIpcMemHandleTypeFlags // Typeflags [in] valid combination of ::ze_ipc_mem_handle_type_flag_t
 
 }
 
 // ZeMemGetIpcHandleWithProperties Creates an IPC memory handle for the specified allocation with
-///        properties for the requested handle.
-/// 
-/// @details
-///     - Takes a pointer to a device or host memory allocation and creates an
-///       IPC memory handle for exporting it for use in another process.
-///     - The pointer must be the base pointer of a device or host memory
-///       allocation; i.e. the value returned from ::zeMemAllocDevice or from
-///       ::zeMemAllocHost, respectively or allocated from
-///       ::zePhysicalMemCreate.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///         + `nullptr == pIpcHandle`
+// /        properties for the requested handle.
+// /
+// / @details
+// /     - Takes a pointer to a device or host memory allocation and creates an
+// /       IPC memory handle for exporting it for use in another process.
+// /     - The pointer must be the base pointer of a device or host memory
+// /       allocation; i.e. the value returned from ::zeMemAllocDevice or from
+// /       ::zeMemAllocHost, respectively or allocated from
+// /       ::zePhysicalMemCreate.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /         + `nullptr == pIpcHandle`
 func ZeMemGetIpcHandleWithProperties(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in] pointer to the device memory allocation
-	pNext unsafe.Pointer,	// pNext [in][optional] Pointer to extension-specific structure.
-	pIpcHandle *ZeIpcMemHandle,	// pIpcHandle [out] Returned IPC memory handle
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in] pointer to the device memory allocation
+	pNext unsafe.Pointer, // pNext [in][optional] Pointer to extension-specific structure.
+	pIpcHandle *ZeIpcMemHandle, // pIpcHandle [out] Returned IPC memory handle
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetIpcHandleWithProperties", uintptr(hContext), uintptr(unsafe.Pointer(ptr)), uintptr(unsafe.Pointer(pNext)), uintptr(unsafe.Pointer(pIpcHandle)))
 }
-

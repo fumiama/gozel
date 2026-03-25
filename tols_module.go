@@ -21,49 +21,49 @@ import (
 
 // ZetModuleDebugInfoFormat (zet_module_debug_info_format_t) Supported module debug info formats.
 type ZetModuleDebugInfoFormat uintptr
+
 const (
-	ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF ZetModuleDebugInfoFormat = 0	// ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF Format is ELF/DWARF
-	ZET_MODULE_DEBUG_INFO_FORMAT_FORCE_UINT32 ZetModuleDebugInfoFormat = 0x7fffffff	// ZET_MODULE_DEBUG_INFO_FORMAT_FORCE_UINT32 Value marking end of ZET_MODULE_DEBUG_INFO_FORMAT_* ENUMs
+	ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF    ZetModuleDebugInfoFormat = 0          // ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF Format is ELF/DWARF
+	ZET_MODULE_DEBUG_INFO_FORMAT_FORCE_UINT32 ZetModuleDebugInfoFormat = 0x7fffffff // ZET_MODULE_DEBUG_INFO_FORMAT_FORCE_UINT32 Value marking end of ZET_MODULE_DEBUG_INFO_FORMAT_* ENUMs
 
 )
 
 // ZetModuleGetDebugInfo Retrieve debug info from module.
-/// 
-/// @details
-///     - The caller can pass nullptr for pDebugInfo when querying only for
-///       size.
-///     - The implementation will copy the native binary into a buffer supplied
-///       by the caller.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF < format`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /
+// / @details
+// /     - The caller can pass nullptr for pDebugInfo when querying only for
+// /       size.
+// /     - The implementation will copy the native binary into a buffer supplied
+// /       by the caller.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF < format`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZetModuleGetDebugInfo(
-	hModule ZetModuleHandle,	// hModule [in] handle of the module
-	format ZetModuleDebugInfoFormat,	// format [in] debug info format requested
-	pSize *uintptr,	// pSize [in,out] size of debug info in bytes
-	pDebugInfo *uint8,	// pDebugInfo [in,out][optional] byte pointer to debug info
+	hModule ZetModuleHandle, // hModule [in] handle of the module
+	format ZetModuleDebugInfoFormat, // format [in] debug info format requested
+	pSize *uintptr, // pSize [in,out] size of debug info in bytes
+	pDebugInfo *uint8, // pDebugInfo [in,out][optional] byte pointer to debug info
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetModuleGetDebugInfo", uintptr(hModule), uintptr(format), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pDebugInfo)))
 }
-

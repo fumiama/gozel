@@ -24,73 +24,73 @@ const ZE_DEVICE_VECTOR_SIZES_EXT_NAME = "ZE_extension_device_vector_sizes"
 
 // ZeDeviceVectorSizesExtVersion (ze_device_vector_sizes_ext_version_t) Device Vector Sizes Query Extension Version(s)
 type ZeDeviceVectorSizesExtVersion uintptr
+
 const (
-	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0 ZeDeviceVectorSizesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0 version 1.0
-	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_CURRENT ZeDeviceVectorSizesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_CURRENT latest known version
-	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_FORCE_UINT32 ZeDeviceVectorSizesExtVersion = 0x7fffffff	// ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_* ENUMs
+	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0          ZeDeviceVectorSizesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0 version 1.0
+	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_CURRENT      ZeDeviceVectorSizesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_CURRENT latest known version
+	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_FORCE_UINT32 ZeDeviceVectorSizesExtVersion = 0x7fffffff                                                   // ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_* ENUMs
 
 )
 
 // ZeDeviceVectorWidthPropertiesExt (ze_device_vector_width_properties_ext_t) Device Vector Width Properties queried using
-///        $DeviceGetVectorWidthPropertiesExt
+// /        $DeviceGetVectorWidthPropertiesExt
 type ZeDeviceVectorWidthPropertiesExt struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	VectorWidthSize uint32	// VectorWidthSize [out] The associated vector width size supported by the device.
-	PreferredVectorWidthChar uint32	// PreferredVectorWidthChar [out] The preferred vector width size for char type supported by the device.
-	PreferredVectorWidthShort uint32	// PreferredVectorWidthShort [out] The preferred vector width size for short type supported by the device.
-	PreferredVectorWidthInt uint32	// PreferredVectorWidthInt [out] The preferred vector width size for int type supported by the device.
-	PreferredVectorWidthLong uint32	// PreferredVectorWidthLong [out] The preferred vector width size for long type supported by the device.
-	PreferredVectorWidthFloat uint32	// PreferredVectorWidthFloat [out] The preferred vector width size for float type supported by the device.
-	PreferredVectorWidthDouble uint32	// PreferredVectorWidthDouble [out] The preferred vector width size for double type supported by the device.
-	PreferredVectorWidthHalf uint32	// PreferredVectorWidthHalf [out] The preferred vector width size for half type supported by the device.
-	NativeVectorWidthChar uint32	// NativeVectorWidthChar [out] The native vector width size for char type supported by the device.
-	NativeVectorWidthShort uint32	// NativeVectorWidthShort [out] The native vector width size for short type supported by the device.
-	NativeVectorWidthInt uint32	// NativeVectorWidthInt [out] The native vector width size for int type supported by the device.
-	NativeVectorWidthLong uint32	// NativeVectorWidthLong [out] The native vector width size for long type supported by the device.
-	NativeVectorWidthFloat uint32	// NativeVectorWidthFloat [out] The native vector width size for float type supported by the device.
-	NativeVectorWidthDouble uint32	// NativeVectorWidthDouble [out] The native vector width size for double type supported by the device.
-	NativeVectorWidthHalf uint32	// NativeVectorWidthHalf [out] The native vector width size for half type supported by the device.
+	Stype                      ZeStructureType // Stype [in] type of this structure
+	Pnext                      unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	VectorWidthSize            uint32          // VectorWidthSize [out] The associated vector width size supported by the device.
+	PreferredVectorWidthChar   uint32          // PreferredVectorWidthChar [out] The preferred vector width size for char type supported by the device.
+	PreferredVectorWidthShort  uint32          // PreferredVectorWidthShort [out] The preferred vector width size for short type supported by the device.
+	PreferredVectorWidthInt    uint32          // PreferredVectorWidthInt [out] The preferred vector width size for int type supported by the device.
+	PreferredVectorWidthLong   uint32          // PreferredVectorWidthLong [out] The preferred vector width size for long type supported by the device.
+	PreferredVectorWidthFloat  uint32          // PreferredVectorWidthFloat [out] The preferred vector width size for float type supported by the device.
+	PreferredVectorWidthDouble uint32          // PreferredVectorWidthDouble [out] The preferred vector width size for double type supported by the device.
+	PreferredVectorWidthHalf   uint32          // PreferredVectorWidthHalf [out] The preferred vector width size for half type supported by the device.
+	NativeVectorWidthChar      uint32          // NativeVectorWidthChar [out] The native vector width size for char type supported by the device.
+	NativeVectorWidthShort     uint32          // NativeVectorWidthShort [out] The native vector width size for short type supported by the device.
+	NativeVectorWidthInt       uint32          // NativeVectorWidthInt [out] The native vector width size for int type supported by the device.
+	NativeVectorWidthLong      uint32          // NativeVectorWidthLong [out] The native vector width size for long type supported by the device.
+	NativeVectorWidthFloat     uint32          // NativeVectorWidthFloat [out] The native vector width size for float type supported by the device.
+	NativeVectorWidthDouble    uint32          // NativeVectorWidthDouble [out] The native vector width size for double type supported by the device.
+	NativeVectorWidthHalf      uint32          // NativeVectorWidthHalf [out] The native vector width size for half type supported by the device.
 
 }
 
 // ZeDeviceGetVectorWidthPropertiesExt Retrieves the vector width properties of the device.
-/// 
-/// @details
-///     - Properties are reported for each vector width supported by the device.
-///     - Multiple calls to this function will return properties in the same
-///       order.
-///     - The number of vector width properties is reported thru the pCount
-///       parameter which is updated by the driver given pCount == 0.
-///     - The application may provide a buffer that is larger than the number of
-///       properties, but the application must set pCount to the number of
-///       properties to retrieve.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - Properties are reported for each vector width supported by the device.
+// /     - Multiple calls to this function will return properties in the same
+// /       order.
+// /     - The number of vector width properties is reported thru the pCount
+// /       parameter which is updated by the driver given pCount == 0.
+// /     - The application may provide a buffer that is larger than the number of
+// /       properties, but the application must set pCount to the number of
+// /       properties to retrieve.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeDeviceGetVectorWidthPropertiesExt(
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	pCount *uint32,	// pCount [in,out] pointer to the number of vector width properties. if count is zero, then the driver shall update the value with the total number of vector width properties available. if count is greater than the number of vector width properties available, then the driver shall update the value with the correct number of vector width properties available.
-	pVectorWidthProperties *ZeDeviceVectorWidthPropertiesExt,	// pVectorWidthProperties [in,out][optional][range(0, *pCount)] array of vector width properties. if count is less than the number of properties available, then the driver will return only the number requested.
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	pCount *uint32, // pCount [in,out] pointer to the number of vector width properties. if count is zero, then the driver shall update the value with the total number of vector width properties available. if count is greater than the number of vector width properties available, then the driver shall update the value with the correct number of vector width properties available.
+	pVectorWidthProperties *ZeDeviceVectorWidthPropertiesExt, // pVectorWidthProperties [in,out][optional][range(0, *pCount)] array of vector width properties. if count is less than the number of properties available, then the driver will return only the number requested.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDeviceGetVectorWidthPropertiesExt", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pVectorWidthProperties)))
 }
-

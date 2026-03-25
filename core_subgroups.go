@@ -18,10 +18,10 @@ const ZE_SUBGROUPS_EXT_NAME = "ZE_extension_subgroups"
 
 // ZeSubgroupExtVersion (ze_subgroup_ext_version_t) Subgroups Extension Version(s)
 type ZeSubgroupExtVersion uintptr
+
 const (
-	ZE_SUBGROUP_EXT_VERSION_1_0 ZeSubgroupExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_SUBGROUP_EXT_VERSION_1_0 version 1.0
-	ZE_SUBGROUP_EXT_VERSION_CURRENT ZeSubgroupExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_SUBGROUP_EXT_VERSION_CURRENT latest known version
-	ZE_SUBGROUP_EXT_VERSION_FORCE_UINT32 ZeSubgroupExtVersion = 0x7fffffff	// ZE_SUBGROUP_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_SUBGROUP_EXT_VERSION_* ENUMs
+	ZE_SUBGROUP_EXT_VERSION_1_0          ZeSubgroupExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SUBGROUP_EXT_VERSION_1_0 version 1.0
+	ZE_SUBGROUP_EXT_VERSION_CURRENT      ZeSubgroupExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SUBGROUP_EXT_VERSION_CURRENT latest known version
+	ZE_SUBGROUP_EXT_VERSION_FORCE_UINT32 ZeSubgroupExtVersion = 0x7fffffff                                                   // ZE_SUBGROUP_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_SUBGROUP_EXT_VERSION_* ENUMs
 
 )
-

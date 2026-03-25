@@ -22,24 +22,24 @@ const ZES_POWER_DOMAIN_PROPERTIES_EXP_NAME = "ZES_extension_power_domain_propert
 
 // ZesPowerDomainPropertiesExpVersion (zes_power_domain_properties_exp_version_t) Power Domain Properties Extension Version(s)
 type ZesPowerDomainPropertiesExpVersion uintptr
+
 const (
-	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0 ZesPowerDomainPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0 version 1.0
-	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_CURRENT ZesPowerDomainPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_CURRENT latest known version
-	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_FORCE_UINT32 ZesPowerDomainPropertiesExpVersion = 0x7fffffff	// ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_* ENUMs
+	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0          ZesPowerDomainPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0 version 1.0
+	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_CURRENT      ZesPowerDomainPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_CURRENT latest known version
+	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_FORCE_UINT32 ZesPowerDomainPropertiesExpVersion = 0x7fffffff                                                   // ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_* ENUMs
 
 )
 
 // ZesPowerDomainExpProperties (zes_power_domain_exp_properties_t) Extension structure for providing power domain information associated
-///        with a power handle
-/// 
-/// @details
-///     - This structure may be returned from ::zesPowerGetProperties via the
-///       `pNext` member of ::zes_power_properties_t.
-///     - Used for associating a power handle with a power domain.
+// /        with a power handle
+// /
+// / @details
+// /     - This structure may be returned from ::zesPowerGetProperties via the
+// /       `pNext` member of ::zes_power_properties_t.
+// /     - Used for associating a power handle with a power domain.
 type ZesPowerDomainExpProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Powerdomain ZesPowerDomain	// Powerdomain [out] Power domain associated with the power handle.
+	Stype       ZesStructureType // Stype [in] type of this structure
+	Pnext       unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Powerdomain ZesPowerDomain   // Powerdomain [out] Power domain associated with the power handle.
 
 }
-

@@ -24,71 +24,72 @@ const ZE_LINKAGE_INSPECTION_EXT_NAME = "ZE_extension_linkage_inspection"
 
 // ZeLinkageInspectionExtVersion (ze_linkage_inspection_ext_version_t) Linkage Inspection Extension Version(s)
 type ZeLinkageInspectionExtVersion uintptr
+
 const (
-	ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0 ZeLinkageInspectionExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0 version 1.0
-	ZE_LINKAGE_INSPECTION_EXT_VERSION_CURRENT ZeLinkageInspectionExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_LINKAGE_INSPECTION_EXT_VERSION_CURRENT latest known version
-	ZE_LINKAGE_INSPECTION_EXT_VERSION_FORCE_UINT32 ZeLinkageInspectionExtVersion = 0x7fffffff	// ZE_LINKAGE_INSPECTION_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_LINKAGE_INSPECTION_EXT_VERSION_* ENUMs
+	ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0          ZeLinkageInspectionExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0 version 1.0
+	ZE_LINKAGE_INSPECTION_EXT_VERSION_CURRENT      ZeLinkageInspectionExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_LINKAGE_INSPECTION_EXT_VERSION_CURRENT latest known version
+	ZE_LINKAGE_INSPECTION_EXT_VERSION_FORCE_UINT32 ZeLinkageInspectionExtVersion = 0x7fffffff                                                   // ZE_LINKAGE_INSPECTION_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_LINKAGE_INSPECTION_EXT_VERSION_* ENUMs
 
 )
 
 // ZeLinkageInspectionExtFlags (ze_linkage_inspection_ext_flags_t) Supported module linkage inspection flags
 type ZeLinkageInspectionExtFlags uint32
+
 const (
-	ZE_LINKAGE_INSPECTION_EXT_FLAG_IMPORTS ZeLinkageInspectionExtFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_LINKAGE_INSPECTION_EXT_FLAG_IMPORTS List all imports of modules
-	ZE_LINKAGE_INSPECTION_EXT_FLAG_UNRESOLVABLE_IMPORTS ZeLinkageInspectionExtFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_LINKAGE_INSPECTION_EXT_FLAG_UNRESOLVABLE_IMPORTS List all imports of modules that do not have a corresponding export
-	ZE_LINKAGE_INSPECTION_EXT_FLAG_EXPORTS ZeLinkageInspectionExtFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_LINKAGE_INSPECTION_EXT_FLAG_EXPORTS List all exports of modules
-	ZE_LINKAGE_INSPECTION_EXT_FLAG_FORCE_UINT32 ZeLinkageInspectionExtFlags = 0x7fffffff	// ZE_LINKAGE_INSPECTION_EXT_FLAG_FORCE_UINT32 Value marking end of ZE_LINKAGE_INSPECTION_EXT_FLAG_* ENUMs
+	ZE_LINKAGE_INSPECTION_EXT_FLAG_IMPORTS              ZeLinkageInspectionExtFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_LINKAGE_INSPECTION_EXT_FLAG_IMPORTS List all imports of modules
+	ZE_LINKAGE_INSPECTION_EXT_FLAG_UNRESOLVABLE_IMPORTS ZeLinkageInspectionExtFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_LINKAGE_INSPECTION_EXT_FLAG_UNRESOLVABLE_IMPORTS List all imports of modules that do not have a corresponding export
+	ZE_LINKAGE_INSPECTION_EXT_FLAG_EXPORTS              ZeLinkageInspectionExtFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_LINKAGE_INSPECTION_EXT_FLAG_EXPORTS List all exports of modules
+	ZE_LINKAGE_INSPECTION_EXT_FLAG_FORCE_UINT32         ZeLinkageInspectionExtFlags = 0x7fffffff               // ZE_LINKAGE_INSPECTION_EXT_FLAG_FORCE_UINT32 Value marking end of ZE_LINKAGE_INSPECTION_EXT_FLAG_* ENUMs
 
 )
 
 // ZeLinkageInspectionExtDesc (ze_linkage_inspection_ext_desc_t) Module linkage inspection descriptor
-/// 
-/// @details
-///     - This structure may be passed to ::zeModuleInspectLinkageExt.
+// /
+// / @details
+// /     - This structure may be passed to ::zeModuleInspectLinkageExt.
 type ZeLinkageInspectionExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeLinkageInspectionExtFlags	// Flags [in] flags specifying module linkage inspection. must be 0 (default) or a valid combination of ::ze_linkage_inspection_ext_flag_t.
+	Stype ZeStructureType             // Stype [in] type of this structure
+	Pnext unsafe.Pointer              // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeLinkageInspectionExtFlags // Flags [in] flags specifying module linkage inspection. must be 0 (default) or a valid combination of ::ze_linkage_inspection_ext_flag_t.
 
 }
 
 // ZeModuleInspectLinkageExt List Imports & Exports
-/// 
-/// @details
-///     - List all the import & unresolveable import dependencies & exports of a
-///       set of modules
-/// 
-/// @remarks
-///   _Analogues_
-///     - None
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pInspectDesc`
-///         + `nullptr == phModules`
-///         + `nullptr == phLog`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x7 < pInspectDesc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - List all the import & unresolveable import dependencies & exports of a
+// /       set of modules
+// /
+// / @remarks
+// /   _Analogues_
+// /     - None
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pInspectDesc`
+// /         + `nullptr == phModules`
+// /         + `nullptr == phLog`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x7 < pInspectDesc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeModuleInspectLinkageExt(
-	pInspectDesc *ZeLinkageInspectionExtDesc,	// pInspectDesc [in] pointer to linkage inspection descriptor structure.
-	numModules uint32,	// numModules [in] number of modules to be inspected pointed to by phModules.
-	phModules *ZeModuleHandle,	// phModules [in][range(0, numModules)] pointer to an array of modules to be inspected for import dependencies.
-	phLog *ZeModuleBuildLogHandle,	// phLog [out] pointer to handle of linkage inspection log. Log object will contain separate lists of imports, un-resolvable imports, and exports.
+	pInspectDesc *ZeLinkageInspectionExtDesc, // pInspectDesc [in] pointer to linkage inspection descriptor structure.
+	numModules uint32, // numModules [in] number of modules to be inspected pointed to by phModules.
+	phModules *ZeModuleHandle, // phModules [in][range(0, numModules)] pointer to an array of modules to be inspected for import dependencies.
+	phLog *ZeModuleBuildLogHandle, // phLog [out] pointer to handle of linkage inspection log. Log object will contain separate lists of imports, un-resolvable imports, and exports.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleInspectLinkageExt", uintptr(unsafe.Pointer(pInspectDesc)), uintptr(numModules), uintptr(unsafe.Pointer(phModules)), uintptr(unsafe.Pointer(phLog)))
 }
-
