@@ -1,3 +1,4 @@
+// Package main demonstrates quick start usage of the gozel Level Zero bindings.
 package main
 
 import (

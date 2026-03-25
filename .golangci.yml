@@ -11,11 +11,6 @@ linters:
     - misspell
     - unconvert
     - revive
-  settings:
-    revive:
-      rules:
-        - name: exported
-          disabled: true
   exclusions:
     rules:
       - path: ^cmd/
@@ -31,10 +26,6 @@ linters:
       - linters:
           - errcheck
         source: "^\\s*defer "
-
-formatters:
-  enable:
-    - gofmt
 
 issues:
   max-issues-per-linter: 0

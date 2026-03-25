@@ -1,3 +1,4 @@
+// Package ze provides high-level wrappers around Level Zero command objects.
 package ze
 
 import (

@@ -1,3 +1,4 @@
+// Package main demonstrates vector addition using the gozel Level Zero bindings.
 package main
 
 import (
@@ -91,36 +92,36 @@ func main() {
 	}
 	defer q.Destroy()
 
-	hbuf_v1, err := ctx.MemAllocHost(bufsz, 1)
+	hbufV1, err := ctx.MemAllocHost(bufsz, 1)
 	if err != nil {
 		panic(err)
 	}
-	defer ctx.MemFree(hbuf_v1)
+	defer ctx.MemFree(hbufV1)
 
-	hbuf_v2, err := ctx.MemAllocHost(bufsz, 1)
+	hbufV2, err := ctx.MemAllocHost(bufsz, 1)
 	if err != nil {
 		panic(err)
 	}
-	defer ctx.MemFree(hbuf_v2)
+	defer ctx.MemFree(hbufV2)
 
-	dbuf_v1, err := ctx.MemAllocDevice(dev, bufsz, 1)
+	dbufV1, err := ctx.MemAllocDevice(dev, bufsz, 1)
 	if err != nil {
 		panic(err)
 	}
-	defer ctx.MemFree(dbuf_v1)
+	defer ctx.MemFree(dbufV1)
 
-	dbuf_v2, err := ctx.MemAllocDevice(dev, bufsz, 1)
+	dbufV2, err := ctx.MemAllocDevice(dev, bufsz, 1)
 	if err != nil {
 		panic(err)
 	}
-	defer ctx.MemFree(dbuf_v2)
+	defer ctx.MemFree(dbufV2)
 
 	floatbuf := make([]float32, 2*N)
 	for i := range floatbuf {
 		floatbuf[i] = rand.Float32()
 	}
 
-	zev1, zev2 := unsafe.Slice((*float32)(hbuf_v1), N), unsafe.Slice((*float32)(hbuf_v2), N)
+	zev1, zev2 := unsafe.Slice((*float32)(hbufV1), N), unsafe.Slice((*float32)(hbufV2), N)
 	copy(zev1, floatbuf[:N])
 	copy(zev2, floatbuf[N:])
 
@@ -136,11 +137,11 @@ func main() {
 	}
 	defer krn.Destroy()
 
-	err = krn.SetArgumentValue(0, unsafe.Sizeof(uintptr(0)), unsafe.Pointer(&dbuf_v1))
+	err = krn.SetArgumentValue(0, unsafe.Sizeof(uintptr(0)), unsafe.Pointer(&dbufV1))
 	if err != nil {
 		panic(err)
 	}
-	err = krn.SetArgumentValue(1, unsafe.Sizeof(uintptr(0)), unsafe.Pointer(&dbuf_v2))
+	err = krn.SetArgumentValue(1, unsafe.Sizeof(uintptr(0)), unsafe.Pointer(&dbufV2))
 	if err != nil {
 		panic(err)
 	}
@@ -155,11 +156,11 @@ func main() {
 	}
 	defer lstpre.Destroy()
 
-	err = lstpre.AppendMemoryCopy(dbuf_v1, hbuf_v1, bufsz)
+	err = lstpre.AppendMemoryCopy(dbufV1, hbufV1, bufsz)
 	if err != nil {
 		panic(err)
 	}
-	err = lstpre.AppendMemoryCopy(dbuf_v2, hbuf_v2, bufsz)
+	err = lstpre.AppendMemoryCopy(dbufV2, hbufV2, bufsz)
 	if err != nil {
 		panic(err)
 	}
@@ -203,7 +204,7 @@ func main() {
 	}
 	defer lstpost.Destroy()
 
-	err = lstpost.AppendMemoryCopy(hbuf_v1, dbuf_v1, bufsz)
+	err = lstpost.AppendMemoryCopy(hbufV1, dbufV1, bufsz)
 	if err != nil {
 		panic(err)
 	}

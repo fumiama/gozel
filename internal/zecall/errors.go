@@ -1,3 +1,4 @@
+// Package zecall provides internal helpers for calling Level Zero functions via purego.
 package zecall
 
 import (
