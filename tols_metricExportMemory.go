@@ -19,35 +19,35 @@ import (
 
 // ZetMetricGroupTypeExpFlags (zet_metric_group_type_exp_flags_t) Metric group type
 type ZetMetricGroupTypeExpFlags uint32
+
 const (
-	ZET_METRIC_GROUP_TYPE_EXP_FLAG_EXPORT_DMA_BUF ZetMetricGroupTypeExpFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZET_METRIC_GROUP_TYPE_EXP_FLAG_EXPORT_DMA_BUF Metric group and metrics exports memory using linux dma-buf, which
+	ZET_METRIC_GROUP_TYPE_EXP_FLAG_EXPORT_DMA_BUF ZetMetricGroupTypeExpFlags = /* ZE_BIT(0) */ (1 << 0) // ZET_METRIC_GROUP_TYPE_EXP_FLAG_EXPORT_DMA_BUF Metric group and metrics exports memory using linux dma-buf, which
 
 	///< could be imported/mapped to the host process. Properties of the
 	///< dma_buf could be queried using ::zet_export_dma_buf_exp_properties_t.
 
-	ZET_METRIC_GROUP_TYPE_EXP_FLAG_USER_CREATED ZetMetricGroupTypeExpFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZET_METRIC_GROUP_TYPE_EXP_FLAG_USER_CREATED Metric group created using ::zetDeviceCreateMetricGroupsFromMetricsExp
-	ZET_METRIC_GROUP_TYPE_EXP_FLAG_OTHER ZetMetricGroupTypeExpFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZET_METRIC_GROUP_TYPE_EXP_FLAG_OTHER Metric group which has a collection of metrics
-	ZET_METRIC_GROUP_TYPE_EXP_FLAG_MARKER ZetMetricGroupTypeExpFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZET_METRIC_GROUP_TYPE_EXP_FLAG_MARKER Metric group is capable of generating Marker metric
-	ZET_METRIC_GROUP_TYPE_EXP_FLAG_FORCE_UINT32 ZetMetricGroupTypeExpFlags = 0x7fffffff	// ZET_METRIC_GROUP_TYPE_EXP_FLAG_FORCE_UINT32 Value marking end of ZET_METRIC_GROUP_TYPE_EXP_FLAG_* ENUMs
+	ZET_METRIC_GROUP_TYPE_EXP_FLAG_USER_CREATED ZetMetricGroupTypeExpFlags = /* ZE_BIT(1) */ (1 << 1) // ZET_METRIC_GROUP_TYPE_EXP_FLAG_USER_CREATED Metric group created using ::zetDeviceCreateMetricGroupsFromMetricsExp
+	ZET_METRIC_GROUP_TYPE_EXP_FLAG_OTHER        ZetMetricGroupTypeExpFlags = /* ZE_BIT(2) */ (1 << 2) // ZET_METRIC_GROUP_TYPE_EXP_FLAG_OTHER Metric group which has a collection of metrics
+	ZET_METRIC_GROUP_TYPE_EXP_FLAG_MARKER       ZetMetricGroupTypeExpFlags = /* ZE_BIT(3) */ (1 << 3) // ZET_METRIC_GROUP_TYPE_EXP_FLAG_MARKER Metric group is capable of generating Marker metric
+	ZET_METRIC_GROUP_TYPE_EXP_FLAG_FORCE_UINT32 ZetMetricGroupTypeExpFlags = 0x7fffffff               // ZET_METRIC_GROUP_TYPE_EXP_FLAG_FORCE_UINT32 Value marking end of ZET_METRIC_GROUP_TYPE_EXP_FLAG_* ENUMs
 
 )
 
 // ZetMetricGroupTypeExp (zet_metric_group_type_exp_t) Query the metric group type using `pNext` of
-///        ::zet_metric_group_properties_t
+// /        ::zet_metric_group_properties_t
 type ZetMetricGroupTypeExp struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Type ZetMetricGroupTypeExpFlags	// Type [out] metric group type. returns a combination of ::zet_metric_group_type_exp_flags_t.
+	Stype ZetStructureType           // Stype [in] type of this structure
+	Pnext unsafe.Pointer             // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Type  ZetMetricGroupTypeExpFlags // Type [out] metric group type. returns a combination of ::zet_metric_group_type_exp_flags_t.
 
 }
 
 // ZetExportDmaBufExpProperties (zet_export_dma_buf_exp_properties_t) Exported dma_buf properties queried using `pNext` of
-///        ::zet_metric_group_properties_t or ::zet_metric_properties_t
+// /        ::zet_metric_group_properties_t or ::zet_metric_properties_t
 type ZetExportDmaBufExpProperties struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Fd int32	// Fd [out] the file descriptor handle that could be used to import the memory by the host process.
-	Size uintptr	// Size [out] size in bytes of the dma_buf
+	Stype ZetStructureType // Stype [in] type of this structure
+	Pnext unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Fd    int32            // Fd [out] the file descriptor handle that could be used to import the memory by the host process.
+	Size  uintptr          // Size [out] size in bytes of the dma_buf
 
 }
-

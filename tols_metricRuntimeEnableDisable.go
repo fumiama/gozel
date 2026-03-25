@@ -22,81 +22,81 @@ const ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_NAME = "ZET_experimental_metrics_ru
 
 // ZetMetricsRuntimeEnableDisableExpVersion (zet_metrics_runtime_enable_disable_exp_version_t) Runtime Enabling and Disabling Metrics Extension Version(s)
 type ZetMetricsRuntimeEnableDisableExpVersion uintptr
+
 const (
-	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0 ZetMetricsRuntimeEnableDisableExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0 version 1.0
-	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_CURRENT ZetMetricsRuntimeEnableDisableExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_CURRENT latest known version
-	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_FORCE_UINT32 ZetMetricsRuntimeEnableDisableExpVersion = 0x7fffffff	// ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_* ENUMs
+	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0          ZetMetricsRuntimeEnableDisableExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0 version 1.0
+	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_CURRENT      ZetMetricsRuntimeEnableDisableExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_CURRENT latest known version
+	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_FORCE_UINT32 ZetMetricsRuntimeEnableDisableExpVersion = 0x7fffffff                                                   // ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_* ENUMs
 
 )
 
 // ZetDeviceEnableMetricsExp Enable Metrics collection during runtime.
-/// 
-/// @details
-///     - This API enables metric collection for a device/sub-device if not
-///       already enabled.
-///     - if ZET_ENABLE_METRICS=1 was already set, then calling this api would
-///       be a NOP.
-///     - This api should be called after calling zeInit().
-///     - If device is a root-device handle, then its sub-devices are also
-///       enabled.
-///     - ::zetDeviceDisableMetricsExp need not be called if if this api returns
-///       error.
-///     - This API can be used as runtime alternative to setting
-///       ZET_ENABLE_METRICS=1.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
+// /
+// / @details
+// /     - This API enables metric collection for a device/sub-device if not
+// /       already enabled.
+// /     - if ZET_ENABLE_METRICS=1 was already set, then calling this api would
+// /       be a NOP.
+// /     - This api should be called after calling zeInit().
+// /     - If device is a root-device handle, then its sub-devices are also
+// /       enabled.
+// /     - ::zetDeviceDisableMetricsExp need not be called if if this api returns
+// /       error.
+// /     - This API can be used as runtime alternative to setting
+// /       ZET_ENABLE_METRICS=1.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
 func ZetDeviceEnableMetricsExp(
-	hDevice ZetDeviceHandle,	// hDevice [in] handle of the device where metrics collection has to be enabled.
+	hDevice ZetDeviceHandle, // hDevice [in] handle of the device where metrics collection has to be enabled.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetDeviceEnableMetricsExp", uintptr(hDevice))
 }
 
 // ZetDeviceDisableMetricsExp Disable Metrics collection during runtime, if it was already enabled.
-/// 
-/// @details
-///     - This API disables metrics collection for a device/sub-device, if it
-///       was previously enabled.
-///     - If device is a root-device handle, then its sub-devices are also
-///       disabled.
-///     - The application has to ensure that all metric operations are complete
-///       and all metric resources are released before this API is called.
-///     - If there are metric operations in progress or metric resources are not
-///       released, then ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE is returned.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
+// /
+// / @details
+// /     - This API disables metrics collection for a device/sub-device, if it
+// /       was previously enabled.
+// /     - If device is a root-device handle, then its sub-devices are also
+// /       disabled.
+// /     - The application has to ensure that all metric operations are complete
+// /       and all metric resources are released before this API is called.
+// /     - If there are metric operations in progress or metric resources are not
+// /       released, then ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE is returned.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
 func ZetDeviceDisableMetricsExp(
-	hDevice ZetDeviceHandle,	// hDevice [in] handle of the device where metrics collection has to be disabled
+	hDevice ZetDeviceHandle, // hDevice [in] handle of the device where metrics collection has to be disabled
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetDeviceDisableMetricsExp", uintptr(hDevice))
 }
-

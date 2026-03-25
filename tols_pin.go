@@ -21,82 +21,83 @@ import (
 
 // ZetProfileFlags (zet_profile_flags_t) Supportted profile features
 type ZetProfileFlags uint32
+
 const (
-	ZET_PROFILE_FLAG_REGISTER_REALLOCATION ZetProfileFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZET_PROFILE_FLAG_REGISTER_REALLOCATION request the compiler attempt to minimize register usage as much as
+	ZET_PROFILE_FLAG_REGISTER_REALLOCATION ZetProfileFlags = /* ZE_BIT(0) */ (1 << 0) // ZET_PROFILE_FLAG_REGISTER_REALLOCATION request the compiler attempt to minimize register usage as much as
 
 	///< possible to allow for instrumentation
 
-	ZET_PROFILE_FLAG_FREE_REGISTER_INFO ZetProfileFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZET_PROFILE_FLAG_FREE_REGISTER_INFO request the compiler generate free register info
-	ZET_PROFILE_FLAG_FORCE_UINT32 ZetProfileFlags = 0x7fffffff	// ZET_PROFILE_FLAG_FORCE_UINT32 Value marking end of ZET_PROFILE_FLAG_* ENUMs
+	ZET_PROFILE_FLAG_FREE_REGISTER_INFO ZetProfileFlags = /* ZE_BIT(1) */ (1 << 1) // ZET_PROFILE_FLAG_FREE_REGISTER_INFO request the compiler generate free register info
+	ZET_PROFILE_FLAG_FORCE_UINT32       ZetProfileFlags = 0x7fffffff               // ZET_PROFILE_FLAG_FORCE_UINT32 Value marking end of ZET_PROFILE_FLAG_* ENUMs
 
 )
 
 // ZetProfileProperties (zet_profile_properties_t) Profiling meta-data for instrumentation
 type ZetProfileProperties struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZetProfileFlags	// Flags [out] indicates which flags were enabled during compilation. returns 0 (none) or a combination of ::zet_profile_flag_t
-	Numtokens uint32	// Numtokens [out] number of tokens immediately following this structure
+	Stype     ZetStructureType // Stype [in] type of this structure
+	Pnext     unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags     ZetProfileFlags  // Flags [out] indicates which flags were enabled during compilation. returns 0 (none) or a combination of ::zet_profile_flag_t
+	Numtokens uint32           // Numtokens [out] number of tokens immediately following this structure
 
 }
 
 // ZetProfileTokenType (zet_profile_token_type_t) Supported profile token types
 type ZetProfileTokenType uintptr
+
 const (
-	ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER ZetProfileTokenType = 0	// ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER GRF info
-	ZET_PROFILE_TOKEN_TYPE_FORCE_UINT32 ZetProfileTokenType = 0x7fffffff	// ZET_PROFILE_TOKEN_TYPE_FORCE_UINT32 Value marking end of ZET_PROFILE_TOKEN_TYPE_* ENUMs
+	ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER ZetProfileTokenType = 0          // ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER GRF info
+	ZET_PROFILE_TOKEN_TYPE_FORCE_UINT32  ZetProfileTokenType = 0x7fffffff // ZET_PROFILE_TOKEN_TYPE_FORCE_UINT32 Value marking end of ZET_PROFILE_TOKEN_TYPE_* ENUMs
 
 )
 
 // ZetProfileFreeRegisterToken (zet_profile_free_register_token_t) Profile free register token detailing unused registers in the current
-///        function
+// /        function
 type ZetProfileFreeRegisterToken struct {
-	Type ZetProfileTokenType	// Type [out] type of token
-	Size uint32	// Size [out] total size of the token, in bytes
-	Count uint32	// Count [out] number of register sequences immediately following this structure
+	Type  ZetProfileTokenType // Type [out] type of token
+	Size  uint32              // Size [out] total size of the token, in bytes
+	Count uint32              // Count [out] number of register sequences immediately following this structure
 
 }
 
 // ZetProfileRegisterSequence (zet_profile_register_sequence_t) Profile register sequence detailing consecutive bytes, all of which
-///        are unused
+// /        are unused
 type ZetProfileRegisterSequence struct {
-	Start uint32	// Start [out] starting byte in the register table, representing the start of unused bytes in the current function
-	Count uint32	// Count [out] number of consecutive bytes in the sequence, starting from start
+	Start uint32 // Start [out] starting byte in the register table, representing the start of unused bytes in the current function
+	Count uint32 // Count [out] number of consecutive bytes in the sequence, starting from start
 
 }
 
 // ZetKernelGetProfileInfo Retrieve profiling information generated for the kernel.
-/// 
-/// @details
-///     - Module must be created using the following build option:
-///         + "-zet-profile-flags <n>" - enable generation of profile
-///           information
-///         + "<n>" must be a combination of ::zet_profile_flag_t, in hex
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pProfileProperties`
+// /
+// / @details
+// /     - Module must be created using the following build option:
+// /         + "-zet-profile-flags <n>" - enable generation of profile
+// /           information
+// /         + "<n>" must be a combination of ::zet_profile_flag_t, in hex
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pProfileProperties`
 func ZetKernelGetProfileInfo(
-	hKernel ZetKernelHandle,	// hKernel [in] handle to kernel
-	pProfileProperties *ZetProfileProperties,	// pProfileProperties [out] pointer to profile properties
+	hKernel ZetKernelHandle, // hKernel [in] handle to kernel
+	pProfileProperties *ZetProfileProperties, // pProfileProperties [out] pointer to profile properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetKernelGetProfileInfo", uintptr(hKernel), uintptr(unsafe.Pointer(pProfileProperties)))
 }
-

@@ -24,42 +24,42 @@ const ZET_CONCURRENT_METRIC_GROUPS_EXP_NAME = "ZET_experimental_concurrent_metri
 
 // ZetConcurrentMetricGroupsExpVersion (zet_concurrent_metric_groups_exp_version_t) Concurrent Metric Groups Experimental Extension Version(s)
 type ZetConcurrentMetricGroupsExpVersion uintptr
+
 const (
-	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0 ZetConcurrentMetricGroupsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0 version 1.0
-	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_CURRENT ZetConcurrentMetricGroupsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_CURRENT latest known version
-	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_FORCE_UINT32 ZetConcurrentMetricGroupsExpVersion = 0x7fffffff	// ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_* ENUMs
+	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0          ZetConcurrentMetricGroupsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0 version 1.0
+	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_CURRENT      ZetConcurrentMetricGroupsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_CURRENT latest known version
+	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_FORCE_UINT32 ZetConcurrentMetricGroupsExpVersion = 0x7fffffff                                                   // ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_* ENUMs
 
 )
 
 // ZetDeviceGetConcurrentMetricGroupsExp Get sets of metric groups which could be collected concurrently.
-/// 
-/// @details
-///     - Re-arrange the input metric groups to provide sets of concurrent
-///       metric groups.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
+// /
+// / @details
+// /     - Re-arrange the input metric groups to provide sets of concurrent
+// /       metric groups.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
 func ZetDeviceGetConcurrentMetricGroupsExp(
-	hDevice ZetDeviceHandle,	// hDevice [in] handle of the device
-	metricGroupCount uint32,	// metricGroupCount [in] metric group count
-	phMetricGroups *ZetMetricGroupHandle,	// phMetricGroups [in,out] metrics groups to be re-arranged to be sets of concurrent groups
-	pMetricGroupsCountPerConcurrentGroup *uint32,	// pMetricGroupsCountPerConcurrentGroup [in,out][optional][*pConcurrentGroupCount] count of metric groups per concurrent group.
-	pConcurrentGroupCount *uint32,	// pConcurrentGroupCount [out] number of concurrent groups. The value of this parameter could be used to determine the number of replays necessary.
+	hDevice ZetDeviceHandle, // hDevice [in] handle of the device
+	metricGroupCount uint32, // metricGroupCount [in] metric group count
+	phMetricGroups *ZetMetricGroupHandle, // phMetricGroups [in,out] metrics groups to be re-arranged to be sets of concurrent groups
+	pMetricGroupsCountPerConcurrentGroup *uint32, // pMetricGroupsCountPerConcurrentGroup [in,out][optional][*pConcurrentGroupCount] count of metric groups per concurrent group.
+	pConcurrentGroupCount *uint32, // pConcurrentGroupCount [out] number of concurrent groups. The value of this parameter could be used to determine the number of replays necessary.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetDeviceGetConcurrentMetricGroupsExp", uintptr(hDevice), uintptr(metricGroupCount), uintptr(unsafe.Pointer(phMetricGroups)), uintptr(unsafe.Pointer(pMetricGroupsCountPerConcurrentGroup)), uintptr(unsafe.Pointer(pConcurrentGroupCount)))
 }
-

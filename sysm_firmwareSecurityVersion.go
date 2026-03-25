@@ -24,73 +24,73 @@ const ZES_FIRMWARE_SECURITY_VERSION_EXP_NAME = "ZES_experimental_firmware_securi
 
 // ZesFirmwareSecurityExpVersion (zes_firmware_security_exp_version_t) Firmware security version Extension Version(s)
 type ZesFirmwareSecurityExpVersion uintptr
+
 const (
-	ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0 ZesFirmwareSecurityExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0 version 1.0
-	ZES_FIRMWARE_SECURITY_EXP_VERSION_CURRENT ZesFirmwareSecurityExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_FIRMWARE_SECURITY_EXP_VERSION_CURRENT latest known version
-	ZES_FIRMWARE_SECURITY_EXP_VERSION_FORCE_UINT32 ZesFirmwareSecurityExpVersion = 0x7fffffff	// ZES_FIRMWARE_SECURITY_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_FIRMWARE_SECURITY_EXP_VERSION_* ENUMs
+	ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0          ZesFirmwareSecurityExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0 version 1.0
+	ZES_FIRMWARE_SECURITY_EXP_VERSION_CURRENT      ZesFirmwareSecurityExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_FIRMWARE_SECURITY_EXP_VERSION_CURRENT latest known version
+	ZES_FIRMWARE_SECURITY_EXP_VERSION_FORCE_UINT32 ZesFirmwareSecurityExpVersion = 0x7fffffff                                                   // ZES_FIRMWARE_SECURITY_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_FIRMWARE_SECURITY_EXP_VERSION_* ENUMs
 
 )
 
 // ZesFirmwareGetSecurityVersionExp Get the firmware security version number of the currently running
-///        firmware
-/// 
-/// @details
-///     - The application should create a character array of size
-///       ::ZES_STRING_PROPERTY_SIZE and reference it for the `pVersion`
-///       parameter.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pVersion`
+// /        firmware
+// /
+// / @details
+// /     - The application should create a character array of size
+// /       ::ZES_STRING_PROPERTY_SIZE and reference it for the `pVersion`
+// /       parameter.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pVersion`
 func ZesFirmwareGetSecurityVersionExp(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
-	pVersion *byte,	// pVersion [in,out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
+	pVersion *byte, // pVersion [in,out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareGetSecurityVersionExp", uintptr(hFirmware), uintptr(unsafe.Pointer(pVersion)))
 }
 
 // ZesFirmwareSetSecurityVersionExp Set the firmware security version number
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
 func ZesFirmwareSetSecurityVersionExp(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareSetSecurityVersionExp", uintptr(hFirmware))
 }
-

@@ -24,57 +24,57 @@ const ZE_IMAGE_MEMORY_PROPERTIES_EXP_NAME = "ZE_experimental_image_memory_proper
 
 // ZeImageMemoryPropertiesExpVersion (ze_image_memory_properties_exp_version_t) Image Memory Properties Extension Version(s)
 type ZeImageMemoryPropertiesExpVersion uintptr
+
 const (
-	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0 ZeImageMemoryPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0 version 1.0
-	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_CURRENT ZeImageMemoryPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_CURRENT latest known version
-	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_FORCE_UINT32 ZeImageMemoryPropertiesExpVersion = 0x7fffffff	// ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_* ENUMs
+	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0          ZeImageMemoryPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0 version 1.0
+	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_CURRENT      ZeImageMemoryPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_CURRENT latest known version
+	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_FORCE_UINT32 ZeImageMemoryPropertiesExpVersion = 0x7fffffff                                                   // ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_* ENUMs
 
 )
 
 // ZeImageMemoryPropertiesExp (ze_image_memory_properties_exp_t) Image memory properties
 type ZeImageMemoryPropertiesExp struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Size uint64	// Size [out] size of image allocation in bytes.
-	Rowpitch uint64	// Rowpitch [out] size of image row in bytes.
-	Slicepitch uint64	// Slicepitch [out] size of image slice in bytes.
+	Stype      ZeStructureType // Stype [in] type of this structure
+	Pnext      unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Size       uint64          // Size [out] size of image allocation in bytes.
+	Rowpitch   uint64          // Rowpitch [out] size of image row in bytes.
+	Slicepitch uint64          // Slicepitch [out] size of image slice in bytes.
 
 }
 
 // ZeImageGetMemoryPropertiesExp Query image memory properties.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-///     - The implementation must support ::ZE_IMAGE_MEMORY_PROPERTIES_EXP_NAME
-///       extension.
-/// 
-/// @remarks
-///   _Analogues_
-///     - None
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hImage`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pMemoryProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /     - The implementation must support ::ZE_IMAGE_MEMORY_PROPERTIES_EXP_NAME
+// /       extension.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - None
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hImage`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pMemoryProperties`
 func ZeImageGetMemoryPropertiesExp(
-	hImage ZeImageHandle,	// hImage [in] handle of image object
-	pMemoryProperties *ZeImageMemoryPropertiesExp,	// pMemoryProperties [in,out] query result for image memory properties.
+	hImage ZeImageHandle, // hImage [in] handle of image object
+	pMemoryProperties *ZeImageMemoryPropertiesExp, // pMemoryProperties [in,out] query result for image memory properties.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeImageGetMemoryPropertiesExp", uintptr(hImage), uintptr(unsafe.Pointer(pMemoryProperties)))
 }
-

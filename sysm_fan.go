@@ -21,37 +21,39 @@ import (
 
 // ZesFanSpeedMode (zes_fan_speed_mode_t) Fan resource speed mode
 type ZesFanSpeedMode uintptr
+
 const (
-	ZES_FAN_SPEED_MODE_DEFAULT ZesFanSpeedMode = 0	// ZES_FAN_SPEED_MODE_DEFAULT The fan speed is operating using the hardware default settings
-	ZES_FAN_SPEED_MODE_FIXED ZesFanSpeedMode = 1	// ZES_FAN_SPEED_MODE_FIXED The fan speed is currently set to a fixed value
-	ZES_FAN_SPEED_MODE_TABLE ZesFanSpeedMode = 2	// ZES_FAN_SPEED_MODE_TABLE The fan speed is currently controlled dynamically by hardware based on
+	ZES_FAN_SPEED_MODE_DEFAULT ZesFanSpeedMode = 0 // ZES_FAN_SPEED_MODE_DEFAULT The fan speed is operating using the hardware default settings
+	ZES_FAN_SPEED_MODE_FIXED   ZesFanSpeedMode = 1 // ZES_FAN_SPEED_MODE_FIXED The fan speed is currently set to a fixed value
+	ZES_FAN_SPEED_MODE_TABLE   ZesFanSpeedMode = 2 // ZES_FAN_SPEED_MODE_TABLE The fan speed is currently controlled dynamically by hardware based on
 
 	///< a temp/speed table
 
-	ZES_FAN_SPEED_MODE_FORCE_UINT32 ZesFanSpeedMode = 0x7fffffff	// ZES_FAN_SPEED_MODE_FORCE_UINT32 Value marking end of ZES_FAN_SPEED_MODE_* ENUMs
+	ZES_FAN_SPEED_MODE_FORCE_UINT32 ZesFanSpeedMode = 0x7fffffff // ZES_FAN_SPEED_MODE_FORCE_UINT32 Value marking end of ZES_FAN_SPEED_MODE_* ENUMs
 
 )
 
 // ZesFanSpeedUnits (zes_fan_speed_units_t) Fan speed units
 type ZesFanSpeedUnits uintptr
+
 const (
-	ZES_FAN_SPEED_UNITS_RPM ZesFanSpeedUnits = 0	// ZES_FAN_SPEED_UNITS_RPM The fan speed is in units of revolutions per minute (rpm)
-	ZES_FAN_SPEED_UNITS_PERCENT ZesFanSpeedUnits = 1	// ZES_FAN_SPEED_UNITS_PERCENT The fan speed is a percentage of the maximum speed of the fan
-	ZES_FAN_SPEED_UNITS_FORCE_UINT32 ZesFanSpeedUnits = 0x7fffffff	// ZES_FAN_SPEED_UNITS_FORCE_UINT32 Value marking end of ZES_FAN_SPEED_UNITS_* ENUMs
+	ZES_FAN_SPEED_UNITS_RPM          ZesFanSpeedUnits = 0          // ZES_FAN_SPEED_UNITS_RPM The fan speed is in units of revolutions per minute (rpm)
+	ZES_FAN_SPEED_UNITS_PERCENT      ZesFanSpeedUnits = 1          // ZES_FAN_SPEED_UNITS_PERCENT The fan speed is a percentage of the maximum speed of the fan
+	ZES_FAN_SPEED_UNITS_FORCE_UINT32 ZesFanSpeedUnits = 0x7fffffff // ZES_FAN_SPEED_UNITS_FORCE_UINT32 Value marking end of ZES_FAN_SPEED_UNITS_* ENUMs
 
 )
 
 // ZesFanSpeed (zes_fan_speed_t) Fan speed
 type ZesFanSpeed struct {
-	Speed int32	// Speed [in,out] The speed of the fan. On output, a value of -1 indicates that there is no fixed fan speed setting.
-	Units ZesFanSpeedUnits	// Units [in,out] The units that the fan speed is expressed in. On output, if fan speed is -1 then units should be ignored.
+	Speed int32            // Speed [in,out] The speed of the fan. On output, a value of -1 indicates that there is no fixed fan speed setting.
+	Units ZesFanSpeedUnits // Units [in,out] The units that the fan speed is expressed in. On output, if fan speed is -1 then units should be ignored.
 
 }
 
 // ZesFanTempSpeed (zes_fan_temp_speed_t) Fan temperature/speed pair
 type ZesFanTempSpeed struct {
-	Temperature uint32	// Temperature [in,out] Temperature in degrees Celsius.
-	Speed ZesFanSpeed	// Speed [in,out] The speed of the fan
+	Temperature uint32      // Temperature [in,out] Temperature in degrees Celsius.
+	Speed       ZesFanSpeed // Speed [in,out] The speed of the fan
 
 }
 
@@ -60,262 +62,261 @@ const ZES_FAN_TEMP_SPEED_PAIR_COUNT = 32
 
 // ZesFanSpeedTable (zes_fan_speed_table_t) Fan speed table
 type ZesFanSpeedTable struct {
-	Numpoints int32	// Numpoints [in,out] The number of valid points in the fan speed table. 0 means that there is no fan speed table configured. -1 means that a fan speed table is not supported by the hardware.
-	Table [ZES_FAN_TEMP_SPEED_PAIR_COUNT]ZesFanTempSpeed	// Table [in,out] Array of temperature/fan speed pairs. The table is ordered based on temperature from lowest to highest.
+	Numpoints int32                                          // Numpoints [in,out] The number of valid points in the fan speed table. 0 means that there is no fan speed table configured. -1 means that a fan speed table is not supported by the hardware.
+	Table     [ZES_FAN_TEMP_SPEED_PAIR_COUNT]ZesFanTempSpeed // Table [in,out] Array of temperature/fan speed pairs. The table is ordered based on temperature from lowest to highest.
 
 }
 
 // ZesFanProperties (zes_fan_properties_t) Fan properties
 type ZesFanProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Onsubdevice ZeBool	// Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
-	Subdeviceid uint32	// Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
-	Cancontrol ZeBool	// Cancontrol [out] Indicates if software can control the fan speed assuming the user has permissions
-	Supportedmodes uint32	// Supportedmodes [out] Bitfield of supported fan configuration modes (1<<::zes_fan_speed_mode_t)
-	Supportedunits uint32	// Supportedunits [out] Bitfield of supported fan speed units (1<<::zes_fan_speed_units_t)
-	Maxrpm int32	// Maxrpm [out] The maximum RPM of the fan. A value of -1 means that this property is unknown.
-	Maxpoints int32	// Maxpoints [out] The maximum number of points in the fan temp/speed table. A value of -1 means that this fan doesn't support providing a temp/speed table.
+	Stype          ZesStructureType // Stype [in] type of this structure
+	Pnext          unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Onsubdevice    ZeBool           // Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
+	Subdeviceid    uint32           // Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
+	Cancontrol     ZeBool           // Cancontrol [out] Indicates if software can control the fan speed assuming the user has permissions
+	Supportedmodes uint32           // Supportedmodes [out] Bitfield of supported fan configuration modes (1<<::zes_fan_speed_mode_t)
+	Supportedunits uint32           // Supportedunits [out] Bitfield of supported fan speed units (1<<::zes_fan_speed_units_t)
+	Maxrpm         int32            // Maxrpm [out] The maximum RPM of the fan. A value of -1 means that this property is unknown.
+	Maxpoints      int32            // Maxpoints [out] The maximum number of points in the fan temp/speed table. A value of -1 means that this fan doesn't support providing a temp/speed table.
 
 }
 
 // ZesFanConfig (zes_fan_config_t) Fan configuration
 type ZesFanConfig struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Mode ZesFanSpeedMode	// Mode [in,out] The fan speed mode (fixed, temp-speed table)
-	Speedfixed ZesFanSpeed	// Speedfixed [in,out] The current fixed fan speed setting
-	Speedtable ZesFanSpeedTable	// Speedtable [out] A table containing temperature/speed pairs
+	Stype      ZesStructureType // Stype [in] type of this structure
+	Pnext      unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Mode       ZesFanSpeedMode  // Mode [in,out] The fan speed mode (fixed, temp-speed table)
+	Speedfixed ZesFanSpeed      // Speedfixed [in,out] The current fixed fan speed setting
+	Speedtable ZesFanSpeedTable // Speedtable [out] A table containing temperature/speed pairs
 
 }
 
 // ZesDeviceEnumFans Get handle of fans
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDeviceEnumFans(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	pCount *uint32,	// pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
-	phFan *ZesFanHandle,	// phFan [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	pCount *uint32, // pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
+	phFan *ZesFanHandle, // phFan [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceEnumFans", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phFan)))
 }
 
 // ZesFanGetProperties Get fan properties
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pProperties`
 func ZesFanGetProperties(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
-	pProperties *ZesFanProperties,	// pProperties [in,out] Will contain the properties of the fan.
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
+	pProperties *ZesFanProperties, // pProperties [in,out] Will contain the properties of the fan.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanGetProperties", uintptr(hFan), uintptr(unsafe.Pointer(pProperties)))
 }
 
 // ZesFanGetConfig Get fan configurations and the current fan speed mode (default, fixed,
-///        temp-speed table)
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pConfig`
+// /        temp-speed table)
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pConfig`
 func ZesFanGetConfig(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
-	pConfig *ZesFanConfig,	// pConfig [in,out] Will contain the current configuration of the fan.
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
+	pConfig *ZesFanConfig, // pConfig [in,out] Will contain the current configuration of the fan.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanGetConfig", uintptr(hFan), uintptr(unsafe.Pointer(pConfig)))
 }
 
 // ZesFanSetDefaultMode Configure the fan to run with hardware factory settings (set mode to
-///        ::ZES_FAN_SPEED_MODE_DEFAULT)
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to make these modifications.
+// /        ::ZES_FAN_SPEED_MODE_DEFAULT)
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to make these modifications.
 func ZesFanSetDefaultMode(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanSetDefaultMode", uintptr(hFan))
 }
 
 // ZesFanSetFixedSpeedMode Configure the fan to rotate at a fixed speed (set mode to
-///        ::ZES_FAN_SPEED_MODE_FIXED)
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == speed`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to make these modifications.
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + Fixing the fan speed not supported by the hardware or the fan speed units are not supported. See the `supportedModes` and `supportedUnits` members of ::zes_fan_properties_t.
+// /        ::ZES_FAN_SPEED_MODE_FIXED)
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == speed`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to make these modifications.
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + Fixing the fan speed not supported by the hardware or the fan speed units are not supported. See the `supportedModes` and `supportedUnits` members of ::zes_fan_properties_t.
 func ZesFanSetFixedSpeedMode(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
-	speed *ZesFanSpeed,	// speed [in] The fixed fan speed setting
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
+	speed *ZesFanSpeed, // speed [in] The fixed fan speed setting
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanSetFixedSpeedMode", uintptr(hFan), uintptr(unsafe.Pointer(speed)))
 }
 
 // ZesFanSetSpeedTableMode Configure the fan to adjust speed based on a temperature/speed table
-///        (set mode to ::ZES_FAN_SPEED_MODE_TABLE)
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == speedTable`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to make these modifications.
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///         + The temperature/speed pairs in the array are not sorted on temperature from lowest to highest.
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + Fan speed table not supported by the hardware or the fan speed units are not supported. See the `supportedModes` and `supportedUnits` members of ::zes_fan_properties_t.
+// /        (set mode to ::ZES_FAN_SPEED_MODE_TABLE)
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == speedTable`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to make these modifications.
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /         + The temperature/speed pairs in the array are not sorted on temperature from lowest to highest.
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + Fan speed table not supported by the hardware or the fan speed units are not supported. See the `supportedModes` and `supportedUnits` members of ::zes_fan_properties_t.
 func ZesFanSetSpeedTableMode(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
-	speedTable *ZesFanSpeedTable,	// speedTable [in] A table containing temperature/speed pairs.
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
+	speedTable *ZesFanSpeedTable, // speedTable [in] A table containing temperature/speed pairs.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanSetSpeedTableMode", uintptr(hFan), uintptr(unsafe.Pointer(speedTable)))
 }
 
 // ZesFanGetState Get current state of a fan - current mode and speed
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFan`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZES_FAN_SPEED_UNITS_PERCENT < units`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSpeed`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + The requested fan speed units are not supported. See the `supportedUnits` member of ::zes_fan_properties_t.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFan`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZES_FAN_SPEED_UNITS_PERCENT < units`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSpeed`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + The requested fan speed units are not supported. See the `supportedUnits` member of ::zes_fan_properties_t.
 func ZesFanGetState(
-	hFan ZesFanHandle,	// hFan [in] Handle for the component.
-	units ZesFanSpeedUnits,	// units [in] The units in which the fan speed should be returned.
-	pSpeed *int32,	// pSpeed [in,out] Will contain the current speed of the fan in the units requested. A value of -1 indicates that the fan speed cannot be measured.
+	hFan ZesFanHandle, // hFan [in] Handle for the component.
+	units ZesFanSpeedUnits, // units [in] The units in which the fan speed should be returned.
+	pSpeed *int32, // pSpeed [in,out] Will contain the current speed of the fan in the units requested. A value of -1 indicates that the fan speed cannot be measured.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFanGetState", uintptr(hFan), uintptr(units), uintptr(unsafe.Pointer(pSpeed)))
 }
-

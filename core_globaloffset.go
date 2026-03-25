@@ -22,44 +22,44 @@ const ZE_GLOBAL_OFFSET_EXP_NAME = "ZE_experimental_global_offset"
 
 // ZeGlobalOffsetExpVersion (ze_global_offset_exp_version_t) Global Offset Extension Version(s)
 type ZeGlobalOffsetExpVersion uintptr
+
 const (
-	ZE_GLOBAL_OFFSET_EXP_VERSION_1_0 ZeGlobalOffsetExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_GLOBAL_OFFSET_EXP_VERSION_1_0 version 1.0
-	ZE_GLOBAL_OFFSET_EXP_VERSION_CURRENT ZeGlobalOffsetExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_GLOBAL_OFFSET_EXP_VERSION_CURRENT latest known version
-	ZE_GLOBAL_OFFSET_EXP_VERSION_FORCE_UINT32 ZeGlobalOffsetExpVersion = 0x7fffffff	// ZE_GLOBAL_OFFSET_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_GLOBAL_OFFSET_EXP_VERSION_* ENUMs
+	ZE_GLOBAL_OFFSET_EXP_VERSION_1_0          ZeGlobalOffsetExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_GLOBAL_OFFSET_EXP_VERSION_1_0 version 1.0
+	ZE_GLOBAL_OFFSET_EXP_VERSION_CURRENT      ZeGlobalOffsetExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_GLOBAL_OFFSET_EXP_VERSION_CURRENT latest known version
+	ZE_GLOBAL_OFFSET_EXP_VERSION_FORCE_UINT32 ZeGlobalOffsetExpVersion = 0x7fffffff                                                   // ZE_GLOBAL_OFFSET_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_GLOBAL_OFFSET_EXP_VERSION_* ENUMs
 
 )
 
 // ZeKernelSetGlobalOffsetExp Set global work offset for a kernel.
-/// 
-/// @details
-///     - The global work offset will be used when a
-///       ::zeCommandListAppendLaunchKernel() variant is called.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
+// /
+// / @details
+// /     - The global work offset will be used when a
+// /       ::zeCommandListAppendLaunchKernel() variant is called.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
 func ZeKernelSetGlobalOffsetExp(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	offsetX uint32,	// offsetX [in] global offset for X dimension to use for this kernel
-	offsetY uint32,	// offsetY [in] global offset for Y dimension to use for this kernel
-	offsetZ uint32,	// offsetZ [in] global offset for Z dimension to use for this kernel
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	offsetX uint32, // offsetX [in] global offset for X dimension to use for this kernel
+	offsetY uint32, // offsetY [in] global offset for Y dimension to use for this kernel
+	offsetZ uint32, // offsetZ [in] global offset for Z dimension to use for this kernel
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSetGlobalOffsetExp", uintptr(hKernel), uintptr(offsetX), uintptr(offsetY), uintptr(offsetZ))
 }
-

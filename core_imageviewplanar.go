@@ -22,18 +22,19 @@ const ZE_IMAGE_VIEW_PLANAR_EXT_NAME = "ZE_extension_image_view_planar"
 
 // ZeImageViewPlanarExtVersion (ze_image_view_planar_ext_version_t) Image View Planar Extension Version(s)
 type ZeImageViewPlanarExtVersion uintptr
+
 const (
-	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0 ZeImageViewPlanarExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0 version 1.0
-	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_CURRENT ZeImageViewPlanarExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_CURRENT latest known version
-	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_FORCE_UINT32 ZeImageViewPlanarExtVersion = 0x7fffffff	// ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_* ENUMs
+	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0          ZeImageViewPlanarExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0 version 1.0
+	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_CURRENT      ZeImageViewPlanarExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_CURRENT latest known version
+	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_FORCE_UINT32 ZeImageViewPlanarExtVersion = 0x7fffffff                                                   // ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_* ENUMs
 
 )
 
 // ZeImageViewPlanarExtDesc (ze_image_view_planar_ext_desc_t) Image view planar descriptor
 type ZeImageViewPlanarExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Planeindex uint32	// Planeindex [in] the 0-based plane index (e.g. NV12 is 0 = Y plane, 1 UV plane)
+	Stype      ZeStructureType // Stype [in] type of this structure
+	Pnext      unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Planeindex uint32          // Planeindex [in] the 0-based plane index (e.g. NV12 is 0 = Y plane, 1 UV plane)
 
 }
 
@@ -42,18 +43,18 @@ const ZE_IMAGE_VIEW_PLANAR_EXP_NAME = "ZE_experimental_image_view_planar"
 
 // ZeImageViewPlanarExpVersion (ze_image_view_planar_exp_version_t) Image View Planar Extension Version(s)
 type ZeImageViewPlanarExpVersion uintptr
+
 const (
-	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0 ZeImageViewPlanarExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0 version 1.0
-	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_CURRENT ZeImageViewPlanarExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_CURRENT latest known version
-	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_FORCE_UINT32 ZeImageViewPlanarExpVersion = 0x7fffffff	// ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_* ENUMs
+	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0          ZeImageViewPlanarExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0 version 1.0
+	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_CURRENT      ZeImageViewPlanarExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_CURRENT latest known version
+	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_FORCE_UINT32 ZeImageViewPlanarExpVersion = 0x7fffffff                                                   // ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_* ENUMs
 
 )
 
 // ZeImageViewPlanarExpDesc (ze_image_view_planar_exp_desc_t) Image view planar descriptor
 type ZeImageViewPlanarExpDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Planeindex uint32	// Planeindex [DEPRECATED] no longer supported, use ::ze_image_view_planar_ext_desc_t instead
+	Stype      ZeStructureType // Stype [in] type of this structure
+	Pnext      unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Planeindex uint32          // Planeindex [DEPRECATED] no longer supported, use ::ze_image_view_planar_ext_desc_t instead
 
 }
-

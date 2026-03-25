@@ -22,24 +22,24 @@ const ZES_MEM_PAGE_OFFLINE_STATE_EXP_NAME = "ZES_extension_mem_state"
 
 // ZesMemPageOfflineStateExpVersion (zes_mem_page_offline_state_exp_version_t) Memory State Extension Version(s)
 type ZesMemPageOfflineStateExpVersion uintptr
+
 const (
-	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0 ZesMemPageOfflineStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0 version 1.0
-	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_CURRENT ZesMemPageOfflineStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_CURRENT latest known version
-	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_FORCE_UINT32 ZesMemPageOfflineStateExpVersion = 0x7fffffff	// ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_* ENUMs
+	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0          ZesMemPageOfflineStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0 version 1.0
+	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_CURRENT      ZesMemPageOfflineStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_CURRENT latest known version
+	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_FORCE_UINT32 ZesMemPageOfflineStateExpVersion = 0x7fffffff                                                   // ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_FORCE_UINT32 Value marking end of ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_* ENUMs
 
 )
 
 // ZesMemPageOfflineStateExp (zes_mem_page_offline_state_exp_t) Extension properties for Memory State
-/// 
-/// @details
-///     - This structure may be returned from ::zesMemoryGetState via the
-///       `pNext` member of ::zes_mem_state_t
-///     - These additional parameters get Memory Page Offline Metrics
+// /
+// / @details
+// /     - This structure may be returned from ::zesMemoryGetState via the
+// /       `pNext` member of ::zes_mem_state_t
+// /     - These additional parameters get Memory Page Offline Metrics
 type ZesMemPageOfflineStateExp struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Memorypageoffline uint32	// Memorypageoffline [out] Returns the number of Memory Pages Offline
-	Maxmemorypageoffline uint32	// Maxmemorypageoffline [out] Returns the Allowed Memory Pages Offline
+	Stype                ZesStructureType // Stype [in] type of this structure
+	Pnext                unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Memorypageoffline    uint32           // Memorypageoffline [out] Returns the number of Memory Pages Offline
+	Maxmemorypageoffline uint32           // Maxmemorypageoffline [out] Returns the Allowed Memory Pages Offline
 
 }
-

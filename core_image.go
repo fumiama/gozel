@@ -21,263 +21,268 @@ import (
 
 // ZeImageFlags (ze_image_flags_t) Supported image creation flags
 type ZeImageFlags uint32
+
 const (
-	ZE_IMAGE_FLAG_KERNEL_WRITE ZeImageFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_IMAGE_FLAG_KERNEL_WRITE kernels will write contents
-	ZE_IMAGE_FLAG_BIAS_UNCACHED ZeImageFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_IMAGE_FLAG_BIAS_UNCACHED device should not cache contents
-	ZE_IMAGE_FLAG_FORCE_UINT32 ZeImageFlags = 0x7fffffff	// ZE_IMAGE_FLAG_FORCE_UINT32 Value marking end of ZE_IMAGE_FLAG_* ENUMs
+	ZE_IMAGE_FLAG_KERNEL_WRITE  ZeImageFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_IMAGE_FLAG_KERNEL_WRITE kernels will write contents
+	ZE_IMAGE_FLAG_BIAS_UNCACHED ZeImageFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_IMAGE_FLAG_BIAS_UNCACHED device should not cache contents
+	ZE_IMAGE_FLAG_FORCE_UINT32  ZeImageFlags = 0x7fffffff               // ZE_IMAGE_FLAG_FORCE_UINT32 Value marking end of ZE_IMAGE_FLAG_* ENUMs
 
 )
 
 // ZeImageType (ze_image_type_t) Supported image types
 type ZeImageType uintptr
+
 const (
-	ZE_IMAGE_TYPE_1D ZeImageType = 0	// ZE_IMAGE_TYPE_1D 1D
-	ZE_IMAGE_TYPE_1DARRAY ZeImageType = 1	// ZE_IMAGE_TYPE_1DARRAY 1D array
-	ZE_IMAGE_TYPE_2D ZeImageType = 2	// ZE_IMAGE_TYPE_2D 2D
-	ZE_IMAGE_TYPE_2DARRAY ZeImageType = 3	// ZE_IMAGE_TYPE_2DARRAY 2D array
-	ZE_IMAGE_TYPE_3D ZeImageType = 4	// ZE_IMAGE_TYPE_3D 3D
-	ZE_IMAGE_TYPE_BUFFER ZeImageType = 5	// ZE_IMAGE_TYPE_BUFFER Buffer
-	ZE_IMAGE_TYPE_FORCE_UINT32 ZeImageType = 0x7fffffff	// ZE_IMAGE_TYPE_FORCE_UINT32 Value marking end of ZE_IMAGE_TYPE_* ENUMs
+	ZE_IMAGE_TYPE_1D           ZeImageType = 0          // ZE_IMAGE_TYPE_1D 1D
+	ZE_IMAGE_TYPE_1DARRAY      ZeImageType = 1          // ZE_IMAGE_TYPE_1DARRAY 1D array
+	ZE_IMAGE_TYPE_2D           ZeImageType = 2          // ZE_IMAGE_TYPE_2D 2D
+	ZE_IMAGE_TYPE_2DARRAY      ZeImageType = 3          // ZE_IMAGE_TYPE_2DARRAY 2D array
+	ZE_IMAGE_TYPE_3D           ZeImageType = 4          // ZE_IMAGE_TYPE_3D 3D
+	ZE_IMAGE_TYPE_BUFFER       ZeImageType = 5          // ZE_IMAGE_TYPE_BUFFER Buffer
+	ZE_IMAGE_TYPE_FORCE_UINT32 ZeImageType = 0x7fffffff // ZE_IMAGE_TYPE_FORCE_UINT32 Value marking end of ZE_IMAGE_TYPE_* ENUMs
 
 )
 
 // ZeImageFormatLayout (ze_image_format_layout_t) Supported image format layouts
 type ZeImageFormatLayout uintptr
+
 const (
-	ZE_IMAGE_FORMAT_LAYOUT_8 ZeImageFormatLayout = 0	// ZE_IMAGE_FORMAT_LAYOUT_8 8-bit single component layout
-	ZE_IMAGE_FORMAT_LAYOUT_16 ZeImageFormatLayout = 1	// ZE_IMAGE_FORMAT_LAYOUT_16 16-bit single component layout
-	ZE_IMAGE_FORMAT_LAYOUT_32 ZeImageFormatLayout = 2	// ZE_IMAGE_FORMAT_LAYOUT_32 32-bit single component layout
-	ZE_IMAGE_FORMAT_LAYOUT_8_8 ZeImageFormatLayout = 3	// ZE_IMAGE_FORMAT_LAYOUT_8_8 2-component 8-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_8_8_8_8 ZeImageFormatLayout = 4	// ZE_IMAGE_FORMAT_LAYOUT_8_8_8_8 4-component 8-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_16_16 ZeImageFormatLayout = 5	// ZE_IMAGE_FORMAT_LAYOUT_16_16 2-component 16-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_16_16_16_16 ZeImageFormatLayout = 6	// ZE_IMAGE_FORMAT_LAYOUT_16_16_16_16 4-component 16-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_32_32 ZeImageFormatLayout = 7	// ZE_IMAGE_FORMAT_LAYOUT_32_32 2-component 32-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_32_32_32_32 ZeImageFormatLayout = 8	// ZE_IMAGE_FORMAT_LAYOUT_32_32_32_32 4-component 32-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_10_10_10_2 ZeImageFormatLayout = 9	// ZE_IMAGE_FORMAT_LAYOUT_10_10_10_2 4-component 10_10_10_2 layout
-	ZE_IMAGE_FORMAT_LAYOUT_11_11_10 ZeImageFormatLayout = 10	// ZE_IMAGE_FORMAT_LAYOUT_11_11_10 3-component 11_11_10 layout
-	ZE_IMAGE_FORMAT_LAYOUT_5_6_5 ZeImageFormatLayout = 11	// ZE_IMAGE_FORMAT_LAYOUT_5_6_5 3-component 5_6_5 layout
-	ZE_IMAGE_FORMAT_LAYOUT_5_5_5_1 ZeImageFormatLayout = 12	// ZE_IMAGE_FORMAT_LAYOUT_5_5_5_1 4-component 5_5_5_1 layout
-	ZE_IMAGE_FORMAT_LAYOUT_4_4_4_4 ZeImageFormatLayout = 13	// ZE_IMAGE_FORMAT_LAYOUT_4_4_4_4 4-component 4_4_4_4 layout
-	ZE_IMAGE_FORMAT_LAYOUT_Y8 ZeImageFormatLayout = 14	// ZE_IMAGE_FORMAT_LAYOUT_Y8 Media Format: Y8. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_NV12 ZeImageFormatLayout = 15	// ZE_IMAGE_FORMAT_LAYOUT_NV12 Media Format: NV12. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_YUYV ZeImageFormatLayout = 16	// ZE_IMAGE_FORMAT_LAYOUT_YUYV Media Format: YUYV. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_VYUY ZeImageFormatLayout = 17	// ZE_IMAGE_FORMAT_LAYOUT_VYUY Media Format: VYUY. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_YVYU ZeImageFormatLayout = 18	// ZE_IMAGE_FORMAT_LAYOUT_YVYU Media Format: YVYU. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_UYVY ZeImageFormatLayout = 19	// ZE_IMAGE_FORMAT_LAYOUT_UYVY Media Format: UYVY. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_AYUV ZeImageFormatLayout = 20	// ZE_IMAGE_FORMAT_LAYOUT_AYUV Media Format: AYUV. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_P010 ZeImageFormatLayout = 21	// ZE_IMAGE_FORMAT_LAYOUT_P010 Media Format: P010. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_Y410 ZeImageFormatLayout = 22	// ZE_IMAGE_FORMAT_LAYOUT_Y410 Media Format: Y410. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_P012 ZeImageFormatLayout = 23	// ZE_IMAGE_FORMAT_LAYOUT_P012 Media Format: P012. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_Y16 ZeImageFormatLayout = 24	// ZE_IMAGE_FORMAT_LAYOUT_Y16 Media Format: Y16. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_P016 ZeImageFormatLayout = 25	// ZE_IMAGE_FORMAT_LAYOUT_P016 Media Format: P016. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_Y216 ZeImageFormatLayout = 26	// ZE_IMAGE_FORMAT_LAYOUT_Y216 Media Format: Y216. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_P216 ZeImageFormatLayout = 27	// ZE_IMAGE_FORMAT_LAYOUT_P216 Media Format: P216. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_P8 ZeImageFormatLayout = 28	// ZE_IMAGE_FORMAT_LAYOUT_P8 Media Format: P8. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_YUY2 ZeImageFormatLayout = 29	// ZE_IMAGE_FORMAT_LAYOUT_YUY2 Media Format: YUY2. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_A8P8 ZeImageFormatLayout = 30	// ZE_IMAGE_FORMAT_LAYOUT_A8P8 Media Format: A8P8. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_IA44 ZeImageFormatLayout = 31	// ZE_IMAGE_FORMAT_LAYOUT_IA44 Media Format: IA44. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_AI44 ZeImageFormatLayout = 32	// ZE_IMAGE_FORMAT_LAYOUT_AI44 Media Format: AI44. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_Y416 ZeImageFormatLayout = 33	// ZE_IMAGE_FORMAT_LAYOUT_Y416 Media Format: Y416. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_Y210 ZeImageFormatLayout = 34	// ZE_IMAGE_FORMAT_LAYOUT_Y210 Media Format: Y210. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_I420 ZeImageFormatLayout = 35	// ZE_IMAGE_FORMAT_LAYOUT_I420 Media Format: I420. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_YV12 ZeImageFormatLayout = 36	// ZE_IMAGE_FORMAT_LAYOUT_YV12 Media Format: YV12. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_400P ZeImageFormatLayout = 37	// ZE_IMAGE_FORMAT_LAYOUT_400P Media Format: 400P. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_422H ZeImageFormatLayout = 38	// ZE_IMAGE_FORMAT_LAYOUT_422H Media Format: 422H. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_422V ZeImageFormatLayout = 39	// ZE_IMAGE_FORMAT_LAYOUT_422V Media Format: 422V. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_444P ZeImageFormatLayout = 40	// ZE_IMAGE_FORMAT_LAYOUT_444P Media Format: 444P. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_RGBP ZeImageFormatLayout = 41	// ZE_IMAGE_FORMAT_LAYOUT_RGBP Media Format: RGBP. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_BRGP ZeImageFormatLayout = 42	// ZE_IMAGE_FORMAT_LAYOUT_BRGP Media Format: BRGP. Format type and swizzle is ignored for this.
-	ZE_IMAGE_FORMAT_LAYOUT_8_8_8 ZeImageFormatLayout = 43	// ZE_IMAGE_FORMAT_LAYOUT_8_8_8 3-component 8-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_16_16_16 ZeImageFormatLayout = 44	// ZE_IMAGE_FORMAT_LAYOUT_16_16_16 3-component 16-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_32_32_32 ZeImageFormatLayout = 45	// ZE_IMAGE_FORMAT_LAYOUT_32_32_32 3-component 32-bit layout
-	ZE_IMAGE_FORMAT_LAYOUT_FORCE_UINT32 ZeImageFormatLayout = 0x7fffffff	// ZE_IMAGE_FORMAT_LAYOUT_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_LAYOUT_* ENUMs
+	ZE_IMAGE_FORMAT_LAYOUT_8            ZeImageFormatLayout = 0          // ZE_IMAGE_FORMAT_LAYOUT_8 8-bit single component layout
+	ZE_IMAGE_FORMAT_LAYOUT_16           ZeImageFormatLayout = 1          // ZE_IMAGE_FORMAT_LAYOUT_16 16-bit single component layout
+	ZE_IMAGE_FORMAT_LAYOUT_32           ZeImageFormatLayout = 2          // ZE_IMAGE_FORMAT_LAYOUT_32 32-bit single component layout
+	ZE_IMAGE_FORMAT_LAYOUT_8_8          ZeImageFormatLayout = 3          // ZE_IMAGE_FORMAT_LAYOUT_8_8 2-component 8-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_8_8_8_8      ZeImageFormatLayout = 4          // ZE_IMAGE_FORMAT_LAYOUT_8_8_8_8 4-component 8-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_16_16        ZeImageFormatLayout = 5          // ZE_IMAGE_FORMAT_LAYOUT_16_16 2-component 16-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_16_16_16_16  ZeImageFormatLayout = 6          // ZE_IMAGE_FORMAT_LAYOUT_16_16_16_16 4-component 16-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_32_32        ZeImageFormatLayout = 7          // ZE_IMAGE_FORMAT_LAYOUT_32_32 2-component 32-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_32_32_32_32  ZeImageFormatLayout = 8          // ZE_IMAGE_FORMAT_LAYOUT_32_32_32_32 4-component 32-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_10_10_10_2   ZeImageFormatLayout = 9          // ZE_IMAGE_FORMAT_LAYOUT_10_10_10_2 4-component 10_10_10_2 layout
+	ZE_IMAGE_FORMAT_LAYOUT_11_11_10     ZeImageFormatLayout = 10         // ZE_IMAGE_FORMAT_LAYOUT_11_11_10 3-component 11_11_10 layout
+	ZE_IMAGE_FORMAT_LAYOUT_5_6_5        ZeImageFormatLayout = 11         // ZE_IMAGE_FORMAT_LAYOUT_5_6_5 3-component 5_6_5 layout
+	ZE_IMAGE_FORMAT_LAYOUT_5_5_5_1      ZeImageFormatLayout = 12         // ZE_IMAGE_FORMAT_LAYOUT_5_5_5_1 4-component 5_5_5_1 layout
+	ZE_IMAGE_FORMAT_LAYOUT_4_4_4_4      ZeImageFormatLayout = 13         // ZE_IMAGE_FORMAT_LAYOUT_4_4_4_4 4-component 4_4_4_4 layout
+	ZE_IMAGE_FORMAT_LAYOUT_Y8           ZeImageFormatLayout = 14         // ZE_IMAGE_FORMAT_LAYOUT_Y8 Media Format: Y8. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_NV12         ZeImageFormatLayout = 15         // ZE_IMAGE_FORMAT_LAYOUT_NV12 Media Format: NV12. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_YUYV         ZeImageFormatLayout = 16         // ZE_IMAGE_FORMAT_LAYOUT_YUYV Media Format: YUYV. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_VYUY         ZeImageFormatLayout = 17         // ZE_IMAGE_FORMAT_LAYOUT_VYUY Media Format: VYUY. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_YVYU         ZeImageFormatLayout = 18         // ZE_IMAGE_FORMAT_LAYOUT_YVYU Media Format: YVYU. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_UYVY         ZeImageFormatLayout = 19         // ZE_IMAGE_FORMAT_LAYOUT_UYVY Media Format: UYVY. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_AYUV         ZeImageFormatLayout = 20         // ZE_IMAGE_FORMAT_LAYOUT_AYUV Media Format: AYUV. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_P010         ZeImageFormatLayout = 21         // ZE_IMAGE_FORMAT_LAYOUT_P010 Media Format: P010. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_Y410         ZeImageFormatLayout = 22         // ZE_IMAGE_FORMAT_LAYOUT_Y410 Media Format: Y410. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_P012         ZeImageFormatLayout = 23         // ZE_IMAGE_FORMAT_LAYOUT_P012 Media Format: P012. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_Y16          ZeImageFormatLayout = 24         // ZE_IMAGE_FORMAT_LAYOUT_Y16 Media Format: Y16. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_P016         ZeImageFormatLayout = 25         // ZE_IMAGE_FORMAT_LAYOUT_P016 Media Format: P016. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_Y216         ZeImageFormatLayout = 26         // ZE_IMAGE_FORMAT_LAYOUT_Y216 Media Format: Y216. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_P216         ZeImageFormatLayout = 27         // ZE_IMAGE_FORMAT_LAYOUT_P216 Media Format: P216. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_P8           ZeImageFormatLayout = 28         // ZE_IMAGE_FORMAT_LAYOUT_P8 Media Format: P8. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_YUY2         ZeImageFormatLayout = 29         // ZE_IMAGE_FORMAT_LAYOUT_YUY2 Media Format: YUY2. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_A8P8         ZeImageFormatLayout = 30         // ZE_IMAGE_FORMAT_LAYOUT_A8P8 Media Format: A8P8. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_IA44         ZeImageFormatLayout = 31         // ZE_IMAGE_FORMAT_LAYOUT_IA44 Media Format: IA44. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_AI44         ZeImageFormatLayout = 32         // ZE_IMAGE_FORMAT_LAYOUT_AI44 Media Format: AI44. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_Y416         ZeImageFormatLayout = 33         // ZE_IMAGE_FORMAT_LAYOUT_Y416 Media Format: Y416. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_Y210         ZeImageFormatLayout = 34         // ZE_IMAGE_FORMAT_LAYOUT_Y210 Media Format: Y210. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_I420         ZeImageFormatLayout = 35         // ZE_IMAGE_FORMAT_LAYOUT_I420 Media Format: I420. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_YV12         ZeImageFormatLayout = 36         // ZE_IMAGE_FORMAT_LAYOUT_YV12 Media Format: YV12. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_400P         ZeImageFormatLayout = 37         // ZE_IMAGE_FORMAT_LAYOUT_400P Media Format: 400P. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_422H         ZeImageFormatLayout = 38         // ZE_IMAGE_FORMAT_LAYOUT_422H Media Format: 422H. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_422V         ZeImageFormatLayout = 39         // ZE_IMAGE_FORMAT_LAYOUT_422V Media Format: 422V. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_444P         ZeImageFormatLayout = 40         // ZE_IMAGE_FORMAT_LAYOUT_444P Media Format: 444P. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_RGBP         ZeImageFormatLayout = 41         // ZE_IMAGE_FORMAT_LAYOUT_RGBP Media Format: RGBP. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_BRGP         ZeImageFormatLayout = 42         // ZE_IMAGE_FORMAT_LAYOUT_BRGP Media Format: BRGP. Format type and swizzle is ignored for this.
+	ZE_IMAGE_FORMAT_LAYOUT_8_8_8        ZeImageFormatLayout = 43         // ZE_IMAGE_FORMAT_LAYOUT_8_8_8 3-component 8-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_16_16_16     ZeImageFormatLayout = 44         // ZE_IMAGE_FORMAT_LAYOUT_16_16_16 3-component 16-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_32_32_32     ZeImageFormatLayout = 45         // ZE_IMAGE_FORMAT_LAYOUT_32_32_32 3-component 32-bit layout
+	ZE_IMAGE_FORMAT_LAYOUT_FORCE_UINT32 ZeImageFormatLayout = 0x7fffffff // ZE_IMAGE_FORMAT_LAYOUT_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_LAYOUT_* ENUMs
 
 )
 
 // ZeImageFormatType (ze_image_format_type_t) Supported image format types
 type ZeImageFormatType uintptr
+
 const (
-	ZE_IMAGE_FORMAT_TYPE_UINT ZeImageFormatType = 0	// ZE_IMAGE_FORMAT_TYPE_UINT Unsigned integer
-	ZE_IMAGE_FORMAT_TYPE_SINT ZeImageFormatType = 1	// ZE_IMAGE_FORMAT_TYPE_SINT Signed integer
-	ZE_IMAGE_FORMAT_TYPE_UNORM ZeImageFormatType = 2	// ZE_IMAGE_FORMAT_TYPE_UNORM Unsigned normalized integer
-	ZE_IMAGE_FORMAT_TYPE_SNORM ZeImageFormatType = 3	// ZE_IMAGE_FORMAT_TYPE_SNORM Signed normalized integer
-	ZE_IMAGE_FORMAT_TYPE_FLOAT ZeImageFormatType = 4	// ZE_IMAGE_FORMAT_TYPE_FLOAT Float
-	ZE_IMAGE_FORMAT_TYPE_FORCE_UINT32 ZeImageFormatType = 0x7fffffff	// ZE_IMAGE_FORMAT_TYPE_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_TYPE_* ENUMs
+	ZE_IMAGE_FORMAT_TYPE_UINT         ZeImageFormatType = 0          // ZE_IMAGE_FORMAT_TYPE_UINT Unsigned integer
+	ZE_IMAGE_FORMAT_TYPE_SINT         ZeImageFormatType = 1          // ZE_IMAGE_FORMAT_TYPE_SINT Signed integer
+	ZE_IMAGE_FORMAT_TYPE_UNORM        ZeImageFormatType = 2          // ZE_IMAGE_FORMAT_TYPE_UNORM Unsigned normalized integer
+	ZE_IMAGE_FORMAT_TYPE_SNORM        ZeImageFormatType = 3          // ZE_IMAGE_FORMAT_TYPE_SNORM Signed normalized integer
+	ZE_IMAGE_FORMAT_TYPE_FLOAT        ZeImageFormatType = 4          // ZE_IMAGE_FORMAT_TYPE_FLOAT Float
+	ZE_IMAGE_FORMAT_TYPE_FORCE_UINT32 ZeImageFormatType = 0x7fffffff // ZE_IMAGE_FORMAT_TYPE_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_TYPE_* ENUMs
 
 )
 
 // ZeImageFormatSwizzle (ze_image_format_swizzle_t) Supported image format component swizzle into channel
 type ZeImageFormatSwizzle uintptr
+
 const (
-	ZE_IMAGE_FORMAT_SWIZZLE_R ZeImageFormatSwizzle = 0	// ZE_IMAGE_FORMAT_SWIZZLE_R Red component
-	ZE_IMAGE_FORMAT_SWIZZLE_G ZeImageFormatSwizzle = 1	// ZE_IMAGE_FORMAT_SWIZZLE_G Green component
-	ZE_IMAGE_FORMAT_SWIZZLE_B ZeImageFormatSwizzle = 2	// ZE_IMAGE_FORMAT_SWIZZLE_B Blue component
-	ZE_IMAGE_FORMAT_SWIZZLE_A ZeImageFormatSwizzle = 3	// ZE_IMAGE_FORMAT_SWIZZLE_A Alpha component
-	ZE_IMAGE_FORMAT_SWIZZLE_0 ZeImageFormatSwizzle = 4	// ZE_IMAGE_FORMAT_SWIZZLE_0 Zero
-	ZE_IMAGE_FORMAT_SWIZZLE_1 ZeImageFormatSwizzle = 5	// ZE_IMAGE_FORMAT_SWIZZLE_1 One
-	ZE_IMAGE_FORMAT_SWIZZLE_X ZeImageFormatSwizzle = 6	// ZE_IMAGE_FORMAT_SWIZZLE_X Don't care
-	ZE_IMAGE_FORMAT_SWIZZLE_D ZeImageFormatSwizzle = 7	// ZE_IMAGE_FORMAT_SWIZZLE_D Depth Component
-	ZE_IMAGE_FORMAT_SWIZZLE_FORCE_UINT32 ZeImageFormatSwizzle = 0x7fffffff	// ZE_IMAGE_FORMAT_SWIZZLE_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_SWIZZLE_* ENUMs
+	ZE_IMAGE_FORMAT_SWIZZLE_R            ZeImageFormatSwizzle = 0          // ZE_IMAGE_FORMAT_SWIZZLE_R Red component
+	ZE_IMAGE_FORMAT_SWIZZLE_G            ZeImageFormatSwizzle = 1          // ZE_IMAGE_FORMAT_SWIZZLE_G Green component
+	ZE_IMAGE_FORMAT_SWIZZLE_B            ZeImageFormatSwizzle = 2          // ZE_IMAGE_FORMAT_SWIZZLE_B Blue component
+	ZE_IMAGE_FORMAT_SWIZZLE_A            ZeImageFormatSwizzle = 3          // ZE_IMAGE_FORMAT_SWIZZLE_A Alpha component
+	ZE_IMAGE_FORMAT_SWIZZLE_0            ZeImageFormatSwizzle = 4          // ZE_IMAGE_FORMAT_SWIZZLE_0 Zero
+	ZE_IMAGE_FORMAT_SWIZZLE_1            ZeImageFormatSwizzle = 5          // ZE_IMAGE_FORMAT_SWIZZLE_1 One
+	ZE_IMAGE_FORMAT_SWIZZLE_X            ZeImageFormatSwizzle = 6          // ZE_IMAGE_FORMAT_SWIZZLE_X Don't care
+	ZE_IMAGE_FORMAT_SWIZZLE_D            ZeImageFormatSwizzle = 7          // ZE_IMAGE_FORMAT_SWIZZLE_D Depth Component
+	ZE_IMAGE_FORMAT_SWIZZLE_FORCE_UINT32 ZeImageFormatSwizzle = 0x7fffffff // ZE_IMAGE_FORMAT_SWIZZLE_FORCE_UINT32 Value marking end of ZE_IMAGE_FORMAT_SWIZZLE_* ENUMs
 
 )
 
-// ZeImageFormat (ze_image_format_t) Image format 
+// ZeImageFormat (ze_image_format_t) Image format
 type ZeImageFormat struct {
-	Layout ZeImageFormatLayout	// Layout [in] image format component layout (e.g. N-component layouts and media formats)
-	Type ZeImageFormatType	// Type [in] image format type
-	X ZeImageFormatSwizzle	// X [in] image component swizzle into channel x
-	Y ZeImageFormatSwizzle	// Y [in] image component swizzle into channel y
-	Z ZeImageFormatSwizzle	// Z [in] image component swizzle into channel z
-	W ZeImageFormatSwizzle	// W [in] image component swizzle into channel w
+	Layout ZeImageFormatLayout  // Layout [in] image format component layout (e.g. N-component layouts and media formats)
+	Type   ZeImageFormatType    // Type [in] image format type
+	X      ZeImageFormatSwizzle // X [in] image component swizzle into channel x
+	Y      ZeImageFormatSwizzle // Y [in] image component swizzle into channel y
+	Z      ZeImageFormatSwizzle // Z [in] image component swizzle into channel z
+	W      ZeImageFormatSwizzle // W [in] image component swizzle into channel w
 
 }
 
 // ZeImageDesc (ze_image_desc_t) Image descriptor
 type ZeImageDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeImageFlags	// Flags [in] creation flags. must be 0 (default) or a valid combination of ::ze_image_flag_t; default is read-only, cached access.
-	Type ZeImageType	// Type [in] image type. Media format layouts are unsupported for ::ZE_IMAGE_TYPE_BUFFER
-	Format ZeImageFormat	// Format [in] image format
-	Width uint64	// Width [in] width dimension. ::ZE_IMAGE_TYPE_BUFFER: size in bytes; see the `maxImageBufferSize` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_1D, ::ZE_IMAGE_TYPE_1DARRAY: width in pixels; see the `maxImageDims1D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_2D, ::ZE_IMAGE_TYPE_2DARRAY: width in pixels; see the `maxImageDims2D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_3D: width in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits.
-	Height uint32	// Height [in] height dimension. ::ZE_IMAGE_TYPE_2D, ::ZE_IMAGE_TYPE_2DARRAY: height in pixels; see the `maxImageDims2D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_3D: height in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits. other: ignored.
-	Depth uint32	// Depth [in] depth dimension. ::ZE_IMAGE_TYPE_3D: depth in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits. other: ignored.
-	Arraylevels uint32	// Arraylevels [in] array levels. ::ZE_IMAGE_TYPE_1DARRAY, ::ZE_IMAGE_TYPE_2DARRAY: see the `maxImageArraySlices` member of ::ze_device_image_properties_t for limits. other: ignored.
-	Miplevels uint32	// Miplevels [in] mipmap levels (must be 0)
+	Stype       ZeStructureType // Stype [in] type of this structure
+	Pnext       unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags       ZeImageFlags    // Flags [in] creation flags. must be 0 (default) or a valid combination of ::ze_image_flag_t; default is read-only, cached access.
+	Type        ZeImageType     // Type [in] image type. Media format layouts are unsupported for ::ZE_IMAGE_TYPE_BUFFER
+	Format      ZeImageFormat   // Format [in] image format
+	Width       uint64          // Width [in] width dimension. ::ZE_IMAGE_TYPE_BUFFER: size in bytes; see the `maxImageBufferSize` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_1D, ::ZE_IMAGE_TYPE_1DARRAY: width in pixels; see the `maxImageDims1D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_2D, ::ZE_IMAGE_TYPE_2DARRAY: width in pixels; see the `maxImageDims2D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_3D: width in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits.
+	Height      uint32          // Height [in] height dimension. ::ZE_IMAGE_TYPE_2D, ::ZE_IMAGE_TYPE_2DARRAY: height in pixels; see the `maxImageDims2D` member of ::ze_device_image_properties_t for limits. ::ZE_IMAGE_TYPE_3D: height in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits. other: ignored.
+	Depth       uint32          // Depth [in] depth dimension. ::ZE_IMAGE_TYPE_3D: depth in pixels; see the `maxImageDims3D` member of ::ze_device_image_properties_t for limits. other: ignored.
+	Arraylevels uint32          // Arraylevels [in] array levels. ::ZE_IMAGE_TYPE_1DARRAY, ::ZE_IMAGE_TYPE_2DARRAY: see the `maxImageArraySlices` member of ::ze_device_image_properties_t for limits. other: ignored.
+	Miplevels   uint32          // Miplevels [in] mipmap levels (must be 0)
 
 }
 
 // ZeImageSamplerFilterFlags (ze_image_sampler_filter_flags_t) Supported sampler filtering flags
 type ZeImageSamplerFilterFlags uint32
+
 const (
-	ZE_IMAGE_SAMPLER_FILTER_FLAG_POINT ZeImageSamplerFilterFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_IMAGE_SAMPLER_FILTER_FLAG_POINT device supports point filtering
-	ZE_IMAGE_SAMPLER_FILTER_FLAG_LINEAR ZeImageSamplerFilterFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_IMAGE_SAMPLER_FILTER_FLAG_LINEAR device supports linear filtering
-	ZE_IMAGE_SAMPLER_FILTER_FLAG_FORCE_UINT32 ZeImageSamplerFilterFlags = 0x7fffffff	// ZE_IMAGE_SAMPLER_FILTER_FLAG_FORCE_UINT32 Value marking end of ZE_IMAGE_SAMPLER_FILTER_FLAG_* ENUMs
+	ZE_IMAGE_SAMPLER_FILTER_FLAG_POINT        ZeImageSamplerFilterFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_IMAGE_SAMPLER_FILTER_FLAG_POINT device supports point filtering
+	ZE_IMAGE_SAMPLER_FILTER_FLAG_LINEAR       ZeImageSamplerFilterFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_IMAGE_SAMPLER_FILTER_FLAG_LINEAR device supports linear filtering
+	ZE_IMAGE_SAMPLER_FILTER_FLAG_FORCE_UINT32 ZeImageSamplerFilterFlags = 0x7fffffff               // ZE_IMAGE_SAMPLER_FILTER_FLAG_FORCE_UINT32 Value marking end of ZE_IMAGE_SAMPLER_FILTER_FLAG_* ENUMs
 
 )
 
 // ZeImageProperties (ze_image_properties_t) Image properties
 type ZeImageProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Samplerfilterflags ZeImageSamplerFilterFlags	// Samplerfilterflags [out] supported sampler filtering. returns 0 (unsupported) or a combination of ::ze_image_sampler_filter_flag_t.
+	Stype              ZeStructureType           // Stype [in] type of this structure
+	Pnext              unsafe.Pointer            // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Samplerfilterflags ZeImageSamplerFilterFlags // Samplerfilterflags [out] supported sampler filtering. returns 0 (unsupported) or a combination of ::ze_image_sampler_filter_flag_t.
 
 }
 
 // ZeImageGetProperties Retrieves supported properties of an image.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == pImageProperties`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < desc->flags`
-///         + `::ZE_IMAGE_TYPE_BUFFER < desc->type`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == pImageProperties`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < desc->flags`
+// /         + `::ZE_IMAGE_TYPE_BUFFER < desc->type`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeImageGetProperties(
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	desc *ZeImageDesc,	// desc [in] pointer to image descriptor
-	pImageProperties *ZeImageProperties,	// pImageProperties [out] pointer to image properties
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	desc *ZeImageDesc, // desc [in] pointer to image descriptor
+	pImageProperties *ZeImageProperties, // pImageProperties [out] pointer to image properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeImageGetProperties", uintptr(hDevice), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(pImageProperties)))
 }
 
 // ZeImageCreate Creates an image on the context.
-/// 
-/// @details
-///     - The application must only use the image for the device, or its
-///       sub-devices, which was provided during creation.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @remarks
-///   _Analogues_
-///     - clCreateImage
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == phImage`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < desc->flags`
-///         + `::ZE_IMAGE_TYPE_BUFFER < desc->type`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT
+// /
+// / @details
+// /     - The application must only use the image for the device, or its
+// /       sub-devices, which was provided during creation.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - clCreateImage
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == phImage`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < desc->flags`
+// /         + `::ZE_IMAGE_TYPE_BUFFER < desc->type`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT
 func ZeImageCreate(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	desc *ZeImageDesc,	// desc [in] pointer to image descriptor
-	phImage *ZeImageHandle,	// phImage [out] pointer to handle of image object created
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	desc *ZeImageDesc, // desc [in] pointer to image descriptor
+	phImage *ZeImageHandle, // phImage [out] pointer to handle of image object created
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeImageCreate", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phImage)))
 }
 
 // ZeImageDestroy Deletes an image object.
-/// 
-/// @details
-///     - The application must ensure the device is not currently referencing
-///       the image before it is deleted.
-///     - The implementation of this function may immediately free all Host and
-///       Device allocations associated with this image.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same image handle.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hImage`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The application must ensure the device is not currently referencing
+// /       the image before it is deleted.
+// /     - The implementation of this function may immediately free all Host and
+// /       Device allocations associated with this image.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same image handle.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hImage`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeImageDestroy(
-	hImage ZeImageHandle,	// hImage [in][release] handle of image object to destroy
+	hImage ZeImageHandle, // hImage [in][release] handle of image object to destroy
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeImageDestroy", uintptr(hImage))
 }
-

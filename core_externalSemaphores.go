@@ -24,10 +24,11 @@ const ZE_EXTERNAL_SEMAPHORES_EXTENSION_NAME = "ZE_extension_external_semaphores"
 
 // ZeExternalSemaphoreExtVersion (ze_external_semaphore_ext_version_t) External Semaphores Extension Version
 type ZeExternalSemaphoreExtVersion uintptr
+
 const (
-	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0 ZeExternalSemaphoreExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0 version 1.0
-	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_CURRENT ZeExternalSemaphoreExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_CURRENT latest known version
-	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_FORCE_UINT32 ZeExternalSemaphoreExtVersion = 0x7fffffff	// ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_* ENUMs
+	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0          ZeExternalSemaphoreExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0 version 1.0
+	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_CURRENT      ZeExternalSemaphoreExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_CURRENT latest known version
+	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_FORCE_UINT32 ZeExternalSemaphoreExtVersion = 0x7fffffff                                                   // ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_* ENUMs
 
 )
 
@@ -36,220 +37,220 @@ type ZeExternalSemaphoreExtHandle uintptr
 
 // ZeExternalSemaphoreExtFlags (ze_external_semaphore_ext_flags_t) External Semaphores Type Flags
 type ZeExternalSemaphoreExtFlags uint32
+
 const (
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_FD ZeExternalSemaphoreExtFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_FD Semaphore is an Linux opaque file descriptor
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32 ZeExternalSemaphoreExtFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32 Semaphore is an opaque Win32 handle for monitored fence
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32_KMT ZeExternalSemaphoreExtFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32_KMT Semaphore is an opaque Win32 KMT handle for monitored fence
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE ZeExternalSemaphoreExtFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE Semaphore is a D3D12 fence
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D11_FENCE ZeExternalSemaphoreExtFlags = /* ZE_BIT(4) */(( 1 << 4 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D11_FENCE Semaphore is a D3D11 fence
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX ZeExternalSemaphoreExtFlags = /* ZE_BIT(5) */(( 1 << 5 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX Semaphore is a keyed mutex for Win32
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX_KMT ZeExternalSemaphoreExtFlags = /* ZE_BIT(6) */(( 1 << 6 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX_KMT Semaphore is a keyed mutex for Win32 KMT
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_FD ZeExternalSemaphoreExtFlags = /* ZE_BIT(7) */(( 1 << 7 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_FD Semaphore is a Vulkan Timeline semaphore for Linux
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_WIN32 ZeExternalSemaphoreExtFlags = /* ZE_BIT(8) */(( 1 << 8 ))	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_WIN32 Semaphore is a Vulkan Timeline semaphore for Win32
-	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_FORCE_UINT32 ZeExternalSemaphoreExtFlags = 0x7fffffff	// ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_FORCE_UINT32 Value marking end of ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_* ENUMs
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_FD                   ZeExternalSemaphoreExtFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_FD Semaphore is an Linux opaque file descriptor
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32                ZeExternalSemaphoreExtFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32 Semaphore is an opaque Win32 handle for monitored fence
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32_KMT            ZeExternalSemaphoreExtFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_OPAQUE_WIN32_KMT Semaphore is an opaque Win32 KMT handle for monitored fence
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE                 ZeExternalSemaphoreExtFlags = /* ZE_BIT(3) */ (1 << 3) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE Semaphore is a D3D12 fence
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D11_FENCE                 ZeExternalSemaphoreExtFlags = /* ZE_BIT(4) */ (1 << 4) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D11_FENCE Semaphore is a D3D11 fence
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX                 ZeExternalSemaphoreExtFlags = /* ZE_BIT(5) */ (1 << 5) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX Semaphore is a keyed mutex for Win32
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX_KMT             ZeExternalSemaphoreExtFlags = /* ZE_BIT(6) */ (1 << 6) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_KEYED_MUTEX_KMT Semaphore is a keyed mutex for Win32 KMT
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_FD    ZeExternalSemaphoreExtFlags = /* ZE_BIT(7) */ (1 << 7) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_FD Semaphore is a Vulkan Timeline semaphore for Linux
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_WIN32 ZeExternalSemaphoreExtFlags = /* ZE_BIT(8) */ (1 << 8) // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_VK_TIMELINE_SEMAPHORE_WIN32 Semaphore is a Vulkan Timeline semaphore for Win32
+	ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_FORCE_UINT32                ZeExternalSemaphoreExtFlags = 0x7fffffff               // ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_FORCE_UINT32 Value marking end of ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_* ENUMs
 
 )
 
 // ZeExternalSemaphoreExtDesc (ze_external_semaphore_ext_desc_t) External Semaphore Descriptor
 type ZeExternalSemaphoreExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalSemaphoreExtFlags	// Flags [in] The flags describing the type of the semaphore. must be 0 (default) or a valid combination of ::ze_external_semaphore_ext_flag_t. When importing a semaphore, pNext should be pointing to one of the following structures: ::ze_external_semaphore_win32_ext_desc_t or ::ze_external_semaphore_fd_ext_desc_t.
+	Stype ZeStructureType             // Stype [in] type of this structure
+	Pnext unsafe.Pointer              // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeExternalSemaphoreExtFlags // Flags [in] The flags describing the type of the semaphore. must be 0 (default) or a valid combination of ::ze_external_semaphore_ext_flag_t. When importing a semaphore, pNext should be pointing to one of the following structures: ::ze_external_semaphore_win32_ext_desc_t or ::ze_external_semaphore_fd_ext_desc_t.
 
 }
 
 // ZeExternalSemaphoreWin32ExtDesc (ze_external_semaphore_win32_ext_desc_t) External Semaphore Win32 Descriptor
 type ZeExternalSemaphoreWin32ExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Handle unsafe.Pointer	// Handle [in] Win32 handle of the semaphore. Must be a valid Win32 handle.
-	Name *byte	// Name [in] Name of the semaphore. Must be a valid null-terminated string.
+	Stype  ZeStructureType // Stype [in] type of this structure
+	Pnext  unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Handle unsafe.Pointer  // Handle [in] Win32 handle of the semaphore. Must be a valid Win32 handle.
+	Name   *byte           // Name [in] Name of the semaphore. Must be a valid null-terminated string.
 
 }
 
 // ZeExternalSemaphoreFdExtDesc (ze_external_semaphore_fd_ext_desc_t) External Semaphore FD Descriptor
 type ZeExternalSemaphoreFdExtDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Fd int32	// Fd [in] File descriptor of the semaphore. Must be a valid file descriptor.
+	Stype ZeStructureType // Stype [in] type of this structure
+	Pnext unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Fd    int32           // Fd [in] File descriptor of the semaphore. Must be a valid file descriptor.
 
 }
 
 // ZeExternalSemaphoreSignalParamsExt (ze_external_semaphore_signal_params_ext_t) External Semaphore Signal parameters
 type ZeExternalSemaphoreSignalParamsExt struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Value uint64	// Value [in] [optional] Value to signal. Specified by user as an expected value with some of semaphore types, such as ::ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE.
+	Stype ZeStructureType // Stype [in] type of this structure
+	Pnext unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Value uint64          // Value [in] [optional] Value to signal. Specified by user as an expected value with some of semaphore types, such as ::ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE.
 
 }
 
 // ZeExternalSemaphoreWaitParamsExt (ze_external_semaphore_wait_params_ext_t) External Semaphore Wait parameters
 type ZeExternalSemaphoreWaitParamsExt struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Value uint64	// Value [in] [optional] Value to wait for. Specified by user as an expected value with some of semaphore types, such as ::ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE.
+	Stype ZeStructureType // Stype [in] type of this structure
+	Pnext unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Value uint64          // Value [in] [optional] Value to wait for. Specified by user as an expected value with some of semaphore types, such as ::ZE_EXTERNAL_SEMAPHORE_EXT_FLAG_D3D12_FENCE.
 
 }
 
 // ZeDeviceImportExternalSemaphoreExt Import an external semaphore
-/// 
-/// @details
-///     - Imports an external semaphore.
-///     - This function may be called from simultaneous threads with the same
-///       device handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == phSemaphore`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x1ff < desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - Imports an external semaphore.
+// /     - This function may be called from simultaneous threads with the same
+// /       device handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == phSemaphore`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x1ff < desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeDeviceImportExternalSemaphoreExt(
-	hDevice ZeDeviceHandle,	// hDevice [in] The device handle.
-	desc *ZeExternalSemaphoreExtDesc,	// desc [in] The pointer to external semaphore descriptor.
-	phSemaphore *ZeExternalSemaphoreExtHandle,	// phSemaphore [out] The handle of the external semaphore imported.
+	hDevice ZeDeviceHandle, // hDevice [in] The device handle.
+	desc *ZeExternalSemaphoreExtDesc, // desc [in] The pointer to external semaphore descriptor.
+	phSemaphore *ZeExternalSemaphoreExtHandle, // phSemaphore [out] The handle of the external semaphore imported.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDeviceImportExternalSemaphoreExt", uintptr(hDevice), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phSemaphore)))
 }
 
 // ZeDeviceReleaseExternalSemaphoreExt Release an external semaphore
-/// 
-/// @details
-///     - The application must ensure the device is not currently referencing
-///       the semaphore before it is released.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same semaphore handle.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hSemaphore`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The application must ensure the device is not currently referencing
+// /       the semaphore before it is released.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same semaphore handle.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hSemaphore`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeDeviceReleaseExternalSemaphoreExt(
-	hSemaphore ZeExternalSemaphoreExtHandle,	// hSemaphore [in] The handle of the external semaphore.
+	hSemaphore ZeExternalSemaphoreExtHandle, // hSemaphore [in] The handle of the external semaphore.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDeviceReleaseExternalSemaphoreExt", uintptr(hSemaphore))
 }
 
 // ZeCommandListAppendSignalExternalSemaphoreExt Signal an external semaphore
-/// 
-/// @details
-///     - Signals an external semaphore.
-///     - This function must only be used with an immediate command list.
-///     - This function may be called from simultaneous threads with the same
-///       command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phSemaphores`
-///         + `nullptr == signalParams`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
-///         + `(nullptr == phSemaphores) && (0 < numSemaphores)`
-///         + `(nullptr == signalParams) && (0 < numSemaphores)`
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///         + Commandlist handle does not correspond to an immediate command list
+// /
+// / @details
+// /     - Signals an external semaphore.
+// /     - This function must only be used with an immediate command list.
+// /     - This function may be called from simultaneous threads with the same
+// /       command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phSemaphores`
+// /         + `nullptr == signalParams`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /         + `(nullptr == phSemaphores) && (0 < numSemaphores)`
+// /         + `(nullptr == signalParams) && (0 < numSemaphores)`
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /         + Commandlist handle does not correspond to an immediate command list
 func ZeCommandListAppendSignalExternalSemaphoreExt(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] The command list handle.
-	numSemaphores uint32,	// numSemaphores [in] The number of external semaphores.
-	phSemaphores *ZeExternalSemaphoreExtHandle,	// phSemaphores [in][range(0, numSemaphores)] The array of pointers to external semaphore handles to be appended into command list.
-	signalParams *ZeExternalSemaphoreSignalParamsExt,	// signalParams [in][range(0, numSemaphores)] The array of pointers to external semaphore signal parameters.
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] The command list handle.
+	numSemaphores uint32, // numSemaphores [in] The number of external semaphores.
+	phSemaphores *ZeExternalSemaphoreExtHandle, // phSemaphores [in][range(0, numSemaphores)] The array of pointers to external semaphore handles to be appended into command list.
+	signalParams *ZeExternalSemaphoreSignalParamsExt, // signalParams [in][range(0, numSemaphores)] The array of pointers to external semaphore signal parameters.
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendSignalExternalSemaphoreExt", uintptr(hCommandList), uintptr(numSemaphores), uintptr(unsafe.Pointer(phSemaphores)), uintptr(unsafe.Pointer(signalParams)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendWaitExternalSemaphoreExt Wait on external semaphores
-/// 
-/// @details
-///     - Waits on external semaphores.
-///     - This function must only be used with an immediate command list.
-///     - This function may be called from simultaneous threads with the same
-///       command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phSemaphores`
-///         + `nullptr == waitParams`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
-///         + `(nullptr == phSemaphores) && (0 < numSemaphores)`
-///         + `(nullptr == waitParams) && (0 < numSemaphores)`
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///         + Commandlist handle does not correspond to an immediate command list
+// /
+// / @details
+// /     - Waits on external semaphores.
+// /     - This function must only be used with an immediate command list.
+// /     - This function may be called from simultaneous threads with the same
+// /       command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phSemaphores`
+// /         + `nullptr == waitParams`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /         + `(nullptr == phSemaphores) && (0 < numSemaphores)`
+// /         + `(nullptr == waitParams) && (0 < numSemaphores)`
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /         + Commandlist handle does not correspond to an immediate command list
 func ZeCommandListAppendWaitExternalSemaphoreExt(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] The command list handle.
-	numSemaphores uint32,	// numSemaphores [in] The number of external semaphores.
-	phSemaphores *ZeExternalSemaphoreExtHandle,	// phSemaphores [in][range(0,numSemaphores)] The array of pointers to external semaphore handles to append into command list.
-	waitParams *ZeExternalSemaphoreWaitParamsExt,	// waitParams [in][range(0,numSemaphores)] The array of pointers to external semaphore wait parameters.
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] The command list handle.
+	numSemaphores uint32, // numSemaphores [in] The number of external semaphores.
+	phSemaphores *ZeExternalSemaphoreExtHandle, // phSemaphores [in][range(0,numSemaphores)] The array of pointers to external semaphore handles to append into command list.
+	waitParams *ZeExternalSemaphoreWaitParamsExt, // waitParams [in][range(0,numSemaphores)] The array of pointers to external semaphore wait parameters.
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendWaitExternalSemaphoreExt", uintptr(hCommandList), uintptr(numSemaphores), uintptr(unsafe.Pointer(phSemaphores)), uintptr(unsafe.Pointer(waitParams)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
-

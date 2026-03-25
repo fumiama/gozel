@@ -21,798 +21,802 @@ import (
 
 // ZeDeviceMemAllocFlags (ze_device_mem_alloc_flags_t) Supported memory allocation flags
 type ZeDeviceMemAllocFlags uint32
+
 const (
-	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_CACHED ZeDeviceMemAllocFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_CACHED device should cache allocation
-	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_UNCACHED ZeDeviceMemAllocFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_UNCACHED device should not cache allocation (UC)
-	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT ZeDeviceMemAllocFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT optimize shared allocation for first access on the device
-	ZE_DEVICE_MEM_ALLOC_FLAG_FORCE_UINT32 ZeDeviceMemAllocFlags = 0x7fffffff	// ZE_DEVICE_MEM_ALLOC_FLAG_FORCE_UINT32 Value marking end of ZE_DEVICE_MEM_ALLOC_FLAG_* ENUMs
+	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_CACHED            ZeDeviceMemAllocFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_CACHED device should cache allocation
+	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_UNCACHED          ZeDeviceMemAllocFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_UNCACHED device should not cache allocation (UC)
+	ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT ZeDeviceMemAllocFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_DEVICE_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT optimize shared allocation for first access on the device
+	ZE_DEVICE_MEM_ALLOC_FLAG_FORCE_UINT32           ZeDeviceMemAllocFlags = 0x7fffffff               // ZE_DEVICE_MEM_ALLOC_FLAG_FORCE_UINT32 Value marking end of ZE_DEVICE_MEM_ALLOC_FLAG_* ENUMs
 
 )
 
 // ZeDeviceMemAllocDesc (ze_device_mem_alloc_desc_t) Device memory allocation descriptor
 type ZeDeviceMemAllocDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeDeviceMemAllocFlags	// Flags [in] flags specifying additional allocation controls. must be 0 (default) or a valid combination of ::ze_device_mem_alloc_flag_t; default behavior may use implicit driver-based heuristics.
-	Ordinal uint32	// Ordinal [in] ordinal of the device's local memory to allocate from. must be less than the count returned from ::zeDeviceGetMemoryProperties.
+	Stype   ZeStructureType       // Stype [in] type of this structure
+	Pnext   unsafe.Pointer        // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags   ZeDeviceMemAllocFlags // Flags [in] flags specifying additional allocation controls. must be 0 (default) or a valid combination of ::ze_device_mem_alloc_flag_t; default behavior may use implicit driver-based heuristics.
+	Ordinal uint32                // Ordinal [in] ordinal of the device's local memory to allocate from. must be less than the count returned from ::zeDeviceGetMemoryProperties.
 
 }
 
 // ZeHostMemAllocFlags (ze_host_mem_alloc_flags_t) Supported host memory allocation flags
 type ZeHostMemAllocFlags uint32
+
 const (
-	ZE_HOST_MEM_ALLOC_FLAG_BIAS_CACHED ZeHostMemAllocFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_HOST_MEM_ALLOC_FLAG_BIAS_CACHED host should cache allocation
-	ZE_HOST_MEM_ALLOC_FLAG_BIAS_UNCACHED ZeHostMemAllocFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_HOST_MEM_ALLOC_FLAG_BIAS_UNCACHED host should not cache allocation (UC)
-	ZE_HOST_MEM_ALLOC_FLAG_BIAS_WRITE_COMBINED ZeHostMemAllocFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_HOST_MEM_ALLOC_FLAG_BIAS_WRITE_COMBINED host memory should be allocated write-combined (WC)
-	ZE_HOST_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT ZeHostMemAllocFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZE_HOST_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT optimize shared allocation for first access on the host
-	ZE_HOST_MEM_ALLOC_FLAG_FORCE_UINT32 ZeHostMemAllocFlags = 0x7fffffff	// ZE_HOST_MEM_ALLOC_FLAG_FORCE_UINT32 Value marking end of ZE_HOST_MEM_ALLOC_FLAG_* ENUMs
+	ZE_HOST_MEM_ALLOC_FLAG_BIAS_CACHED            ZeHostMemAllocFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_HOST_MEM_ALLOC_FLAG_BIAS_CACHED host should cache allocation
+	ZE_HOST_MEM_ALLOC_FLAG_BIAS_UNCACHED          ZeHostMemAllocFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_HOST_MEM_ALLOC_FLAG_BIAS_UNCACHED host should not cache allocation (UC)
+	ZE_HOST_MEM_ALLOC_FLAG_BIAS_WRITE_COMBINED    ZeHostMemAllocFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_HOST_MEM_ALLOC_FLAG_BIAS_WRITE_COMBINED host memory should be allocated write-combined (WC)
+	ZE_HOST_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT ZeHostMemAllocFlags = /* ZE_BIT(3) */ (1 << 3) // ZE_HOST_MEM_ALLOC_FLAG_BIAS_INITIAL_PLACEMENT optimize shared allocation for first access on the host
+	ZE_HOST_MEM_ALLOC_FLAG_FORCE_UINT32           ZeHostMemAllocFlags = 0x7fffffff               // ZE_HOST_MEM_ALLOC_FLAG_FORCE_UINT32 Value marking end of ZE_HOST_MEM_ALLOC_FLAG_* ENUMs
 
 )
 
 // ZeHostMemAllocDesc (ze_host_mem_alloc_desc_t) Host memory allocation descriptor
 type ZeHostMemAllocDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeHostMemAllocFlags	// Flags [in] flags specifying additional allocation controls. must be 0 (default) or a valid combination of ::ze_host_mem_alloc_flag_t; default behavior may use implicit driver-based heuristics.
+	Stype ZeStructureType     // Stype [in] type of this structure
+	Pnext unsafe.Pointer      // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeHostMemAllocFlags // Flags [in] flags specifying additional allocation controls. must be 0 (default) or a valid combination of ::ze_host_mem_alloc_flag_t; default behavior may use implicit driver-based heuristics.
 
 }
 
 // ZeMemAllocShared Allocates shared memory on the context.
-/// 
-/// @details
-///     - Shared allocations share ownership between the host and one or more
-///       devices.
-///     - Shared allocations may optionally be associated with a device by
-///       passing a handle to the device.
-///     - Devices supporting only single-device shared access capabilities may
-///       access shared memory associated with the device.
-///       For these devices, ownership of the allocation is shared between the
-///       host and the associated device only.
-///     - Passing nullptr as the device handle does not associate the shared
-///       allocation with any device.
-///       For allocations with no associated device, ownership of the allocation
-///       is shared between the host and all devices supporting cross-device
-///       shared access capabilities.
-///     - The application must only use the memory allocation for the context
-///       and device, or its sub-devices, which was provided during allocation.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == device_desc`
-///         + `nullptr == host_desc`
-///         + `nullptr == pptr`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x7 < device_desc->flags`
-///         + `0xf < host_desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
-///         + `0 == size`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
-///         + Must be zero or a power-of-two
-///         + `0 != (alignment & (alignment - 1))`
+// /
+// / @details
+// /     - Shared allocations share ownership between the host and one or more
+// /       devices.
+// /     - Shared allocations may optionally be associated with a device by
+// /       passing a handle to the device.
+// /     - Devices supporting only single-device shared access capabilities may
+// /       access shared memory associated with the device.
+// /       For these devices, ownership of the allocation is shared between the
+// /       host and the associated device only.
+// /     - Passing nullptr as the device handle does not associate the shared
+// /       allocation with any device.
+// /       For allocations with no associated device, ownership of the allocation
+// /       is shared between the host and all devices supporting cross-device
+// /       shared access capabilities.
+// /     - The application must only use the memory allocation for the context
+// /       and device, or its sub-devices, which was provided during allocation.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == device_desc`
+// /         + `nullptr == host_desc`
+// /         + `nullptr == pptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x7 < device_desc->flags`
+// /         + `0xf < host_desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
+// /         + `0 == size`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
+// /         + Must be zero or a power-of-two
+// /         + `0 != (alignment & (alignment - 1))`
 func ZeMemAllocShared(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	device_desc *ZeDeviceMemAllocDesc,	// device_desc [in] pointer to device memory allocation descriptor
-	host_desc *ZeHostMemAllocDesc,	// host_desc [in] pointer to host memory allocation descriptor
-	size uintptr,	// size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
-	alignment uintptr,	// alignment [in] minimum alignment in bytes for the allocation; must be a power of two
-	hDevice ZeDeviceHandle,	// hDevice [in][optional] device handle to associate with
-	pptr *unsafe.Pointer,	// pptr [out] pointer to shared allocation
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	device_desc *ZeDeviceMemAllocDesc, // device_desc [in] pointer to device memory allocation descriptor
+	host_desc *ZeHostMemAllocDesc, // host_desc [in] pointer to host memory allocation descriptor
+	size uintptr, // size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
+	alignment uintptr, // alignment [in] minimum alignment in bytes for the allocation; must be a power of two
+	hDevice ZeDeviceHandle, // hDevice [in][optional] device handle to associate with
+	pptr *unsafe.Pointer, // pptr [out] pointer to shared allocation
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemAllocShared", uintptr(hContext), uintptr(unsafe.Pointer(device_desc)), uintptr(unsafe.Pointer(host_desc)), uintptr(size), uintptr(alignment), uintptr(hDevice), uintptr(unsafe.Pointer(pptr)))
 }
 
 // ZeMemAllocDevice Allocates device memory on the context.
-/// 
-/// @details
-///     - Device allocations are owned by a specific device.
-///     - In general, a device allocation may only be accessed by the device
-///       that owns it.
-///     - The application must only use the memory allocation for the context
-///       and device, or its sub-devices, which was provided during allocation.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == device_desc`
-///         + `nullptr == pptr`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x7 < device_desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
-///         + `0 == size`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
-///         + Must be zero or a power-of-two
-///         + `0 != (alignment & (alignment - 1))`
+// /
+// / @details
+// /     - Device allocations are owned by a specific device.
+// /     - In general, a device allocation may only be accessed by the device
+// /       that owns it.
+// /     - The application must only use the memory allocation for the context
+// /       and device, or its sub-devices, which was provided during allocation.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == device_desc`
+// /         + `nullptr == pptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x7 < device_desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
+// /         + `0 == size`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
+// /         + Must be zero or a power-of-two
+// /         + `0 != (alignment & (alignment - 1))`
 func ZeMemAllocDevice(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	device_desc *ZeDeviceMemAllocDesc,	// device_desc [in] pointer to device memory allocation descriptor
-	size uintptr,	// size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
-	alignment uintptr,	// alignment [in] minimum alignment in bytes for the allocation; must be a power of two
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	pptr *unsafe.Pointer,	// pptr [out] pointer to device allocation
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	device_desc *ZeDeviceMemAllocDesc, // device_desc [in] pointer to device memory allocation descriptor
+	size uintptr, // size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
+	alignment uintptr, // alignment [in] minimum alignment in bytes for the allocation; must be a power of two
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	pptr *unsafe.Pointer, // pptr [out] pointer to device allocation
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemAllocDevice", uintptr(hContext), uintptr(unsafe.Pointer(device_desc)), uintptr(size), uintptr(alignment), uintptr(hDevice), uintptr(unsafe.Pointer(pptr)))
 }
 
 // ZeMemAllocHost Allocates host memory on the context.
-/// 
-/// @details
-///     - Host allocations are owned by the host process.
-///     - Host allocations are accessible by the host and all devices within the
-///       driver's context.
-///     - Host allocations are frequently used as staging areas to transfer data
-///       to or from devices.
-///     - The application must only use the memory allocation for the context
-///       which was provided during allocation.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == host_desc`
-///         + `nullptr == pptr`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0xf < host_desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
-///         + `0 == size`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
-///         + Must be zero or a power-of-two
-///         + `0 != (alignment & (alignment - 1))`
+// /
+// / @details
+// /     - Host allocations are owned by the host process.
+// /     - Host allocations are accessible by the host and all devices within the
+// /       driver's context.
+// /     - Host allocations are frequently used as staging areas to transfer data
+// /       to or from devices.
+// /     - The application must only use the memory allocation for the context
+// /       which was provided during allocation.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == host_desc`
+// /         + `nullptr == pptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0xf < host_desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_SIZE
+// /         + `0 == size`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ALIGNMENT
+// /         + Must be zero or a power-of-two
+// /         + `0 != (alignment & (alignment - 1))`
 func ZeMemAllocHost(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	host_desc *ZeHostMemAllocDesc,	// host_desc [in] pointer to host memory allocation descriptor
-	size uintptr,	// size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
-	alignment uintptr,	// alignment [in] minimum alignment in bytes for the allocation; must be a power of two
-	pptr *unsafe.Pointer,	// pptr [out] pointer to host allocation
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	host_desc *ZeHostMemAllocDesc, // host_desc [in] pointer to host memory allocation descriptor
+	size uintptr, // size [in] size in bytes to allocate; must be less than or equal to the `maxMemAllocSize` member of ::ze_device_properties_t
+	alignment uintptr, // alignment [in] minimum alignment in bytes for the allocation; must be a power of two
+	pptr *unsafe.Pointer, // pptr [out] pointer to host allocation
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemAllocHost", uintptr(hContext), uintptr(unsafe.Pointer(host_desc)), uintptr(size), uintptr(alignment), uintptr(unsafe.Pointer(pptr)))
 }
 
 // ZeMemFree Frees allocated host memory, device memory, or shared memory on the
-///        context.
-/// 
-/// @details
-///     - The application must ensure the device is not currently referencing
-///       the memory before it is freed
-///     - The implementation will use the default and immediate policy to
-///       schedule all Host and Device allocations associated with this memory
-///       to be freed, without any safety checking. Actual freeing of memory is
-///       specific to user mode driver and kernel mode driver implementation and
-///       may be done asynchronously.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same pointer.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
+// /        context.
+// /
+// / @details
+// /     - The application must ensure the device is not currently referencing
+// /       the memory before it is freed
+// /     - The implementation will use the default and immediate policy to
+// /       schedule all Host and Device allocations associated with this memory
+// /       to be freed, without any safety checking. Actual freeing of memory is
+// /       specific to user mode driver and kernel mode driver implementation and
+// /       may be done asynchronously.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same pointer.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
 func ZeMemFree(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in][release] pointer to memory to free
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in][release] pointer to memory to free
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemFree", uintptr(hContext), uintptr(unsafe.Pointer(ptr)))
 }
 
 // ZeMemoryType (ze_memory_type_t) Memory allocation type
 type ZeMemoryType uintptr
+
 const (
-	ZE_MEMORY_TYPE_UNKNOWN ZeMemoryType = 0	// ZE_MEMORY_TYPE_UNKNOWN the memory pointed to is of unknown type
-	ZE_MEMORY_TYPE_HOST ZeMemoryType = 1	// ZE_MEMORY_TYPE_HOST the memory pointed to is a host allocation
-	ZE_MEMORY_TYPE_DEVICE ZeMemoryType = 2	// ZE_MEMORY_TYPE_DEVICE the memory pointed to is a device allocation
-	ZE_MEMORY_TYPE_SHARED ZeMemoryType = 3	// ZE_MEMORY_TYPE_SHARED the memory pointed to is a shared ownership allocation
-	ZE_MEMORY_TYPE_HOST_IMPORTED ZeMemoryType = 4	// ZE_MEMORY_TYPE_HOST_IMPORTED the memory pointed to is a host allocation created from external
+	ZE_MEMORY_TYPE_UNKNOWN       ZeMemoryType = 0 // ZE_MEMORY_TYPE_UNKNOWN the memory pointed to is of unknown type
+	ZE_MEMORY_TYPE_HOST          ZeMemoryType = 1 // ZE_MEMORY_TYPE_HOST the memory pointed to is a host allocation
+	ZE_MEMORY_TYPE_DEVICE        ZeMemoryType = 2 // ZE_MEMORY_TYPE_DEVICE the memory pointed to is a device allocation
+	ZE_MEMORY_TYPE_SHARED        ZeMemoryType = 3 // ZE_MEMORY_TYPE_SHARED the memory pointed to is a shared ownership allocation
+	ZE_MEMORY_TYPE_HOST_IMPORTED ZeMemoryType = 4 // ZE_MEMORY_TYPE_HOST_IMPORTED the memory pointed to is a host allocation created from external
 
 	///< system memory
 
-	ZE_MEMORY_TYPE_FORCE_UINT32 ZeMemoryType = 0x7fffffff	// ZE_MEMORY_TYPE_FORCE_UINT32 Value marking end of ZE_MEMORY_TYPE_* ENUMs
+	ZE_MEMORY_TYPE_FORCE_UINT32 ZeMemoryType = 0x7fffffff // ZE_MEMORY_TYPE_FORCE_UINT32 Value marking end of ZE_MEMORY_TYPE_* ENUMs
 
 )
 
 // ZeMemoryAllocationProperties (ze_memory_allocation_properties_t) Memory allocation properties queried using ::zeMemGetAllocProperties
 type ZeMemoryAllocationProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Type ZeMemoryType	// Type [out] type of allocated memory
-	Id uint64	// Id [out] identifier for this allocation
-	Pagesize uint64	// Pagesize [out] page size used for allocation
+	Stype    ZeStructureType // Stype [in] type of this structure
+	Pnext    unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Type     ZeMemoryType    // Type [out] type of allocated memory
+	Id       uint64          // Id [out] identifier for this allocation
+	Pagesize uint64          // Pagesize [out] page size used for allocation
 
 }
 
 // ZeMemGetAllocProperties Retrieves attributes of a memory allocation
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The application may query attributes of a memory allocation unrelated
-///       to the context.
-///       When this occurs, the returned allocation type will be
-///       ::ZE_MEMORY_TYPE_UNKNOWN, and the returned identifier and associated
-///       device is unspecified.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///         + `nullptr == pMemAllocProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The application may query attributes of a memory allocation unrelated
+// /       to the context.
+// /       When this occurs, the returned allocation type will be
+// /       ::ZE_MEMORY_TYPE_UNKNOWN, and the returned identifier and associated
+// /       device is unspecified.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /         + `nullptr == pMemAllocProperties`
 func ZeMemGetAllocProperties(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in] memory pointer to query
-	pMemAllocProperties *ZeMemoryAllocationProperties,	// pMemAllocProperties [in,out] query result for memory allocation properties
-	phDevice *ZeDeviceHandle,	// phDevice [out][optional] device associated with this allocation
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in] memory pointer to query
+	pMemAllocProperties *ZeMemoryAllocationProperties, // pMemAllocProperties [in,out] query result for memory allocation properties
+	phDevice *ZeDeviceHandle, // phDevice [out][optional] device associated with this allocation
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetAllocProperties", uintptr(hContext), uintptr(unsafe.Pointer(ptr)), uintptr(unsafe.Pointer(pMemAllocProperties)), uintptr(unsafe.Pointer(phDevice)))
 }
 
 // ZeMemGetAddressRange Retrieves the base address and/or size of an allocation
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///     - ::ZE_RESULT_ERROR_ADDRESS_NOT_FOUND
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /     - ::ZE_RESULT_ERROR_ADDRESS_NOT_FOUND
 func ZeMemGetAddressRange(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in] memory pointer to query
-	pBase *unsafe.Pointer,	// pBase [in,out][optional] base address of the allocation
-	pSize *uintptr,	// pSize [in,out][optional] size of the allocation
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in] memory pointer to query
+	pBase *unsafe.Pointer, // pBase [in,out][optional] base address of the allocation
+	pSize *uintptr, // pSize [in,out][optional] size of the allocation
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetAddressRange", uintptr(hContext), uintptr(unsafe.Pointer(ptr)), uintptr(unsafe.Pointer(pBase)), uintptr(unsafe.Pointer(pSize)))
 }
 
 // ZeMemGetIpcHandle Creates an IPC memory handle for the specified allocation
-/// 
-/// @details
-///     - Takes a pointer to a device memory allocation and creates an IPC
-///       memory handle for exporting it for use in another process.
-///     - The pointer must be base pointer of a device or host memory
-///       allocation; i.e. the value returned from ::zeMemAllocDevice or from
-///       ::zeMemAllocHost, respectively.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///         + `nullptr == pIpcHandle`
+// /
+// / @details
+// /     - Takes a pointer to a device memory allocation and creates an IPC
+// /       memory handle for exporting it for use in another process.
+// /     - The pointer must be base pointer of a device or host memory
+// /       allocation; i.e. the value returned from ::zeMemAllocDevice or from
+// /       ::zeMemAllocHost, respectively.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /         + `nullptr == pIpcHandle`
 func ZeMemGetIpcHandle(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in] pointer to the device memory allocation
-	pIpcHandle *ZeIpcMemHandle,	// pIpcHandle [out] Returned IPC memory handle
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in] pointer to the device memory allocation
+	pIpcHandle *ZeIpcMemHandle, // pIpcHandle [out] Returned IPC memory handle
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetIpcHandle", uintptr(hContext), uintptr(unsafe.Pointer(ptr)), uintptr(unsafe.Pointer(pIpcHandle)))
 }
 
 // ZeMemGetIpcHandleFromFileDescriptorExp Creates an IPC memory handle out of a file descriptor
-/// 
-/// @details
-///     - Handle passed must be a valid file descriptor obtained with
-///       ::ze_external_memory_export_fd_t via ::zeMemGetAllocProperties or
-///       ::zePhysicalMemGetProperties.
-///     - Returned IPC handle may contain metadata in addition to the file
-///       descriptor.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pIpcHandle`
+// /
+// / @details
+// /     - Handle passed must be a valid file descriptor obtained with
+// /       ::ze_external_memory_export_fd_t via ::zeMemGetAllocProperties or
+// /       ::zePhysicalMemGetProperties.
+// /     - Returned IPC handle may contain metadata in addition to the file
+// /       descriptor.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pIpcHandle`
 func ZeMemGetIpcHandleFromFileDescriptorExp(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	handle uint64,	// handle [in] file descriptor
-	pIpcHandle *ZeIpcMemHandle,	// pIpcHandle [out] Returned IPC memory handle
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	handle uint64, // handle [in] file descriptor
+	pIpcHandle *ZeIpcMemHandle, // pIpcHandle [out] Returned IPC memory handle
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetIpcHandleFromFileDescriptorExp", uintptr(hContext), uintptr(handle), uintptr(unsafe.Pointer(pIpcHandle)))
 }
 
 // ZeMemGetFileDescriptorFromIpcHandleExp Gets the file descriptor contained in an IPC memory handle
-/// 
-/// @details
-///     - IPC memory handle must be a valid handle obtained with
-///       ::zeMemGetIpcHandle.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pHandle`
+// /
+// / @details
+// /     - IPC memory handle must be a valid handle obtained with
+// /       ::zeMemGetIpcHandle.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pHandle`
 func ZeMemGetFileDescriptorFromIpcHandleExp(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ipcHandle *ZeIpcMemHandle,	// ipcHandle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
-	pHandle *uint64,	// pHandle [out] Returned file descriptor
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ipcHandle *ZeIpcMemHandle, // ipcHandle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
+	pHandle *uint64, // pHandle [out] Returned file descriptor
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetFileDescriptorFromIpcHandleExp", uintptr(hContext), uintptr(unsafe.Pointer(ipcHandle)), uintptr(unsafe.Pointer(pHandle)))
 }
 
 // ZeMemPutIpcHandle Returns an IPC memory handle to the driver
-/// 
-/// @details
-///     - This call may be used for IPC handles previously obtained with either
-///       ::zeMemGetIpcHandle or with ::ze_external_memory_export_fd_t via
-///       ::zeMemGetAllocProperties or ::zePhysicalMemGetProperties.
-///     - Upon call, driver may release any underlying resources associated with
-///       the IPC handle.
-///       For instance, it may close the file descriptor contained in the IPC
-///       handle, if such type of handle is being used by the driver.
-///     - This call does not free the original allocation for which the IPC
-///       handle was created.
-///     - This function may **not** be called from simultaneous threads with the
-///       same IPC handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
+// /
+// / @details
+// /     - This call may be used for IPC handles previously obtained with either
+// /       ::zeMemGetIpcHandle or with ::ze_external_memory_export_fd_t via
+// /       ::zeMemGetAllocProperties or ::zePhysicalMemGetProperties.
+// /     - Upon call, driver may release any underlying resources associated with
+// /       the IPC handle.
+// /       For instance, it may close the file descriptor contained in the IPC
+// /       handle, if such type of handle is being used by the driver.
+// /     - This call does not free the original allocation for which the IPC
+// /       handle was created.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same IPC handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
 func ZeMemPutIpcHandle(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	handle *ZeIpcMemHandle,	// handle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	handle *ZeIpcMemHandle, // handle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemPutIpcHandle", uintptr(hContext), uintptr(unsafe.Pointer(handle)))
 }
 
 // ZeIpcMemoryFlags (ze_ipc_memory_flags_t) Supported IPC memory flags
 type ZeIpcMemoryFlags uint32
+
 const (
-	ZE_IPC_MEMORY_FLAG_BIAS_CACHED ZeIpcMemoryFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_IPC_MEMORY_FLAG_BIAS_CACHED device should cache allocation
-	ZE_IPC_MEMORY_FLAG_BIAS_UNCACHED ZeIpcMemoryFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_IPC_MEMORY_FLAG_BIAS_UNCACHED device should not cache allocation (UC)
-	ZE_IPC_MEMORY_FLAG_FORCE_UINT32 ZeIpcMemoryFlags = 0x7fffffff	// ZE_IPC_MEMORY_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_MEMORY_FLAG_* ENUMs
+	ZE_IPC_MEMORY_FLAG_BIAS_CACHED   ZeIpcMemoryFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_IPC_MEMORY_FLAG_BIAS_CACHED device should cache allocation
+	ZE_IPC_MEMORY_FLAG_BIAS_UNCACHED ZeIpcMemoryFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_IPC_MEMORY_FLAG_BIAS_UNCACHED device should not cache allocation (UC)
+	ZE_IPC_MEMORY_FLAG_FORCE_UINT32  ZeIpcMemoryFlags = 0x7fffffff               // ZE_IPC_MEMORY_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_MEMORY_FLAG_* ENUMs
 
 )
 
 // ZeMemOpenIpcHandle Opens an IPC memory handle to retrieve a device pointer on the
-///        context.
-/// 
-/// @details
-///     - Takes an IPC memory handle from a remote process and associates it
-///       with a device pointer usable in this process.
-///     - The device pointer in this process should not be freed with
-///       ::zeMemFree, but rather with ::zeMemCloseIpcHandle.
-///     - Multiple calls to this function with the same IPC handle will return
-///       unique pointers.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pptr`
+// /        context.
+// /
+// / @details
+// /     - Takes an IPC memory handle from a remote process and associates it
+// /       with a device pointer usable in this process.
+// /     - The device pointer in this process should not be freed with
+// /       ::zeMemFree, but rather with ::zeMemCloseIpcHandle.
+// /     - Multiple calls to this function with the same IPC handle will return
+// /       unique pointers.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pptr`
 func ZeMemOpenIpcHandle(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device to associate with the IPC memory handle
-	handle *ZeIpcMemHandle,	// handle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
-	flags ZeIpcMemoryFlags,	// flags [in] flags controlling the operation. must be 0 (default) or a valid combination of ::ze_ipc_memory_flag_t.
-	pptr *unsafe.Pointer,	// pptr [out] pointer to device allocation in this process
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device to associate with the IPC memory handle
+	handle *ZeIpcMemHandle, // handle [in] IPC memory handle (gozel hack: converted to a hidden pointer from a struct value)
+	flags ZeIpcMemoryFlags, // flags [in] flags controlling the operation. must be 0 (default) or a valid combination of ::ze_ipc_memory_flag_t.
+	pptr *unsafe.Pointer, // pptr [out] pointer to device allocation in this process
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemOpenIpcHandle", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(handle)), uintptr(flags), uintptr(unsafe.Pointer(pptr)))
 }
 
 // ZeMemCloseIpcHandle Closes an IPC memory handle
-/// 
-/// @details
-///     - Closes an IPC memory handle by unmapping memory that was opened in
-///       this process using ::zeMemOpenIpcHandle.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same pointer.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
+// /
+// / @details
+// /     - Closes an IPC memory handle by unmapping memory that was opened in
+// /       this process using ::zeMemOpenIpcHandle.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same pointer.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
 func ZeMemCloseIpcHandle(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	ptr unsafe.Pointer,	// ptr [in][release] pointer to device allocation in this process
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	ptr unsafe.Pointer, // ptr [in][release] pointer to device allocation in this process
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemCloseIpcHandle", uintptr(hContext), uintptr(unsafe.Pointer(ptr)))
 }
 
 // ZeExternalMemoryExportDesc (ze_external_memory_export_desc_t) Additional allocation descriptor for exporting external memory
-/// 
-/// @details
-///     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
-///       or ::zePhysicalMemCreate, via the `pNext` member of
-///       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
-///       ::ze_physical_mem_desc_t, respectively, to indicate an exportable
-///       memory allocation.
-///     - This structure may be passed to ::zeImageCreate, via the `pNext`
-///       member of ::ze_image_desc_t, to indicate an exportable image.
+// /
+// / @details
+// /     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
+// /       or ::zePhysicalMemCreate, via the `pNext` member of
+// /       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
+// /       ::ze_physical_mem_desc_t, respectively, to indicate an exportable
+// /       memory allocation.
+// /     - This structure may be passed to ::zeImageCreate, via the `pNext`
+// /       member of ::ze_image_desc_t, to indicate an exportable image.
 type ZeExternalMemoryExportDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalMemoryTypeFlags	// Flags [in] flags specifying memory export types for this allocation. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
+	Stype ZeStructureType           // Stype [in] type of this structure
+	Pnext unsafe.Pointer            // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeExternalMemoryTypeFlags // Flags [in] flags specifying memory export types for this allocation. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
 
 }
 
 // ZeExternalMemoryImportFd (ze_external_memory_import_fd_t) Additional allocation descriptor for importing external memory as a
-///        file descriptor
-/// 
-/// @details
-///     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
-///       or ::zePhysicalMemCreate, via the `pNext` member of
-///       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
-///       ::ze_physical_mem_desc_t, respectively, to import memory from a file
-///       descriptor.
-///     - This structure may be passed to ::zeImageCreate, via the `pNext`
-///       member of ::ze_image_desc_t, to import memory from a file descriptor.
+// /        file descriptor
+// /
+// / @details
+// /     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
+// /       or ::zePhysicalMemCreate, via the `pNext` member of
+// /       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
+// /       ::ze_physical_mem_desc_t, respectively, to import memory from a file
+// /       descriptor.
+// /     - This structure may be passed to ::zeImageCreate, via the `pNext`
+// /       member of ::ze_image_desc_t, to import memory from a file descriptor.
 type ZeExternalMemoryImportFd struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalMemoryTypeFlags	// Flags [in] flags specifying the memory import type for the file descriptor. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
-	Fd int32	// Fd [in] the file descriptor handle to import
+	Stype ZeStructureType           // Stype [in] type of this structure
+	Pnext unsafe.Pointer            // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeExternalMemoryTypeFlags // Flags [in] flags specifying the memory import type for the file descriptor. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
+	Fd    int32                     // Fd [in] the file descriptor handle to import
 
 }
 
 // ZeExternalMemoryExportFd (ze_external_memory_export_fd_t) Exports an allocation as a file descriptor
-/// 
-/// @details
-///     - This structure may be passed to ::zeMemGetAllocProperties, via the
-///       `pNext` member of ::ze_memory_allocation_properties_t, to export a
-///       memory allocation as a file descriptor.
-///     - This structure may be passed to ::zeImageGetAllocPropertiesExt, via
-///       the `pNext` member of ::ze_image_allocation_ext_properties_t, to
-///       export an image as a file descriptor.
-///     - This structure may be passed to ::zePhysicalMemGetProperties, via the
-///       `pNext` member of ::ze_physical_mem_properties_t, to export physical
-///       memory as a file descriptor.
-///     - The requested memory export type must have been specified when the
-///       allocation was made.
+// /
+// / @details
+// /     - This structure may be passed to ::zeMemGetAllocProperties, via the
+// /       `pNext` member of ::ze_memory_allocation_properties_t, to export a
+// /       memory allocation as a file descriptor.
+// /     - This structure may be passed to ::zeImageGetAllocPropertiesExt, via
+// /       the `pNext` member of ::ze_image_allocation_ext_properties_t, to
+// /       export an image as a file descriptor.
+// /     - This structure may be passed to ::zePhysicalMemGetProperties, via the
+// /       `pNext` member of ::ze_physical_mem_properties_t, to export physical
+// /       memory as a file descriptor.
+// /     - The requested memory export type must have been specified when the
+// /       allocation was made.
 type ZeExternalMemoryExportFd struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalMemoryTypeFlags	// Flags [in] flags specifying the memory export type for the file descriptor. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
-	Fd int32	// Fd [out] the exported file descriptor handle representing the allocation.
+	Stype ZeStructureType           // Stype [in] type of this structure
+	Pnext unsafe.Pointer            // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeExternalMemoryTypeFlags // Flags [in] flags specifying the memory export type for the file descriptor. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
+	Fd    int32                     // Fd [out] the exported file descriptor handle representing the allocation.
 
 }
 
 // ZeExternalMemoryImportWin32Handle (ze_external_memory_import_win32_handle_t) Additional allocation descriptor for importing external memory as a
-///        Win32 handle
-/// 
-/// @details
-///     - When `handle` is `nullptr`, `name` must not be `nullptr`.
-///     - When `name` is `nullptr`, `handle` must not be `nullptr`.
-///     - When `flags` is ::ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT,
-///       `name` must be `nullptr`.
-///     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
-///       or ::zePhysicalMemCreate, via the `pNext` member of
-///       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
-///       ::ze_physical_mem_desc_t, respectively, to import memory from a Win32
-///       handle.
-///     - This structure may be passed to ::zeImageCreate, via the `pNext`
-///       member of ::ze_image_desc_t, to import memory from a Win32 handle.
+// /        Win32 handle
+// /
+// / @details
+// /     - When `handle` is `nullptr`, `name` must not be `nullptr`.
+// /     - When `name` is `nullptr`, `handle` must not be `nullptr`.
+// /     - When `flags` is ::ZE_EXTERNAL_MEMORY_TYPE_FLAG_OPAQUE_WIN32_KMT,
+// /       `name` must be `nullptr`.
+// /     - This structure may be passed to ::zeMemAllocDevice, ::zeMemAllocHost,
+// /       or ::zePhysicalMemCreate, via the `pNext` member of
+// /       ::ze_device_mem_alloc_desc_t or ::ze_host_mem_alloc_desc_t, or
+// /       ::ze_physical_mem_desc_t, respectively, to import memory from a Win32
+// /       handle.
+// /     - This structure may be passed to ::zeImageCreate, via the `pNext`
+// /       member of ::ze_image_desc_t, to import memory from a Win32 handle.
 type ZeExternalMemoryImportWin32Handle struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalMemoryTypeFlags	// Flags [in] flags specifying the memory import type for the Win32 handle. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
-	Handle unsafe.Pointer	// Handle [in][optional] the Win32 handle to import
-	Name unsafe.Pointer	// Name [in][optional] name of a memory object to import
+	Stype  ZeStructureType           // Stype [in] type of this structure
+	Pnext  unsafe.Pointer            // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags  ZeExternalMemoryTypeFlags // Flags [in] flags specifying the memory import type for the Win32 handle. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
+	Handle unsafe.Pointer            // Handle [in][optional] the Win32 handle to import
+	Name   unsafe.Pointer            // Name [in][optional] name of a memory object to import
 
 }
 
 // ZeExternalMemoryExportWin32Handle (ze_external_memory_export_win32_handle_t) Exports an allocation as a Win32 handle
-/// 
-/// @details
-///     - This structure may be passed to ::zeMemGetAllocProperties, via the
-///       `pNext` member of ::ze_memory_allocation_properties_t, to export a
-///       memory allocation as a Win32 handle.
-///     - This structure may be passed to ::zeImageGetAllocPropertiesExt, via
-///       the `pNext` member of ::ze_image_allocation_ext_properties_t, to
-///       export an image as a Win32 handle.
-///     - This structure may be passed to ::zePhysicalMemGetProperties, via the
-///       `pNext` member of ::ze_physical_mem_properties_t, to export physical
-///       memory as a Win32 handle.
-///     - The requested memory export type must have been specified when the
-///       allocation was made.
+// /
+// / @details
+// /     - This structure may be passed to ::zeMemGetAllocProperties, via the
+// /       `pNext` member of ::ze_memory_allocation_properties_t, to export a
+// /       memory allocation as a Win32 handle.
+// /     - This structure may be passed to ::zeImageGetAllocPropertiesExt, via
+// /       the `pNext` member of ::ze_image_allocation_ext_properties_t, to
+// /       export an image as a Win32 handle.
+// /     - This structure may be passed to ::zePhysicalMemGetProperties, via the
+// /       `pNext` member of ::ze_physical_mem_properties_t, to export physical
+// /       memory as a Win32 handle.
+// /     - The requested memory export type must have been specified when the
+// /       allocation was made.
 type ZeExternalMemoryExportWin32Handle struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeExternalMemoryTypeFlags	// Flags [in] flags specifying the memory export type for the Win32 handle. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
-	Handle unsafe.Pointer	// Handle [out] the exported Win32 handle representing the allocation.
+	Stype  ZeStructureType           // Stype [in] type of this structure
+	Pnext  unsafe.Pointer            // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags  ZeExternalMemoryTypeFlags // Flags [in] flags specifying the memory export type for the Win32 handle. must be 0 (default) or a valid combination of ::ze_external_memory_type_flags_t
+	Handle unsafe.Pointer            // Handle [out] the exported Win32 handle representing the allocation.
 
 }
 
 // ZeMemoryAtomicAttrExpFlags (ze_memory_atomic_attr_exp_flags_t) atomic access attribute flags
 type ZeMemoryAtomicAttrExpFlags uint32
+
 const (
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_ATOMICS Atomics on the pointer are not allowed
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_HOST_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_HOST_ATOMICS Host atomics on the pointer are not allowed
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_HOST_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_HOST_ATOMICS Host atomics on the pointer are allowed. Requires
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_ATOMICS      ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_ATOMICS Atomics on the pointer are not allowed
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_HOST_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_HOST_ATOMICS Host atomics on the pointer are not allowed
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_HOST_ATOMICS    ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_HOST_ATOMICS Host atomics on the pointer are allowed. Requires
 
 	///< ::ZE_MEMORY_ACCESS_CAP_FLAG_ATOMIC returned by
 	///< ::zeDeviceGetMemoryAccessProperties.
 
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_DEVICE_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_DEVICE_ATOMICS Device atomics on the pointer are not allowed
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_DEVICE_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(4) */(( 1 << 4 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_DEVICE_ATOMICS Device atomics on the pointer are allowed. Requires
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_DEVICE_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(3) */ (1 << 3) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_DEVICE_ATOMICS Device atomics on the pointer are not allowed
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_DEVICE_ATOMICS    ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(4) */ (1 << 4) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_DEVICE_ATOMICS Device atomics on the pointer are allowed. Requires
 
 	///< ::ZE_MEMORY_ACCESS_CAP_FLAG_ATOMIC returned by
 	///< ::zeDeviceGetMemoryAccessProperties.
 
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_SYSTEM_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(5) */(( 1 << 5 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_SYSTEM_ATOMICS Concurrent atomics on the pointer from both host and device are not
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_SYSTEM_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(5) */ (1 << 5) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_NO_SYSTEM_ATOMICS Concurrent atomics on the pointer from both host and device are not
 
 	///< allowed
 
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_SYSTEM_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(6) */(( 1 << 6 ))	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_SYSTEM_ATOMICS Concurrent atomics on the pointer from both host and device are
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_SYSTEM_ATOMICS ZeMemoryAtomicAttrExpFlags = /* ZE_BIT(6) */ (1 << 6) // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_SYSTEM_ATOMICS Concurrent atomics on the pointer from both host and device are
 
 	///< allowed. Requires ::ZE_MEMORY_ACCESS_CAP_FLAG_CONCURRENT_ATOMIC
 	///< returned by ::zeDeviceGetMemoryAccessProperties.
 
-	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_FORCE_UINT32 ZeMemoryAtomicAttrExpFlags = 0x7fffffff	// ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_FORCE_UINT32 Value marking end of ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_* ENUMs
+	ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_FORCE_UINT32 ZeMemoryAtomicAttrExpFlags = 0x7fffffff // ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_FORCE_UINT32 Value marking end of ZE_MEMORY_ATOMIC_ATTR_EXP_FLAG_* ENUMs
 
 )
 
 // ZeMemSetAtomicAccessAttributeExp Sets atomic access attributes for a shared allocation
-/// 
-/// @details
-///     - If the shared-allocation is owned by multiple devices (i.e. nullptr
-///       was passed to ::zeMemAllocShared when creating it), then hDevice may be
-///       passed to set the attributes in that specific device. If nullptr is
-///       passed in hDevice, then the atomic attributes are set in all devices
-///       associated with the allocation.
-///     - If the atomic access attribute select is not supported by the driver,
-///       ::ZE_RESULT_ERROR_INVALID_ARGUMENT is returned.
-///     - The atomic access attribute may be only supported at a device-specific
-///       granularity, such as at a page boundary. In this case, the memory range
-///       may be expanded such that the start and end of the range satisfy granularity
-///       requirements.
-///     - When calling this function multiple times with different flags, only the
-///       attributes from last call are honored.
-///     - The application must not call this function for shared-allocations currently
-///       being used by the device.
-///     - The application must **not** call this function from simultaneous threads
-///       with the same pointer.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x7f < attr`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - If the shared-allocation is owned by multiple devices (i.e. nullptr
+// /       was passed to ::zeMemAllocShared when creating it), then hDevice may be
+// /       passed to set the attributes in that specific device. If nullptr is
+// /       passed in hDevice, then the atomic attributes are set in all devices
+// /       associated with the allocation.
+// /     - If the atomic access attribute select is not supported by the driver,
+// /       ::ZE_RESULT_ERROR_INVALID_ARGUMENT is returned.
+// /     - The atomic access attribute may be only supported at a device-specific
+// /       granularity, such as at a page boundary. In this case, the memory range
+// /       may be expanded such that the start and end of the range satisfy granularity
+// /       requirements.
+// /     - When calling this function multiple times with different flags, only the
+// /       attributes from last call are honored.
+// /     - The application must not call this function for shared-allocations currently
+// /       being used by the device.
+// /     - The application must **not** call this function from simultaneous threads
+// /       with the same pointer.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x7f < attr`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeMemSetAtomicAccessAttributeExp(
-	hContext ZeContextHandle,	// hContext [in] handle of context
-	hDevice ZeDeviceHandle,	// hDevice [in] device associated with the memory advice
-	ptr unsafe.Pointer,	// ptr [in] Pointer to the start of the memory range
-	size uintptr,	// size [in] Size in bytes of the memory range
-	attr ZeMemoryAtomicAttrExpFlags,	// attr [in] Atomic access attributes to set for the specified range. Must be 0 (default) or a valid combination of ::ze_memory_atomic_attr_exp_flag_t.
+	hContext ZeContextHandle, // hContext [in] handle of context
+	hDevice ZeDeviceHandle, // hDevice [in] device associated with the memory advice
+	ptr unsafe.Pointer, // ptr [in] Pointer to the start of the memory range
+	size uintptr, // size [in] Size in bytes of the memory range
+	attr ZeMemoryAtomicAttrExpFlags, // attr [in] Atomic access attributes to set for the specified range. Must be 0 (default) or a valid combination of ::ze_memory_atomic_attr_exp_flag_t.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemSetAtomicAccessAttributeExp", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(ptr)), uintptr(size), uintptr(attr))
 }
 
 // ZeMemGetAtomicAccessAttributeExp Retrieves the atomic access attributes previously set for a shared
-///        allocation
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads
-///       with the same pointer.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ptr`
-///         + `nullptr == pAttr`
+// /        allocation
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads
+// /       with the same pointer.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ptr`
+// /         + `nullptr == pAttr`
 func ZeMemGetAtomicAccessAttributeExp(
-	hContext ZeContextHandle,	// hContext [in] handle of context
-	hDevice ZeDeviceHandle,	// hDevice [in] device associated with the memory advice
-	ptr unsafe.Pointer,	// ptr [in] Pointer to the start of the memory range
-	size uintptr,	// size [in] Size in bytes of the memory range
-	pAttr *ZeMemoryAtomicAttrExpFlags,	// pAttr [out] Atomic access attributes for the specified range
+	hContext ZeContextHandle, // hContext [in] handle of context
+	hDevice ZeDeviceHandle, // hDevice [in] device associated with the memory advice
+	ptr unsafe.Pointer, // ptr [in] Pointer to the start of the memory range
+	size uintptr, // size [in] Size in bytes of the memory range
+	pAttr *ZeMemoryAtomicAttrExpFlags, // pAttr [out] Atomic access attributes for the specified range
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeMemGetAtomicAccessAttributeExp", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(ptr)), uintptr(size), uintptr(unsafe.Pointer(pAttr)))
 }
-

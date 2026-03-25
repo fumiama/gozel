@@ -22,23 +22,23 @@ const ZE_EU_COUNT_EXT_NAME = "ZE_extension_eu_count"
 
 // ZeEuCountExtVersion (ze_eu_count_ext_version_t) EU Count Extension Version(s)
 type ZeEuCountExtVersion uintptr
+
 const (
-	ZE_EU_COUNT_EXT_VERSION_1_0 ZeEuCountExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_EU_COUNT_EXT_VERSION_1_0 version 1.0
-	ZE_EU_COUNT_EXT_VERSION_CURRENT ZeEuCountExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_EU_COUNT_EXT_VERSION_CURRENT latest known version
-	ZE_EU_COUNT_EXT_VERSION_FORCE_UINT32 ZeEuCountExtVersion = 0x7fffffff	// ZE_EU_COUNT_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_EU_COUNT_EXT_VERSION_* ENUMs
+	ZE_EU_COUNT_EXT_VERSION_1_0          ZeEuCountExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EU_COUNT_EXT_VERSION_1_0 version 1.0
+	ZE_EU_COUNT_EXT_VERSION_CURRENT      ZeEuCountExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EU_COUNT_EXT_VERSION_CURRENT latest known version
+	ZE_EU_COUNT_EXT_VERSION_FORCE_UINT32 ZeEuCountExtVersion = 0x7fffffff                                                   // ZE_EU_COUNT_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_EU_COUNT_EXT_VERSION_* ENUMs
 
 )
 
 // ZeEuCountExt (ze_eu_count_ext_t) EU count queried using ::zeDeviceGetProperties
-/// 
-/// @details
-///     - This structure may be returned from ::zeDeviceGetProperties via the
-///       `pNext` member of ::ze_device_properties_t.
-///     - Used for determining the total number of EUs available on device.
+// /
+// / @details
+// /     - This structure may be returned from ::zeDeviceGetProperties via the
+// /       `pNext` member of ::ze_device_properties_t.
+// /     - Used for determining the total number of EUs available on device.
 type ZeEuCountExt struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Numtotaleus uint32	// Numtotaleus [out] Total number of EUs available
+	Stype       ZeStructureType // Stype [in] type of this structure
+	Pnext       unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Numtotaleus uint32          // Numtotaleus [out] Total number of EUs available
 
 }
-

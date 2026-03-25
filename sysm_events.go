@@ -21,166 +21,166 @@ import (
 
 // ZesEventTypeFlags (zes_event_type_flags_t) Event types
 type ZesEventTypeFlags uint32
+
 const (
-	ZES_EVENT_TYPE_FLAG_DEVICE_DETACH ZesEventTypeFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZES_EVENT_TYPE_FLAG_DEVICE_DETACH Event is triggered when the device is no longer available (due to a
+	ZES_EVENT_TYPE_FLAG_DEVICE_DETACH ZesEventTypeFlags = /* ZE_BIT(0) */ (1 << 0) // ZES_EVENT_TYPE_FLAG_DEVICE_DETACH Event is triggered when the device is no longer available (due to a
 
 	///< reset or being disabled).
 
-	ZES_EVENT_TYPE_FLAG_DEVICE_ATTACH ZesEventTypeFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZES_EVENT_TYPE_FLAG_DEVICE_ATTACH Event is triggered after the device is available again.
-	ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_ENTER ZesEventTypeFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_ENTER Event is triggered when the driver is about to put the device into a
+	ZES_EVENT_TYPE_FLAG_DEVICE_ATTACH            ZesEventTypeFlags = /* ZE_BIT(1) */ (1 << 1) // ZES_EVENT_TYPE_FLAG_DEVICE_ATTACH Event is triggered after the device is available again.
+	ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_ENTER ZesEventTypeFlags = /* ZE_BIT(2) */ (1 << 2) // ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_ENTER Event is triggered when the driver is about to put the device into a
 
 	///< deep sleep state
 
-	ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_EXIT ZesEventTypeFlags = /* ZE_BIT(3) */(( 1 << 3 ))	// ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_EXIT Event is triggered when the driver is waking the device up from a deep
+	ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_EXIT ZesEventTypeFlags = /* ZE_BIT(3) */ (1 << 3) // ZES_EVENT_TYPE_FLAG_DEVICE_SLEEP_STATE_EXIT Event is triggered when the driver is waking the device up from a deep
 
 	///< sleep state
 
-	ZES_EVENT_TYPE_FLAG_FREQ_THROTTLED ZesEventTypeFlags = /* ZE_BIT(4) */(( 1 << 4 ))	// ZES_EVENT_TYPE_FLAG_FREQ_THROTTLED Event is triggered when the frequency starts being throttled
-	ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED ZesEventTypeFlags = /* ZE_BIT(5) */(( 1 << 5 ))	// ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED Event is triggered when the energy consumption threshold is reached
+	ZES_EVENT_TYPE_FLAG_FREQ_THROTTLED           ZesEventTypeFlags = /* ZE_BIT(4) */ (1 << 4) // ZES_EVENT_TYPE_FLAG_FREQ_THROTTLED Event is triggered when the frequency starts being throttled
+	ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED ZesEventTypeFlags = /* ZE_BIT(5) */ (1 << 5) // ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED Event is triggered when the energy consumption threshold is reached
 
 	///< (use ::zesPowerSetEnergyThreshold() to configure).
 
-	ZES_EVENT_TYPE_FLAG_TEMP_CRITICAL ZesEventTypeFlags = /* ZE_BIT(6) */(( 1 << 6 ))	// ZES_EVENT_TYPE_FLAG_TEMP_CRITICAL Event is triggered when the critical temperature is reached (use
+	ZES_EVENT_TYPE_FLAG_TEMP_CRITICAL ZesEventTypeFlags = /* ZE_BIT(6) */ (1 << 6) // ZES_EVENT_TYPE_FLAG_TEMP_CRITICAL Event is triggered when the critical temperature is reached (use
 
 	///< ::zesTemperatureSetConfig() to configure - disabled by default).
 
-	ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD1 ZesEventTypeFlags = /* ZE_BIT(7) */(( 1 << 7 ))	// ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD1 Event is triggered when the temperature crosses threshold 1 (use
+	ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD1 ZesEventTypeFlags = /* ZE_BIT(7) */ (1 << 7) // ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD1 Event is triggered when the temperature crosses threshold 1 (use
 
 	///< ::zesTemperatureSetConfig() to configure - disabled by default).
 
-	ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD2 ZesEventTypeFlags = /* ZE_BIT(8) */(( 1 << 8 ))	// ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD2 Event is triggered when the temperature crosses threshold 2 (use
+	ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD2 ZesEventTypeFlags = /* ZE_BIT(8) */ (1 << 8) // ZES_EVENT_TYPE_FLAG_TEMP_THRESHOLD2 Event is triggered when the temperature crosses threshold 2 (use
 
 	///< ::zesTemperatureSetConfig() to configure - disabled by default).
 
-	ZES_EVENT_TYPE_FLAG_MEM_HEALTH ZesEventTypeFlags = /* ZE_BIT(9) */(( 1 << 9 ))	// ZES_EVENT_TYPE_FLAG_MEM_HEALTH Event is triggered when the health of device memory changes.
-	ZES_EVENT_TYPE_FLAG_FABRIC_PORT_HEALTH ZesEventTypeFlags = /* ZE_BIT(10) */(( 1 << 10 ))	// ZES_EVENT_TYPE_FLAG_FABRIC_PORT_HEALTH Event is triggered when the health of fabric ports change.
-	ZES_EVENT_TYPE_FLAG_PCI_LINK_HEALTH ZesEventTypeFlags = /* ZE_BIT(11) */(( 1 << 11 ))	// ZES_EVENT_TYPE_FLAG_PCI_LINK_HEALTH Event is triggered when the health of the PCI link changes.
-	ZES_EVENT_TYPE_FLAG_RAS_CORRECTABLE_ERRORS ZesEventTypeFlags = /* ZE_BIT(12) */(( 1 << 12 ))	// ZES_EVENT_TYPE_FLAG_RAS_CORRECTABLE_ERRORS Event is triggered when accelerator RAS correctable errors cross
+	ZES_EVENT_TYPE_FLAG_MEM_HEALTH             ZesEventTypeFlags = /* ZE_BIT(9) */ (1 << 9)   // ZES_EVENT_TYPE_FLAG_MEM_HEALTH Event is triggered when the health of device memory changes.
+	ZES_EVENT_TYPE_FLAG_FABRIC_PORT_HEALTH     ZesEventTypeFlags = /* ZE_BIT(10) */ (1 << 10) // ZES_EVENT_TYPE_FLAG_FABRIC_PORT_HEALTH Event is triggered when the health of fabric ports change.
+	ZES_EVENT_TYPE_FLAG_PCI_LINK_HEALTH        ZesEventTypeFlags = /* ZE_BIT(11) */ (1 << 11) // ZES_EVENT_TYPE_FLAG_PCI_LINK_HEALTH Event is triggered when the health of the PCI link changes.
+	ZES_EVENT_TYPE_FLAG_RAS_CORRECTABLE_ERRORS ZesEventTypeFlags = /* ZE_BIT(12) */ (1 << 12) // ZES_EVENT_TYPE_FLAG_RAS_CORRECTABLE_ERRORS Event is triggered when accelerator RAS correctable errors cross
 
 	///< thresholds (use ::zesRasSetConfig() to configure - disabled by
 	///< default).
 
-	ZES_EVENT_TYPE_FLAG_RAS_UNCORRECTABLE_ERRORS ZesEventTypeFlags = /* ZE_BIT(13) */(( 1 << 13 ))	// ZES_EVENT_TYPE_FLAG_RAS_UNCORRECTABLE_ERRORS Event is triggered when accelerator RAS uncorrectable errors cross
+	ZES_EVENT_TYPE_FLAG_RAS_UNCORRECTABLE_ERRORS ZesEventTypeFlags = /* ZE_BIT(13) */ (1 << 13) // ZES_EVENT_TYPE_FLAG_RAS_UNCORRECTABLE_ERRORS Event is triggered when accelerator RAS uncorrectable errors cross
 
 	///< thresholds (use ::zesRasSetConfig() to configure - disabled by
 	///< default).
 
-	ZES_EVENT_TYPE_FLAG_DEVICE_RESET_REQUIRED ZesEventTypeFlags = /* ZE_BIT(14) */(( 1 << 14 ))	// ZES_EVENT_TYPE_FLAG_DEVICE_RESET_REQUIRED Event is triggered when the device needs to be reset (use
+	ZES_EVENT_TYPE_FLAG_DEVICE_RESET_REQUIRED ZesEventTypeFlags = /* ZE_BIT(14) */ (1 << 14) // ZES_EVENT_TYPE_FLAG_DEVICE_RESET_REQUIRED Event is triggered when the device needs to be reset (use
 
 	///< ::zesDeviceGetState() to determine the reasons for the reset).
 
-	ZES_EVENT_TYPE_FLAG_SURVIVABILITY_MODE_DETECTED ZesEventTypeFlags = /* ZE_BIT(15) */(( 1 << 15 ))	// ZES_EVENT_TYPE_FLAG_SURVIVABILITY_MODE_DETECTED Event is triggered when graphics driver encounter an error condition.
-	ZES_EVENT_TYPE_FLAG_FORCE_UINT32 ZesEventTypeFlags = 0x7fffffff	// ZES_EVENT_TYPE_FLAG_FORCE_UINT32 Value marking end of ZES_EVENT_TYPE_FLAG_* ENUMs
+	ZES_EVENT_TYPE_FLAG_SURVIVABILITY_MODE_DETECTED ZesEventTypeFlags = /* ZE_BIT(15) */ (1 << 15) // ZES_EVENT_TYPE_FLAG_SURVIVABILITY_MODE_DETECTED Event is triggered when graphics driver encounter an error condition.
+	ZES_EVENT_TYPE_FLAG_FORCE_UINT32                ZesEventTypeFlags = 0x7fffffff                 // ZES_EVENT_TYPE_FLAG_FORCE_UINT32 Value marking end of ZES_EVENT_TYPE_FLAG_* ENUMs
 
 )
 
 // ZesDeviceEventRegister Specify the list of events to listen to for a given device
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0xffff < events`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0xffff < events`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZesDeviceEventRegister(
-	hDevice ZesDeviceHandle,	// hDevice [in] The device handle.
-	events ZesEventTypeFlags,	// events [in] List of events to listen to.
+	hDevice ZesDeviceHandle, // hDevice [in] The device handle.
+	events ZesEventTypeFlags, // events [in] List of events to listen to.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceEventRegister", uintptr(hDevice), uintptr(events))
 }
 
 // ZesDriverEventListen Wait for events to be received from a one or more devices.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phDevices`
-///         + `nullptr == pNumDeviceEvents`
-///         + `nullptr == pEvents`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to listen to events.
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///         + One or more of the supplied device handles belongs to a different driver.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phDevices`
+// /         + `nullptr == pNumDeviceEvents`
+// /         + `nullptr == pEvents`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to listen to events.
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /         + One or more of the supplied device handles belongs to a different driver.
 func ZesDriverEventListen(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	timeout uint32,	// timeout [in] if non-zero, then indicates the maximum time (in milliseconds) to yield before returning ::ZE_RESULT_SUCCESS or ::ZE_RESULT_NOT_READY; if zero, then will check status and return immediately; if `UINT32_MAX`, then function will not return until events arrive.
-	count uint32,	// count [in] Number of device handles in phDevices.
-	phDevices *ZesDeviceHandle,	// phDevices [in][range(0, count)] Device handles to listen to for events. Only devices from the provided driver handle can be specified in this list.
-	pNumDeviceEvents *uint32,	// pNumDeviceEvents [in,out] Will contain the actual number of devices in phDevices that generated events. If non-zero, check pEvents to determine the devices and events that were received.
-	pEvents *ZesEventTypeFlags,	// pEvents [in,out] An array that will continue the list of events for each device listened in phDevices. This array must be at least as big as count. For every device handle in phDevices, this will provide the events that occurred for that device at the same position in this array. If no event was received for a given device, the corresponding array entry will be zero.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	timeout uint32, // timeout [in] if non-zero, then indicates the maximum time (in milliseconds) to yield before returning ::ZE_RESULT_SUCCESS or ::ZE_RESULT_NOT_READY; if zero, then will check status and return immediately; if `UINT32_MAX`, then function will not return until events arrive.
+	count uint32, // count [in] Number of device handles in phDevices.
+	phDevices *ZesDeviceHandle, // phDevices [in][range(0, count)] Device handles to listen to for events. Only devices from the provided driver handle can be specified in this list.
+	pNumDeviceEvents *uint32, // pNumDeviceEvents [in,out] Will contain the actual number of devices in phDevices that generated events. If non-zero, check pEvents to determine the devices and events that were received.
+	pEvents *ZesEventTypeFlags, // pEvents [in,out] An array that will continue the list of events for each device listened in phDevices. This array must be at least as big as count. For every device handle in phDevices, this will provide the events that occurred for that device at the same position in this array. If no event was received for a given device, the corresponding array entry will be zero.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDriverEventListen", uintptr(hDriver), uintptr(timeout), uintptr(count), uintptr(unsafe.Pointer(phDevices)), uintptr(unsafe.Pointer(pNumDeviceEvents)), uintptr(unsafe.Pointer(pEvents)))
 }
 
 // ZesDriverEventListenEx Wait for events to be received from a one or more devices.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phDevices`
-///         + `nullptr == pNumDeviceEvents`
-///         + `nullptr == pEvents`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to listen to events.
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///         + One or more of the supplied device handles belongs to a different driver.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phDevices`
+// /         + `nullptr == pNumDeviceEvents`
+// /         + `nullptr == pEvents`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to listen to events.
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /         + One or more of the supplied device handles belongs to a different driver.
 func ZesDriverEventListenEx(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	timeout uint64,	// timeout [in] if non-zero, then indicates the maximum time (in milliseconds) to yield before returning ::ZE_RESULT_SUCCESS or ::ZE_RESULT_NOT_READY; if zero, then will check status and return immediately; if `UINT64_MAX`, then function will not return until events arrive.
-	count uint32,	// count [in] Number of device handles in phDevices.
-	phDevices *ZesDeviceHandle,	// phDevices [in][range(0, count)] Device handles to listen to for events. Only devices from the provided driver handle can be specified in this list.
-	pNumDeviceEvents *uint32,	// pNumDeviceEvents [in,out] Will contain the actual number of devices in phDevices that generated events. If non-zero, check pEvents to determine the devices and events that were received.
-	pEvents *ZesEventTypeFlags,	// pEvents [in,out] An array that will continue the list of events for each device listened in phDevices. This array must be at least as big as count. For every device handle in phDevices, this will provide the events that occurred for that device at the same position in this array. If no event was received for a given device, the corresponding array entry will be zero.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	timeout uint64, // timeout [in] if non-zero, then indicates the maximum time (in milliseconds) to yield before returning ::ZE_RESULT_SUCCESS or ::ZE_RESULT_NOT_READY; if zero, then will check status and return immediately; if `UINT64_MAX`, then function will not return until events arrive.
+	count uint32, // count [in] Number of device handles in phDevices.
+	phDevices *ZesDeviceHandle, // phDevices [in][range(0, count)] Device handles to listen to for events. Only devices from the provided driver handle can be specified in this list.
+	pNumDeviceEvents *uint32, // pNumDeviceEvents [in,out] Will contain the actual number of devices in phDevices that generated events. If non-zero, check pEvents to determine the devices and events that were received.
+	pEvents *ZesEventTypeFlags, // pEvents [in,out] An array that will continue the list of events for each device listened in phDevices. This array must be at least as big as count. For every device handle in phDevices, this will provide the events that occurred for that device at the same position in this array. If no event was received for a given device, the corresponding array entry will be zero.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDriverEventListenEx", uintptr(hDriver), uintptr(timeout), uintptr(count), uintptr(unsafe.Pointer(phDevices)), uintptr(unsafe.Pointer(pNumDeviceEvents)), uintptr(unsafe.Pointer(pEvents)))
 }
-

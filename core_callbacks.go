@@ -17,18 +17,18 @@ import (
 	"unsafe"
 )
 
-// ZeInitParams (ze_init_params_t) Callback function parameters for zeInit 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeInitParams (ze_init_params_t) Callback function parameters for zeInit
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeInitParams struct {
 	Pflags *ZeInitFlags
 }
 
-// ZePfninitcb (ze_pfnInitCb_t) Callback function-pointer for zeInit 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfninitcb (ze_pfnInitCb_t) Callback function-pointer for zeInit
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfninitcb uintptr
 
@@ -37,2269 +37,2268 @@ type ZeGlobalCallbacks struct {
 	Pfninitcb ZePfninitcb
 }
 
-// ZeDriverGetParams (ze_driver_get_params_t) Callback function parameters for zeDriverGet 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDriverGetParams (ze_driver_get_params_t) Callback function parameters for zeDriverGet
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDriverGetParams struct {
-	Ppcount **uint32
+	Ppcount    **uint32
 	Pphdrivers **ZeDriverHandle
 }
 
-// ZePfndrivergetcb (ze_pfnDriverGetCb_t) Callback function-pointer for zeDriverGet 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndrivergetcb (ze_pfnDriverGetCb_t) Callback function-pointer for zeDriverGet
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndrivergetcb uintptr
 
-// ZeDriverGetApiVersionParams (ze_driver_get_api_version_params_t) Callback function parameters for zeDriverGetApiVersion 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDriverGetApiVersionParams (ze_driver_get_api_version_params_t) Callback function parameters for zeDriverGetApiVersion
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDriverGetApiVersionParams struct {
 	Phdriver *ZeDriverHandle
 	Pversion **ZeApiVersion
 }
 
-// ZePfndrivergetapiversioncb (ze_pfnDriverGetApiVersionCb_t) Callback function-pointer for zeDriverGetApiVersion 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndrivergetapiversioncb (ze_pfnDriverGetApiVersionCb_t) Callback function-pointer for zeDriverGetApiVersion
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndrivergetapiversioncb uintptr
 
-// ZeDriverGetPropertiesParams (ze_driver_get_properties_params_t) Callback function parameters for zeDriverGetProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDriverGetPropertiesParams (ze_driver_get_properties_params_t) Callback function parameters for zeDriverGetProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDriverGetPropertiesParams struct {
-	Phdriver *ZeDriverHandle
+	Phdriver           *ZeDriverHandle
 	Ppdriverproperties **ZeDriverProperties
 }
 
-// ZePfndrivergetpropertiescb (ze_pfnDriverGetPropertiesCb_t) Callback function-pointer for zeDriverGetProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndrivergetpropertiescb (ze_pfnDriverGetPropertiesCb_t) Callback function-pointer for zeDriverGetProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndrivergetpropertiescb uintptr
 
-// ZeDriverGetIpcPropertiesParams (ze_driver_get_ipc_properties_params_t) Callback function parameters for zeDriverGetIpcProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDriverGetIpcPropertiesParams (ze_driver_get_ipc_properties_params_t) Callback function parameters for zeDriverGetIpcProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDriverGetIpcPropertiesParams struct {
-	Phdriver *ZeDriverHandle
+	Phdriver        *ZeDriverHandle
 	Ppipcproperties **ZeDriverIpcProperties
 }
 
-// ZePfndrivergetipcpropertiescb (ze_pfnDriverGetIpcPropertiesCb_t) Callback function-pointer for zeDriverGetIpcProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndrivergetipcpropertiescb (ze_pfnDriverGetIpcPropertiesCb_t) Callback function-pointer for zeDriverGetIpcProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndrivergetipcpropertiescb uintptr
 
-// ZeDriverGetExtensionPropertiesParams (ze_driver_get_extension_properties_params_t) Callback function parameters for zeDriverGetExtensionProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDriverGetExtensionPropertiesParams (ze_driver_get_extension_properties_params_t) Callback function parameters for zeDriverGetExtensionProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDriverGetExtensionPropertiesParams struct {
-	Phdriver *ZeDriverHandle
-	Ppcount **uint32
+	Phdriver              *ZeDriverHandle
+	Ppcount               **uint32
 	Ppextensionproperties **ZeDriverExtensionProperties
 }
 
-// ZePfndrivergetextensionpropertiescb (ze_pfnDriverGetExtensionPropertiesCb_t) Callback function-pointer for zeDriverGetExtensionProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndrivergetextensionpropertiescb (ze_pfnDriverGetExtensionPropertiesCb_t) Callback function-pointer for zeDriverGetExtensionProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndrivergetextensionpropertiescb uintptr
 
 // ZeDriverCallbacks (ze_driver_callbacks_t) Table of Driver callback functions pointers
 type ZeDriverCallbacks struct {
-	Pfngetcb ZePfndrivergetcb
-	Pfngetapiversioncb ZePfndrivergetapiversioncb
-	Pfngetpropertiescb ZePfndrivergetpropertiescb
-	Pfngetipcpropertiescb ZePfndrivergetipcpropertiescb
+	Pfngetcb                    ZePfndrivergetcb
+	Pfngetapiversioncb          ZePfndrivergetapiversioncb
+	Pfngetpropertiescb          ZePfndrivergetpropertiescb
+	Pfngetipcpropertiescb       ZePfndrivergetipcpropertiescb
 	Pfngetextensionpropertiescb ZePfndrivergetextensionpropertiescb
 }
 
-// ZeDeviceGetParams (ze_device_get_params_t) Callback function parameters for zeDeviceGet 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetParams (ze_device_get_params_t) Callback function parameters for zeDeviceGet
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetParams struct {
-	Phdriver *ZeDriverHandle
-	Ppcount **uint32
+	Phdriver   *ZeDriverHandle
+	Ppcount    **uint32
 	Pphdevices **ZeDeviceHandle
 }
 
-// ZePfndevicegetcb (ze_pfnDeviceGetCb_t) Callback function-pointer for zeDeviceGet 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetcb (ze_pfnDeviceGetCb_t) Callback function-pointer for zeDeviceGet
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetcb uintptr
 
-// ZeDeviceGetSubDevicesParams (ze_device_get_sub_devices_params_t) Callback function parameters for zeDeviceGetSubDevices 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetSubDevicesParams (ze_device_get_sub_devices_params_t) Callback function parameters for zeDeviceGetSubDevices
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetSubDevicesParams struct {
-	Phdevice *ZeDeviceHandle
-	Ppcount **uint32
+	Phdevice      *ZeDeviceHandle
+	Ppcount       **uint32
 	Pphsubdevices **ZeDeviceHandle
 }
 
-// ZePfndevicegetsubdevicescb (ze_pfnDeviceGetSubDevicesCb_t) Callback function-pointer for zeDeviceGetSubDevices 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetsubdevicescb (ze_pfnDeviceGetSubDevicesCb_t) Callback function-pointer for zeDeviceGetSubDevices
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetsubdevicescb uintptr
 
-// ZeDeviceGetPropertiesParams (ze_device_get_properties_params_t) Callback function parameters for zeDeviceGetProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetPropertiesParams (ze_device_get_properties_params_t) Callback function parameters for zeDeviceGetProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice           *ZeDeviceHandle
 	Ppdeviceproperties **ZeDeviceProperties
 }
 
-// ZePfndevicegetpropertiescb (ze_pfnDeviceGetPropertiesCb_t) Callback function-pointer for zeDeviceGetProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetpropertiescb (ze_pfnDeviceGetPropertiesCb_t) Callback function-pointer for zeDeviceGetProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetpropertiescb uintptr
 
-// ZeDeviceGetComputePropertiesParams (ze_device_get_compute_properties_params_t) Callback function parameters for zeDeviceGetComputeProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetComputePropertiesParams (ze_device_get_compute_properties_params_t) Callback function parameters for zeDeviceGetComputeProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetComputePropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice            *ZeDeviceHandle
 	Ppcomputeproperties **ZeDeviceComputeProperties
 }
 
-// ZePfndevicegetcomputepropertiescb (ze_pfnDeviceGetComputePropertiesCb_t) Callback function-pointer for zeDeviceGetComputeProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetcomputepropertiescb (ze_pfnDeviceGetComputePropertiesCb_t) Callback function-pointer for zeDeviceGetComputeProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetcomputepropertiescb uintptr
 
-// ZeDeviceGetModulePropertiesParams (ze_device_get_module_properties_params_t) Callback function parameters for zeDeviceGetModuleProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetModulePropertiesParams (ze_device_get_module_properties_params_t) Callback function parameters for zeDeviceGetModuleProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetModulePropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice           *ZeDeviceHandle
 	Ppmoduleproperties **ZeDeviceModuleProperties
 }
 
-// ZePfndevicegetmodulepropertiescb (ze_pfnDeviceGetModulePropertiesCb_t) Callback function-pointer for zeDeviceGetModuleProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetmodulepropertiescb (ze_pfnDeviceGetModulePropertiesCb_t) Callback function-pointer for zeDeviceGetModuleProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetmodulepropertiescb uintptr
 
-// ZeDeviceGetCommandQueueGroupPropertiesParams (ze_device_get_command_queue_group_properties_params_t) Callback function parameters for zeDeviceGetCommandQueueGroupProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetCommandQueueGroupPropertiesParams (ze_device_get_command_queue_group_properties_params_t) Callback function parameters for zeDeviceGetCommandQueueGroupProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetCommandQueueGroupPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
-	Ppcount **uint32
+	Phdevice                      *ZeDeviceHandle
+	Ppcount                       **uint32
 	Ppcommandqueuegroupproperties **ZeCommandQueueGroupProperties
 }
 
-// ZePfndevicegetcommandqueuegrouppropertiescb (ze_pfnDeviceGetCommandQueueGroupPropertiesCb_t) Callback function-pointer for zeDeviceGetCommandQueueGroupProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetcommandqueuegrouppropertiescb (ze_pfnDeviceGetCommandQueueGroupPropertiesCb_t) Callback function-pointer for zeDeviceGetCommandQueueGroupProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetcommandqueuegrouppropertiescb uintptr
 
-// ZeDeviceGetMemoryPropertiesParams (ze_device_get_memory_properties_params_t) Callback function parameters for zeDeviceGetMemoryProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetMemoryPropertiesParams (ze_device_get_memory_properties_params_t) Callback function parameters for zeDeviceGetMemoryProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetMemoryPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
-	Ppcount **uint32
+	Phdevice        *ZeDeviceHandle
+	Ppcount         **uint32
 	Ppmemproperties **ZeDeviceMemoryProperties
 }
 
-// ZePfndevicegetmemorypropertiescb (ze_pfnDeviceGetMemoryPropertiesCb_t) Callback function-pointer for zeDeviceGetMemoryProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetmemorypropertiescb (ze_pfnDeviceGetMemoryPropertiesCb_t) Callback function-pointer for zeDeviceGetMemoryProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetmemorypropertiescb uintptr
 
-// ZeDeviceGetMemoryAccessPropertiesParams (ze_device_get_memory_access_properties_params_t) Callback function parameters for zeDeviceGetMemoryAccessProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetMemoryAccessPropertiesParams (ze_device_get_memory_access_properties_params_t) Callback function parameters for zeDeviceGetMemoryAccessProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetMemoryAccessPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice              *ZeDeviceHandle
 	Ppmemaccessproperties **ZeDeviceMemoryAccessProperties
 }
 
-// ZePfndevicegetmemoryaccesspropertiescb (ze_pfnDeviceGetMemoryAccessPropertiesCb_t) Callback function-pointer for zeDeviceGetMemoryAccessProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetmemoryaccesspropertiescb (ze_pfnDeviceGetMemoryAccessPropertiesCb_t) Callback function-pointer for zeDeviceGetMemoryAccessProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetmemoryaccesspropertiescb uintptr
 
-// ZeDeviceGetCachePropertiesParams (ze_device_get_cache_properties_params_t) Callback function parameters for zeDeviceGetCacheProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetCachePropertiesParams (ze_device_get_cache_properties_params_t) Callback function parameters for zeDeviceGetCacheProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetCachePropertiesParams struct {
-	Phdevice *ZeDeviceHandle
-	Ppcount **uint32
+	Phdevice          *ZeDeviceHandle
+	Ppcount           **uint32
 	Ppcacheproperties **ZeDeviceCacheProperties
 }
 
-// ZePfndevicegetcachepropertiescb (ze_pfnDeviceGetCachePropertiesCb_t) Callback function-pointer for zeDeviceGetCacheProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetcachepropertiescb (ze_pfnDeviceGetCachePropertiesCb_t) Callback function-pointer for zeDeviceGetCacheProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetcachepropertiescb uintptr
 
-// ZeDeviceGetImagePropertiesParams (ze_device_get_image_properties_params_t) Callback function parameters for zeDeviceGetImageProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetImagePropertiesParams (ze_device_get_image_properties_params_t) Callback function parameters for zeDeviceGetImageProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetImagePropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice          *ZeDeviceHandle
 	Ppimageproperties **ZeDeviceImageProperties
 }
 
-// ZePfndevicegetimagepropertiescb (ze_pfnDeviceGetImagePropertiesCb_t) Callback function-pointer for zeDeviceGetImageProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetimagepropertiescb (ze_pfnDeviceGetImagePropertiesCb_t) Callback function-pointer for zeDeviceGetImageProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetimagepropertiescb uintptr
 
-// ZeDeviceGetExternalMemoryPropertiesParams (ze_device_get_external_memory_properties_params_t) Callback function parameters for zeDeviceGetExternalMemoryProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetExternalMemoryPropertiesParams (ze_device_get_external_memory_properties_params_t) Callback function parameters for zeDeviceGetExternalMemoryProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetExternalMemoryPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice                   *ZeDeviceHandle
 	Ppexternalmemoryproperties **ZeDeviceExternalMemoryProperties
 }
 
-// ZePfndevicegetexternalmemorypropertiescb (ze_pfnDeviceGetExternalMemoryPropertiesCb_t) Callback function-pointer for zeDeviceGetExternalMemoryProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetexternalmemorypropertiescb (ze_pfnDeviceGetExternalMemoryPropertiesCb_t) Callback function-pointer for zeDeviceGetExternalMemoryProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetexternalmemorypropertiescb uintptr
 
-// ZeDeviceGetP2PPropertiesParams (ze_device_get_p2_p_properties_params_t) Callback function parameters for zeDeviceGetP2PProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetP2PPropertiesParams (ze_device_get_p2_p_properties_params_t) Callback function parameters for zeDeviceGetP2PProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetP2PPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
-	Phpeerdevice *ZeDeviceHandle
+	Phdevice        *ZeDeviceHandle
+	Phpeerdevice    *ZeDeviceHandle
 	Ppp2pproperties **ZeDeviceP2pProperties
 }
 
-// ZePfndevicegetp2ppropertiescb (ze_pfnDeviceGetP2PPropertiesCb_t) Callback function-pointer for zeDeviceGetP2PProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetp2ppropertiescb (ze_pfnDeviceGetP2PPropertiesCb_t) Callback function-pointer for zeDeviceGetP2PProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetp2ppropertiescb uintptr
 
-// ZeDeviceCanAccessPeerParams (ze_device_can_access_peer_params_t) Callback function parameters for zeDeviceCanAccessPeer 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceCanAccessPeerParams (ze_device_can_access_peer_params_t) Callback function parameters for zeDeviceCanAccessPeer
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceCanAccessPeerParams struct {
-	Phdevice *ZeDeviceHandle
+	Phdevice     *ZeDeviceHandle
 	Phpeerdevice *ZeDeviceHandle
-	Pvalue **ZeBool
+	Pvalue       **ZeBool
 }
 
-// ZePfndevicecanaccesspeercb (ze_pfnDeviceCanAccessPeerCb_t) Callback function-pointer for zeDeviceCanAccessPeer 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicecanaccesspeercb (ze_pfnDeviceCanAccessPeerCb_t) Callback function-pointer for zeDeviceCanAccessPeer
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicecanaccesspeercb uintptr
 
-// ZeDeviceGetStatusParams (ze_device_get_status_params_t) Callback function parameters for zeDeviceGetStatus 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeDeviceGetStatusParams (ze_device_get_status_params_t) Callback function parameters for zeDeviceGetStatus
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeDeviceGetStatusParams struct {
 	Phdevice *ZeDeviceHandle
 }
 
-// ZePfndevicegetstatuscb (ze_pfnDeviceGetStatusCb_t) Callback function-pointer for zeDeviceGetStatus 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfndevicegetstatuscb (ze_pfnDeviceGetStatusCb_t) Callback function-pointer for zeDeviceGetStatus
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfndevicegetstatuscb uintptr
 
 // ZeDeviceCallbacks (ze_device_callbacks_t) Table of Device callback functions pointers
 type ZeDeviceCallbacks struct {
-	Pfngetcb ZePfndevicegetcb
-	Pfngetsubdevicescb ZePfndevicegetsubdevicescb
-	Pfngetpropertiescb ZePfndevicegetpropertiescb
-	Pfngetcomputepropertiescb ZePfndevicegetcomputepropertiescb
-	Pfngetmodulepropertiescb ZePfndevicegetmodulepropertiescb
+	Pfngetcb                            ZePfndevicegetcb
+	Pfngetsubdevicescb                  ZePfndevicegetsubdevicescb
+	Pfngetpropertiescb                  ZePfndevicegetpropertiescb
+	Pfngetcomputepropertiescb           ZePfndevicegetcomputepropertiescb
+	Pfngetmodulepropertiescb            ZePfndevicegetmodulepropertiescb
 	Pfngetcommandqueuegrouppropertiescb ZePfndevicegetcommandqueuegrouppropertiescb
-	Pfngetmemorypropertiescb ZePfndevicegetmemorypropertiescb
-	Pfngetmemoryaccesspropertiescb ZePfndevicegetmemoryaccesspropertiescb
-	Pfngetcachepropertiescb ZePfndevicegetcachepropertiescb
-	Pfngetimagepropertiescb ZePfndevicegetimagepropertiescb
-	Pfngetexternalmemorypropertiescb ZePfndevicegetexternalmemorypropertiescb
-	Pfngetp2ppropertiescb ZePfndevicegetp2ppropertiescb
-	Pfncanaccesspeercb ZePfndevicecanaccesspeercb
-	Pfngetstatuscb ZePfndevicegetstatuscb
+	Pfngetmemorypropertiescb            ZePfndevicegetmemorypropertiescb
+	Pfngetmemoryaccesspropertiescb      ZePfndevicegetmemoryaccesspropertiescb
+	Pfngetcachepropertiescb             ZePfndevicegetcachepropertiescb
+	Pfngetimagepropertiescb             ZePfndevicegetimagepropertiescb
+	Pfngetexternalmemorypropertiescb    ZePfndevicegetexternalmemorypropertiescb
+	Pfngetp2ppropertiescb               ZePfndevicegetp2ppropertiescb
+	Pfncanaccesspeercb                  ZePfndevicecanaccesspeercb
+	Pfngetstatuscb                      ZePfndevicegetstatuscb
 }
 
-// ZeContextCreateParams (ze_context_create_params_t) Callback function parameters for zeContextCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextCreateParams (ze_context_create_params_t) Callback function parameters for zeContextCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextCreateParams struct {
-	Phdriver *ZeDriverHandle
-	Pdesc **ZeContextDesc
+	Phdriver   *ZeDriverHandle
+	Pdesc      **ZeContextDesc
 	Pphcontext **ZeContextHandle
 }
 
-// ZePfncontextcreatecb (ze_pfnContextCreateCb_t) Callback function-pointer for zeContextCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextcreatecb (ze_pfnContextCreateCb_t) Callback function-pointer for zeContextCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextcreatecb uintptr
 
-// ZeContextDestroyParams (ze_context_destroy_params_t) Callback function parameters for zeContextDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextDestroyParams (ze_context_destroy_params_t) Callback function parameters for zeContextDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextDestroyParams struct {
 	Phcontext *ZeContextHandle
 }
 
-// ZePfncontextdestroycb (ze_pfnContextDestroyCb_t) Callback function-pointer for zeContextDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextdestroycb (ze_pfnContextDestroyCb_t) Callback function-pointer for zeContextDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextdestroycb uintptr
 
-// ZeContextGetStatusParams (ze_context_get_status_params_t) Callback function parameters for zeContextGetStatus 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextGetStatusParams (ze_context_get_status_params_t) Callback function parameters for zeContextGetStatus
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextGetStatusParams struct {
 	Phcontext *ZeContextHandle
 }
 
-// ZePfncontextgetstatuscb (ze_pfnContextGetStatusCb_t) Callback function-pointer for zeContextGetStatus 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextgetstatuscb (ze_pfnContextGetStatusCb_t) Callback function-pointer for zeContextGetStatus
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextgetstatuscb uintptr
 
-// ZeContextSystemBarrierParams (ze_context_system_barrier_params_t) Callback function parameters for zeContextSystemBarrier 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextSystemBarrierParams (ze_context_system_barrier_params_t) Callback function parameters for zeContextSystemBarrier
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextSystemBarrierParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
+	Phdevice  *ZeDeviceHandle
 }
 
-// ZePfncontextsystembarriercb (ze_pfnContextSystemBarrierCb_t) Callback function-pointer for zeContextSystemBarrier 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextsystembarriercb (ze_pfnContextSystemBarrierCb_t) Callback function-pointer for zeContextSystemBarrier
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextsystembarriercb uintptr
 
-// ZeContextMakeMemoryResidentParams (ze_context_make_memory_resident_params_t) Callback function parameters for zeContextMakeMemoryResident 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextMakeMemoryResidentParams (ze_context_make_memory_resident_params_t) Callback function parameters for zeContextMakeMemoryResident
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextMakeMemoryResidentParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Phdevice  *ZeDeviceHandle
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
 }
 
-// ZePfncontextmakememoryresidentcb (ze_pfnContextMakeMemoryResidentCb_t) Callback function-pointer for zeContextMakeMemoryResident 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextmakememoryresidentcb (ze_pfnContextMakeMemoryResidentCb_t) Callback function-pointer for zeContextMakeMemoryResident
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextmakememoryresidentcb uintptr
 
-// ZeContextEvictMemoryParams (ze_context_evict_memory_params_t) Callback function parameters for zeContextEvictMemory 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextEvictMemoryParams (ze_context_evict_memory_params_t) Callback function parameters for zeContextEvictMemory
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextEvictMemoryParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Phdevice  *ZeDeviceHandle
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
 }
 
-// ZePfncontextevictmemorycb (ze_pfnContextEvictMemoryCb_t) Callback function-pointer for zeContextEvictMemory 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextevictmemorycb (ze_pfnContextEvictMemoryCb_t) Callback function-pointer for zeContextEvictMemory
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextevictmemorycb uintptr
 
-// ZeContextMakeImageResidentParams (ze_context_make_image_resident_params_t) Callback function parameters for zeContextMakeImageResident 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextMakeImageResidentParams (ze_context_make_image_resident_params_t) Callback function parameters for zeContextMakeImageResident
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextMakeImageResidentParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Phimage *ZeImageHandle
+	Phdevice  *ZeDeviceHandle
+	Phimage   *ZeImageHandle
 }
 
-// ZePfncontextmakeimageresidentcb (ze_pfnContextMakeImageResidentCb_t) Callback function-pointer for zeContextMakeImageResident 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextmakeimageresidentcb (ze_pfnContextMakeImageResidentCb_t) Callback function-pointer for zeContextMakeImageResident
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextmakeimageresidentcb uintptr
 
-// ZeContextEvictImageParams (ze_context_evict_image_params_t) Callback function parameters for zeContextEvictImage 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeContextEvictImageParams (ze_context_evict_image_params_t) Callback function parameters for zeContextEvictImage
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeContextEvictImageParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Phimage *ZeImageHandle
+	Phdevice  *ZeDeviceHandle
+	Phimage   *ZeImageHandle
 }
 
-// ZePfncontextevictimagecb (ze_pfnContextEvictImageCb_t) Callback function-pointer for zeContextEvictImage 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncontextevictimagecb (ze_pfnContextEvictImageCb_t) Callback function-pointer for zeContextEvictImage
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncontextevictimagecb uintptr
 
 // ZeContextCallbacks (ze_context_callbacks_t) Table of Context callback functions pointers
 type ZeContextCallbacks struct {
-	Pfncreatecb ZePfncontextcreatecb
-	Pfndestroycb ZePfncontextdestroycb
-	Pfngetstatuscb ZePfncontextgetstatuscb
-	Pfnsystembarriercb ZePfncontextsystembarriercb
+	Pfncreatecb             ZePfncontextcreatecb
+	Pfndestroycb            ZePfncontextdestroycb
+	Pfngetstatuscb          ZePfncontextgetstatuscb
+	Pfnsystembarriercb      ZePfncontextsystembarriercb
 	Pfnmakememoryresidentcb ZePfncontextmakememoryresidentcb
-	Pfnevictmemorycb ZePfncontextevictmemorycb
-	Pfnmakeimageresidentcb ZePfncontextmakeimageresidentcb
-	Pfnevictimagecb ZePfncontextevictimagecb
+	Pfnevictmemorycb        ZePfncontextevictmemorycb
+	Pfnmakeimageresidentcb  ZePfncontextmakeimageresidentcb
+	Pfnevictimagecb         ZePfncontextevictimagecb
 }
 
-// ZeCommandQueueCreateParams (ze_command_queue_create_params_t) Callback function parameters for zeCommandQueueCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandQueueCreateParams (ze_command_queue_create_params_t) Callback function parameters for zeCommandQueueCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandQueueCreateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeCommandQueueDesc
+	Phcontext       *ZeContextHandle
+	Phdevice        *ZeDeviceHandle
+	Pdesc           **ZeCommandQueueDesc
 	Pphcommandqueue **ZeCommandQueueHandle
 }
 
-// ZePfncommandqueuecreatecb (ze_pfnCommandQueueCreateCb_t) Callback function-pointer for zeCommandQueueCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandqueuecreatecb (ze_pfnCommandQueueCreateCb_t) Callback function-pointer for zeCommandQueueCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandqueuecreatecb uintptr
 
-// ZeCommandQueueDestroyParams (ze_command_queue_destroy_params_t) Callback function parameters for zeCommandQueueDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandQueueDestroyParams (ze_command_queue_destroy_params_t) Callback function parameters for zeCommandQueueDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandQueueDestroyParams struct {
 	Phcommandqueue *ZeCommandQueueHandle
 }
 
-// ZePfncommandqueuedestroycb (ze_pfnCommandQueueDestroyCb_t) Callback function-pointer for zeCommandQueueDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandqueuedestroycb (ze_pfnCommandQueueDestroyCb_t) Callback function-pointer for zeCommandQueueDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandqueuedestroycb uintptr
 
-// ZeCommandQueueExecuteCommandListsParams (ze_command_queue_execute_command_lists_params_t) Callback function parameters for zeCommandQueueExecuteCommandLists 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandQueueExecuteCommandListsParams (ze_command_queue_execute_command_lists_params_t) Callback function parameters for zeCommandQueueExecuteCommandLists
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandQueueExecuteCommandListsParams struct {
-	Phcommandqueue *ZeCommandQueueHandle
+	Phcommandqueue   *ZeCommandQueueHandle
 	Pnumcommandlists *uint32
-	Pphcommandlists **ZeCommandListHandle
-	Phfence *ZeFenceHandle
+	Pphcommandlists  **ZeCommandListHandle
+	Phfence          *ZeFenceHandle
 }
 
-// ZePfncommandqueueexecutecommandlistscb (ze_pfnCommandQueueExecuteCommandListsCb_t) Callback function-pointer for zeCommandQueueExecuteCommandLists 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandqueueexecutecommandlistscb (ze_pfnCommandQueueExecuteCommandListsCb_t) Callback function-pointer for zeCommandQueueExecuteCommandLists
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandqueueexecutecommandlistscb uintptr
 
-// ZeCommandQueueSynchronizeParams (ze_command_queue_synchronize_params_t) Callback function parameters for zeCommandQueueSynchronize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandQueueSynchronizeParams (ze_command_queue_synchronize_params_t) Callback function parameters for zeCommandQueueSynchronize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandQueueSynchronizeParams struct {
 	Phcommandqueue *ZeCommandQueueHandle
-	Ptimeout *uint64
+	Ptimeout       *uint64
 }
 
-// ZePfncommandqueuesynchronizecb (ze_pfnCommandQueueSynchronizeCb_t) Callback function-pointer for zeCommandQueueSynchronize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandqueuesynchronizecb (ze_pfnCommandQueueSynchronizeCb_t) Callback function-pointer for zeCommandQueueSynchronize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandqueuesynchronizecb uintptr
 
 // ZeCommandQueueCallbacks (ze_command_queue_callbacks_t) Table of CommandQueue callback functions pointers
 type ZeCommandQueueCallbacks struct {
-	Pfncreatecb ZePfncommandqueuecreatecb
-	Pfndestroycb ZePfncommandqueuedestroycb
+	Pfncreatecb              ZePfncommandqueuecreatecb
+	Pfndestroycb             ZePfncommandqueuedestroycb
 	Pfnexecutecommandlistscb ZePfncommandqueueexecutecommandlistscb
-	Pfnsynchronizecb ZePfncommandqueuesynchronizecb
+	Pfnsynchronizecb         ZePfncommandqueuesynchronizecb
 }
 
-// ZeCommandListCreateParams (ze_command_list_create_params_t) Callback function parameters for zeCommandListCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListCreateParams (ze_command_list_create_params_t) Callback function parameters for zeCommandListCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListCreateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeCommandListDesc
+	Phcontext      *ZeContextHandle
+	Phdevice       *ZeDeviceHandle
+	Pdesc          **ZeCommandListDesc
 	Pphcommandlist **ZeCommandListHandle
 }
 
-// ZePfncommandlistcreatecb (ze_pfnCommandListCreateCb_t) Callback function-pointer for zeCommandListCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistcreatecb (ze_pfnCommandListCreateCb_t) Callback function-pointer for zeCommandListCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistcreatecb uintptr
 
-// ZeCommandListCreateImmediateParams (ze_command_list_create_immediate_params_t) Callback function parameters for zeCommandListCreateImmediate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListCreateImmediateParams (ze_command_list_create_immediate_params_t) Callback function parameters for zeCommandListCreateImmediate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListCreateImmediateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Paltdesc **ZeCommandQueueDesc
+	Phcontext      *ZeContextHandle
+	Phdevice       *ZeDeviceHandle
+	Paltdesc       **ZeCommandQueueDesc
 	Pphcommandlist **ZeCommandListHandle
 }
 
-// ZePfncommandlistcreateimmediatecb (ze_pfnCommandListCreateImmediateCb_t) Callback function-pointer for zeCommandListCreateImmediate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistcreateimmediatecb (ze_pfnCommandListCreateImmediateCb_t) Callback function-pointer for zeCommandListCreateImmediate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistcreateimmediatecb uintptr
 
-// ZeCommandListDestroyParams (ze_command_list_destroy_params_t) Callback function parameters for zeCommandListDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListDestroyParams (ze_command_list_destroy_params_t) Callback function parameters for zeCommandListDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListDestroyParams struct {
 	Phcommandlist *ZeCommandListHandle
 }
 
-// ZePfncommandlistdestroycb (ze_pfnCommandListDestroyCb_t) Callback function-pointer for zeCommandListDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistdestroycb (ze_pfnCommandListDestroyCb_t) Callback function-pointer for zeCommandListDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistdestroycb uintptr
 
-// ZeCommandListCloseParams (ze_command_list_close_params_t) Callback function parameters for zeCommandListClose 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListCloseParams (ze_command_list_close_params_t) Callback function parameters for zeCommandListClose
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListCloseParams struct {
 	Phcommandlist *ZeCommandListHandle
 }
 
-// ZePfncommandlistclosecb (ze_pfnCommandListCloseCb_t) Callback function-pointer for zeCommandListClose 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistclosecb (ze_pfnCommandListCloseCb_t) Callback function-pointer for zeCommandListClose
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistclosecb uintptr
 
-// ZeCommandListResetParams (ze_command_list_reset_params_t) Callback function parameters for zeCommandListReset 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListResetParams (ze_command_list_reset_params_t) Callback function parameters for zeCommandListReset
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListResetParams struct {
 	Phcommandlist *ZeCommandListHandle
 }
 
-// ZePfncommandlistresetcb (ze_pfnCommandListResetCb_t) Callback function-pointer for zeCommandListReset 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistresetcb (ze_pfnCommandListResetCb_t) Callback function-pointer for zeCommandListReset
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistresetcb uintptr
 
-// ZeCommandListAppendWriteGlobalTimestampParams (ze_command_list_append_write_global_timestamp_params_t) Callback function parameters for zeCommandListAppendWriteGlobalTimestamp 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendWriteGlobalTimestampParams (ze_command_list_append_write_global_timestamp_params_t) Callback function parameters for zeCommandListAppendWriteGlobalTimestamp
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendWriteGlobalTimestampParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pdstptr **uint64
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pdstptr        **uint64
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendwriteglobaltimestampcb (ze_pfnCommandListAppendWriteGlobalTimestampCb_t) Callback function-pointer for zeCommandListAppendWriteGlobalTimestamp 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendwriteglobaltimestampcb (ze_pfnCommandListAppendWriteGlobalTimestampCb_t) Callback function-pointer for zeCommandListAppendWriteGlobalTimestamp
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendwriteglobaltimestampcb uintptr
 
-// ZeCommandListAppendBarrierParams (ze_command_list_append_barrier_params_t) Callback function parameters for zeCommandListAppendBarrier 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendBarrierParams (ze_command_list_append_barrier_params_t) Callback function parameters for zeCommandListAppendBarrier
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendBarrierParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendbarriercb (ze_pfnCommandListAppendBarrierCb_t) Callback function-pointer for zeCommandListAppendBarrier 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendbarriercb (ze_pfnCommandListAppendBarrierCb_t) Callback function-pointer for zeCommandListAppendBarrier
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendbarriercb uintptr
 
-// ZeCommandListAppendMemoryRangesBarrierParams (ze_command_list_append_memory_ranges_barrier_params_t) Callback function parameters for zeCommandListAppendMemoryRangesBarrier 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryRangesBarrierParams (ze_command_list_append_memory_ranges_barrier_params_t) Callback function parameters for zeCommandListAppendMemoryRangesBarrier
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryRangesBarrierParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pnumranges *uint32
-	Pprangesizes **uintptr
-	Ppranges **unsafe.Pointer
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pnumranges     *uint32
+	Pprangesizes   **uintptr
+	Ppranges       **unsafe.Pointer
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendmemoryrangesbarriercb (ze_pfnCommandListAppendMemoryRangesBarrierCb_t) Callback function-pointer for zeCommandListAppendMemoryRangesBarrier 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemoryrangesbarriercb (ze_pfnCommandListAppendMemoryRangesBarrierCb_t) Callback function-pointer for zeCommandListAppendMemoryRangesBarrier
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemoryrangesbarriercb uintptr
 
-// ZeCommandListAppendMemoryCopyParams (ze_command_list_append_memory_copy_params_t) Callback function parameters for zeCommandListAppendMemoryCopy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryCopyParams (ze_command_list_append_memory_copy_params_t) Callback function parameters for zeCommandListAppendMemoryCopy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryCopyParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pdstptr *unsafe.Pointer
-	Psrcptr *unsafe.Pointer
-	Psize *uintptr
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pdstptr        *unsafe.Pointer
+	Psrcptr        *unsafe.Pointer
+	Psize          *uintptr
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendmemorycopycb (ze_pfnCommandListAppendMemoryCopyCb_t) Callback function-pointer for zeCommandListAppendMemoryCopy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemorycopycb (ze_pfnCommandListAppendMemoryCopyCb_t) Callback function-pointer for zeCommandListAppendMemoryCopy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemorycopycb uintptr
 
-// ZeCommandListAppendMemoryFillParams (ze_command_list_append_memory_fill_params_t) Callback function parameters for zeCommandListAppendMemoryFill 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryFillParams (ze_command_list_append_memory_fill_params_t) Callback function parameters for zeCommandListAppendMemoryFill
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryFillParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pptr *unsafe.Pointer
-	Ppattern *unsafe.Pointer
-	PpatternSize *uintptr
-	Psize *uintptr
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pptr           *unsafe.Pointer
+	Ppattern       *unsafe.Pointer
+	PpatternSize   *uintptr
+	Psize          *uintptr
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendmemoryfillcb (ze_pfnCommandListAppendMemoryFillCb_t) Callback function-pointer for zeCommandListAppendMemoryFill 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemoryfillcb (ze_pfnCommandListAppendMemoryFillCb_t) Callback function-pointer for zeCommandListAppendMemoryFill
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemoryfillcb uintptr
 
-// ZeCommandListAppendMemoryCopyRegionParams (ze_command_list_append_memory_copy_region_params_t) Callback function parameters for zeCommandListAppendMemoryCopyRegion 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryCopyRegionParams (ze_command_list_append_memory_copy_region_params_t) Callback function parameters for zeCommandListAppendMemoryCopyRegion
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryCopyRegionParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pdstptr *unsafe.Pointer
-	Pdstregion **ZeCopyRegion
-	Pdstpitch *uint32
+	Phcommandlist  *ZeCommandListHandle
+	Pdstptr        *unsafe.Pointer
+	Pdstregion     **ZeCopyRegion
+	Pdstpitch      *uint32
 	Pdstslicepitch *uint32
-	Psrcptr *unsafe.Pointer
-	Psrcregion **ZeCopyRegion
-	Psrcpitch *uint32
+	Psrcptr        *unsafe.Pointer
+	Psrcregion     **ZeCopyRegion
+	Psrcpitch      *uint32
 	Psrcslicepitch *uint32
-	Phsignalevent *ZeEventHandle
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendmemorycopyregioncb (ze_pfnCommandListAppendMemoryCopyRegionCb_t) Callback function-pointer for zeCommandListAppendMemoryCopyRegion 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemorycopyregioncb (ze_pfnCommandListAppendMemoryCopyRegionCb_t) Callback function-pointer for zeCommandListAppendMemoryCopyRegion
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemorycopyregioncb uintptr
 
-// ZeCommandListAppendMemoryCopyFromContextParams (ze_command_list_append_memory_copy_from_context_params_t) Callback function parameters for zeCommandListAppendMemoryCopyFromContext 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryCopyFromContextParams (ze_command_list_append_memory_copy_from_context_params_t) Callback function parameters for zeCommandListAppendMemoryCopyFromContext
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryCopyFromContextParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pdstptr *unsafe.Pointer
-	Phcontextsrc *ZeContextHandle
-	Psrcptr *unsafe.Pointer
-	Psize *uintptr
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pdstptr        *unsafe.Pointer
+	Phcontextsrc   *ZeContextHandle
+	Psrcptr        *unsafe.Pointer
+	Psize          *uintptr
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendmemorycopyfromcontextcb (ze_pfnCommandListAppendMemoryCopyFromContextCb_t) Callback function-pointer for zeCommandListAppendMemoryCopyFromContext 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemorycopyfromcontextcb (ze_pfnCommandListAppendMemoryCopyFromContextCb_t) Callback function-pointer for zeCommandListAppendMemoryCopyFromContext
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemorycopyfromcontextcb uintptr
 
-// ZeCommandListAppendImageCopyParams (ze_command_list_append_image_copy_params_t) Callback function parameters for zeCommandListAppendImageCopy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendImageCopyParams (ze_command_list_append_image_copy_params_t) Callback function parameters for zeCommandListAppendImageCopy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendImageCopyParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phdstimage *ZeImageHandle
-	Phsrcimage *ZeImageHandle
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Phdstimage     *ZeImageHandle
+	Phsrcimage     *ZeImageHandle
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendimagecopycb (ze_pfnCommandListAppendImageCopyCb_t) Callback function-pointer for zeCommandListAppendImageCopy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendimagecopycb (ze_pfnCommandListAppendImageCopyCb_t) Callback function-pointer for zeCommandListAppendImageCopy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendimagecopycb uintptr
 
-// ZeCommandListAppendImageCopyRegionParams (ze_command_list_append_image_copy_region_params_t) Callback function parameters for zeCommandListAppendImageCopyRegion 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendImageCopyRegionParams (ze_command_list_append_image_copy_region_params_t) Callback function parameters for zeCommandListAppendImageCopyRegion
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendImageCopyRegionParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phdstimage *ZeImageHandle
-	Phsrcimage *ZeImageHandle
-	Ppdstregion **ZeImageRegion
-	Ppsrcregion **ZeImageRegion
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Phdstimage     *ZeImageHandle
+	Phsrcimage     *ZeImageHandle
+	Ppdstregion    **ZeImageRegion
+	Ppsrcregion    **ZeImageRegion
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendimagecopyregioncb (ze_pfnCommandListAppendImageCopyRegionCb_t) Callback function-pointer for zeCommandListAppendImageCopyRegion 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendimagecopyregioncb (ze_pfnCommandListAppendImageCopyRegionCb_t) Callback function-pointer for zeCommandListAppendImageCopyRegion
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendimagecopyregioncb uintptr
 
-// ZeCommandListAppendImageCopyToMemoryParams (ze_command_list_append_image_copy_to_memory_params_t) Callback function parameters for zeCommandListAppendImageCopyToMemory 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendImageCopyToMemoryParams (ze_command_list_append_image_copy_to_memory_params_t) Callback function parameters for zeCommandListAppendImageCopyToMemory
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendImageCopyToMemoryParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pdstptr *unsafe.Pointer
-	Phsrcimage *ZeImageHandle
-	Ppsrcregion **ZeImageRegion
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pdstptr        *unsafe.Pointer
+	Phsrcimage     *ZeImageHandle
+	Ppsrcregion    **ZeImageRegion
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendimagecopytomemorycb (ze_pfnCommandListAppendImageCopyToMemoryCb_t) Callback function-pointer for zeCommandListAppendImageCopyToMemory 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendimagecopytomemorycb (ze_pfnCommandListAppendImageCopyToMemoryCb_t) Callback function-pointer for zeCommandListAppendImageCopyToMemory
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendimagecopytomemorycb uintptr
 
-// ZeCommandListAppendImageCopyFromMemoryParams (ze_command_list_append_image_copy_from_memory_params_t) Callback function parameters for zeCommandListAppendImageCopyFromMemory 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendImageCopyFromMemoryParams (ze_command_list_append_image_copy_from_memory_params_t) Callback function parameters for zeCommandListAppendImageCopyFromMemory
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendImageCopyFromMemoryParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phdstimage *ZeImageHandle
-	Psrcptr *unsafe.Pointer
-	Ppdstregion **ZeImageRegion
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Phdstimage     *ZeImageHandle
+	Psrcptr        *unsafe.Pointer
+	Ppdstregion    **ZeImageRegion
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendimagecopyfrommemorycb (ze_pfnCommandListAppendImageCopyFromMemoryCb_t) Callback function-pointer for zeCommandListAppendImageCopyFromMemory 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendimagecopyfrommemorycb (ze_pfnCommandListAppendImageCopyFromMemoryCb_t) Callback function-pointer for zeCommandListAppendImageCopyFromMemory
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendimagecopyfrommemorycb uintptr
 
-// ZeCommandListAppendMemoryPrefetchParams (ze_command_list_append_memory_prefetch_params_t) Callback function parameters for zeCommandListAppendMemoryPrefetch 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemoryPrefetchParams (ze_command_list_append_memory_prefetch_params_t) Callback function parameters for zeCommandListAppendMemoryPrefetch
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemoryPrefetchParams struct {
 	Phcommandlist *ZeCommandListHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Pptr          *unsafe.Pointer
+	Psize         *uintptr
 }
 
-// ZePfncommandlistappendmemoryprefetchcb (ze_pfnCommandListAppendMemoryPrefetchCb_t) Callback function-pointer for zeCommandListAppendMemoryPrefetch 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemoryprefetchcb (ze_pfnCommandListAppendMemoryPrefetchCb_t) Callback function-pointer for zeCommandListAppendMemoryPrefetch
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemoryprefetchcb uintptr
 
-// ZeCommandListAppendMemAdviseParams (ze_command_list_append_mem_advise_params_t) Callback function parameters for zeCommandListAppendMemAdvise 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendMemAdviseParams (ze_command_list_append_mem_advise_params_t) Callback function parameters for zeCommandListAppendMemAdvise
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendMemAdviseParams struct {
 	Phcommandlist *ZeCommandListHandle
-	Phdevice *ZeDeviceHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
-	Padvice *ZeMemoryAdvice
+	Phdevice      *ZeDeviceHandle
+	Pptr          *unsafe.Pointer
+	Psize         *uintptr
+	Padvice       *ZeMemoryAdvice
 }
 
-// ZePfncommandlistappendmemadvisecb (ze_pfnCommandListAppendMemAdviseCb_t) Callback function-pointer for zeCommandListAppendMemAdvise 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendmemadvisecb (ze_pfnCommandListAppendMemAdviseCb_t) Callback function-pointer for zeCommandListAppendMemAdvise
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendmemadvisecb uintptr
 
-// ZeCommandListAppendSignalEventParams (ze_command_list_append_signal_event_params_t) Callback function parameters for zeCommandListAppendSignalEvent 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendSignalEventParams (ze_command_list_append_signal_event_params_t) Callback function parameters for zeCommandListAppendSignalEvent
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendSignalEventParams struct {
 	Phcommandlist *ZeCommandListHandle
-	Phevent *ZeEventHandle
+	Phevent       *ZeEventHandle
 }
 
-// ZePfncommandlistappendsignaleventcb (ze_pfnCommandListAppendSignalEventCb_t) Callback function-pointer for zeCommandListAppendSignalEvent 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendsignaleventcb (ze_pfnCommandListAppendSignalEventCb_t) Callback function-pointer for zeCommandListAppendSignalEvent
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendsignaleventcb uintptr
 
-// ZeCommandListAppendWaitOnEventsParams (ze_command_list_append_wait_on_events_params_t) Callback function parameters for zeCommandListAppendWaitOnEvents 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendWaitOnEventsParams (ze_command_list_append_wait_on_events_params_t) Callback function parameters for zeCommandListAppendWaitOnEvents
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendWaitOnEventsParams struct {
 	Phcommandlist *ZeCommandListHandle
-	Pnumevents *uint32
-	Pphevents **ZeEventHandle
+	Pnumevents    *uint32
+	Pphevents     **ZeEventHandle
 }
 
-// ZePfncommandlistappendwaitoneventscb (ze_pfnCommandListAppendWaitOnEventsCb_t) Callback function-pointer for zeCommandListAppendWaitOnEvents 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendwaitoneventscb (ze_pfnCommandListAppendWaitOnEventsCb_t) Callback function-pointer for zeCommandListAppendWaitOnEvents
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendwaitoneventscb uintptr
 
-// ZeCommandListAppendEventResetParams (ze_command_list_append_event_reset_params_t) Callback function parameters for zeCommandListAppendEventReset 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendEventResetParams (ze_command_list_append_event_reset_params_t) Callback function parameters for zeCommandListAppendEventReset
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendEventResetParams struct {
 	Phcommandlist *ZeCommandListHandle
-	Phevent *ZeEventHandle
+	Phevent       *ZeEventHandle
 }
 
-// ZePfncommandlistappendeventresetcb (ze_pfnCommandListAppendEventResetCb_t) Callback function-pointer for zeCommandListAppendEventReset 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendeventresetcb (ze_pfnCommandListAppendEventResetCb_t) Callback function-pointer for zeCommandListAppendEventReset
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendeventresetcb uintptr
 
-// ZeCommandListAppendQueryKernelTimestampsParams (ze_command_list_append_query_kernel_timestamps_params_t) Callback function parameters for zeCommandListAppendQueryKernelTimestamps 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendQueryKernelTimestampsParams (ze_command_list_append_query_kernel_timestamps_params_t) Callback function parameters for zeCommandListAppendQueryKernelTimestamps
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendQueryKernelTimestampsParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pnumevents *uint32
-	Pphevents **ZeEventHandle
-	Pdstptr *unsafe.Pointer
-	Ppoffsets **uintptr
-	Phsignalevent *ZeEventHandle
+	Phcommandlist  *ZeCommandListHandle
+	Pnumevents     *uint32
+	Pphevents      **ZeEventHandle
+	Pdstptr        *unsafe.Pointer
+	Ppoffsets      **uintptr
+	Phsignalevent  *ZeEventHandle
 	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Pphwaitevents  **ZeEventHandle
 }
 
-// ZePfncommandlistappendquerykerneltimestampscb (ze_pfnCommandListAppendQueryKernelTimestampsCb_t) Callback function-pointer for zeCommandListAppendQueryKernelTimestamps 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendquerykerneltimestampscb (ze_pfnCommandListAppendQueryKernelTimestampsCb_t) Callback function-pointer for zeCommandListAppendQueryKernelTimestamps
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendquerykerneltimestampscb uintptr
 
-// ZeCommandListAppendLaunchKernelParams (ze_command_list_append_launch_kernel_params_t) Callback function parameters for zeCommandListAppendLaunchKernel 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendLaunchKernelParams (ze_command_list_append_launch_kernel_params_t) Callback function parameters for zeCommandListAppendLaunchKernel
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendLaunchKernelParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phkernel *ZeKernelHandle
+	Phcommandlist    *ZeCommandListHandle
+	Phkernel         *ZeKernelHandle
 	Pplaunchfuncargs **ZeGroupCount
-	Phsignalevent *ZeEventHandle
-	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Phsignalevent    *ZeEventHandle
+	Pnumwaitevents   *uint32
+	Pphwaitevents    **ZeEventHandle
 }
 
-// ZePfncommandlistappendlaunchkernelcb (ze_pfnCommandListAppendLaunchKernelCb_t) Callback function-pointer for zeCommandListAppendLaunchKernel 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendlaunchkernelcb (ze_pfnCommandListAppendLaunchKernelCb_t) Callback function-pointer for zeCommandListAppendLaunchKernel
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendlaunchkernelcb uintptr
 
-// ZeCommandListAppendLaunchCooperativeKernelParams (ze_command_list_append_launch_cooperative_kernel_params_t) Callback function parameters for zeCommandListAppendLaunchCooperativeKernel 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendLaunchCooperativeKernelParams (ze_command_list_append_launch_cooperative_kernel_params_t) Callback function parameters for zeCommandListAppendLaunchCooperativeKernel
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendLaunchCooperativeKernelParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phkernel *ZeKernelHandle
+	Phcommandlist    *ZeCommandListHandle
+	Phkernel         *ZeKernelHandle
 	Pplaunchfuncargs **ZeGroupCount
-	Phsignalevent *ZeEventHandle
-	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Phsignalevent    *ZeEventHandle
+	Pnumwaitevents   *uint32
+	Pphwaitevents    **ZeEventHandle
 }
 
-// ZePfncommandlistappendlaunchcooperativekernelcb (ze_pfnCommandListAppendLaunchCooperativeKernelCb_t) Callback function-pointer for zeCommandListAppendLaunchCooperativeKernel 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendlaunchcooperativekernelcb (ze_pfnCommandListAppendLaunchCooperativeKernelCb_t) Callback function-pointer for zeCommandListAppendLaunchCooperativeKernel
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendlaunchcooperativekernelcb uintptr
 
-// ZeCommandListAppendLaunchKernelIndirectParams (ze_command_list_append_launch_kernel_indirect_params_t) Callback function parameters for zeCommandListAppendLaunchKernelIndirect 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendLaunchKernelIndirectParams (ze_command_list_append_launch_kernel_indirect_params_t) Callback function parameters for zeCommandListAppendLaunchKernelIndirect
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendLaunchKernelIndirectParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Phkernel *ZeKernelHandle
+	Phcommandlist           *ZeCommandListHandle
+	Phkernel                *ZeKernelHandle
 	Pplaunchargumentsbuffer **ZeGroupCount
-	Phsignalevent *ZeEventHandle
-	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Phsignalevent           *ZeEventHandle
+	Pnumwaitevents          *uint32
+	Pphwaitevents           **ZeEventHandle
 }
 
-// ZePfncommandlistappendlaunchkernelindirectcb (ze_pfnCommandListAppendLaunchKernelIndirectCb_t) Callback function-pointer for zeCommandListAppendLaunchKernelIndirect 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendlaunchkernelindirectcb (ze_pfnCommandListAppendLaunchKernelIndirectCb_t) Callback function-pointer for zeCommandListAppendLaunchKernelIndirect
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendlaunchkernelindirectcb uintptr
 
-// ZeCommandListAppendLaunchMultipleKernelsIndirectParams (ze_command_list_append_launch_multiple_kernels_indirect_params_t) Callback function parameters for zeCommandListAppendLaunchMultipleKernelsIndirect 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeCommandListAppendLaunchMultipleKernelsIndirectParams (ze_command_list_append_launch_multiple_kernels_indirect_params_t) Callback function parameters for zeCommandListAppendLaunchMultipleKernelsIndirect
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeCommandListAppendLaunchMultipleKernelsIndirectParams struct {
-	Phcommandlist *ZeCommandListHandle
-	Pnumkernels *uint32
-	Pphkernels **ZeKernelHandle
-	Ppcountbuffer **uint32
+	Phcommandlist           *ZeCommandListHandle
+	Pnumkernels             *uint32
+	Pphkernels              **ZeKernelHandle
+	Ppcountbuffer           **uint32
 	Pplaunchargumentsbuffer **ZeGroupCount
-	Phsignalevent *ZeEventHandle
-	Pnumwaitevents *uint32
-	Pphwaitevents **ZeEventHandle
+	Phsignalevent           *ZeEventHandle
+	Pnumwaitevents          *uint32
+	Pphwaitevents           **ZeEventHandle
 }
 
-// ZePfncommandlistappendlaunchmultiplekernelsindirectcb (ze_pfnCommandListAppendLaunchMultipleKernelsIndirectCb_t) Callback function-pointer for zeCommandListAppendLaunchMultipleKernelsIndirect 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfncommandlistappendlaunchmultiplekernelsindirectcb (ze_pfnCommandListAppendLaunchMultipleKernelsIndirectCb_t) Callback function-pointer for zeCommandListAppendLaunchMultipleKernelsIndirect
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfncommandlistappendlaunchmultiplekernelsindirectcb uintptr
 
 // ZeCommandListCallbacks (ze_command_list_callbacks_t) Table of CommandList callback functions pointers
 type ZeCommandListCallbacks struct {
-	Pfncreatecb ZePfncommandlistcreatecb
-	Pfncreateimmediatecb ZePfncommandlistcreateimmediatecb
-	Pfndestroycb ZePfncommandlistdestroycb
-	Pfnclosecb ZePfncommandlistclosecb
-	Pfnresetcb ZePfncommandlistresetcb
-	Pfnappendwriteglobaltimestampcb ZePfncommandlistappendwriteglobaltimestampcb
-	Pfnappendbarriercb ZePfncommandlistappendbarriercb
-	Pfnappendmemoryrangesbarriercb ZePfncommandlistappendmemoryrangesbarriercb
-	Pfnappendmemorycopycb ZePfncommandlistappendmemorycopycb
-	Pfnappendmemoryfillcb ZePfncommandlistappendmemoryfillcb
-	Pfnappendmemorycopyregioncb ZePfncommandlistappendmemorycopyregioncb
-	Pfnappendmemorycopyfromcontextcb ZePfncommandlistappendmemorycopyfromcontextcb
-	Pfnappendimagecopycb ZePfncommandlistappendimagecopycb
-	Pfnappendimagecopyregioncb ZePfncommandlistappendimagecopyregioncb
-	Pfnappendimagecopytomemorycb ZePfncommandlistappendimagecopytomemorycb
-	Pfnappendimagecopyfrommemorycb ZePfncommandlistappendimagecopyfrommemorycb
-	Pfnappendmemoryprefetchcb ZePfncommandlistappendmemoryprefetchcb
-	Pfnappendmemadvisecb ZePfncommandlistappendmemadvisecb
-	Pfnappendsignaleventcb ZePfncommandlistappendsignaleventcb
-	Pfnappendwaitoneventscb ZePfncommandlistappendwaitoneventscb
-	Pfnappendeventresetcb ZePfncommandlistappendeventresetcb
-	Pfnappendquerykerneltimestampscb ZePfncommandlistappendquerykerneltimestampscb
-	Pfnappendlaunchkernelcb ZePfncommandlistappendlaunchkernelcb
-	Pfnappendlaunchcooperativekernelcb ZePfncommandlistappendlaunchcooperativekernelcb
-	Pfnappendlaunchkernelindirectcb ZePfncommandlistappendlaunchkernelindirectcb
+	Pfncreatecb                              ZePfncommandlistcreatecb
+	Pfncreateimmediatecb                     ZePfncommandlistcreateimmediatecb
+	Pfndestroycb                             ZePfncommandlistdestroycb
+	Pfnclosecb                               ZePfncommandlistclosecb
+	Pfnresetcb                               ZePfncommandlistresetcb
+	Pfnappendwriteglobaltimestampcb          ZePfncommandlistappendwriteglobaltimestampcb
+	Pfnappendbarriercb                       ZePfncommandlistappendbarriercb
+	Pfnappendmemoryrangesbarriercb           ZePfncommandlistappendmemoryrangesbarriercb
+	Pfnappendmemorycopycb                    ZePfncommandlistappendmemorycopycb
+	Pfnappendmemoryfillcb                    ZePfncommandlistappendmemoryfillcb
+	Pfnappendmemorycopyregioncb              ZePfncommandlistappendmemorycopyregioncb
+	Pfnappendmemorycopyfromcontextcb         ZePfncommandlistappendmemorycopyfromcontextcb
+	Pfnappendimagecopycb                     ZePfncommandlistappendimagecopycb
+	Pfnappendimagecopyregioncb               ZePfncommandlistappendimagecopyregioncb
+	Pfnappendimagecopytomemorycb             ZePfncommandlistappendimagecopytomemorycb
+	Pfnappendimagecopyfrommemorycb           ZePfncommandlistappendimagecopyfrommemorycb
+	Pfnappendmemoryprefetchcb                ZePfncommandlistappendmemoryprefetchcb
+	Pfnappendmemadvisecb                     ZePfncommandlistappendmemadvisecb
+	Pfnappendsignaleventcb                   ZePfncommandlistappendsignaleventcb
+	Pfnappendwaitoneventscb                  ZePfncommandlistappendwaitoneventscb
+	Pfnappendeventresetcb                    ZePfncommandlistappendeventresetcb
+	Pfnappendquerykerneltimestampscb         ZePfncommandlistappendquerykerneltimestampscb
+	Pfnappendlaunchkernelcb                  ZePfncommandlistappendlaunchkernelcb
+	Pfnappendlaunchcooperativekernelcb       ZePfncommandlistappendlaunchcooperativekernelcb
+	Pfnappendlaunchkernelindirectcb          ZePfncommandlistappendlaunchkernelindirectcb
 	Pfnappendlaunchmultiplekernelsindirectcb ZePfncommandlistappendlaunchmultiplekernelsindirectcb
 }
 
-// ZeImageGetPropertiesParams (ze_image_get_properties_params_t) Callback function parameters for zeImageGetProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeImageGetPropertiesParams (ze_image_get_properties_params_t) Callback function parameters for zeImageGetProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeImageGetPropertiesParams struct {
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeImageDesc
+	Phdevice          *ZeDeviceHandle
+	Pdesc             **ZeImageDesc
 	Ppimageproperties **ZeImageProperties
 }
 
-// ZePfnimagegetpropertiescb (ze_pfnImageGetPropertiesCb_t) Callback function-pointer for zeImageGetProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnimagegetpropertiescb (ze_pfnImageGetPropertiesCb_t) Callback function-pointer for zeImageGetProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnimagegetpropertiescb uintptr
 
-// ZeImageCreateParams (ze_image_create_params_t) Callback function parameters for zeImageCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeImageCreateParams (ze_image_create_params_t) Callback function parameters for zeImageCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeImageCreateParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeImageDesc
-	Pphimage **ZeImageHandle
+	Phdevice  *ZeDeviceHandle
+	Pdesc     **ZeImageDesc
+	Pphimage  **ZeImageHandle
 }
 
-// ZePfnimagecreatecb (ze_pfnImageCreateCb_t) Callback function-pointer for zeImageCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnimagecreatecb (ze_pfnImageCreateCb_t) Callback function-pointer for zeImageCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnimagecreatecb uintptr
 
-// ZeImageDestroyParams (ze_image_destroy_params_t) Callback function parameters for zeImageDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeImageDestroyParams (ze_image_destroy_params_t) Callback function parameters for zeImageDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeImageDestroyParams struct {
 	Phimage *ZeImageHandle
 }
 
-// ZePfnimagedestroycb (ze_pfnImageDestroyCb_t) Callback function-pointer for zeImageDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnimagedestroycb (ze_pfnImageDestroyCb_t) Callback function-pointer for zeImageDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnimagedestroycb uintptr
 
 // ZeImageCallbacks (ze_image_callbacks_t) Table of Image callback functions pointers
 type ZeImageCallbacks struct {
 	Pfngetpropertiescb ZePfnimagegetpropertiescb
-	Pfncreatecb ZePfnimagecreatecb
-	Pfndestroycb ZePfnimagedestroycb
+	Pfncreatecb        ZePfnimagecreatecb
+	Pfndestroycb       ZePfnimagedestroycb
 }
 
-// ZeMemAllocSharedParams (ze_mem_alloc_shared_params_t) Callback function parameters for zeMemAllocShared 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemAllocSharedParams (ze_mem_alloc_shared_params_t) Callback function parameters for zeMemAllocShared
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemAllocSharedParams struct {
-	Phcontext *ZeContextHandle
+	Phcontext   *ZeContextHandle
 	PdeviceDesc **ZeDeviceMemAllocDesc
-	PhostDesc **ZeHostMemAllocDesc
-	Psize *uintptr
-	Palignment *uintptr
-	Phdevice *ZeDeviceHandle
-	Ppptr **unsafe.Pointer
+	PhostDesc   **ZeHostMemAllocDesc
+	Psize       *uintptr
+	Palignment  *uintptr
+	Phdevice    *ZeDeviceHandle
+	Ppptr       **unsafe.Pointer
 }
 
-// ZePfnmemallocsharedcb (ze_pfnMemAllocSharedCb_t) Callback function-pointer for zeMemAllocShared 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemallocsharedcb (ze_pfnMemAllocSharedCb_t) Callback function-pointer for zeMemAllocShared
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemallocsharedcb uintptr
 
-// ZeMemAllocDeviceParams (ze_mem_alloc_device_params_t) Callback function parameters for zeMemAllocDevice 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemAllocDeviceParams (ze_mem_alloc_device_params_t) Callback function parameters for zeMemAllocDevice
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemAllocDeviceParams struct {
-	Phcontext *ZeContextHandle
+	Phcontext   *ZeContextHandle
 	PdeviceDesc **ZeDeviceMemAllocDesc
-	Psize *uintptr
-	Palignment *uintptr
-	Phdevice *ZeDeviceHandle
-	Ppptr **unsafe.Pointer
+	Psize       *uintptr
+	Palignment  *uintptr
+	Phdevice    *ZeDeviceHandle
+	Ppptr       **unsafe.Pointer
 }
 
-// ZePfnmemallocdevicecb (ze_pfnMemAllocDeviceCb_t) Callback function-pointer for zeMemAllocDevice 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemallocdevicecb (ze_pfnMemAllocDeviceCb_t) Callback function-pointer for zeMemAllocDevice
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemallocdevicecb uintptr
 
-// ZeMemAllocHostParams (ze_mem_alloc_host_params_t) Callback function parameters for zeMemAllocHost 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemAllocHostParams (ze_mem_alloc_host_params_t) Callback function parameters for zeMemAllocHost
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemAllocHostParams struct {
-	Phcontext *ZeContextHandle
-	PhostDesc **ZeHostMemAllocDesc
-	Psize *uintptr
+	Phcontext  *ZeContextHandle
+	PhostDesc  **ZeHostMemAllocDesc
+	Psize      *uintptr
 	Palignment *uintptr
-	Ppptr **unsafe.Pointer
+	Ppptr      **unsafe.Pointer
 }
 
-// ZePfnmemallochostcb (ze_pfnMemAllocHostCb_t) Callback function-pointer for zeMemAllocHost 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemallochostcb (ze_pfnMemAllocHostCb_t) Callback function-pointer for zeMemAllocHost
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemallochostcb uintptr
 
-// ZeMemFreeParams (ze_mem_free_params_t) Callback function parameters for zeMemFree 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemFreeParams (ze_mem_free_params_t) Callback function parameters for zeMemFree
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemFreeParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
+	Pptr      *unsafe.Pointer
 }
 
-// ZePfnmemfreecb (ze_pfnMemFreeCb_t) Callback function-pointer for zeMemFree 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemfreecb (ze_pfnMemFreeCb_t) Callback function-pointer for zeMemFree
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemfreecb uintptr
 
-// ZeMemGetAllocPropertiesParams (ze_mem_get_alloc_properties_params_t) Callback function parameters for zeMemGetAllocProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemGetAllocPropertiesParams (ze_mem_get_alloc_properties_params_t) Callback function parameters for zeMemGetAllocProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemGetAllocPropertiesParams struct {
-	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
+	Phcontext            *ZeContextHandle
+	Pptr                 *unsafe.Pointer
 	Ppmemallocproperties **ZeMemoryAllocationProperties
-	Pphdevice **ZeDeviceHandle
+	Pphdevice            **ZeDeviceHandle
 }
 
-// ZePfnmemgetallocpropertiescb (ze_pfnMemGetAllocPropertiesCb_t) Callback function-pointer for zeMemGetAllocProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemgetallocpropertiescb (ze_pfnMemGetAllocPropertiesCb_t) Callback function-pointer for zeMemGetAllocProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemgetallocpropertiescb uintptr
 
-// ZeMemGetAddressRangeParams (ze_mem_get_address_range_params_t) Callback function parameters for zeMemGetAddressRange 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemGetAddressRangeParams (ze_mem_get_address_range_params_t) Callback function parameters for zeMemGetAddressRange
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemGetAddressRangeParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Ppbase **unsafe.Pointer
-	Ppsize **uintptr
+	Pptr      *unsafe.Pointer
+	Ppbase    **unsafe.Pointer
+	Ppsize    **uintptr
 }
 
-// ZePfnmemgetaddressrangecb (ze_pfnMemGetAddressRangeCb_t) Callback function-pointer for zeMemGetAddressRange 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemgetaddressrangecb (ze_pfnMemGetAddressRangeCb_t) Callback function-pointer for zeMemGetAddressRange
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemgetaddressrangecb uintptr
 
-// ZeMemGetIpcHandleParams (ze_mem_get_ipc_handle_params_t) Callback function parameters for zeMemGetIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemGetIpcHandleParams (ze_mem_get_ipc_handle_params_t) Callback function parameters for zeMemGetIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemGetIpcHandleParams struct {
-	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
+	Phcontext   *ZeContextHandle
+	Pptr        *unsafe.Pointer
 	Ppipchandle **ZeIpcMemHandle
 }
 
-// ZePfnmemgetipchandlecb (ze_pfnMemGetIpcHandleCb_t) Callback function-pointer for zeMemGetIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemgetipchandlecb (ze_pfnMemGetIpcHandleCb_t) Callback function-pointer for zeMemGetIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemgetipchandlecb uintptr
 
-// ZeMemOpenIpcHandleParams (ze_mem_open_ipc_handle_params_t) Callback function parameters for zeMemOpenIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemOpenIpcHandleParams (ze_mem_open_ipc_handle_params_t) Callback function parameters for zeMemOpenIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemOpenIpcHandleParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Phandle *ZeIpcMemHandle
-	Pflags *ZeIpcMemoryFlags
-	Ppptr **unsafe.Pointer
+	Phdevice  *ZeDeviceHandle
+	Phandle   *ZeIpcMemHandle
+	Pflags    *ZeIpcMemoryFlags
+	Ppptr     **unsafe.Pointer
 }
 
-// ZePfnmemopenipchandlecb (ze_pfnMemOpenIpcHandleCb_t) Callback function-pointer for zeMemOpenIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemopenipchandlecb (ze_pfnMemOpenIpcHandleCb_t) Callback function-pointer for zeMemOpenIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemopenipchandlecb uintptr
 
-// ZeMemCloseIpcHandleParams (ze_mem_close_ipc_handle_params_t) Callback function parameters for zeMemCloseIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeMemCloseIpcHandleParams (ze_mem_close_ipc_handle_params_t) Callback function parameters for zeMemCloseIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeMemCloseIpcHandleParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
+	Pptr      *unsafe.Pointer
 }
 
-// ZePfnmemcloseipchandlecb (ze_pfnMemCloseIpcHandleCb_t) Callback function-pointer for zeMemCloseIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmemcloseipchandlecb (ze_pfnMemCloseIpcHandleCb_t) Callback function-pointer for zeMemCloseIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmemcloseipchandlecb uintptr
 
 // ZeMemCallbacks (ze_mem_callbacks_t) Table of Mem callback functions pointers
 type ZeMemCallbacks struct {
-	Pfnallocsharedcb ZePfnmemallocsharedcb
-	Pfnallocdevicecb ZePfnmemallocdevicecb
-	Pfnallochostcb ZePfnmemallochostcb
-	Pfnfreecb ZePfnmemfreecb
+	Pfnallocsharedcb        ZePfnmemallocsharedcb
+	Pfnallocdevicecb        ZePfnmemallocdevicecb
+	Pfnallochostcb          ZePfnmemallochostcb
+	Pfnfreecb               ZePfnmemfreecb
 	Pfngetallocpropertiescb ZePfnmemgetallocpropertiescb
-	Pfngetaddressrangecb ZePfnmemgetaddressrangecb
-	Pfngetipchandlecb ZePfnmemgetipchandlecb
-	Pfnopenipchandlecb ZePfnmemopenipchandlecb
-	Pfncloseipchandlecb ZePfnmemcloseipchandlecb
+	Pfngetaddressrangecb    ZePfnmemgetaddressrangecb
+	Pfngetipchandlecb       ZePfnmemgetipchandlecb
+	Pfnopenipchandlecb      ZePfnmemopenipchandlecb
+	Pfncloseipchandlecb     ZePfnmemcloseipchandlecb
 }
 
-// ZeFenceCreateParams (ze_fence_create_params_t) Callback function parameters for zeFenceCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeFenceCreateParams (ze_fence_create_params_t) Callback function parameters for zeFenceCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeFenceCreateParams struct {
 	Phcommandqueue *ZeCommandQueueHandle
-	Pdesc **ZeFenceDesc
-	Pphfence **ZeFenceHandle
+	Pdesc          **ZeFenceDesc
+	Pphfence       **ZeFenceHandle
 }
 
-// ZePfnfencecreatecb (ze_pfnFenceCreateCb_t) Callback function-pointer for zeFenceCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnfencecreatecb (ze_pfnFenceCreateCb_t) Callback function-pointer for zeFenceCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnfencecreatecb uintptr
 
-// ZeFenceDestroyParams (ze_fence_destroy_params_t) Callback function parameters for zeFenceDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeFenceDestroyParams (ze_fence_destroy_params_t) Callback function parameters for zeFenceDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeFenceDestroyParams struct {
 	Phfence *ZeFenceHandle
 }
 
-// ZePfnfencedestroycb (ze_pfnFenceDestroyCb_t) Callback function-pointer for zeFenceDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnfencedestroycb (ze_pfnFenceDestroyCb_t) Callback function-pointer for zeFenceDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnfencedestroycb uintptr
 
-// ZeFenceHostSynchronizeParams (ze_fence_host_synchronize_params_t) Callback function parameters for zeFenceHostSynchronize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeFenceHostSynchronizeParams (ze_fence_host_synchronize_params_t) Callback function parameters for zeFenceHostSynchronize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeFenceHostSynchronizeParams struct {
-	Phfence *ZeFenceHandle
+	Phfence  *ZeFenceHandle
 	Ptimeout *uint64
 }
 
-// ZePfnfencehostsynchronizecb (ze_pfnFenceHostSynchronizeCb_t) Callback function-pointer for zeFenceHostSynchronize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnfencehostsynchronizecb (ze_pfnFenceHostSynchronizeCb_t) Callback function-pointer for zeFenceHostSynchronize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnfencehostsynchronizecb uintptr
 
-// ZeFenceQueryStatusParams (ze_fence_query_status_params_t) Callback function parameters for zeFenceQueryStatus 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeFenceQueryStatusParams (ze_fence_query_status_params_t) Callback function parameters for zeFenceQueryStatus
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeFenceQueryStatusParams struct {
 	Phfence *ZeFenceHandle
 }
 
-// ZePfnfencequerystatuscb (ze_pfnFenceQueryStatusCb_t) Callback function-pointer for zeFenceQueryStatus 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnfencequerystatuscb (ze_pfnFenceQueryStatusCb_t) Callback function-pointer for zeFenceQueryStatus
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnfencequerystatuscb uintptr
 
-// ZeFenceResetParams (ze_fence_reset_params_t) Callback function parameters for zeFenceReset 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeFenceResetParams (ze_fence_reset_params_t) Callback function parameters for zeFenceReset
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeFenceResetParams struct {
 	Phfence *ZeFenceHandle
 }
 
-// ZePfnfenceresetcb (ze_pfnFenceResetCb_t) Callback function-pointer for zeFenceReset 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnfenceresetcb (ze_pfnFenceResetCb_t) Callback function-pointer for zeFenceReset
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnfenceresetcb uintptr
 
 // ZeFenceCallbacks (ze_fence_callbacks_t) Table of Fence callback functions pointers
 type ZeFenceCallbacks struct {
-	Pfncreatecb ZePfnfencecreatecb
-	Pfndestroycb ZePfnfencedestroycb
+	Pfncreatecb          ZePfnfencecreatecb
+	Pfndestroycb         ZePfnfencedestroycb
 	Pfnhostsynchronizecb ZePfnfencehostsynchronizecb
-	Pfnquerystatuscb ZePfnfencequerystatuscb
-	Pfnresetcb ZePfnfenceresetcb
+	Pfnquerystatuscb     ZePfnfencequerystatuscb
+	Pfnresetcb           ZePfnfenceresetcb
 }
 
-// ZeEventPoolCreateParams (ze_event_pool_create_params_t) Callback function parameters for zeEventPoolCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventPoolCreateParams (ze_event_pool_create_params_t) Callback function parameters for zeEventPoolCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventPoolCreateParams struct {
-	Phcontext *ZeContextHandle
-	Pdesc **ZeEventPoolDesc
-	Pnumdevices *uint32
-	Pphdevices **ZeDeviceHandle
+	Phcontext    *ZeContextHandle
+	Pdesc        **ZeEventPoolDesc
+	Pnumdevices  *uint32
+	Pphdevices   **ZeDeviceHandle
 	Ppheventpool **ZeEventPoolHandle
 }
 
-// ZePfneventpoolcreatecb (ze_pfnEventPoolCreateCb_t) Callback function-pointer for zeEventPoolCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventpoolcreatecb (ze_pfnEventPoolCreateCb_t) Callback function-pointer for zeEventPoolCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventpoolcreatecb uintptr
 
-// ZeEventPoolDestroyParams (ze_event_pool_destroy_params_t) Callback function parameters for zeEventPoolDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventPoolDestroyParams (ze_event_pool_destroy_params_t) Callback function parameters for zeEventPoolDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventPoolDestroyParams struct {
 	Pheventpool *ZeEventPoolHandle
 }
 
-// ZePfneventpooldestroycb (ze_pfnEventPoolDestroyCb_t) Callback function-pointer for zeEventPoolDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventpooldestroycb (ze_pfnEventPoolDestroyCb_t) Callback function-pointer for zeEventPoolDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventpooldestroycb uintptr
 
-// ZeEventPoolGetIpcHandleParams (ze_event_pool_get_ipc_handle_params_t) Callback function parameters for zeEventPoolGetIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventPoolGetIpcHandleParams (ze_event_pool_get_ipc_handle_params_t) Callback function parameters for zeEventPoolGetIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventPoolGetIpcHandleParams struct {
 	Pheventpool *ZeEventPoolHandle
-	Pphipc **ZeIpcEventPoolHandle
+	Pphipc      **ZeIpcEventPoolHandle
 }
 
-// ZePfneventpoolgetipchandlecb (ze_pfnEventPoolGetIpcHandleCb_t) Callback function-pointer for zeEventPoolGetIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventpoolgetipchandlecb (ze_pfnEventPoolGetIpcHandleCb_t) Callback function-pointer for zeEventPoolGetIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventpoolgetipchandlecb uintptr
 
-// ZeEventPoolOpenIpcHandleParams (ze_event_pool_open_ipc_handle_params_t) Callback function parameters for zeEventPoolOpenIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventPoolOpenIpcHandleParams (ze_event_pool_open_ipc_handle_params_t) Callback function parameters for zeEventPoolOpenIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventPoolOpenIpcHandleParams struct {
-	Phcontext *ZeContextHandle
-	Phipc *ZeIpcEventPoolHandle
+	Phcontext    *ZeContextHandle
+	Phipc        *ZeIpcEventPoolHandle
 	Ppheventpool **ZeEventPoolHandle
 }
 
-// ZePfneventpoolopenipchandlecb (ze_pfnEventPoolOpenIpcHandleCb_t) Callback function-pointer for zeEventPoolOpenIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventpoolopenipchandlecb (ze_pfnEventPoolOpenIpcHandleCb_t) Callback function-pointer for zeEventPoolOpenIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventpoolopenipchandlecb uintptr
 
-// ZeEventPoolCloseIpcHandleParams (ze_event_pool_close_ipc_handle_params_t) Callback function parameters for zeEventPoolCloseIpcHandle 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventPoolCloseIpcHandleParams (ze_event_pool_close_ipc_handle_params_t) Callback function parameters for zeEventPoolCloseIpcHandle
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventPoolCloseIpcHandleParams struct {
 	Pheventpool *ZeEventPoolHandle
 }
 
-// ZePfneventpoolcloseipchandlecb (ze_pfnEventPoolCloseIpcHandleCb_t) Callback function-pointer for zeEventPoolCloseIpcHandle 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventpoolcloseipchandlecb (ze_pfnEventPoolCloseIpcHandleCb_t) Callback function-pointer for zeEventPoolCloseIpcHandle
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventpoolcloseipchandlecb uintptr
 
 // ZeEventPoolCallbacks (ze_event_pool_callbacks_t) Table of EventPool callback functions pointers
 type ZeEventPoolCallbacks struct {
-	Pfncreatecb ZePfneventpoolcreatecb
-	Pfndestroycb ZePfneventpooldestroycb
-	Pfngetipchandlecb ZePfneventpoolgetipchandlecb
-	Pfnopenipchandlecb ZePfneventpoolopenipchandlecb
+	Pfncreatecb         ZePfneventpoolcreatecb
+	Pfndestroycb        ZePfneventpooldestroycb
+	Pfngetipchandlecb   ZePfneventpoolgetipchandlecb
+	Pfnopenipchandlecb  ZePfneventpoolopenipchandlecb
 	Pfncloseipchandlecb ZePfneventpoolcloseipchandlecb
 }
 
-// ZeEventCreateParams (ze_event_create_params_t) Callback function parameters for zeEventCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventCreateParams (ze_event_create_params_t) Callback function parameters for zeEventCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventCreateParams struct {
 	Pheventpool *ZeEventPoolHandle
-	Pdesc **ZeEventDesc
-	Pphevent **ZeEventHandle
+	Pdesc       **ZeEventDesc
+	Pphevent    **ZeEventHandle
 }
 
-// ZePfneventcreatecb (ze_pfnEventCreateCb_t) Callback function-pointer for zeEventCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventcreatecb (ze_pfnEventCreateCb_t) Callback function-pointer for zeEventCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventcreatecb uintptr
 
-// ZeEventDestroyParams (ze_event_destroy_params_t) Callback function parameters for zeEventDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventDestroyParams (ze_event_destroy_params_t) Callback function parameters for zeEventDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventDestroyParams struct {
 	Phevent *ZeEventHandle
 }
 
-// ZePfneventdestroycb (ze_pfnEventDestroyCb_t) Callback function-pointer for zeEventDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventdestroycb (ze_pfnEventDestroyCb_t) Callback function-pointer for zeEventDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventdestroycb uintptr
 
-// ZeEventHostSignalParams (ze_event_host_signal_params_t) Callback function parameters for zeEventHostSignal 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventHostSignalParams (ze_event_host_signal_params_t) Callback function parameters for zeEventHostSignal
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventHostSignalParams struct {
 	Phevent *ZeEventHandle
 }
 
-// ZePfneventhostsignalcb (ze_pfnEventHostSignalCb_t) Callback function-pointer for zeEventHostSignal 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventhostsignalcb (ze_pfnEventHostSignalCb_t) Callback function-pointer for zeEventHostSignal
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventhostsignalcb uintptr
 
-// ZeEventHostSynchronizeParams (ze_event_host_synchronize_params_t) Callback function parameters for zeEventHostSynchronize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventHostSynchronizeParams (ze_event_host_synchronize_params_t) Callback function parameters for zeEventHostSynchronize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventHostSynchronizeParams struct {
-	Phevent *ZeEventHandle
+	Phevent  *ZeEventHandle
 	Ptimeout *uint64
 }
 
-// ZePfneventhostsynchronizecb (ze_pfnEventHostSynchronizeCb_t) Callback function-pointer for zeEventHostSynchronize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventhostsynchronizecb (ze_pfnEventHostSynchronizeCb_t) Callback function-pointer for zeEventHostSynchronize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventhostsynchronizecb uintptr
 
-// ZeEventQueryStatusParams (ze_event_query_status_params_t) Callback function parameters for zeEventQueryStatus 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventQueryStatusParams (ze_event_query_status_params_t) Callback function parameters for zeEventQueryStatus
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventQueryStatusParams struct {
 	Phevent *ZeEventHandle
 }
 
-// ZePfneventquerystatuscb (ze_pfnEventQueryStatusCb_t) Callback function-pointer for zeEventQueryStatus 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventquerystatuscb (ze_pfnEventQueryStatusCb_t) Callback function-pointer for zeEventQueryStatus
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventquerystatuscb uintptr
 
-// ZeEventHostResetParams (ze_event_host_reset_params_t) Callback function parameters for zeEventHostReset 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventHostResetParams (ze_event_host_reset_params_t) Callback function parameters for zeEventHostReset
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventHostResetParams struct {
 	Phevent *ZeEventHandle
 }
 
-// ZePfneventhostresetcb (ze_pfnEventHostResetCb_t) Callback function-pointer for zeEventHostReset 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventhostresetcb (ze_pfnEventHostResetCb_t) Callback function-pointer for zeEventHostReset
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventhostresetcb uintptr
 
-// ZeEventQueryKernelTimestampParams (ze_event_query_kernel_timestamp_params_t) Callback function parameters for zeEventQueryKernelTimestamp 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeEventQueryKernelTimestampParams (ze_event_query_kernel_timestamp_params_t) Callback function parameters for zeEventQueryKernelTimestamp
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeEventQueryKernelTimestampParams struct {
 	Phevent *ZeEventHandle
 	Pdstptr **ZeKernelTimestampResult
 }
 
-// ZePfneventquerykerneltimestampcb (ze_pfnEventQueryKernelTimestampCb_t) Callback function-pointer for zeEventQueryKernelTimestamp 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfneventquerykerneltimestampcb (ze_pfnEventQueryKernelTimestampCb_t) Callback function-pointer for zeEventQueryKernelTimestamp
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfneventquerykerneltimestampcb uintptr
 
 // ZeEventCallbacks (ze_event_callbacks_t) Table of Event callback functions pointers
 type ZeEventCallbacks struct {
-	Pfncreatecb ZePfneventcreatecb
-	Pfndestroycb ZePfneventdestroycb
-	Pfnhostsignalcb ZePfneventhostsignalcb
-	Pfnhostsynchronizecb ZePfneventhostsynchronizecb
-	Pfnquerystatuscb ZePfneventquerystatuscb
-	Pfnhostresetcb ZePfneventhostresetcb
+	Pfncreatecb               ZePfneventcreatecb
+	Pfndestroycb              ZePfneventdestroycb
+	Pfnhostsignalcb           ZePfneventhostsignalcb
+	Pfnhostsynchronizecb      ZePfneventhostsynchronizecb
+	Pfnquerystatuscb          ZePfneventquerystatuscb
+	Pfnhostresetcb            ZePfneventhostresetcb
 	Pfnquerykerneltimestampcb ZePfneventquerykerneltimestampcb
 }
 
-// ZeModuleCreateParams (ze_module_create_params_t) Callback function parameters for zeModuleCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleCreateParams (ze_module_create_params_t) Callback function parameters for zeModuleCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleCreateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeModuleDesc
-	Pphmodule **ZeModuleHandle
+	Phcontext   *ZeContextHandle
+	Phdevice    *ZeDeviceHandle
+	Pdesc       **ZeModuleDesc
+	Pphmodule   **ZeModuleHandle
 	Pphbuildlog **ZeModuleBuildLogHandle
 }
 
-// ZePfnmodulecreatecb (ze_pfnModuleCreateCb_t) Callback function-pointer for zeModuleCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulecreatecb (ze_pfnModuleCreateCb_t) Callback function-pointer for zeModuleCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulecreatecb uintptr
 
-// ZeModuleDestroyParams (ze_module_destroy_params_t) Callback function parameters for zeModuleDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleDestroyParams (ze_module_destroy_params_t) Callback function parameters for zeModuleDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleDestroyParams struct {
 	Phmodule *ZeModuleHandle
 }
 
-// ZePfnmoduledestroycb (ze_pfnModuleDestroyCb_t) Callback function-pointer for zeModuleDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmoduledestroycb (ze_pfnModuleDestroyCb_t) Callback function-pointer for zeModuleDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmoduledestroycb uintptr
 
-// ZeModuleDynamicLinkParams (ze_module_dynamic_link_params_t) Callback function parameters for zeModuleDynamicLink 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleDynamicLinkParams (ze_module_dynamic_link_params_t) Callback function parameters for zeModuleDynamicLink
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleDynamicLinkParams struct {
 	Pnummodules *uint32
-	Pphmodules **ZeModuleHandle
-	Pphlinklog **ZeModuleBuildLogHandle
+	Pphmodules  **ZeModuleHandle
+	Pphlinklog  **ZeModuleBuildLogHandle
 }
 
-// ZePfnmoduledynamiclinkcb (ze_pfnModuleDynamicLinkCb_t) Callback function-pointer for zeModuleDynamicLink 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmoduledynamiclinkcb (ze_pfnModuleDynamicLinkCb_t) Callback function-pointer for zeModuleDynamicLink
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmoduledynamiclinkcb uintptr
 
-// ZeModuleGetNativeBinaryParams (ze_module_get_native_binary_params_t) Callback function parameters for zeModuleGetNativeBinary 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleGetNativeBinaryParams (ze_module_get_native_binary_params_t) Callback function parameters for zeModuleGetNativeBinary
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleGetNativeBinaryParams struct {
-	Phmodule *ZeModuleHandle
-	Ppsize **uintptr
+	Phmodule             *ZeModuleHandle
+	Ppsize               **uintptr
 	Ppmodulenativebinary **uint8
 }
 
-// ZePfnmodulegetnativebinarycb (ze_pfnModuleGetNativeBinaryCb_t) Callback function-pointer for zeModuleGetNativeBinary 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulegetnativebinarycb (ze_pfnModuleGetNativeBinaryCb_t) Callback function-pointer for zeModuleGetNativeBinary
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulegetnativebinarycb uintptr
 
-// ZeModuleGetGlobalPointerParams (ze_module_get_global_pointer_params_t) Callback function parameters for zeModuleGetGlobalPointer 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleGetGlobalPointerParams (ze_module_get_global_pointer_params_t) Callback function parameters for zeModuleGetGlobalPointer
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleGetGlobalPointerParams struct {
-	Phmodule *ZeModuleHandle
+	Phmodule     *ZeModuleHandle
 	Ppglobalname **byte
-	Ppsize **uintptr
-	Ppptr **unsafe.Pointer
+	Ppsize       **uintptr
+	Ppptr        **unsafe.Pointer
 }
 
-// ZePfnmodulegetglobalpointercb (ze_pfnModuleGetGlobalPointerCb_t) Callback function-pointer for zeModuleGetGlobalPointer 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulegetglobalpointercb (ze_pfnModuleGetGlobalPointerCb_t) Callback function-pointer for zeModuleGetGlobalPointer
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulegetglobalpointercb uintptr
 
-// ZeModuleGetKernelNamesParams (ze_module_get_kernel_names_params_t) Callback function parameters for zeModuleGetKernelNames 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleGetKernelNamesParams (ze_module_get_kernel_names_params_t) Callback function parameters for zeModuleGetKernelNames
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleGetKernelNamesParams struct {
 	Phmodule *ZeModuleHandle
-	Ppcount **uint32
-	Ppnames ***byte
+	Ppcount  **uint32
+	Ppnames  ***byte
 }
 
-// ZePfnmodulegetkernelnamescb (ze_pfnModuleGetKernelNamesCb_t) Callback function-pointer for zeModuleGetKernelNames 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulegetkernelnamescb (ze_pfnModuleGetKernelNamesCb_t) Callback function-pointer for zeModuleGetKernelNames
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulegetkernelnamescb uintptr
 
-// ZeModuleGetPropertiesParams (ze_module_get_properties_params_t) Callback function parameters for zeModuleGetProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleGetPropertiesParams (ze_module_get_properties_params_t) Callback function parameters for zeModuleGetProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleGetPropertiesParams struct {
-	Phmodule *ZeModuleHandle
+	Phmodule           *ZeModuleHandle
 	Ppmoduleproperties **ZeModuleProperties
 }
 
-// ZePfnmodulegetpropertiescb (ze_pfnModuleGetPropertiesCb_t) Callback function-pointer for zeModuleGetProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulegetpropertiescb (ze_pfnModuleGetPropertiesCb_t) Callback function-pointer for zeModuleGetProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulegetpropertiescb uintptr
 
-// ZeModuleGetFunctionPointerParams (ze_module_get_function_pointer_params_t) Callback function parameters for zeModuleGetFunctionPointer 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleGetFunctionPointerParams (ze_module_get_function_pointer_params_t) Callback function parameters for zeModuleGetFunctionPointer
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleGetFunctionPointerParams struct {
-	Phmodule *ZeModuleHandle
+	Phmodule       *ZeModuleHandle
 	Ppfunctionname **byte
-	Ppfnfunction **unsafe.Pointer
+	Ppfnfunction   **unsafe.Pointer
 }
 
-// ZePfnmodulegetfunctionpointercb (ze_pfnModuleGetFunctionPointerCb_t) Callback function-pointer for zeModuleGetFunctionPointer 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulegetfunctionpointercb (ze_pfnModuleGetFunctionPointerCb_t) Callback function-pointer for zeModuleGetFunctionPointer
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulegetfunctionpointercb uintptr
 
 // ZeModuleCallbacks (ze_module_callbacks_t) Table of Module callback functions pointers
 type ZeModuleCallbacks struct {
-	Pfncreatecb ZePfnmodulecreatecb
-	Pfndestroycb ZePfnmoduledestroycb
-	Pfndynamiclinkcb ZePfnmoduledynamiclinkcb
-	Pfngetnativebinarycb ZePfnmodulegetnativebinarycb
-	Pfngetglobalpointercb ZePfnmodulegetglobalpointercb
-	Pfngetkernelnamescb ZePfnmodulegetkernelnamescb
-	Pfngetpropertiescb ZePfnmodulegetpropertiescb
+	Pfncreatecb             ZePfnmodulecreatecb
+	Pfndestroycb            ZePfnmoduledestroycb
+	Pfndynamiclinkcb        ZePfnmoduledynamiclinkcb
+	Pfngetnativebinarycb    ZePfnmodulegetnativebinarycb
+	Pfngetglobalpointercb   ZePfnmodulegetglobalpointercb
+	Pfngetkernelnamescb     ZePfnmodulegetkernelnamescb
+	Pfngetpropertiescb      ZePfnmodulegetpropertiescb
 	Pfngetfunctionpointercb ZePfnmodulegetfunctionpointercb
 }
 
-// ZeModuleBuildLogDestroyParams (ze_module_build_log_destroy_params_t) Callback function parameters for zeModuleBuildLogDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleBuildLogDestroyParams (ze_module_build_log_destroy_params_t) Callback function parameters for zeModuleBuildLogDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleBuildLogDestroyParams struct {
 	Phmodulebuildlog *ZeModuleBuildLogHandle
 }
 
-// ZePfnmodulebuildlogdestroycb (ze_pfnModuleBuildLogDestroyCb_t) Callback function-pointer for zeModuleBuildLogDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulebuildlogdestroycb (ze_pfnModuleBuildLogDestroyCb_t) Callback function-pointer for zeModuleBuildLogDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulebuildlogdestroycb uintptr
 
-// ZeModuleBuildLogGetStringParams (ze_module_build_log_get_string_params_t) Callback function parameters for zeModuleBuildLogGetString 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeModuleBuildLogGetStringParams (ze_module_build_log_get_string_params_t) Callback function parameters for zeModuleBuildLogGetString
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeModuleBuildLogGetStringParams struct {
 	Phmodulebuildlog *ZeModuleBuildLogHandle
-	Ppsize **uintptr
-	Ppbuildlog **byte
+	Ppsize           **uintptr
+	Ppbuildlog       **byte
 }
 
-// ZePfnmodulebuildloggetstringcb (ze_pfnModuleBuildLogGetStringCb_t) Callback function-pointer for zeModuleBuildLogGetString 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnmodulebuildloggetstringcb (ze_pfnModuleBuildLogGetStringCb_t) Callback function-pointer for zeModuleBuildLogGetString
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnmodulebuildloggetstringcb uintptr
 
 // ZeModuleBuildLogCallbacks (ze_module_build_log_callbacks_t) Table of ModuleBuildLog callback functions pointers
 type ZeModuleBuildLogCallbacks struct {
-	Pfndestroycb ZePfnmodulebuildlogdestroycb
+	Pfndestroycb   ZePfnmodulebuildlogdestroycb
 	Pfngetstringcb ZePfnmodulebuildloggetstringcb
 }
 
-// ZeKernelCreateParams (ze_kernel_create_params_t) Callback function parameters for zeKernelCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelCreateParams (ze_kernel_create_params_t) Callback function parameters for zeKernelCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelCreateParams struct {
-	Phmodule *ZeModuleHandle
-	Pdesc **ZeKernelDesc
+	Phmodule  *ZeModuleHandle
+	Pdesc     **ZeKernelDesc
 	Pphkernel **ZeKernelHandle
 }
 
-// ZePfnkernelcreatecb (ze_pfnKernelCreateCb_t) Callback function-pointer for zeKernelCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelcreatecb (ze_pfnKernelCreateCb_t) Callback function-pointer for zeKernelCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelcreatecb uintptr
 
-// ZeKernelDestroyParams (ze_kernel_destroy_params_t) Callback function parameters for zeKernelDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelDestroyParams (ze_kernel_destroy_params_t) Callback function parameters for zeKernelDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelDestroyParams struct {
 	Phkernel *ZeKernelHandle
 }
 
-// ZePfnkerneldestroycb (ze_pfnKernelDestroyCb_t) Callback function-pointer for zeKernelDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkerneldestroycb (ze_pfnKernelDestroyCb_t) Callback function-pointer for zeKernelDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkerneldestroycb uintptr
 
-// ZeKernelSetCacheConfigParams (ze_kernel_set_cache_config_params_t) Callback function parameters for zeKernelSetCacheConfig 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSetCacheConfigParams (ze_kernel_set_cache_config_params_t) Callback function parameters for zeKernelSetCacheConfig
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSetCacheConfigParams struct {
 	Phkernel *ZeKernelHandle
-	Pflags *ZeCacheConfigFlags
+	Pflags   *ZeCacheConfigFlags
 }
 
-// ZePfnkernelsetcacheconfigcb (ze_pfnKernelSetCacheConfigCb_t) Callback function-pointer for zeKernelSetCacheConfig 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsetcacheconfigcb (ze_pfnKernelSetCacheConfigCb_t) Callback function-pointer for zeKernelSetCacheConfig
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsetcacheconfigcb uintptr
 
-// ZeKernelSetGroupSizeParams (ze_kernel_set_group_size_params_t) Callback function parameters for zeKernelSetGroupSize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSetGroupSizeParams (ze_kernel_set_group_size_params_t) Callback function parameters for zeKernelSetGroupSize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSetGroupSizeParams struct {
-	Phkernel *ZeKernelHandle
+	Phkernel    *ZeKernelHandle
 	Pgroupsizex *uint32
 	Pgroupsizey *uint32
 	Pgroupsizez *uint32
 }
 
-// ZePfnkernelsetgroupsizecb (ze_pfnKernelSetGroupSizeCb_t) Callback function-pointer for zeKernelSetGroupSize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsetgroupsizecb (ze_pfnKernelSetGroupSizeCb_t) Callback function-pointer for zeKernelSetGroupSize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsetgroupsizecb uintptr
 
-// ZeKernelSuggestGroupSizeParams (ze_kernel_suggest_group_size_params_t) Callback function parameters for zeKernelSuggestGroupSize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSuggestGroupSizeParams (ze_kernel_suggest_group_size_params_t) Callback function parameters for zeKernelSuggestGroupSize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSuggestGroupSizeParams struct {
-	Phkernel *ZeKernelHandle
+	Phkernel     *ZeKernelHandle
 	Pglobalsizex *uint32
 	Pglobalsizey *uint32
 	Pglobalsizez *uint32
-	Pgroupsizex **uint32
-	Pgroupsizey **uint32
-	Pgroupsizez **uint32
+	Pgroupsizex  **uint32
+	Pgroupsizey  **uint32
+	Pgroupsizez  **uint32
 }
 
-// ZePfnkernelsuggestgroupsizecb (ze_pfnKernelSuggestGroupSizeCb_t) Callback function-pointer for zeKernelSuggestGroupSize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsuggestgroupsizecb (ze_pfnKernelSuggestGroupSizeCb_t) Callback function-pointer for zeKernelSuggestGroupSize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsuggestgroupsizecb uintptr
 
-// ZeKernelSuggestMaxCooperativeGroupCountParams (ze_kernel_suggest_max_cooperative_group_count_params_t) Callback function parameters for zeKernelSuggestMaxCooperativeGroupCount 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSuggestMaxCooperativeGroupCountParams (ze_kernel_suggest_max_cooperative_group_count_params_t) Callback function parameters for zeKernelSuggestMaxCooperativeGroupCount
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSuggestMaxCooperativeGroupCountParams struct {
-	Phkernel *ZeKernelHandle
+	Phkernel         *ZeKernelHandle
 	Ptotalgroupcount **uint32
 }
 
-// ZePfnkernelsuggestmaxcooperativegroupcountcb (ze_pfnKernelSuggestMaxCooperativeGroupCountCb_t) Callback function-pointer for zeKernelSuggestMaxCooperativeGroupCount 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsuggestmaxcooperativegroupcountcb (ze_pfnKernelSuggestMaxCooperativeGroupCountCb_t) Callback function-pointer for zeKernelSuggestMaxCooperativeGroupCount
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsuggestmaxcooperativegroupcountcb uintptr
 
-// ZeKernelSetArgumentValueParams (ze_kernel_set_argument_value_params_t) Callback function parameters for zeKernelSetArgumentValue 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSetArgumentValueParams (ze_kernel_set_argument_value_params_t) Callback function parameters for zeKernelSetArgumentValue
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSetArgumentValueParams struct {
-	Phkernel *ZeKernelHandle
-	Pargindex *uint32
-	Pargsize *uintptr
+	Phkernel   *ZeKernelHandle
+	Pargindex  *uint32
+	Pargsize   *uintptr
 	Ppargvalue *unsafe.Pointer
 }
 
-// ZePfnkernelsetargumentvaluecb (ze_pfnKernelSetArgumentValueCb_t) Callback function-pointer for zeKernelSetArgumentValue 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsetargumentvaluecb (ze_pfnKernelSetArgumentValueCb_t) Callback function-pointer for zeKernelSetArgumentValue
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsetargumentvaluecb uintptr
 
-// ZeKernelSetIndirectAccessParams (ze_kernel_set_indirect_access_params_t) Callback function parameters for zeKernelSetIndirectAccess 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelSetIndirectAccessParams (ze_kernel_set_indirect_access_params_t) Callback function parameters for zeKernelSetIndirectAccess
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelSetIndirectAccessParams struct {
 	Phkernel *ZeKernelHandle
-	Pflags *ZeKernelIndirectAccessFlags
+	Pflags   *ZeKernelIndirectAccessFlags
 }
 
-// ZePfnkernelsetindirectaccesscb (ze_pfnKernelSetIndirectAccessCb_t) Callback function-pointer for zeKernelSetIndirectAccess 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelsetindirectaccesscb (ze_pfnKernelSetIndirectAccessCb_t) Callback function-pointer for zeKernelSetIndirectAccess
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelsetindirectaccesscb uintptr
 
-// ZeKernelGetIndirectAccessParams (ze_kernel_get_indirect_access_params_t) Callback function parameters for zeKernelGetIndirectAccess 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelGetIndirectAccessParams (ze_kernel_get_indirect_access_params_t) Callback function parameters for zeKernelGetIndirectAccess
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelGetIndirectAccessParams struct {
 	Phkernel *ZeKernelHandle
-	Ppflags **ZeKernelIndirectAccessFlags
+	Ppflags  **ZeKernelIndirectAccessFlags
 }
 
-// ZePfnkernelgetindirectaccesscb (ze_pfnKernelGetIndirectAccessCb_t) Callback function-pointer for zeKernelGetIndirectAccess 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelgetindirectaccesscb (ze_pfnKernelGetIndirectAccessCb_t) Callback function-pointer for zeKernelGetIndirectAccess
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelgetindirectaccesscb uintptr
 
-// ZeKernelGetSourceAttributesParams (ze_kernel_get_source_attributes_params_t) Callback function parameters for zeKernelGetSourceAttributes 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelGetSourceAttributesParams (ze_kernel_get_source_attributes_params_t) Callback function parameters for zeKernelGetSourceAttributes
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelGetSourceAttributesParams struct {
 	Phkernel *ZeKernelHandle
-	Ppsize **uint32
+	Ppsize   **uint32
 	Ppstring ***byte
 }
 
-// ZePfnkernelgetsourceattributescb (ze_pfnKernelGetSourceAttributesCb_t) Callback function-pointer for zeKernelGetSourceAttributes 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelgetsourceattributescb (ze_pfnKernelGetSourceAttributesCb_t) Callback function-pointer for zeKernelGetSourceAttributes
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelgetsourceattributescb uintptr
 
-// ZeKernelGetPropertiesParams (ze_kernel_get_properties_params_t) Callback function parameters for zeKernelGetProperties 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelGetPropertiesParams (ze_kernel_get_properties_params_t) Callback function parameters for zeKernelGetProperties
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelGetPropertiesParams struct {
-	Phkernel *ZeKernelHandle
+	Phkernel           *ZeKernelHandle
 	Ppkernelproperties **ZeKernelProperties
 }
 
-// ZePfnkernelgetpropertiescb (ze_pfnKernelGetPropertiesCb_t) Callback function-pointer for zeKernelGetProperties 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelgetpropertiescb (ze_pfnKernelGetPropertiesCb_t) Callback function-pointer for zeKernelGetProperties
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelgetpropertiescb uintptr
 
-// ZeKernelGetNameParams (ze_kernel_get_name_params_t) Callback function parameters for zeKernelGetName 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeKernelGetNameParams (ze_kernel_get_name_params_t) Callback function parameters for zeKernelGetName
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeKernelGetNameParams struct {
 	Phkernel *ZeKernelHandle
-	Ppsize **uintptr
-	Ppname **byte
+	Ppsize   **uintptr
+	Ppname   **byte
 }
 
-// ZePfnkernelgetnamecb (ze_pfnKernelGetNameCb_t) Callback function-pointer for zeKernelGetName 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnkernelgetnamecb (ze_pfnKernelGetNameCb_t) Callback function-pointer for zeKernelGetName
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnkernelgetnamecb uintptr
 
 // ZeKernelCallbacks (ze_kernel_callbacks_t) Table of Kernel callback functions pointers
 type ZeKernelCallbacks struct {
-	Pfncreatecb ZePfnkernelcreatecb
-	Pfndestroycb ZePfnkerneldestroycb
-	Pfnsetcacheconfigcb ZePfnkernelsetcacheconfigcb
-	Pfnsetgroupsizecb ZePfnkernelsetgroupsizecb
-	Pfnsuggestgroupsizecb ZePfnkernelsuggestgroupsizecb
+	Pfncreatecb                          ZePfnkernelcreatecb
+	Pfndestroycb                         ZePfnkerneldestroycb
+	Pfnsetcacheconfigcb                  ZePfnkernelsetcacheconfigcb
+	Pfnsetgroupsizecb                    ZePfnkernelsetgroupsizecb
+	Pfnsuggestgroupsizecb                ZePfnkernelsuggestgroupsizecb
 	Pfnsuggestmaxcooperativegroupcountcb ZePfnkernelsuggestmaxcooperativegroupcountcb
-	Pfnsetargumentvaluecb ZePfnkernelsetargumentvaluecb
-	Pfnsetindirectaccesscb ZePfnkernelsetindirectaccesscb
-	Pfngetindirectaccesscb ZePfnkernelgetindirectaccesscb
-	Pfngetsourceattributescb ZePfnkernelgetsourceattributescb
-	Pfngetpropertiescb ZePfnkernelgetpropertiescb
-	Pfngetnamecb ZePfnkernelgetnamecb
+	Pfnsetargumentvaluecb                ZePfnkernelsetargumentvaluecb
+	Pfnsetindirectaccesscb               ZePfnkernelsetindirectaccesscb
+	Pfngetindirectaccesscb               ZePfnkernelgetindirectaccesscb
+	Pfngetsourceattributescb             ZePfnkernelgetsourceattributescb
+	Pfngetpropertiescb                   ZePfnkernelgetpropertiescb
+	Pfngetnamecb                         ZePfnkernelgetnamecb
 }
 
-// ZeSamplerCreateParams (ze_sampler_create_params_t) Callback function parameters for zeSamplerCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeSamplerCreateParams (ze_sampler_create_params_t) Callback function parameters for zeSamplerCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeSamplerCreateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZeSamplerDesc
+	Phcontext  *ZeContextHandle
+	Phdevice   *ZeDeviceHandle
+	Pdesc      **ZeSamplerDesc
 	Pphsampler **ZeSamplerHandle
 }
 
-// ZePfnsamplercreatecb (ze_pfnSamplerCreateCb_t) Callback function-pointer for zeSamplerCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnsamplercreatecb (ze_pfnSamplerCreateCb_t) Callback function-pointer for zeSamplerCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnsamplercreatecb uintptr
 
-// ZeSamplerDestroyParams (ze_sampler_destroy_params_t) Callback function parameters for zeSamplerDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeSamplerDestroyParams (ze_sampler_destroy_params_t) Callback function parameters for zeSamplerDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeSamplerDestroyParams struct {
 	Phsampler *ZeSamplerHandle
 }
 
-// ZePfnsamplerdestroycb (ze_pfnSamplerDestroyCb_t) Callback function-pointer for zeSamplerDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnsamplerdestroycb (ze_pfnSamplerDestroyCb_t) Callback function-pointer for zeSamplerDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnsamplerdestroycb uintptr
 
 // ZeSamplerCallbacks (ze_sampler_callbacks_t) Table of Sampler callback functions pointers
 type ZeSamplerCallbacks struct {
-	Pfncreatecb ZePfnsamplercreatecb
+	Pfncreatecb  ZePfnsamplercreatecb
 	Pfndestroycb ZePfnsamplerdestroycb
 }
 
-// ZePhysicalMemCreateParams (ze_physical_mem_create_params_t) Callback function parameters for zePhysicalMemCreate 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZePhysicalMemCreateParams (ze_physical_mem_create_params_t) Callback function parameters for zePhysicalMemCreate
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZePhysicalMemCreateParams struct {
-	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Pdesc **ZePhysicalMemDesc
+	Phcontext         *ZeContextHandle
+	Phdevice          *ZeDeviceHandle
+	Pdesc             **ZePhysicalMemDesc
 	Pphphysicalmemory **ZePhysicalMemHandle
 }
 
-// ZePfnphysicalmemcreatecb (ze_pfnPhysicalMemCreateCb_t) Callback function-pointer for zePhysicalMemCreate 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnphysicalmemcreatecb (ze_pfnPhysicalMemCreateCb_t) Callback function-pointer for zePhysicalMemCreate
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnphysicalmemcreatecb uintptr
 
-// ZePhysicalMemDestroyParams (ze_physical_mem_destroy_params_t) Callback function parameters for zePhysicalMemDestroy 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZePhysicalMemDestroyParams (ze_physical_mem_destroy_params_t) Callback function parameters for zePhysicalMemDestroy
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZePhysicalMemDestroyParams struct {
-	Phcontext *ZeContextHandle
+	Phcontext        *ZeContextHandle
 	Phphysicalmemory *ZePhysicalMemHandle
 }
 
-// ZePfnphysicalmemdestroycb (ze_pfnPhysicalMemDestroyCb_t) Callback function-pointer for zePhysicalMemDestroy 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnphysicalmemdestroycb (ze_pfnPhysicalMemDestroyCb_t) Callback function-pointer for zePhysicalMemDestroy
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnphysicalmemdestroycb uintptr
 
 // ZePhysicalMemCallbacks (ze_physical_mem_callbacks_t) Table of PhysicalMem callback functions pointers
 type ZePhysicalMemCallbacks struct {
-	Pfncreatecb ZePfnphysicalmemcreatecb
+	Pfncreatecb  ZePfnphysicalmemcreatecb
 	Pfndestroycb ZePfnphysicalmemdestroycb
 }
 
-// ZeVirtualMemReserveParams (ze_virtual_mem_reserve_params_t) Callback function parameters for zeVirtualMemReserve 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemReserveParams (ze_virtual_mem_reserve_params_t) Callback function parameters for zeVirtualMemReserve
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemReserveParams struct {
 	Phcontext *ZeContextHandle
-	Ppstart *unsafe.Pointer
-	Psize *uintptr
-	Ppptr **unsafe.Pointer
+	Ppstart   *unsafe.Pointer
+	Psize     *uintptr
+	Ppptr     **unsafe.Pointer
 }
 
-// ZePfnvirtualmemreservecb (ze_pfnVirtualMemReserveCb_t) Callback function-pointer for zeVirtualMemReserve 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemreservecb (ze_pfnVirtualMemReserveCb_t) Callback function-pointer for zeVirtualMemReserve
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemreservecb uintptr
 
-// ZeVirtualMemFreeParams (ze_virtual_mem_free_params_t) Callback function parameters for zeVirtualMemFree 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemFreeParams (ze_virtual_mem_free_params_t) Callback function parameters for zeVirtualMemFree
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemFreeParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
 }
 
-// ZePfnvirtualmemfreecb (ze_pfnVirtualMemFreeCb_t) Callback function-pointer for zeVirtualMemFree 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemfreecb (ze_pfnVirtualMemFreeCb_t) Callback function-pointer for zeVirtualMemFree
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemfreecb uintptr
 
-// ZeVirtualMemQueryPageSizeParams (ze_virtual_mem_query_page_size_params_t) Callback function parameters for zeVirtualMemQueryPageSize 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemQueryPageSizeParams (ze_virtual_mem_query_page_size_params_t) Callback function parameters for zeVirtualMemQueryPageSize
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemQueryPageSizeParams struct {
 	Phcontext *ZeContextHandle
-	Phdevice *ZeDeviceHandle
-	Psize *uintptr
+	Phdevice  *ZeDeviceHandle
+	Psize     *uintptr
 	Ppagesize **uintptr
 }
 
-// ZePfnvirtualmemquerypagesizecb (ze_pfnVirtualMemQueryPageSizeCb_t) Callback function-pointer for zeVirtualMemQueryPageSize 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemquerypagesizecb (ze_pfnVirtualMemQueryPageSizeCb_t) Callback function-pointer for zeVirtualMemQueryPageSize
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemquerypagesizecb uintptr
 
-// ZeVirtualMemMapParams (ze_virtual_mem_map_params_t) Callback function parameters for zeVirtualMemMap 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemMapParams (ze_virtual_mem_map_params_t) Callback function parameters for zeVirtualMemMap
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemMapParams struct {
-	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Phcontext        *ZeContextHandle
+	Pptr             *unsafe.Pointer
+	Psize            *uintptr
 	Phphysicalmemory *ZePhysicalMemHandle
-	Poffset *uintptr
-	Paccess *ZeMemoryAccessAttribute
+	Poffset          *uintptr
+	Paccess          *ZeMemoryAccessAttribute
 }
 
-// ZePfnvirtualmemmapcb (ze_pfnVirtualMemMapCb_t) Callback function-pointer for zeVirtualMemMap 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemmapcb (ze_pfnVirtualMemMapCb_t) Callback function-pointer for zeVirtualMemMap
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemmapcb uintptr
 
-// ZeVirtualMemUnmapParams (ze_virtual_mem_unmap_params_t) Callback function parameters for zeVirtualMemUnmap 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemUnmapParams (ze_virtual_mem_unmap_params_t) Callback function parameters for zeVirtualMemUnmap
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemUnmapParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
 }
 
-// ZePfnvirtualmemunmapcb (ze_pfnVirtualMemUnmapCb_t) Callback function-pointer for zeVirtualMemUnmap 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemunmapcb (ze_pfnVirtualMemUnmapCb_t) Callback function-pointer for zeVirtualMemUnmap
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemunmapcb uintptr
 
-// ZeVirtualMemSetAccessAttributeParams (ze_virtual_mem_set_access_attribute_params_t) Callback function parameters for zeVirtualMemSetAccessAttribute 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemSetAccessAttributeParams (ze_virtual_mem_set_access_attribute_params_t) Callback function parameters for zeVirtualMemSetAccessAttribute
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemSetAccessAttributeParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
-	Paccess *ZeMemoryAccessAttribute
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
+	Paccess   *ZeMemoryAccessAttribute
 }
 
-// ZePfnvirtualmemsetaccessattributecb (ze_pfnVirtualMemSetAccessAttributeCb_t) Callback function-pointer for zeVirtualMemSetAccessAttribute 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemsetaccessattributecb (ze_pfnVirtualMemSetAccessAttributeCb_t) Callback function-pointer for zeVirtualMemSetAccessAttribute
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemsetaccessattributecb uintptr
 
-// ZeVirtualMemGetAccessAttributeParams (ze_virtual_mem_get_access_attribute_params_t) Callback function parameters for zeVirtualMemGetAccessAttribute 
-/// @details Each entry is a pointer to the parameter passed to the function;
-///     allowing the callback the ability to modify the parameter's value
+// ZeVirtualMemGetAccessAttributeParams (ze_virtual_mem_get_access_attribute_params_t) Callback function parameters for zeVirtualMemGetAccessAttribute
+// / @details Each entry is a pointer to the parameter passed to the function;
+// /     allowing the callback the ability to modify the parameter's value
 type ZeVirtualMemGetAccessAttributeParams struct {
 	Phcontext *ZeContextHandle
-	Pptr *unsafe.Pointer
-	Psize *uintptr
-	Paccess **ZeMemoryAccessAttribute
-	Poutsize **uintptr
+	Pptr      *unsafe.Pointer
+	Psize     *uintptr
+	Paccess   **ZeMemoryAccessAttribute
+	Poutsize  **uintptr
 }
 
-// ZePfnvirtualmemgetaccessattributecb (ze_pfnVirtualMemGetAccessAttributeCb_t) Callback function-pointer for zeVirtualMemGetAccessAttribute 
-/// @param[in] params Parameters passed to this instance
-/// @param[in] result Return value
-/// @param[in] pTracerUserData Per-Tracer user data
-/// @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
+// ZePfnvirtualmemgetaccessattributecb (ze_pfnVirtualMemGetAccessAttributeCb_t) Callback function-pointer for zeVirtualMemGetAccessAttribute
+// / @param[in] params Parameters passed to this instance
+// / @param[in] result Return value
+// / @param[in] pTracerUserData Per-Tracer user data
+// / @param[in,out] ppTracerInstanceUserData Per-Tracer, Per-Instance user data
 // gozel warn: please use C function pointer loaded from C library!
 type ZePfnvirtualmemgetaccessattributecb uintptr
 
 // ZeVirtualMemCallbacks (ze_virtual_mem_callbacks_t) Table of VirtualMem callback functions pointers
 type ZeVirtualMemCallbacks struct {
-	Pfnreservecb ZePfnvirtualmemreservecb
-	Pfnfreecb ZePfnvirtualmemfreecb
-	Pfnquerypagesizecb ZePfnvirtualmemquerypagesizecb
-	Pfnmapcb ZePfnvirtualmemmapcb
-	Pfnunmapcb ZePfnvirtualmemunmapcb
+	Pfnreservecb            ZePfnvirtualmemreservecb
+	Pfnfreecb               ZePfnvirtualmemfreecb
+	Pfnquerypagesizecb      ZePfnvirtualmemquerypagesizecb
+	Pfnmapcb                ZePfnvirtualmemmapcb
+	Pfnunmapcb              ZePfnvirtualmemunmapcb
 	Pfnsetaccessattributecb ZePfnvirtualmemsetaccessattributecb
 	Pfngetaccessattributecb ZePfnvirtualmemgetaccessattributecb
 }
 
 // ZeCallbacks (ze_callbacks_t) Container for all callbacks
 type ZeCallbacks struct {
-	Global ZeGlobalCallbacks
-	Driver ZeDriverCallbacks
-	Device ZeDeviceCallbacks
-	Context ZeContextCallbacks
-	Commandqueue ZeCommandQueueCallbacks
-	Commandlist ZeCommandListCallbacks
-	Fence ZeFenceCallbacks
-	Eventpool ZeEventPoolCallbacks
-	Event ZeEventCallbacks
-	Image ZeImageCallbacks
-	Module ZeModuleCallbacks
+	Global         ZeGlobalCallbacks
+	Driver         ZeDriverCallbacks
+	Device         ZeDeviceCallbacks
+	Context        ZeContextCallbacks
+	Commandqueue   ZeCommandQueueCallbacks
+	Commandlist    ZeCommandListCallbacks
+	Fence          ZeFenceCallbacks
+	Eventpool      ZeEventPoolCallbacks
+	Event          ZeEventCallbacks
+	Image          ZeImageCallbacks
+	Module         ZeModuleCallbacks
 	Modulebuildlog ZeModuleBuildLogCallbacks
-	Kernel ZeKernelCallbacks
-	Sampler ZeSamplerCallbacks
-	Physicalmem ZePhysicalMemCallbacks
-	Mem ZeMemCallbacks
-	Virtualmem ZeVirtualMemCallbacks
+	Kernel         ZeKernelCallbacks
+	Sampler        ZeSamplerCallbacks
+	Physicalmem    ZePhysicalMemCallbacks
+	Mem            ZeMemCallbacks
+	Virtualmem     ZeVirtualMemCallbacks
 }
-
