@@ -73,7 +73,9 @@ jobs:
           echo "/tmp/sycl_linux/bin" >> $GITHUB_PATH
 
       - name: Run go generate
-        run: go generate ./...
+        run: |
+          go generate ./...
+          gofmt -w .
 
       - name: Check for changes
         id: diff
