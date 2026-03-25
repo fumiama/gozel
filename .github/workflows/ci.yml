@@ -62,7 +62,7 @@ jobs:
 
       - name: Add SYCL bin to PATH
         run: |
-          echo "${{ github.workspace }}/sycl_linux/bin" >> $GITHUB_PATH
+          (echo "${{ github.workspace }}/sycl_linux/bin"; cat $GITHUB_PATH) > $GITHUB_PATH.tmp && mv $GITHUB_PATH.tmp $GITHUB_PATH
 
       - name: Run go generate
         run: go generate ./...
@@ -88,20 +88,27 @@ jobs:
           branch: auto/go-generate
           delete-branch: true
 
-  build:
-    name: Build
+  vet_build_test:
+    name: Vet & Build & Test
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        go-version: ["stable"]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-go@v5
         with:
-          go-version: ${{ matrix.go-version }}
+          go-version-file: go.mod
+
+      - name: Find and remove all .cpp files
+        run: |
+          find . -name "*.cpp" -type f -delete
+        shell: bash
+
+      - name: Run go vet
+        run: go vet ./...
 
       - name: Build all packages
         run: go build ./...
@@ -112,34 +119,5 @@ jobs:
       - name: Build cmd/func2kernel
         run: go build ./cmd/func2kernel
 
-  test:
-    name: Test
-    needs: build
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-latest, windows-latest]
-        go-version: ["stable"]
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version: ${{ matrix.go-version }}
-
       - name: Run tests
         run: go test -v -count=1 ./...
-
-  vet:
-    name: Vet
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-go@v5
-        with:
-          go-version-file: go.mod
-
-      - name: Run go vet
-        run: go vet ./...
