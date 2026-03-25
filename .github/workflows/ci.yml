@@ -62,7 +62,8 @@ jobs:
 
       - name: Add SYCL bin to PATH
         run: |
-          (echo "${{ github.workspace }}/sycl_linux/bin"; cat $GITHUB_PATH) > $GITHUB_PATH.tmp && mv $GITHUB_PATH.tmp $GITHUB_PATH
+          ls -hl sycl_linux
+          echo "${{ github.workspace }}/sycl_linux/bin" >> $GITHUB_PATH
 
       - name: Run go generate
         run: go generate ./...
