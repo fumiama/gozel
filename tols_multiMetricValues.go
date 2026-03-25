@@ -24,59 +24,59 @@ const ZET_MULTI_METRICS_EXP_NAME = "ZET_experimental_calculate_multiple_metrics"
 
 // ZeCalculateMultipleMetricsExpVersion (ze_calculate_multiple_metrics_exp_version_t) Calculating Multiple Metrics Experimental Extension Version(s)
 type ZeCalculateMultipleMetricsExpVersion uintptr
+
 const (
-	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0 ZeCalculateMultipleMetricsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0 version 1.0
-	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_CURRENT ZeCalculateMultipleMetricsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_CURRENT latest known version
-	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_FORCE_UINT32 ZeCalculateMultipleMetricsExpVersion = 0x7fffffff	// ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_* ENUMs
+	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0          ZeCalculateMultipleMetricsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0 version 1.0
+	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_CURRENT      ZeCalculateMultipleMetricsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_CURRENT latest known version
+	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_FORCE_UINT32 ZeCalculateMultipleMetricsExpVersion = 0x7fffffff                                                   // ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_FORCE_UINT32 Value marking end of ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_* ENUMs
 
 )
 
 // ZetMetricGroupCalculateMultipleMetricValuesExp Calculate one or more sets of metric values from raw data.
-/// 
-/// @details
-///     - This function is similar to ::zetMetricGroupCalculateMetricValues
-///       except it may calculate more than one set of metric values from a
-///       single data buffer.  There may be one set of metric values for each
-///       sub-device, for example.
-///     - Each set of metric values may consist of a different number of metric
-///       values, returned as the metric value count.
-///     - All metric values are calculated into a single buffer; use the metric
-///       counts to determine which metric values belong to which set.
-///     - The application may call this function from simultaneous threads.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricGroup`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZET_METRIC_GROUP_CALCULATION_TYPE_MAX_METRIC_VALUES < type`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pRawData`
-///         + `nullptr == pSetCount`
-///         + `nullptr == pTotalMetricValueCount`
+// /
+// / @details
+// /     - This function is similar to ::zetMetricGroupCalculateMetricValues
+// /       except it may calculate more than one set of metric values from a
+// /       single data buffer.  There may be one set of metric values for each
+// /       sub-device, for example.
+// /     - Each set of metric values may consist of a different number of metric
+// /       values, returned as the metric value count.
+// /     - All metric values are calculated into a single buffer; use the metric
+// /       counts to determine which metric values belong to which set.
+// /     - The application may call this function from simultaneous threads.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricGroup`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZET_METRIC_GROUP_CALCULATION_TYPE_MAX_METRIC_VALUES < type`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pRawData`
+// /         + `nullptr == pSetCount`
+// /         + `nullptr == pTotalMetricValueCount`
 func ZetMetricGroupCalculateMultipleMetricValuesExp(
-	hMetricGroup ZetMetricGroupHandle,	// hMetricGroup [in] handle of the metric group
-	typ ZetMetricGroupCalculationType,	// typ [in] calculation type to be applied on raw data
-	rawDataSize uintptr,	// rawDataSize [in] size in bytes of raw data buffer
-	pRawData *uint8,	// pRawData [in][range(0, rawDataSize)] buffer of raw data to calculate
-	pSetCount *uint32,	// pSetCount [in,out] pointer to number of metric sets. if count is zero, then the driver shall update the value with the total number of metric sets to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be calculated.
-	pTotalMetricValueCount *uint32,	// pTotalMetricValueCount [in,out] pointer to number of the total number of metric values calculated, for all metric sets. if count is zero, then the driver shall update the value with the total number of metric values to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric values to be calculated.
-	pMetricCounts *uint32,	// pMetricCounts [in,out][optional][range(0, *pSetCount)] buffer of metric counts per metric set.
-	pMetricValues *ZetTypedValue,	// pMetricValues [in,out][optional][range(0, *pTotalMetricValueCount)] buffer of calculated metrics. if count is less than the number available in the raw data buffer, then driver shall only calculate that number of metric values.
+	hMetricGroup ZetMetricGroupHandle, // hMetricGroup [in] handle of the metric group
+	typ ZetMetricGroupCalculationType, // typ [in] calculation type to be applied on raw data
+	rawDataSize uintptr, // rawDataSize [in] size in bytes of raw data buffer
+	pRawData *uint8, // pRawData [in][range(0, rawDataSize)] buffer of raw data to calculate
+	pSetCount *uint32, // pSetCount [in,out] pointer to number of metric sets. if count is zero, then the driver shall update the value with the total number of metric sets to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be calculated.
+	pTotalMetricValueCount *uint32, // pTotalMetricValueCount [in,out] pointer to number of the total number of metric values calculated, for all metric sets. if count is zero, then the driver shall update the value with the total number of metric values to be calculated. if count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric values to be calculated.
+	pMetricCounts *uint32, // pMetricCounts [in,out][optional][range(0, *pSetCount)] buffer of metric counts per metric set.
+	pMetricValues *ZetTypedValue, // pMetricValues [in,out][optional][range(0, *pTotalMetricValueCount)] buffer of calculated metrics. if count is less than the number available in the raw data buffer, then driver shall only calculate that number of metric values.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricGroupCalculateMultipleMetricValuesExp", uintptr(hMetricGroup), uintptr(typ), uintptr(rawDataSize), uintptr(unsafe.Pointer(pRawData)), uintptr(unsafe.Pointer(pSetCount)), uintptr(unsafe.Pointer(pTotalMetricValueCount)), uintptr(unsafe.Pointer(pMetricCounts)), uintptr(unsafe.Pointer(pMetricValues)))
 }
-

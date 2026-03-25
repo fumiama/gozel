@@ -24,119 +24,119 @@ const ZES_POWER_LIMITS_EXT_NAME = "ZES_extension_power_limits"
 
 // ZesPowerLimitsExtVersion (zes_power_limits_ext_version_t) Power Limits Extension Version(s)
 type ZesPowerLimitsExtVersion uintptr
+
 const (
-	ZES_POWER_LIMITS_EXT_VERSION_1_0 ZesPowerLimitsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_POWER_LIMITS_EXT_VERSION_1_0 version 1.0
-	ZES_POWER_LIMITS_EXT_VERSION_CURRENT ZesPowerLimitsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_POWER_LIMITS_EXT_VERSION_CURRENT latest known version
-	ZES_POWER_LIMITS_EXT_VERSION_FORCE_UINT32 ZesPowerLimitsExtVersion = 0x7fffffff	// ZES_POWER_LIMITS_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_POWER_LIMITS_EXT_VERSION_* ENUMs
+	ZES_POWER_LIMITS_EXT_VERSION_1_0          ZesPowerLimitsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_LIMITS_EXT_VERSION_1_0 version 1.0
+	ZES_POWER_LIMITS_EXT_VERSION_CURRENT      ZesPowerLimitsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_LIMITS_EXT_VERSION_CURRENT latest known version
+	ZES_POWER_LIMITS_EXT_VERSION_FORCE_UINT32 ZesPowerLimitsExtVersion = 0x7fffffff                                                   // ZES_POWER_LIMITS_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_POWER_LIMITS_EXT_VERSION_* ENUMs
 
 )
 
 // ZesPowerLimitExtDesc (zes_power_limit_ext_desc_t) Device power/current limit descriptor.
 type ZesPowerLimitExtDesc struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Level ZesPowerLevel	// Level [in,out] duration type over which the power draw is measured, i.e. sustained, burst, peak, or critical.
-	Source ZesPowerSource	// Source [out] source of power used by the system, i.e. AC or DC.
-	Limitunit ZesLimitUnit	// Limitunit [out] unit used for specifying limit, i.e. current units (milliamps) or power units (milliwatts).
-	Enabledstatelocked ZeBool	// Enabledstatelocked [out] indicates if the power limit state (enabled/ignored) can be set (false) or is locked (true).
-	Enabled ZeBool	// Enabled [in,out] indicates if the limit is enabled (true) or ignored (false). If enabledStateIsLocked is True, this value is ignored.
-	Intervalvaluelocked ZeBool	// Intervalvaluelocked [out] indicates if the interval can be modified (false) or is fixed (true).
-	Interval int32	// Interval [in,out] power averaging window in milliseconds. If intervalValueLocked is true, this value is ignored.
-	Limitvaluelocked ZeBool	// Limitvaluelocked [out] indicates if the limit can be set (false) or if the limit is fixed (true).
-	Limit int32	// Limit [in,out] limit value. If limitValueLocked is true, this value is ignored. The value should be provided in the unit specified by limitUnit.
+	Stype               ZesStructureType // Stype [in] type of this structure
+	Pnext               unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Level               ZesPowerLevel    // Level [in,out] duration type over which the power draw is measured, i.e. sustained, burst, peak, or critical.
+	Source              ZesPowerSource   // Source [out] source of power used by the system, i.e. AC or DC.
+	Limitunit           ZesLimitUnit     // Limitunit [out] unit used for specifying limit, i.e. current units (milliamps) or power units (milliwatts).
+	Enabledstatelocked  ZeBool           // Enabledstatelocked [out] indicates if the power limit state (enabled/ignored) can be set (false) or is locked (true).
+	Enabled             ZeBool           // Enabled [in,out] indicates if the limit is enabled (true) or ignored (false). If enabledStateIsLocked is True, this value is ignored.
+	Intervalvaluelocked ZeBool           // Intervalvaluelocked [out] indicates if the interval can be modified (false) or is fixed (true).
+	Interval            int32            // Interval [in,out] power averaging window in milliseconds. If intervalValueLocked is true, this value is ignored.
+	Limitvaluelocked    ZeBool           // Limitvaluelocked [out] indicates if the limit can be set (false) or if the limit is fixed (true).
+	Limit               int32            // Limit [in,out] limit value. If limitValueLocked is true, this value is ignored. The value should be provided in the unit specified by limitUnit.
 
 }
 
 // ZesPowerExtProperties (zes_power_ext_properties_t) Extension properties related to device power settings
-/// 
-/// @details
-///     - This structure may be returned from ::zesPowerGetProperties via the
-///       `pNext` member of ::zes_power_properties_t.
-///     - This structure may also be returned from ::zesPowerGetProperties via
-///       the `pNext` member of ::zes_power_ext_properties_t
-///     - Used for determining the power domain level, i.e. card-level v/s
-///       package-level v/s stack-level & the factory default power limits.
+// /
+// / @details
+// /     - This structure may be returned from ::zesPowerGetProperties via the
+// /       `pNext` member of ::zes_power_properties_t.
+// /     - This structure may also be returned from ::zesPowerGetProperties via
+// /       the `pNext` member of ::zes_power_ext_properties_t
+// /     - Used for determining the power domain level, i.e. card-level v/s
+// /       package-level v/s stack-level & the factory default power limits.
 type ZesPowerExtProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Domain ZesPowerDomain	// Domain [out] domain that the power limit belongs to.
-	Defaultlimit *ZesPowerLimitExtDesc	// Defaultlimit [out] the factory default limit of the part.
+	Stype        ZesStructureType      // Stype [in] type of this structure
+	Pnext        unsafe.Pointer        // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Domain       ZesPowerDomain        // Domain [out] domain that the power limit belongs to.
+	Defaultlimit *ZesPowerLimitExtDesc // Defaultlimit [out] the factory default limit of the part.
 
 }
 
 // ZesPowerGetLimitsExt Get power limits
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - This function returns all the power limits associated with the
-///       supplied power domain.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - This function returns all the power limits associated with the
+// /       supplied power domain.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesPowerGetLimitsExt(
-	hPower ZesPwrHandle,	// hPower [in] Power domain handle instance.
-	pCount *uint32,	// pCount [in,out] Pointer to the number of power limit descriptors. If count is zero, then the driver shall update the value with the total number of components of this type that are available. If count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
-	pSustained *ZesPowerLimitExtDesc,	// pSustained [in,out][optional][range(0, *pCount)] Array of query results for power limit descriptors. If count is less than the number of components of this type that are available, then the driver shall only retrieve that number of components.
+	hPower ZesPwrHandle, // hPower [in] Power domain handle instance.
+	pCount *uint32, // pCount [in,out] Pointer to the number of power limit descriptors. If count is zero, then the driver shall update the value with the total number of components of this type that are available. If count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
+	pSustained *ZesPowerLimitExtDesc, // pSustained [in,out][optional][range(0, *pCount)] Array of query results for power limit descriptors. If count is less than the number of components of this type that are available, then the driver shall only retrieve that number of components.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerGetLimitsExt", uintptr(hPower), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pSustained)))
 }
 
 // ZesPowerSetLimitsExt Set power limits
-/// 
-/// @details
-///     - The application can only modify unlocked members of the limit
-///       descriptors returned by ::zesPowerGetLimitsExt.
-///     - Not all the limits returned by ::zesPowerGetLimitsExt need to be
-///       supplied to this function.
-///     - Limits do not have to be supplied in the same order as returned by
-///       ::zesPowerGetLimitsExt.
-///     - The same limit can be supplied multiple times. Limits are applied in
-///       the order in which they are supplied.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to make these modifications.
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///         + The device is in use, meaning that the GPU is under Over clocking, applying power limits under overclocking is not supported.
+// /
+// / @details
+// /     - The application can only modify unlocked members of the limit
+// /       descriptors returned by ::zesPowerGetLimitsExt.
+// /     - Not all the limits returned by ::zesPowerGetLimitsExt need to be
+// /       supplied to this function.
+// /     - Limits do not have to be supplied in the same order as returned by
+// /       ::zesPowerGetLimitsExt.
+// /     - The same limit can be supplied multiple times. Limits are applied in
+// /       the order in which they are supplied.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to make these modifications.
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /         + The device is in use, meaning that the GPU is under Over clocking, applying power limits under overclocking is not supported.
 func ZesPowerSetLimitsExt(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pCount *uint32,	// pCount [in] Pointer to the number of power limit descriptors.
-	pSustained *ZesPowerLimitExtDesc,	// pSustained [in][optional][range(0, *pCount)] Array of power limit descriptors.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pCount *uint32, // pCount [in] Pointer to the number of power limit descriptors.
+	pSustained *ZesPowerLimitExtDesc, // pSustained [in][optional][range(0, *pCount)] Array of power limit descriptors.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerSetLimitsExt", uintptr(hPower), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pSustained)))
 }
-

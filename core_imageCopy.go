@@ -24,146 +24,146 @@ const ZE_IMAGE_COPY_EXT_NAME = "ZE_extension_image_copy"
 
 // ZeImageCopyExtVersion (ze_image_copy_ext_version_t) Image Copy Extension Version(s)
 type ZeImageCopyExtVersion uintptr
+
 const (
-	ZE_IMAGE_COPY_EXT_VERSION_1_0 ZeImageCopyExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_COPY_EXT_VERSION_1_0 version 1.0
-	ZE_IMAGE_COPY_EXT_VERSION_CURRENT ZeImageCopyExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_COPY_EXT_VERSION_CURRENT latest known version
-	ZE_IMAGE_COPY_EXT_VERSION_FORCE_UINT32 ZeImageCopyExtVersion = 0x7fffffff	// ZE_IMAGE_COPY_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_COPY_EXT_VERSION_* ENUMs
+	ZE_IMAGE_COPY_EXT_VERSION_1_0          ZeImageCopyExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_COPY_EXT_VERSION_1_0 version 1.0
+	ZE_IMAGE_COPY_EXT_VERSION_CURRENT      ZeImageCopyExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_COPY_EXT_VERSION_CURRENT latest known version
+	ZE_IMAGE_COPY_EXT_VERSION_FORCE_UINT32 ZeImageCopyExtVersion = 0x7fffffff                                                   // ZE_IMAGE_COPY_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_COPY_EXT_VERSION_* ENUMs
 
 )
 
 // ZeCommandListAppendImageCopyToMemoryExt Copies from an image to device or shared memory.
-/// 
-/// @details
-///     - The application must ensure the memory pointed to by dstptr is
-///       accessible by the device on which the command list was created.
-///     - The implementation must not access the memory pointed to by dstptr as
-///       it is free to be modified by either the Host or device up until
-///       execution.
-///     - The application must ensure the image and events are accessible by the
-///       device on which the command list was created.
-///     - The application must ensure the image format descriptor for the source
-///       image is a single-planar format.
-///     - The application must ensure that the rowPitch is set to 0 if image is
-///       a 1D image. Otherwise the rowPitch must be greater than or equal to
-///       the element size in bytes x width.
-///     - If rowPitch is set to 0, the appropriate row pitch is calculated based
-///       on the size of each element in bytes multiplied by width
-///     - The application must ensure that the slicePitch is set to 0 if image
-///       is a 1D or 2D image. Otherwise this value must be greater than or
-///       equal to rowPitch x height.
-///     - If slicePitch is set to 0, the appropriate slice pitch is calculated
-///       based on the rowPitch x height.
-///     - The application must ensure the command list, image and events were
-///       created, and the memory was allocated, on the same context.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @remarks
-///   _Analogues_
-///     - clEnqueueReadImage
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hSrcImage`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == dstptr`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /
+// / @details
+// /     - The application must ensure the memory pointed to by dstptr is
+// /       accessible by the device on which the command list was created.
+// /     - The implementation must not access the memory pointed to by dstptr as
+// /       it is free to be modified by either the Host or device up until
+// /       execution.
+// /     - The application must ensure the image and events are accessible by the
+// /       device on which the command list was created.
+// /     - The application must ensure the image format descriptor for the source
+// /       image is a single-planar format.
+// /     - The application must ensure that the rowPitch is set to 0 if image is
+// /       a 1D image. Otherwise the rowPitch must be greater than or equal to
+// /       the element size in bytes x width.
+// /     - If rowPitch is set to 0, the appropriate row pitch is calculated based
+// /       on the size of each element in bytes multiplied by width
+// /     - The application must ensure that the slicePitch is set to 0 if image
+// /       is a 1D or 2D image. Otherwise this value must be greater than or
+// /       equal to rowPitch x height.
+// /     - If slicePitch is set to 0, the appropriate slice pitch is calculated
+// /       based on the rowPitch x height.
+// /     - The application must ensure the command list, image and events were
+// /       created, and the memory was allocated, on the same context.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - clEnqueueReadImage
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hSrcImage`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == dstptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendImageCopyToMemoryExt(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of command list
-	dstptr unsafe.Pointer,	// dstptr [in] pointer to destination memory to copy to
-	hSrcImage ZeImageHandle,	// hSrcImage [in] handle of source image to copy from
-	pSrcRegion *ZeImageRegion,	// pSrcRegion [in][optional] source region descriptor
-	destRowPitch uint32,	// destRowPitch [in] size in bytes of the 1D slice of the 2D region of a 2D or 3D image or each image of a 1D or 2D image array being written
-	destSlicePitch uint32,	// destSlicePitch [in] size in bytes of the 2D slice of the 3D region of a 3D image or each image of a 1D or 2D image array being written
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of command list
+	dstptr unsafe.Pointer, // dstptr [in] pointer to destination memory to copy to
+	hSrcImage ZeImageHandle, // hSrcImage [in] handle of source image to copy from
+	pSrcRegion *ZeImageRegion, // pSrcRegion [in][optional] source region descriptor
+	destRowPitch uint32, // destRowPitch [in] size in bytes of the 1D slice of the 2D region of a 2D or 3D image or each image of a 1D or 2D image array being written
+	destSlicePitch uint32, // destSlicePitch [in] size in bytes of the 2D slice of the 3D region of a 3D image or each image of a 1D or 2D image array being written
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendImageCopyToMemoryExt", uintptr(hCommandList), uintptr(unsafe.Pointer(dstptr)), uintptr(hSrcImage), uintptr(unsafe.Pointer(pSrcRegion)), uintptr(destRowPitch), uintptr(destSlicePitch), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendImageCopyFromMemoryExt Copies to an image from device or shared memory.
-/// 
-/// @details
-///     - The application must ensure the memory pointed to by srcptr is
-///       accessible by the device on which the command list was created.
-///     - The implementation must not access the memory pointed to by srcptr as
-///       it is free to be modified by either the Host or device up until
-///       execution.
-///     - The application must ensure the image and events are accessible by the
-///       device on which the command list was created.
-///     - The application must ensure the image format descriptor for the
-///       destination image is a single-planar format.
-///     - The application must ensure that the rowPitch is set to 0 if image is
-///       a 1D image. Otherwise the rowPitch must be greater than or equal to
-///       the element size in bytes x width.
-///     - If rowPitch is set to 0, the appropriate row pitch is calculated based
-///       on the size of each element in bytes multiplied by width
-///     - The application must ensure that the slicePitch is set to 0 if image
-///       is a 1D or 2D image. Otherwise this value must be greater than or
-///       equal to rowPitch x height.
-///     - If slicePitch is set to 0, the appropriate slice pitch is calculated
-///       based on the rowPitch x height.
-///     - The application must ensure the command list, image and events were
-///       created, and the memory was allocated, on the same context.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @remarks
-///   _Analogues_
-///     - clEnqueueWriteImage
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hDstImage`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == srcptr`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /
+// / @details
+// /     - The application must ensure the memory pointed to by srcptr is
+// /       accessible by the device on which the command list was created.
+// /     - The implementation must not access the memory pointed to by srcptr as
+// /       it is free to be modified by either the Host or device up until
+// /       execution.
+// /     - The application must ensure the image and events are accessible by the
+// /       device on which the command list was created.
+// /     - The application must ensure the image format descriptor for the
+// /       destination image is a single-planar format.
+// /     - The application must ensure that the rowPitch is set to 0 if image is
+// /       a 1D image. Otherwise the rowPitch must be greater than or equal to
+// /       the element size in bytes x width.
+// /     - If rowPitch is set to 0, the appropriate row pitch is calculated based
+// /       on the size of each element in bytes multiplied by width
+// /     - The application must ensure that the slicePitch is set to 0 if image
+// /       is a 1D or 2D image. Otherwise this value must be greater than or
+// /       equal to rowPitch x height.
+// /     - If slicePitch is set to 0, the appropriate slice pitch is calculated
+// /       based on the rowPitch x height.
+// /     - The application must ensure the command list, image and events were
+// /       created, and the memory was allocated, on the same context.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - clEnqueueWriteImage
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hDstImage`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == srcptr`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendImageCopyFromMemoryExt(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of command list
-	hDstImage ZeImageHandle,	// hDstImage [in] handle of destination image to copy to
-	srcptr unsafe.Pointer,	// srcptr [in] pointer to source memory to copy from
-	pDstRegion *ZeImageRegion,	// pDstRegion [in][optional] destination region descriptor
-	srcRowPitch uint32,	// srcRowPitch [in] size in bytes of the 1D slice of the 2D region of a 2D or 3D image or each image of a 1D or 2D image array being read
-	srcSlicePitch uint32,	// srcSlicePitch [in] size in bytes of the 2D slice of the 3D region of a 3D image or each image of a 1D or 2D image array being read
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of command list
+	hDstImage ZeImageHandle, // hDstImage [in] handle of destination image to copy to
+	srcptr unsafe.Pointer, // srcptr [in] pointer to source memory to copy from
+	pDstRegion *ZeImageRegion, // pDstRegion [in][optional] destination region descriptor
+	srcRowPitch uint32, // srcRowPitch [in] size in bytes of the 1D slice of the 2D region of a 2D or 3D image or each image of a 1D or 2D image array being read
+	srcSlicePitch uint32, // srcSlicePitch [in] size in bytes of the 2D slice of the 3D region of a 3D image or each image of a 1D or 2D image array being read
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendImageCopyFromMemoryExt", uintptr(hCommandList), uintptr(hDstImage), uintptr(unsafe.Pointer(srcptr)), uintptr(unsafe.Pointer(pDstRegion)), uintptr(srcRowPitch), uintptr(srcSlicePitch), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
-

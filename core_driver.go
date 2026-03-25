@@ -21,247 +21,250 @@ import (
 
 // ZeInitFlags (ze_init_flags_t) Supported initialization flags
 type ZeInitFlags uint32
+
 const (
-	ZE_INIT_FLAG_GPU_ONLY ZeInitFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_INIT_FLAG_GPU_ONLY only initialize GPU drivers
-	ZE_INIT_FLAG_VPU_ONLY ZeInitFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_INIT_FLAG_VPU_ONLY only initialize VPU drivers
-	ZE_INIT_FLAG_FORCE_UINT32 ZeInitFlags = 0x7fffffff	// ZE_INIT_FLAG_FORCE_UINT32 Value marking end of ZE_INIT_FLAG_* ENUMs
+	ZE_INIT_FLAG_GPU_ONLY     ZeInitFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_INIT_FLAG_GPU_ONLY only initialize GPU drivers
+	ZE_INIT_FLAG_VPU_ONLY     ZeInitFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_INIT_FLAG_VPU_ONLY only initialize VPU drivers
+	ZE_INIT_FLAG_FORCE_UINT32 ZeInitFlags = 0x7fffffff               // ZE_INIT_FLAG_FORCE_UINT32 Value marking end of ZE_INIT_FLAG_* ENUMs
 
 )
 
 // ZeInit Initialize the 'oneAPI' driver(s)
-/// 
-/// @details
-///     - @deprecated since 1.10. Please use zeInitDrivers()
-///     - The application must call this function or zeInitDrivers before
-///       calling any other function.
-///     - If this function is not called then all other functions will return
-///       ::ZE_RESULT_ERROR_UNINITIALIZED.
-///     - Only one instance of each driver will be initialized per process.
-///     - The application may call this function multiple times with different
-///       flags or environment variables enabled.
-///     - The application must call this function after forking new processes.
-///       Each forked process must call this function.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe for scenarios
-///       where multiple libraries may initialize the driver(s) simultaneously.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - @deprecated since 1.10. Please use zeInitDrivers()
+// /     - The application must call this function or zeInitDrivers before
+// /       calling any other function.
+// /     - If this function is not called then all other functions will return
+// /       ::ZE_RESULT_ERROR_UNINITIALIZED.
+// /     - Only one instance of each driver will be initialized per process.
+// /     - The application may call this function multiple times with different
+// /       flags or environment variables enabled.
+// /     - The application must call this function after forking new processes.
+// /       Each forked process must call this function.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe for scenarios
+// /       where multiple libraries may initialize the driver(s) simultaneously.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeInit(
-	flags ZeInitFlags,	// flags [in] initialization flags. must be 0 (default) or a combination of ::ze_init_flag_t.
+	flags ZeInitFlags, // flags [in] initialization flags. must be 0 (default) or a combination of ::ze_init_flag_t.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeInit", uintptr(flags))
 }
 
 // ZeDriverGet Retrieves driver instances
-/// 
-/// @details
-///     - @deprecated since 1.10. Please use zeInitDrivers()
-///     - Usage of zeInitDrivers and zeDriverGet is mutually exclusive and
-///       should not be used together. Usage of them together will result in
-///       undefined behavior.
-///     - A driver represents a collection of physical devices.
-///     - Multiple calls to this function will return identical driver handles,
-///       in the same order.
-///     - The application may pass nullptr for pDrivers when only querying the
-///       number of drivers.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @remarks
-///   _Analogues_
-///     - clGetPlatformIDs
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - @deprecated since 1.10. Please use zeInitDrivers()
+// /     - Usage of zeInitDrivers and zeDriverGet is mutually exclusive and
+// /       should not be used together. Usage of them together will result in
+// /       undefined behavior.
+// /     - A driver represents a collection of physical devices.
+// /     - Multiple calls to this function will return identical driver handles,
+// /       in the same order.
+// /     - The application may pass nullptr for pDrivers when only querying the
+// /       number of drivers.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - clGetPlatformIDs
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeDriverGet(
-	pCount *uint32,	// pCount [in,out] pointer to the number of driver instances. if count is zero, then the loader shall update the value with the total number of drivers available. if count is greater than the number of drivers available, then the loader shall update the value with the correct number of drivers available.
-	phDrivers *ZeDriverHandle,	// phDrivers [in,out][optional][range(0, *pCount)] array of driver instance handles. if count is less than the number of drivers available, then the loader shall only retrieve that number of drivers.
+	pCount *uint32, // pCount [in,out] pointer to the number of driver instances. if count is zero, then the loader shall update the value with the total number of drivers available. if count is greater than the number of drivers available, then the loader shall update the value with the correct number of drivers available.
+	phDrivers *ZeDriverHandle, // phDrivers [in,out][optional][range(0, *pCount)] array of driver instance handles. if count is less than the number of drivers available, then the loader shall only retrieve that number of drivers.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGet", uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phDrivers)))
 }
 
 // ZeInitDriverTypeFlags (ze_init_driver_type_flags_t) Supported driver initialization type flags
-/// 
-/// @details
-///     - Bit Field which details the driver types to be initialized and
-///       returned to the user.
-///     - Value Definition:
-///     - 0, do not init or retrieve any drivers.
-///     - ZE_INIT_DRIVER_TYPE_FLAG_GPU,	GPU Drivers are Init and driver handles
-///       retrieved.
-///     - ZE_INIT_DRIVER_TYPE_FLAG_NPU,	NPU Drivers are Init and driver handles
-///       retrieved.
-///     - ZE_INIT_DRIVER_TYPE_FLAG_GPU | ZE_INIT_DRIVER_TYPE_FLAG_NPU, NPU & GPU
-///       Drivers are Init and driver handles retrieved.
-///     - UINT32_MAX	All Drivers of any type are Init and driver handles
-///       retrieved.
+// /
+// / @details
+// /     - Bit Field which details the driver types to be initialized and
+// /       returned to the user.
+// /     - Value Definition:
+// /     - 0, do not init or retrieve any drivers.
+// /     - ZE_INIT_DRIVER_TYPE_FLAG_GPU,	GPU Drivers are Init and driver handles
+// /       retrieved.
+// /     - ZE_INIT_DRIVER_TYPE_FLAG_NPU,	NPU Drivers are Init and driver handles
+// /       retrieved.
+// /     - ZE_INIT_DRIVER_TYPE_FLAG_GPU | ZE_INIT_DRIVER_TYPE_FLAG_NPU, NPU & GPU
+// /       Drivers are Init and driver handles retrieved.
+// /     - UINT32_MAX	All Drivers of any type are Init and driver handles
+// /       retrieved.
 type ZeInitDriverTypeFlags uint32
+
 const (
-	ZE_INIT_DRIVER_TYPE_FLAG_GPU ZeInitDriverTypeFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_INIT_DRIVER_TYPE_FLAG_GPU initialize and retrieve GPU drivers
-	ZE_INIT_DRIVER_TYPE_FLAG_NPU ZeInitDriverTypeFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_INIT_DRIVER_TYPE_FLAG_NPU initialize and retrieve NPU drivers
-	ZE_INIT_DRIVER_TYPE_FLAG_FORCE_UINT32 ZeInitDriverTypeFlags = 0x7fffffff	// ZE_INIT_DRIVER_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_INIT_DRIVER_TYPE_FLAG_* ENUMs
+	ZE_INIT_DRIVER_TYPE_FLAG_GPU          ZeInitDriverTypeFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_INIT_DRIVER_TYPE_FLAG_GPU initialize and retrieve GPU drivers
+	ZE_INIT_DRIVER_TYPE_FLAG_NPU          ZeInitDriverTypeFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_INIT_DRIVER_TYPE_FLAG_NPU initialize and retrieve NPU drivers
+	ZE_INIT_DRIVER_TYPE_FLAG_FORCE_UINT32 ZeInitDriverTypeFlags = 0x7fffffff               // ZE_INIT_DRIVER_TYPE_FLAG_FORCE_UINT32 Value marking end of ZE_INIT_DRIVER_TYPE_FLAG_* ENUMs
 
 )
 
 // ZeInitDriverTypeDesc (ze_init_driver_type_desc_t) Init Driver Type descriptor
 type ZeInitDriverTypeDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeInitDriverTypeFlags	// Flags [in] driver type init flags. must be a valid combination of ::ze_init_driver_type_flag_t or UINT32_MAX; driver types are init and retrieved based on these init flags in zeInitDrivers().
+	Stype ZeStructureType       // Stype [in] type of this structure
+	Pnext unsafe.Pointer        // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeInitDriverTypeFlags // Flags [in] driver type init flags. must be a valid combination of ::ze_init_driver_type_flag_t or UINT32_MAX; driver types are init and retrieved based on these init flags in zeInitDrivers().
 
 }
 
 // ZeInitDrivers Initialize the 'oneAPI' driver(s) based on the driver types requested
-///        and retrieve the driver handles.
-/// 
-/// @details
-///     - The application must call this function or zeInit before calling any
-///       other function. (zeInit is [Deprecated] and is replaced by
-///       zeInitDrivers)
-///     - Calls to zeInit[Deprecated] or InitDrivers will not alter the drivers
-///       retrieved through either api.
-///     - Drivers init through zeInit[Deprecated] or InitDrivers will not be
-///       reInitialized once init in an application. The Loader will determine
-///       if the already init driver needs to be delivered to the user through
-///       the init type flags.
-///     - Already init Drivers will not be uninitialized if the call to
-///       InitDrivers does not include that driver's type. Those init drivers
-///       which don't match the init flags will not have their driver handles
-///       returned to the user in that InitDrivers call.
-///     - If this function or zeInit[Deprecated] is not called, then all other
-///       functions will return ::ZE_RESULT_ERROR_UNINITIALIZED.
-///     - Only one instance of each driver will be initialized per process.
-///     - A driver represents a collection of physical devices.
-///     - Multiple calls to this function will return identical driver handles,
-///       in the same order.
-///     - The drivers returned to the caller will be based on the init types
-///       which state the drivers to be included.
-///     - The application may pass nullptr for pDrivers when only querying the
-///       number of drivers.
-///     - The application may call this function multiple times with different
-///       flags or environment variables enabled.
-///     - The application must call this function after forking new processes.
-///       Each forked process must call this function.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe for scenarios
-///       where multiple libraries may initialize the driver(s) simultaneously.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
-///         + `nullptr == desc`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x0 == desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /        and retrieve the driver handles.
+// /
+// / @details
+// /     - The application must call this function or zeInit before calling any
+// /       other function. (zeInit is [Deprecated] and is replaced by
+// /       zeInitDrivers)
+// /     - Calls to zeInit[Deprecated] or InitDrivers will not alter the drivers
+// /       retrieved through either api.
+// /     - Drivers init through zeInit[Deprecated] or InitDrivers will not be
+// /       reInitialized once init in an application. The Loader will determine
+// /       if the already init driver needs to be delivered to the user through
+// /       the init type flags.
+// /     - Already init Drivers will not be uninitialized if the call to
+// /       InitDrivers does not include that driver's type. Those init drivers
+// /       which don't match the init flags will not have their driver handles
+// /       returned to the user in that InitDrivers call.
+// /     - If this function or zeInit[Deprecated] is not called, then all other
+// /       functions will return ::ZE_RESULT_ERROR_UNINITIALIZED.
+// /     - Only one instance of each driver will be initialized per process.
+// /     - A driver represents a collection of physical devices.
+// /     - Multiple calls to this function will return identical driver handles,
+// /       in the same order.
+// /     - The drivers returned to the caller will be based on the init types
+// /       which state the drivers to be included.
+// /     - The application may pass nullptr for pDrivers when only querying the
+// /       number of drivers.
+// /     - The application may call this function multiple times with different
+// /       flags or environment variables enabled.
+// /     - The application must call this function after forking new processes.
+// /       Each forked process must call this function.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe for scenarios
+// /       where multiple libraries may initialize the driver(s) simultaneously.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
+// /         + `nullptr == desc`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x0 == desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeInitDrivers(
-	pCount *uint32,	// pCount [in,out] pointer to the number of driver instances. if count is zero, then the loader shall update the value with the total number of drivers available. if count is greater than the number of drivers available, then the loader shall update the value with the correct number of drivers available.
-	phDrivers *ZeDriverHandle,	// phDrivers [in,out][optional][range(0, *pCount)] array of driver instance handles. if count is less than the number of drivers available, then the loader shall only retrieve that number of drivers.
-	desc *ZeInitDriverTypeDesc,	// desc [in] descriptor containing the driver type initialization details including ::ze_init_driver_type_flag_t combinations.
+	pCount *uint32, // pCount [in,out] pointer to the number of driver instances. if count is zero, then the loader shall update the value with the total number of drivers available. if count is greater than the number of drivers available, then the loader shall update the value with the correct number of drivers available.
+	phDrivers *ZeDriverHandle, // phDrivers [in,out][optional][range(0, *pCount)] array of driver instance handles. if count is less than the number of drivers available, then the loader shall only retrieve that number of drivers.
+	desc *ZeInitDriverTypeDesc, // desc [in] descriptor containing the driver type initialization details including ::ze_init_driver_type_flag_t combinations.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeInitDrivers", uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phDrivers)), uintptr(unsafe.Pointer(desc)))
 }
 
 // ZeApiVersion (ze_api_version_t) Supported API versions
-/// 
-/// @details
-///     - API versions contain major and minor attributes, use
-///       ::ZE_MAJOR_VERSION and ::ZE_MINOR_VERSION
+// /
+// / @details
+// /     - API versions contain major and minor attributes, use
+// /       ::ZE_MAJOR_VERSION and ::ZE_MINOR_VERSION
 type ZeApiVersion uintptr
+
 const (
-	ZE_API_VERSION_1_0 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_API_VERSION_1_0 version 1.0
-	ZE_API_VERSION_1_1 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 1 ) */((( 1 << 16 )|( 1 & 0x0000ffff)))	// ZE_API_VERSION_1_1 version 1.1
-	ZE_API_VERSION_1_2 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 2 ) */((( 1 << 16 )|( 2 & 0x0000ffff)))	// ZE_API_VERSION_1_2 version 1.2
-	ZE_API_VERSION_1_3 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 3 ) */((( 1 << 16 )|( 3 & 0x0000ffff)))	// ZE_API_VERSION_1_3 version 1.3
-	ZE_API_VERSION_1_4 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 4 ) */((( 1 << 16 )|( 4 & 0x0000ffff)))	// ZE_API_VERSION_1_4 version 1.4
-	ZE_API_VERSION_1_5 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 5 ) */((( 1 << 16 )|( 5 & 0x0000ffff)))	// ZE_API_VERSION_1_5 version 1.5
-	ZE_API_VERSION_1_6 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 6 ) */((( 1 << 16 )|( 6 & 0x0000ffff)))	// ZE_API_VERSION_1_6 version 1.6
-	ZE_API_VERSION_1_7 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 7 ) */((( 1 << 16 )|( 7 & 0x0000ffff)))	// ZE_API_VERSION_1_7 version 1.7
-	ZE_API_VERSION_1_8 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 8 ) */((( 1 << 16 )|( 8 & 0x0000ffff)))	// ZE_API_VERSION_1_8 version 1.8
-	ZE_API_VERSION_1_9 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 9 ) */((( 1 << 16 )|( 9 & 0x0000ffff)))	// ZE_API_VERSION_1_9 version 1.9
-	ZE_API_VERSION_1_10 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 10 ) */((( 1 << 16 )|( 10 & 0x0000ffff)))	// ZE_API_VERSION_1_10 version 1.10
-	ZE_API_VERSION_1_11 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 11 ) */((( 1 << 16 )|( 11 & 0x0000ffff)))	// ZE_API_VERSION_1_11 version 1.11
-	ZE_API_VERSION_1_12 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 12 ) */((( 1 << 16 )|( 12 & 0x0000ffff)))	// ZE_API_VERSION_1_12 version 1.12
-	ZE_API_VERSION_1_13 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 13 ) */((( 1 << 16 )|( 13 & 0x0000ffff)))	// ZE_API_VERSION_1_13 version 1.13
-	ZE_API_VERSION_1_14 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 14 ) */((( 1 << 16 )|( 14 & 0x0000ffff)))	// ZE_API_VERSION_1_14 version 1.14
-	ZE_API_VERSION_1_15 ZeApiVersion = /* ZE_MAKE_VERSION( 1, 15 ) */((( 1 << 16 )|( 15 & 0x0000ffff)))	// ZE_API_VERSION_1_15 version 1.15
-	ZE_API_VERSION_CURRENT ZeApiVersion = /* ZE_MAKE_VERSION( 1, 15 ) */((( 1 << 16 )|( 15 & 0x0000ffff)))	// ZE_API_VERSION_CURRENT latest known version
-	ZE_API_VERSION_FORCE_UINT32 ZeApiVersion = 0x7fffffff	// ZE_API_VERSION_FORCE_UINT32 Value marking end of ZE_API_VERSION_* ENUMs
+	ZE_API_VERSION_1_0          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff))   // ZE_API_VERSION_1_0 version 1.0
+	ZE_API_VERSION_1_1          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 1 ) */ ((1 << 16) | (1 & 0x0000ffff))   // ZE_API_VERSION_1_1 version 1.1
+	ZE_API_VERSION_1_2          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 2 ) */ ((1 << 16) | (2 & 0x0000ffff))   // ZE_API_VERSION_1_2 version 1.2
+	ZE_API_VERSION_1_3          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 3 ) */ ((1 << 16) | (3 & 0x0000ffff))   // ZE_API_VERSION_1_3 version 1.3
+	ZE_API_VERSION_1_4          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 4 ) */ ((1 << 16) | (4 & 0x0000ffff))   // ZE_API_VERSION_1_4 version 1.4
+	ZE_API_VERSION_1_5          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 5 ) */ ((1 << 16) | (5 & 0x0000ffff))   // ZE_API_VERSION_1_5 version 1.5
+	ZE_API_VERSION_1_6          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 6 ) */ ((1 << 16) | (6 & 0x0000ffff))   // ZE_API_VERSION_1_6 version 1.6
+	ZE_API_VERSION_1_7          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 7 ) */ ((1 << 16) | (7 & 0x0000ffff))   // ZE_API_VERSION_1_7 version 1.7
+	ZE_API_VERSION_1_8          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 8 ) */ ((1 << 16) | (8 & 0x0000ffff))   // ZE_API_VERSION_1_8 version 1.8
+	ZE_API_VERSION_1_9          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 9 ) */ ((1 << 16) | (9 & 0x0000ffff))   // ZE_API_VERSION_1_9 version 1.9
+	ZE_API_VERSION_1_10         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 10 ) */ ((1 << 16) | (10 & 0x0000ffff)) // ZE_API_VERSION_1_10 version 1.10
+	ZE_API_VERSION_1_11         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 11 ) */ ((1 << 16) | (11 & 0x0000ffff)) // ZE_API_VERSION_1_11 version 1.11
+	ZE_API_VERSION_1_12         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 12 ) */ ((1 << 16) | (12 & 0x0000ffff)) // ZE_API_VERSION_1_12 version 1.12
+	ZE_API_VERSION_1_13         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 13 ) */ ((1 << 16) | (13 & 0x0000ffff)) // ZE_API_VERSION_1_13 version 1.13
+	ZE_API_VERSION_1_14         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 14 ) */ ((1 << 16) | (14 & 0x0000ffff)) // ZE_API_VERSION_1_14 version 1.14
+	ZE_API_VERSION_1_15         ZeApiVersion = /* ZE_MAKE_VERSION( 1, 15 ) */ ((1 << 16) | (15 & 0x0000ffff)) // ZE_API_VERSION_1_15 version 1.15
+	ZE_API_VERSION_CURRENT      ZeApiVersion = /* ZE_MAKE_VERSION( 1, 15 ) */ ((1 << 16) | (15 & 0x0000ffff)) // ZE_API_VERSION_CURRENT latest known version
+	ZE_API_VERSION_FORCE_UINT32 ZeApiVersion = 0x7fffffff                                                     // ZE_API_VERSION_FORCE_UINT32 Value marking end of ZE_API_VERSION_* ENUMs
 
 )
 
 // ZE_API_VERSION_CURRENT_M Current API version as a macro
-const ZE_API_VERSION_CURRENT_M = /* ZE_MAKE_VERSION( 1, 15 ) */((( 1 << 16 )|( 15 & 0x0000ffff)))
+const ZE_API_VERSION_CURRENT_M = /* ZE_MAKE_VERSION( 1, 15 ) */ ((1 << 16) | (15 & 0x0000ffff))
 
 // ZeDriverGetApiVersion Returns the API version supported by the specified driver
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == version`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == version`
 func ZeDriverGetApiVersion(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	version *ZeApiVersion,	// version [out] api version
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	version *ZeApiVersion, // version [out] api version
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetApiVersion", uintptr(hDriver), uintptr(unsafe.Pointer(version)))
 }
@@ -271,104 +274,105 @@ const ZE_MAX_DRIVER_UUID_SIZE = 16
 
 // ZeDriverUuid (ze_driver_uuid_t) Driver universal unique id (UUID)
 type ZeDriverUuid struct {
-	Id [ZE_MAX_DRIVER_UUID_SIZE]uint8	// Id [out] opaque data representing a driver UUID
+	Id [ZE_MAX_DRIVER_UUID_SIZE]uint8 // Id [out] opaque data representing a driver UUID
 
 }
 
 // ZeDriverProperties (ze_driver_properties_t) Driver properties queried using ::zeDriverGetProperties
 type ZeDriverProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Uuid ZeDriverUuid	// Uuid [out] universal unique identifier.
-	Driverversion uint32	// Driverversion [out] driver version The driver version is a non-zero, monotonically increasing value where higher values always indicate a more recent version.
+	Stype         ZeStructureType // Stype [in] type of this structure
+	Pnext         unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Uuid          ZeDriverUuid    // Uuid [out] universal unique identifier.
+	Driverversion uint32          // Driverversion [out] driver version The driver version is a non-zero, monotonically increasing value where higher values always indicate a more recent version.
 
 }
 
 // ZeDriverGetProperties Retrieves properties of the driver.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @remarks
-///   _Analogues_
-///     - **clGetPlatformInfo**
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pDriverProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - **clGetPlatformInfo**
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pDriverProperties`
 func ZeDriverGetProperties(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	pDriverProperties *ZeDriverProperties,	// pDriverProperties [in,out] query result for driver properties
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	pDriverProperties *ZeDriverProperties, // pDriverProperties [in,out] query result for driver properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetProperties", uintptr(hDriver), uintptr(unsafe.Pointer(pDriverProperties)))
 }
 
 // ZeIpcPropertyFlags (ze_ipc_property_flags_t) Supported IPC property flags
 type ZeIpcPropertyFlags uint32
+
 const (
-	ZE_IPC_PROPERTY_FLAG_MEMORY ZeIpcPropertyFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_IPC_PROPERTY_FLAG_MEMORY Supports passing memory allocations between processes. See
+	ZE_IPC_PROPERTY_FLAG_MEMORY ZeIpcPropertyFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_IPC_PROPERTY_FLAG_MEMORY Supports passing memory allocations between processes. See
 
 	///< ::zeMemGetIpcHandle.
 
-	ZE_IPC_PROPERTY_FLAG_EVENT_POOL ZeIpcPropertyFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_IPC_PROPERTY_FLAG_EVENT_POOL Supports passing event pools between processes. See
+	ZE_IPC_PROPERTY_FLAG_EVENT_POOL ZeIpcPropertyFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_IPC_PROPERTY_FLAG_EVENT_POOL Supports passing event pools between processes. See
 
 	///< ::zeEventPoolGetIpcHandle.
 
-	ZE_IPC_PROPERTY_FLAG_FORCE_UINT32 ZeIpcPropertyFlags = 0x7fffffff	// ZE_IPC_PROPERTY_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_PROPERTY_FLAG_* ENUMs
+	ZE_IPC_PROPERTY_FLAG_FORCE_UINT32 ZeIpcPropertyFlags = 0x7fffffff // ZE_IPC_PROPERTY_FLAG_FORCE_UINT32 Value marking end of ZE_IPC_PROPERTY_FLAG_* ENUMs
 
 )
 
 // ZeDriverIpcProperties (ze_driver_ipc_properties_t) IPC properties queried using ::zeDriverGetIpcProperties
 type ZeDriverIpcProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeIpcPropertyFlags	// Flags [out] 0 (none) or a valid combination of ::ze_ipc_property_flag_t
+	Stype ZeStructureType    // Stype [in] type of this structure
+	Pnext unsafe.Pointer     // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeIpcPropertyFlags // Flags [out] 0 (none) or a valid combination of ::ze_ipc_property_flag_t
 
 }
 
 // ZeDriverGetIpcProperties Retrieves IPC attributes of the driver
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pIpcProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pIpcProperties`
 func ZeDriverGetIpcProperties(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	pIpcProperties *ZeDriverIpcProperties,	// pIpcProperties [in,out] query result for IPC properties
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	pIpcProperties *ZeDriverIpcProperties, // pIpcProperties [in,out] query result for IPC properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetIpcProperties", uintptr(hDriver), uintptr(unsafe.Pointer(pIpcProperties)))
 }
@@ -378,136 +382,135 @@ const ZE_MAX_EXTENSION_NAME = 256
 
 // ZeDriverExtensionProperties (ze_driver_extension_properties_t) Extension properties queried using ::zeDriverGetExtensionProperties
 type ZeDriverExtensionProperties struct {
-	Name [ZE_MAX_EXTENSION_NAME]byte	// Name [out] extension name
-	Version uint32	// Version [out] extension version using ::ZE_MAKE_VERSION
+	Name    [ZE_MAX_EXTENSION_NAME]byte // Name [out] extension name
+	Version uint32                      // Version [out] extension version using ::ZE_MAKE_VERSION
 
 }
 
 // ZeDriverGetExtensionProperties Retrieves extension properties
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @remarks
-///   _Analogues_
-///     - **vkEnumerateInstanceExtensionProperties**
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @remarks
+// /   _Analogues_
+// /     - **vkEnumerateInstanceExtensionProperties**
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeDriverGetExtensionProperties(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	pCount *uint32,	// pCount [in,out] pointer to the number of extension properties. if count is zero, then the driver shall update the value with the total number of extension properties available. if count is greater than the number of extension properties available, then the driver shall update the value with the correct number of extension properties available.
-	pExtensionProperties *ZeDriverExtensionProperties,	// pExtensionProperties [in,out][optional][range(0, *pCount)] array of query results for extension properties. if count is less than the number of extension properties available, then driver shall only retrieve that number of extension properties.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	pCount *uint32, // pCount [in,out] pointer to the number of extension properties. if count is zero, then the driver shall update the value with the total number of extension properties available. if count is greater than the number of extension properties available, then the driver shall update the value with the correct number of extension properties available.
+	pExtensionProperties *ZeDriverExtensionProperties, // pExtensionProperties [in,out][optional][range(0, *pCount)] array of query results for extension properties. if count is less than the number of extension properties available, then driver shall only retrieve that number of extension properties.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetExtensionProperties", uintptr(hDriver), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pExtensionProperties)))
 }
 
 // ZeDriverGetExtensionFunctionAddress Retrieves function pointer for vendor-specific or experimental
-///        extensions
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == name`
-///         + `nullptr == ppFunctionAddress`
+// /        extensions
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == name`
+// /         + `nullptr == ppFunctionAddress`
 func ZeDriverGetExtensionFunctionAddress(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	name *byte,	// name [in] extension function name
-	ppFunctionAddress *unsafe.Pointer,	// ppFunctionAddress [out] pointer to function pointer
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	name *byte, // name [in] extension function name
+	ppFunctionAddress *unsafe.Pointer, // ppFunctionAddress [out] pointer to function pointer
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetExtensionFunctionAddress", uintptr(hDriver), uintptr(unsafe.Pointer(name)), uintptr(unsafe.Pointer(ppFunctionAddress)))
 }
 
 // ZeDriverGetLastErrorDescription Retrieves a string describing the last error code returned by the
-///        driver in the current thread.
-/// 
-/// @details
-///     - String returned is thread local.
-///     - String is only updated on calls returning an error, i.e., not on calls
-///       returning ::ZE_RESULT_SUCCESS.
-///     - String may be empty if driver considers error code is already explicit
-///       enough to describe cause.
-///     - Memory pointed to by ppString is owned by the driver.
-///     - String returned is null-terminated.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDriver`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == ppString`
+// /        driver in the current thread.
+// /
+// / @details
+// /     - String returned is thread local.
+// /     - String is only updated on calls returning an error, i.e., not on calls
+// /       returning ::ZE_RESULT_SUCCESS.
+// /     - String may be empty if driver considers error code is already explicit
+// /       enough to describe cause.
+// /     - Memory pointed to by ppString is owned by the driver.
+// /     - String returned is null-terminated.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDriver`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == ppString`
 func ZeDriverGetLastErrorDescription(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
-	ppString **byte,	// ppString [in,out] pointer to a null-terminated array of characters describing cause of error.
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
+	ppString **byte, // ppString [in,out] pointer to a null-terminated array of characters describing cause of error.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeDriverGetLastErrorDescription", uintptr(hDriver), uintptr(unsafe.Pointer(ppString)))
 }
 
 // ZeDriverGetDefaultContext Retrieves handle to default context from the driver.
-/// 
-/// @details
-///     - The implementation of this function should be lock-free.
-///     - This returned context contains all the devices available in the
-///       driver.
-///     - This function does not return error code, to get info about failure
-///       user may use ::zeDriverGetLastErrorDescription function.
-///     - In case of failure, this function returns null.
-///     - Details on the error can be retrieved using
-///       ::zeDriverGetLastErrorDescription function.
-/// 
-/// @returns
-///     - handle of the default context
-///     - nullptr
+// /
+// / @details
+// /     - The implementation of this function should be lock-free.
+// /     - This returned context contains all the devices available in the
+// /       driver.
+// /     - This function does not return error code, to get info about failure
+// /       user may use ::zeDriverGetLastErrorDescription function.
+// /     - In case of failure, this function returns null.
+// /     - Details on the error can be retrieved using
+// /       ::zeDriverGetLastErrorDescription function.
+// /
+// / @returns
+// /     - handle of the default context
+// /     - nullptr
 func ZeDriverGetDefaultContext(
-	hDriver ZeDriverHandle,	// hDriver [in] handle of the driver instance
+	hDriver ZeDriverHandle, // hDriver [in] handle of the driver instance
 ) (ZeContextHandle, error) {
 	return zecall.Call[ZeContextHandle]("zeDriverGetDefaultContext", uintptr(hDriver))
 }
-

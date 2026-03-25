@@ -21,421 +21,424 @@ import (
 
 // ZesPowerDomain (zes_power_domain_t) Power Domain
 type ZesPowerDomain uintptr
+
 const (
-	ZES_POWER_DOMAIN_UNKNOWN ZesPowerDomain = 0	// ZES_POWER_DOMAIN_UNKNOWN The PUnit power domain level cannot be determined.
-	ZES_POWER_DOMAIN_CARD ZesPowerDomain = 1	// ZES_POWER_DOMAIN_CARD The PUnit power domain is a card-level power domain.
-	ZES_POWER_DOMAIN_PACKAGE ZesPowerDomain = 2	// ZES_POWER_DOMAIN_PACKAGE The PUnit power domain is a package-level power domain.
-	ZES_POWER_DOMAIN_STACK ZesPowerDomain = 3	// ZES_POWER_DOMAIN_STACK The PUnit power domain is a stack-level power domain.
-	ZES_POWER_DOMAIN_MEMORY ZesPowerDomain = 4	// ZES_POWER_DOMAIN_MEMORY The PUnit power domain is a memory-level power domain.
-	ZES_POWER_DOMAIN_GPU ZesPowerDomain = 5	// ZES_POWER_DOMAIN_GPU The PUnit power domain is a GPU-level power domain.
-	ZES_POWER_DOMAIN_FORCE_UINT32 ZesPowerDomain = 0x7fffffff	// ZES_POWER_DOMAIN_FORCE_UINT32 Value marking end of ZES_POWER_DOMAIN_* ENUMs
+	ZES_POWER_DOMAIN_UNKNOWN      ZesPowerDomain = 0          // ZES_POWER_DOMAIN_UNKNOWN The PUnit power domain level cannot be determined.
+	ZES_POWER_DOMAIN_CARD         ZesPowerDomain = 1          // ZES_POWER_DOMAIN_CARD The PUnit power domain is a card-level power domain.
+	ZES_POWER_DOMAIN_PACKAGE      ZesPowerDomain = 2          // ZES_POWER_DOMAIN_PACKAGE The PUnit power domain is a package-level power domain.
+	ZES_POWER_DOMAIN_STACK        ZesPowerDomain = 3          // ZES_POWER_DOMAIN_STACK The PUnit power domain is a stack-level power domain.
+	ZES_POWER_DOMAIN_MEMORY       ZesPowerDomain = 4          // ZES_POWER_DOMAIN_MEMORY The PUnit power domain is a memory-level power domain.
+	ZES_POWER_DOMAIN_GPU          ZesPowerDomain = 5          // ZES_POWER_DOMAIN_GPU The PUnit power domain is a GPU-level power domain.
+	ZES_POWER_DOMAIN_FORCE_UINT32 ZesPowerDomain = 0x7fffffff // ZES_POWER_DOMAIN_FORCE_UINT32 Value marking end of ZES_POWER_DOMAIN_* ENUMs
 
 )
 
 // ZesPowerLevel (zes_power_level_t) Power Level Type
 type ZesPowerLevel uintptr
+
 const (
-	ZES_POWER_LEVEL_UNKNOWN ZesPowerLevel = 0	// ZES_POWER_LEVEL_UNKNOWN The PUnit power monitoring duration cannot be determined.
-	ZES_POWER_LEVEL_SUSTAINED ZesPowerLevel = 1	// ZES_POWER_LEVEL_SUSTAINED The PUnit determines effective power draw by computing a moving
+	ZES_POWER_LEVEL_UNKNOWN   ZesPowerLevel = 0 // ZES_POWER_LEVEL_UNKNOWN The PUnit power monitoring duration cannot be determined.
+	ZES_POWER_LEVEL_SUSTAINED ZesPowerLevel = 1 // ZES_POWER_LEVEL_SUSTAINED The PUnit determines effective power draw by computing a moving
 
 	///< average of the actual power draw over a time interval (longer than
 	///< BURST).
 
-	ZES_POWER_LEVEL_BURST ZesPowerLevel = 2	// ZES_POWER_LEVEL_BURST The PUnit determines effective power draw by computing a moving
+	ZES_POWER_LEVEL_BURST ZesPowerLevel = 2 // ZES_POWER_LEVEL_BURST The PUnit determines effective power draw by computing a moving
 
 	///< average of the actual power draw over a time interval (longer than
 	///< PEAK).
 
-	ZES_POWER_LEVEL_PEAK ZesPowerLevel = 3	// ZES_POWER_LEVEL_PEAK The PUnit determines effective power draw by computing a moving
+	ZES_POWER_LEVEL_PEAK ZesPowerLevel = 3 // ZES_POWER_LEVEL_PEAK The PUnit determines effective power draw by computing a moving
 
 	///< average of the actual power draw over a very short time interval.
 
-	ZES_POWER_LEVEL_INSTANTANEOUS ZesPowerLevel = 4	// ZES_POWER_LEVEL_INSTANTANEOUS The PUnit predicts effective power draw using the current device
+	ZES_POWER_LEVEL_INSTANTANEOUS ZesPowerLevel = 4 // ZES_POWER_LEVEL_INSTANTANEOUS The PUnit predicts effective power draw using the current device
 
 	///< configuration (frequency, voltage, etc...) & throttles proactively to
 	///< stay within the specified limit.
 
-	ZES_POWER_LEVEL_FORCE_UINT32 ZesPowerLevel = 0x7fffffff	// ZES_POWER_LEVEL_FORCE_UINT32 Value marking end of ZES_POWER_LEVEL_* ENUMs
+	ZES_POWER_LEVEL_FORCE_UINT32 ZesPowerLevel = 0x7fffffff // ZES_POWER_LEVEL_FORCE_UINT32 Value marking end of ZES_POWER_LEVEL_* ENUMs
 
 )
 
 // ZesPowerSource (zes_power_source_t) Power Source Type
 type ZesPowerSource uintptr
+
 const (
-	ZES_POWER_SOURCE_ANY ZesPowerSource = 0	// ZES_POWER_SOURCE_ANY Limit active no matter whether the power source is mains powered or
+	ZES_POWER_SOURCE_ANY ZesPowerSource = 0 // ZES_POWER_SOURCE_ANY Limit active no matter whether the power source is mains powered or
 
 	///< battery powered.
 
-	ZES_POWER_SOURCE_MAINS ZesPowerSource = 1	// ZES_POWER_SOURCE_MAINS Limit active only when the device is mains powered.
-	ZES_POWER_SOURCE_BATTERY ZesPowerSource = 2	// ZES_POWER_SOURCE_BATTERY Limit active only when the device is battery powered.
-	ZES_POWER_SOURCE_FORCE_UINT32 ZesPowerSource = 0x7fffffff	// ZES_POWER_SOURCE_FORCE_UINT32 Value marking end of ZES_POWER_SOURCE_* ENUMs
+	ZES_POWER_SOURCE_MAINS        ZesPowerSource = 1          // ZES_POWER_SOURCE_MAINS Limit active only when the device is mains powered.
+	ZES_POWER_SOURCE_BATTERY      ZesPowerSource = 2          // ZES_POWER_SOURCE_BATTERY Limit active only when the device is battery powered.
+	ZES_POWER_SOURCE_FORCE_UINT32 ZesPowerSource = 0x7fffffff // ZES_POWER_SOURCE_FORCE_UINT32 Value marking end of ZES_POWER_SOURCE_* ENUMs
 
 )
 
 // ZesLimitUnit (zes_limit_unit_t) Limit Unit
 type ZesLimitUnit uintptr
+
 const (
-	ZES_LIMIT_UNIT_UNKNOWN ZesLimitUnit = 0	// ZES_LIMIT_UNIT_UNKNOWN The PUnit power monitoring unit cannot be determined.
-	ZES_LIMIT_UNIT_CURRENT ZesLimitUnit = 1	// ZES_LIMIT_UNIT_CURRENT The limit is specified in milliamperes of current drawn.
-	ZES_LIMIT_UNIT_POWER ZesLimitUnit = 2	// ZES_LIMIT_UNIT_POWER The limit is specified in milliwatts of power generated.
-	ZES_LIMIT_UNIT_FORCE_UINT32 ZesLimitUnit = 0x7fffffff	// ZES_LIMIT_UNIT_FORCE_UINT32 Value marking end of ZES_LIMIT_UNIT_* ENUMs
+	ZES_LIMIT_UNIT_UNKNOWN      ZesLimitUnit = 0          // ZES_LIMIT_UNIT_UNKNOWN The PUnit power monitoring unit cannot be determined.
+	ZES_LIMIT_UNIT_CURRENT      ZesLimitUnit = 1          // ZES_LIMIT_UNIT_CURRENT The limit is specified in milliamperes of current drawn.
+	ZES_LIMIT_UNIT_POWER        ZesLimitUnit = 2          // ZES_LIMIT_UNIT_POWER The limit is specified in milliwatts of power generated.
+	ZES_LIMIT_UNIT_FORCE_UINT32 ZesLimitUnit = 0x7fffffff // ZES_LIMIT_UNIT_FORCE_UINT32 Value marking end of ZES_LIMIT_UNIT_* ENUMs
 
 )
 
 // ZesPowerProperties (zes_power_properties_t) Properties related to device power settings
 type ZesPowerProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Onsubdevice ZeBool	// Onsubdevice [out] True if this resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
-	Subdeviceid uint32	// Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
-	Cancontrol ZeBool	// Cancontrol [out] Software can change the power limits of this domain assuming the user has permissions.
-	Isenergythresholdsupported ZeBool	// Isenergythresholdsupported [out] Indicates if this power domain supports the energy threshold event (::ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED).
-	Defaultlimit int32	// Defaultlimit [out] (Deprecated) The factory default TDP power limit of the part in milliwatts. A value of -1 means that this is not known.
-	Minlimit int32	// Minlimit [out] (Deprecated) The minimum power limit in milliwatts that can be requested. A value of -1 means that this is not known.
-	Maxlimit int32	// Maxlimit [out] (Deprecated) The maximum power limit in milliwatts that can be requested. A value of -1 means that this is not known.
+	Stype                      ZesStructureType // Stype [in] type of this structure
+	Pnext                      unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Onsubdevice                ZeBool           // Onsubdevice [out] True if this resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
+	Subdeviceid                uint32           // Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
+	Cancontrol                 ZeBool           // Cancontrol [out] Software can change the power limits of this domain assuming the user has permissions.
+	Isenergythresholdsupported ZeBool           // Isenergythresholdsupported [out] Indicates if this power domain supports the energy threshold event (::ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED).
+	Defaultlimit               int32            // Defaultlimit [out] (Deprecated) The factory default TDP power limit of the part in milliwatts. A value of -1 means that this is not known.
+	Minlimit                   int32            // Minlimit [out] (Deprecated) The minimum power limit in milliwatts that can be requested. A value of -1 means that this is not known.
+	Maxlimit                   int32            // Maxlimit [out] (Deprecated) The maximum power limit in milliwatts that can be requested. A value of -1 means that this is not known.
 
 }
 
 // ZesPowerEnergyCounter (zes_power_energy_counter_t) Energy counter snapshot
-/// 
-/// @details
-///     - Average power is calculated by taking two snapshots (s1, s2) and using
-///       the equation: PowerWatts = (s2.energy - s1.energy) / (s2.timestamp -
-///       s1.timestamp)
+// /
+// / @details
+// /     - Average power is calculated by taking two snapshots (s1, s2) and using
+// /       the equation: PowerWatts = (s2.energy - s1.energy) / (s2.timestamp -
+// /       s1.timestamp)
 type ZesPowerEnergyCounter struct {
-	Energy uint64	// Energy [out] The monotonic energy counter in microjoules.
-	Timestamp uint64	// Timestamp [out] Microsecond timestamp when energy was captured. This timestamp should only be used to calculate delta time between snapshots of this structure. Never take the delta of this timestamp with the timestamp from a different structure since they are not guaranteed to have the same base. The absolute value of the timestamp is only valid during within the application and may be different on the next execution.
+	Energy    uint64 // Energy [out] The monotonic energy counter in microjoules.
+	Timestamp uint64 // Timestamp [out] Microsecond timestamp when energy was captured. This timestamp should only be used to calculate delta time between snapshots of this structure. Never take the delta of this timestamp with the timestamp from a different structure since they are not guaranteed to have the same base. The absolute value of the timestamp is only valid during within the application and may be different on the next execution.
 
 }
 
 // ZesPowerSustainedLimit (zes_power_sustained_limit_t) Sustained power limits
-/// 
-/// @details
-///     - The power controller (Punit) will throttle the operating frequency if
-///       the power averaged over a window (typically seconds) exceeds this
-///       limit.
-///     - [DEPRECATED] No longer supported.
+// /
+// / @details
+// /     - The power controller (Punit) will throttle the operating frequency if
+// /       the power averaged over a window (typically seconds) exceeds this
+// /       limit.
+// /     - [DEPRECATED] No longer supported.
 type ZesPowerSustainedLimit struct {
-	Enabled ZeBool	// Enabled [in,out] indicates if the limit is enabled (true) or ignored (false)
-	Power int32	// Power [in,out] power limit in milliwatts
-	Interval int32	// Interval [in,out] power averaging window (Tau) in milliseconds
+	Enabled  ZeBool // Enabled [in,out] indicates if the limit is enabled (true) or ignored (false)
+	Power    int32  // Power [in,out] power limit in milliwatts
+	Interval int32  // Interval [in,out] power averaging window (Tau) in milliseconds
 
 }
 
 // ZesPowerBurstLimit (zes_power_burst_limit_t) Burst power limit
-/// 
-/// @details
-///     - The power controller (Punit) will throttle the operating frequency of
-///       the device if the power averaged over a few milliseconds exceeds a
-///       limit known as PL2. Typically PL2 > PL1 so that it permits the
-///       frequency to burst higher for short periods than would be otherwise
-///       permitted by PL1.
-///     - [DEPRECATED] No longer supported.
+// /
+// / @details
+// /     - The power controller (Punit) will throttle the operating frequency of
+// /       the device if the power averaged over a few milliseconds exceeds a
+// /       limit known as PL2. Typically PL2 > PL1 so that it permits the
+// /       frequency to burst higher for short periods than would be otherwise
+// /       permitted by PL1.
+// /     - [DEPRECATED] No longer supported.
 type ZesPowerBurstLimit struct {
-	Enabled ZeBool	// Enabled [in,out] indicates if the limit is enabled (true) or ignored (false)
-	Power int32	// Power [in,out] power limit in milliwatts
+	Enabled ZeBool // Enabled [in,out] indicates if the limit is enabled (true) or ignored (false)
+	Power   int32  // Power [in,out] power limit in milliwatts
 
 }
 
 // ZesPowerPeakLimit (zes_power_peak_limit_t) Peak power limit
-/// 
-/// @details
-///     - The power controller (Punit) will reactively/proactively throttle the
-///       operating frequency of the device when the instantaneous/100usec power
-///       exceeds this limit. The limit is known as PL4 or Psys. It expresses
-///       the maximum power that can be drawn from the power supply.
-///     - If this power limit is removed or set too high, the power supply will
-///       generate an interrupt when it detects an overcurrent condition and the
-///       power controller will throttle the device frequencies down to min. It
-///       is thus better to tune the PL4 value in order to avoid such
-///       excursions.
-///     - [DEPRECATED] No longer supported.
+// /
+// / @details
+// /     - The power controller (Punit) will reactively/proactively throttle the
+// /       operating frequency of the device when the instantaneous/100usec power
+// /       exceeds this limit. The limit is known as PL4 or Psys. It expresses
+// /       the maximum power that can be drawn from the power supply.
+// /     - If this power limit is removed or set too high, the power supply will
+// /       generate an interrupt when it detects an overcurrent condition and the
+// /       power controller will throttle the device frequencies down to min. It
+// /       is thus better to tune the PL4 value in order to avoid such
+// /       excursions.
+// /     - [DEPRECATED] No longer supported.
 type ZesPowerPeakLimit struct {
-	Powerac int32	// Powerac [in,out] power limit in milliwatts for the AC power source.
-	Powerdc int32	// Powerdc [in,out] power limit in milliwatts for the DC power source. On input, this is ignored if the product does not have a battery. On output, this will be -1 if the product does not have a battery.
+	Powerac int32 // Powerac [in,out] power limit in milliwatts for the AC power source.
+	Powerdc int32 // Powerdc [in,out] power limit in milliwatts for the DC power source. On input, this is ignored if the product does not have a battery. On output, this will be -1 if the product does not have a battery.
 
 }
 
 // ZesEnergyThreshold (zes_energy_threshold_t) Energy threshold
-/// 
-/// @details
-///     - .
+// /
+// / @details
+// /     - .
 type ZesEnergyThreshold struct {
-	Enable ZeBool	// Enable [in,out] Indicates if the energy threshold is enabled.
-	Threshold float64	// Threshold [in,out] The energy threshold in Joules. Will be 0.0 if no threshold has been set.
-	Processid uint32	// Processid [in,out] The host process ID that set the energy threshold. Will be 0xFFFFFFFF if no threshold has been set.
+	Enable    ZeBool  // Enable [in,out] Indicates if the energy threshold is enabled.
+	Threshold float64 // Threshold [in,out] The energy threshold in Joules. Will be 0.0 if no threshold has been set.
+	Processid uint32  // Processid [in,out] The host process ID that set the energy threshold. Will be 0xFFFFFFFF if no threshold has been set.
 
 }
 
 // ZesDeviceEnumPowerDomains Get handle of power domains
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDeviceEnumPowerDomains(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	pCount *uint32,	// pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
-	phPower *ZesPwrHandle,	// phPower [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	pCount *uint32, // pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
+	phPower *ZesPwrHandle, // phPower [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceEnumPowerDomains", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phPower)))
 }
 
 // ZesDeviceGetCardPowerDomain Get handle of the PCIe card-level power
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - [DEPRECATED] No longer supported.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phPower`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + The device does not provide access to card level power controls or telemetry. An invalid power domain handle will be returned in phPower.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - [DEPRECATED] No longer supported.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phPower`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + The device does not provide access to card level power controls or telemetry. An invalid power domain handle will be returned in phPower.
 func ZesDeviceGetCardPowerDomain(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	phPower *ZesPwrHandle,	// phPower [in,out] power domain handle for the entire PCIe card.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	phPower *ZesPwrHandle, // phPower [in,out] power domain handle for the entire PCIe card.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceGetCardPowerDomain", uintptr(hDevice), uintptr(unsafe.Pointer(phPower)))
 }
 
 // ZesPowerGetProperties Get properties related to a power domain
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pProperties`
 func ZesPowerGetProperties(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pProperties *ZesPowerProperties,	// pProperties [in,out] Structure that will contain property data.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pProperties *ZesPowerProperties, // pProperties [in,out] Structure that will contain property data.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerGetProperties", uintptr(hPower), uintptr(unsafe.Pointer(pProperties)))
 }
 
 // ZesPowerGetEnergyCounter Get energy counter
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pEnergy`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pEnergy`
 func ZesPowerGetEnergyCounter(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pEnergy *ZesPowerEnergyCounter,	// pEnergy [in,out] Will contain the latest snapshot of the energy counter and timestamp when the last counter value was measured.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pEnergy *ZesPowerEnergyCounter, // pEnergy [in,out] Will contain the latest snapshot of the energy counter and timestamp when the last counter value was measured.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerGetEnergyCounter", uintptr(hPower), uintptr(unsafe.Pointer(pEnergy)))
 }
 
 // ZesPowerGetLimits Get power limits
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - [DEPRECATED] Use ::zesPowerGetLimitsExt.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - [DEPRECATED] Use ::zesPowerGetLimitsExt.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
 func ZesPowerGetLimits(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pSustained *ZesPowerSustainedLimit,	// pSustained [in,out][optional] The sustained power limit. If this is null, the current sustained power limits will not be returned.
-	pBurst *ZesPowerBurstLimit,	// pBurst [in,out][optional] The burst power limit. If this is null, the current peak power limits will not be returned.
-	pPeak *ZesPowerPeakLimit,	// pPeak [in,out][optional] The peak power limit. If this is null, the peak power limits will not be returned.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pSustained *ZesPowerSustainedLimit, // pSustained [in,out][optional] The sustained power limit. If this is null, the current sustained power limits will not be returned.
+	pBurst *ZesPowerBurstLimit, // pBurst [in,out][optional] The burst power limit. If this is null, the current peak power limits will not be returned.
+	pPeak *ZesPowerPeakLimit, // pPeak [in,out][optional] The peak power limit. If this is null, the peak power limits will not be returned.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerGetLimits", uintptr(hPower), uintptr(unsafe.Pointer(pSustained)), uintptr(unsafe.Pointer(pBurst)), uintptr(unsafe.Pointer(pPeak)))
 }
 
 // ZesPowerSetLimits Set power limits
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - [DEPRECATED] Use ::zesPowerSetLimitsExt.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to make these modifications.
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///         + The device is in use, meaning that the GPU is under Over clocking, applying power limits under overclocking is not supported.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - [DEPRECATED] Use ::zesPowerSetLimitsExt.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to make these modifications.
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /         + The device is in use, meaning that the GPU is under Over clocking, applying power limits under overclocking is not supported.
 func ZesPowerSetLimits(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pSustained *ZesPowerSustainedLimit,	// pSustained [in][optional] The sustained power limit. If this is null, no changes will be made to the sustained power limits.
-	pBurst *ZesPowerBurstLimit,	// pBurst [in][optional] The burst power limit. If this is null, no changes will be made to the burst power limits.
-	pPeak *ZesPowerPeakLimit,	// pPeak [in][optional] The peak power limit. If this is null, no changes will be made to the peak power limits.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pSustained *ZesPowerSustainedLimit, // pSustained [in][optional] The sustained power limit. If this is null, no changes will be made to the sustained power limits.
+	pBurst *ZesPowerBurstLimit, // pBurst [in][optional] The burst power limit. If this is null, no changes will be made to the burst power limits.
+	pPeak *ZesPowerPeakLimit, // pPeak [in][optional] The peak power limit. If this is null, no changes will be made to the peak power limits.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerSetLimits", uintptr(hPower), uintptr(unsafe.Pointer(pSustained)), uintptr(unsafe.Pointer(pBurst)), uintptr(unsafe.Pointer(pPeak)))
 }
 
 // ZesPowerGetEnergyThreshold Get energy threshold
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pThreshold`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + Energy threshold not supported on this power domain (check the `isEnergyThresholdSupported` member of ::zes_power_properties_t).
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to request this feature.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pThreshold`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + Energy threshold not supported on this power domain (check the `isEnergyThresholdSupported` member of ::zes_power_properties_t).
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to request this feature.
 func ZesPowerGetEnergyThreshold(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	pThreshold *ZesEnergyThreshold,	// pThreshold [in,out] Returns information about the energy threshold setting - enabled/energy threshold/process ID.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	pThreshold *ZesEnergyThreshold, // pThreshold [in,out] Returns information about the energy threshold setting - enabled/energy threshold/process ID.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerGetEnergyThreshold", uintptr(hPower), uintptr(unsafe.Pointer(pThreshold)))
 }
 
 // ZesPowerSetEnergyThreshold Set energy threshold
-/// 
-/// @details
-///     - An event ::ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED will be
-///       generated when the delta energy consumed starting from this call
-///       exceeds the specified threshold. Use the function
-///       ::zesDeviceEventRegister() to start receiving the event.
-///     - Only one running process can control the energy threshold at a given
-///       time. If another process attempts to change the energy threshold, the
-///       error ::ZE_RESULT_ERROR_NOT_AVAILABLE will be returned. The function
-///       ::zesPowerGetEnergyThreshold() to determine the process ID currently
-///       controlling this setting.
-///     - Calling this function will remove any pending energy thresholds and
-///       start counting from the time of this call.
-///     - Once the energy threshold has been reached and the event generated,
-///       the threshold is automatically removed. It is up to the application to
-///       request a new threshold.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hPower`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + Energy threshold not supported on this power domain (check the `isEnergyThresholdSupported` member of ::zes_power_properties_t).
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to request this feature.
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///         + Another running process has set the energy threshold.
+// /
+// / @details
+// /     - An event ::ZES_EVENT_TYPE_FLAG_ENERGY_THRESHOLD_CROSSED will be
+// /       generated when the delta energy consumed starting from this call
+// /       exceeds the specified threshold. Use the function
+// /       ::zesDeviceEventRegister() to start receiving the event.
+// /     - Only one running process can control the energy threshold at a given
+// /       time. If another process attempts to change the energy threshold, the
+// /       error ::ZE_RESULT_ERROR_NOT_AVAILABLE will be returned. The function
+// /       ::zesPowerGetEnergyThreshold() to determine the process ID currently
+// /       controlling this setting.
+// /     - Calling this function will remove any pending energy thresholds and
+// /       start counting from the time of this call.
+// /     - Once the energy threshold has been reached and the event generated,
+// /       the threshold is automatically removed. It is up to the application to
+// /       request a new threshold.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hPower`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + Energy threshold not supported on this power domain (check the `isEnergyThresholdSupported` member of ::zes_power_properties_t).
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to request this feature.
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /         + Another running process has set the energy threshold.
 func ZesPowerSetEnergyThreshold(
-	hPower ZesPwrHandle,	// hPower [in] Handle for the component.
-	threshold float64,	// threshold [in] The energy threshold to be set in joules.
+	hPower ZesPwrHandle, // hPower [in] Handle for the component.
+	threshold float64, // threshold [in] The energy threshold to be set in joules.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesPowerSetEnergyThreshold", uintptr(hPower), uintptr(threshold))
 }
-

@@ -22,22 +22,22 @@ const ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_NAME = "ZE_extension_device_usable
 
 // ZeDeviceUsablememSizePropertiesExtVersion (ze_device_usablemem_size_properties_ext_version_t) Device Usable Mem Size  Extension Version(s)
 type ZeDeviceUsablememSizePropertiesExtVersion uintptr
+
 const (
-	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0 ZeDeviceUsablememSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0 version 1.0
-	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_CURRENT ZeDeviceUsablememSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_CURRENT latest known version
-	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_FORCE_UINT32 ZeDeviceUsablememSizePropertiesExtVersion = 0x7fffffff	// ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_* ENUMs
+	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0          ZeDeviceUsablememSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0 version 1.0
+	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_CURRENT      ZeDeviceUsablememSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_CURRENT latest known version
+	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_FORCE_UINT32 ZeDeviceUsablememSizePropertiesExtVersion = 0x7fffffff                                                   // ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_* ENUMs
 
 )
 
 // ZeDeviceUsablememSizeExtProperties (ze_device_usablemem_size_ext_properties_t) Memory access property to discover current status of usable memory
-/// 
-/// @details
-///     - This structure may be returned from ::zeDeviceGetProperties via the
-///       `pNext` member of ::ze_device_properties_t
+// /
+// / @details
+// /     - This structure may be returned from ::zeDeviceGetProperties via the
+// /       `pNext` member of ::ze_device_properties_t
 type ZeDeviceUsablememSizeExtProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Currusablememsize uint64	// Currusablememsize [out] Returns the available usable memory at the device level. This is typically less than or equal to the available physical memory on the device. It important to note that usable memory size reported is transient in nature and cannot be used to reliably guarentee success of future allocations. The usable memory includes all the memory that the clients can allocate for their use and by L0 Core for its internal allocations.
+	Stype             ZeStructureType // Stype [in] type of this structure
+	Pnext             unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Currusablememsize uint64          // Currusablememsize [out] Returns the available usable memory at the device level. This is typically less than or equal to the available physical memory on the device. It important to note that usable memory size reported is transient in nature and cannot be used to reliably guarentee success of future allocations. The usable memory includes all the memory that the clients can allocate for their use and by L0 Core for its internal allocations.
 
 }
-

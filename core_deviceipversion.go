@@ -22,22 +22,22 @@ const ZE_DEVICE_IP_VERSION_EXT_NAME = "ZE_extension_device_ip_version"
 
 // ZeDeviceIpVersionVersion (ze_device_ip_version_version_t) Device IP Version Extension Version(s)
 type ZeDeviceIpVersionVersion uintptr
+
 const (
-	ZE_DEVICE_IP_VERSION_VERSION_1_0 ZeDeviceIpVersionVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_IP_VERSION_VERSION_1_0 version 1.0
-	ZE_DEVICE_IP_VERSION_VERSION_CURRENT ZeDeviceIpVersionVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_DEVICE_IP_VERSION_VERSION_CURRENT latest known version
-	ZE_DEVICE_IP_VERSION_VERSION_FORCE_UINT32 ZeDeviceIpVersionVersion = 0x7fffffff	// ZE_DEVICE_IP_VERSION_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_IP_VERSION_VERSION_* ENUMs
+	ZE_DEVICE_IP_VERSION_VERSION_1_0          ZeDeviceIpVersionVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_IP_VERSION_VERSION_1_0 version 1.0
+	ZE_DEVICE_IP_VERSION_VERSION_CURRENT      ZeDeviceIpVersionVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_IP_VERSION_VERSION_CURRENT latest known version
+	ZE_DEVICE_IP_VERSION_VERSION_FORCE_UINT32 ZeDeviceIpVersionVersion = 0x7fffffff                                                   // ZE_DEVICE_IP_VERSION_VERSION_FORCE_UINT32 Value marking end of ZE_DEVICE_IP_VERSION_VERSION_* ENUMs
 
 )
 
 // ZeDeviceIpVersionExt (ze_device_ip_version_ext_t) Device IP version queried using ::zeDeviceGetProperties
-/// 
-/// @details
-///     - This structure may be returned from ::zeDeviceGetProperties via the
-///       `pNext` member of ::ze_device_properties_t
+// /
+// / @details
+// /     - This structure may be returned from ::zeDeviceGetProperties via the
+// /       `pNext` member of ::ze_device_properties_t
 type ZeDeviceIpVersionExt struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Ipversion uint32	// Ipversion [out] Device IP version. The meaning of the device IP version is implementation-defined, but newer devices should have a higher version than older devices.
+	Stype     ZeStructureType // Stype [in] type of this structure
+	Pnext     unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Ipversion uint32          // Ipversion [out] Device IP version. The meaning of the device IP version is implementation-defined, but newer devices should have a higher version than older devices.
 
 }
-

@@ -21,179 +21,178 @@ import (
 
 // ZesFirmwareProperties (zes_firmware_properties_t) Firmware properties
 type ZesFirmwareProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Onsubdevice ZeBool	// Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
-	Subdeviceid uint32	// Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
-	Cancontrol ZeBool	// Cancontrol [out] Indicates if software can flash the firmware assuming the user has permissions
-	Name [ZES_STRING_PROPERTY_SIZE]byte	// Name [out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
-	Version [ZES_STRING_PROPERTY_SIZE]byte	// Version [out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
+	Stype       ZesStructureType               // Stype [in] type of this structure
+	Pnext       unsafe.Pointer                 // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Onsubdevice ZeBool                         // Onsubdevice [out] True if the resource is located on a sub-device; false means that the resource is on the device of the calling Sysman handle
+	Subdeviceid uint32                         // Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device
+	Cancontrol  ZeBool                         // Cancontrol [out] Indicates if software can flash the firmware assuming the user has permissions
+	Name        [ZES_STRING_PROPERTY_SIZE]byte // Name [out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
+	Version     [ZES_STRING_PROPERTY_SIZE]byte // Version [out] NULL terminated string value. The string "unknown" will be returned if this property cannot be determined.
 
 }
 
 // ZesDeviceEnumFirmwares Get handle of firmwares
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZesDeviceEnumFirmwares(
-	hDevice ZesDeviceHandle,	// hDevice [in] Sysman handle of the device.
-	pCount *uint32,	// pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
-	phFirmware *ZesFirmwareHandle,	// phFirmware [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
+	hDevice ZesDeviceHandle, // hDevice [in] Sysman handle of the device.
+	pCount *uint32, // pCount [in,out] pointer to the number of components of this type. if count is zero, then the driver shall update the value with the total number of components of this type that are available. if count is greater than the number of components of this type that are available, then the driver shall update the value with the correct number of components.
+	phFirmware *ZesFirmwareHandle, // phFirmware [in,out][optional][range(0, *pCount)] array of handle of components of this type. if count is less than the number of components of this type that are available, then the driver shall only retrieve that number of component handles.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesDeviceEnumFirmwares", uintptr(hDevice), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phFirmware)))
 }
 
 // ZesFirmwareGetProperties Get firmware properties
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pProperties`
 func ZesFirmwareGetProperties(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
-	pProperties *ZesFirmwareProperties,	// pProperties [in,out] Pointer to an array that will hold the properties of the firmware
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
+	pProperties *ZesFirmwareProperties, // pProperties [in,out] Pointer to an array that will hold the properties of the firmware
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareGetProperties", uintptr(hFirmware), uintptr(unsafe.Pointer(pProperties)))
 }
 
 // ZesFirmwareFlash Flash a new firmware image
-/// 
-/// @details
-///     - Any running workload must be gracefully closed before invoking this
-///       function.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - This is a non-blocking call. Application may call
-///       ::zesFirmwareGetFlashProgress to get completion status.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pImage`
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///         + User does not have permissions to perform this operation.
+// /
+// / @details
+// /     - Any running workload must be gracefully closed before invoking this
+// /       function.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - This is a non-blocking call. Application may call
+// /       ::zesFirmwareGetFlashProgress to get completion status.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pImage`
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /         + User does not have permissions to perform this operation.
 func ZesFirmwareFlash(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
-	pImage unsafe.Pointer,	// pImage [in] Image of the new firmware to flash.
-	size uint32,	// size [in] Size of the flash image.
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
+	pImage unsafe.Pointer, // pImage [in] Image of the new firmware to flash.
+	size uint32, // size [in] Size of the flash image.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareFlash", uintptr(hFirmware), uintptr(unsafe.Pointer(pImage)), uintptr(size))
 }
 
 // ZesFirmwareGetFlashProgress Get Firmware Flash Progress
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCompletionPercent`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCompletionPercent`
 func ZesFirmwareGetFlashProgress(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
-	pCompletionPercent *uint32,	// pCompletionPercent [in,out] Pointer to the Completion Percentage of Firmware Update
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
+	pCompletionPercent *uint32, // pCompletionPercent [in,out] Pointer to the Completion Percentage of Firmware Update
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareGetFlashProgress", uintptr(hFirmware), uintptr(unsafe.Pointer(pCompletionPercent)))
 }
 
 // ZesFirmwareGetConsoleLogs Get Firmware Console Logs
-/// 
-/// @details
-///     - The caller may pass nullptr for pFirmwareLog and set pSize to zero
-///       when querying only for size.
-///     - The caller must provide memory for Firmware log.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hFirmware`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /
+// / @details
+// /     - The caller may pass nullptr for pFirmwareLog and set pSize to zero
+// /       when querying only for size.
+// /     - The caller must provide memory for Firmware log.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hFirmware`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZesFirmwareGetConsoleLogs(
-	hFirmware ZesFirmwareHandle,	// hFirmware [in] Handle for the component.
-	pSize *uintptr,	// pSize [in,out] size of firmware log
-	pFirmwareLog *byte,	// pFirmwareLog [in,out][optional] pointer to null-terminated string of the log.
+	hFirmware ZesFirmwareHandle, // hFirmware [in] Handle for the component.
+	pSize *uintptr, // pSize [in,out] size of firmware log
+	pFirmwareLog *byte, // pFirmwareLog [in,out][optional] pointer to null-terminated string of the log.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesFirmwareGetConsoleLogs", uintptr(hFirmware), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pFirmwareLog)))
 }
-

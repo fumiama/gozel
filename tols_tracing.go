@@ -24,10 +24,11 @@ const ZET_API_TRACING_EXP_NAME = "ZET_experimental_api_tracing"
 
 // ZetApiTracingExpVersion (zet_api_tracing_exp_version_t) API Tracing Experimental Extension Version(s)
 type ZetApiTracingExpVersion uintptr
+
 const (
-	ZET_API_TRACING_EXP_VERSION_1_0 ZetApiTracingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_API_TRACING_EXP_VERSION_1_0 version 1.0
-	ZET_API_TRACING_EXP_VERSION_CURRENT ZetApiTracingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_API_TRACING_EXP_VERSION_CURRENT latest known version
-	ZET_API_TRACING_EXP_VERSION_FORCE_UINT32 ZetApiTracingExpVersion = 0x7fffffff	// ZET_API_TRACING_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_API_TRACING_EXP_VERSION_* ENUMs
+	ZET_API_TRACING_EXP_VERSION_1_0          ZetApiTracingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_API_TRACING_EXP_VERSION_1_0 version 1.0
+	ZET_API_TRACING_EXP_VERSION_CURRENT      ZetApiTracingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_API_TRACING_EXP_VERSION_CURRENT latest known version
+	ZET_API_TRACING_EXP_VERSION_FORCE_UINT32 ZetApiTracingExpVersion = 0x7fffffff                                                   // ZET_API_TRACING_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_API_TRACING_EXP_VERSION_* ENUMs
 
 )
 
@@ -36,195 +37,194 @@ type ZetCoreCallbacks ZeCallbacks
 
 // ZetTracerExpDesc (zet_tracer_exp_desc_t) Tracer descriptor
 type ZetTracerExpDesc struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Puserdata unsafe.Pointer	// Puserdata [in] pointer passed to every tracer's callbacks
+	Stype     ZetStructureType // Stype [in] type of this structure
+	Pnext     unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Puserdata unsafe.Pointer   // Puserdata [in] pointer passed to every tracer's callbacks
 
 }
 
 // ZetTracerExpCreate Creates a tracer on the context.
-/// 
-/// @details
-///     - @deprecated This function is not supported in L0 drivers and has been
-///       replaced by the Loader Tracing Layer. See the Loader Tracing
-///       documentation for more details.
-///     - The application must only use the tracer for the context which was
-///       provided during creation.
-///     - The tracer is created in the disabled state.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == desc->pUserData`
-///         + `nullptr == phTracer`
+// /
+// / @details
+// /     - @deprecated This function is not supported in L0 drivers and has been
+// /       replaced by the Loader Tracing Layer. See the Loader Tracing
+// /       documentation for more details.
+// /     - The application must only use the tracer for the context which was
+// /       provided during creation.
+// /     - The tracer is created in the disabled state.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == desc->pUserData`
+// /         + `nullptr == phTracer`
 func ZetTracerExpCreate(
-	hContext ZetContextHandle,	// hContext [in] handle of the context object
-	desc *ZetTracerExpDesc,	// desc [in] pointer to tracer descriptor
-	phTracer *ZetTracerExpHandle,	// phTracer [out] pointer to handle of tracer object created
+	hContext ZetContextHandle, // hContext [in] handle of the context object
+	desc *ZetTracerExpDesc, // desc [in] pointer to tracer descriptor
+	phTracer *ZetTracerExpHandle, // phTracer [out] pointer to handle of tracer object created
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetTracerExpCreate", uintptr(hContext), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phTracer)))
 }
 
 // ZetTracerExpDestroy Destroys a tracer.
-/// 
-/// @details
-///     - @deprecated This function is not supported in L0 drivers and has been
-///       replaced by the Loader Tracing Layer. See the Loader Tracing
-///       documentation for more details.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same tracer handle.
-///     - The implementation of this function must be thread-safe.
-///     - The implementation of this function will stall and wait on any
-///       outstanding threads executing callbacks before freeing any Host
-///       allocations associated with this tracer.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hTracer`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - @deprecated This function is not supported in L0 drivers and has been
+// /       replaced by the Loader Tracing Layer. See the Loader Tracing
+// /       documentation for more details.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same tracer handle.
+// /     - The implementation of this function must be thread-safe.
+// /     - The implementation of this function will stall and wait on any
+// /       outstanding threads executing callbacks before freeing any Host
+// /       allocations associated with this tracer.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hTracer`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZetTracerExpDestroy(
-	hTracer ZetTracerExpHandle,	// hTracer [in][release] handle of tracer object to destroy
+	hTracer ZetTracerExpHandle, // hTracer [in][release] handle of tracer object to destroy
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetTracerExpDestroy", uintptr(hTracer))
 }
 
 // ZetTracerExpSetPrologues Sets the collection of callbacks to be executed **before** driver
-///        execution.
-/// 
-/// @details
-///     - @deprecated This function is not supported in L0 drivers and has been
-///       replaced by the Loader Tracing Layer. See the Loader Tracing
-///       documentation for more details.
-///     - The application only needs to set the function pointers it is
-///       interested in receiving; all others should be 'nullptr'
-///     - The application must ensure that no other threads are executing
-///       functions for which the tracing functions are changing.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hTracer`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCoreCbs`
+// /        execution.
+// /
+// / @details
+// /     - @deprecated This function is not supported in L0 drivers and has been
+// /       replaced by the Loader Tracing Layer. See the Loader Tracing
+// /       documentation for more details.
+// /     - The application only needs to set the function pointers it is
+// /       interested in receiving; all others should be 'nullptr'
+// /     - The application must ensure that no other threads are executing
+// /       functions for which the tracing functions are changing.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hTracer`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCoreCbs`
 func ZetTracerExpSetPrologues(
-	hTracer ZetTracerExpHandle,	// hTracer [in] handle of the tracer
-	pCoreCbs *ZetCoreCallbacks,	// pCoreCbs [in] pointer to table of 'core' callback function pointers
+	hTracer ZetTracerExpHandle, // hTracer [in] handle of the tracer
+	pCoreCbs *ZetCoreCallbacks, // pCoreCbs [in] pointer to table of 'core' callback function pointers
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetTracerExpSetPrologues", uintptr(hTracer), uintptr(unsafe.Pointer(pCoreCbs)))
 }
 
 // ZetTracerExpSetEpilogues Sets the collection of callbacks to be executed **after** driver
-///        execution.
-/// 
-/// @details
-///     - @deprecated This function is not supported in L0 drivers and has been
-///       replaced by the Loader Tracing Layer. See the Loader Tracing
-///       documentation for more details.
-///     - The application only needs to set the function pointers it is
-///       interested in receiving; all others should be 'nullptr'
-///     - The application must ensure that no other threads are executing
-///       functions for which the tracing functions are changing.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hTracer`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCoreCbs`
+// /        execution.
+// /
+// / @details
+// /     - @deprecated This function is not supported in L0 drivers and has been
+// /       replaced by the Loader Tracing Layer. See the Loader Tracing
+// /       documentation for more details.
+// /     - The application only needs to set the function pointers it is
+// /       interested in receiving; all others should be 'nullptr'
+// /     - The application must ensure that no other threads are executing
+// /       functions for which the tracing functions are changing.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hTracer`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCoreCbs`
 func ZetTracerExpSetEpilogues(
-	hTracer ZetTracerExpHandle,	// hTracer [in] handle of the tracer
-	pCoreCbs *ZetCoreCallbacks,	// pCoreCbs [in] pointer to table of 'core' callback function pointers
+	hTracer ZetTracerExpHandle, // hTracer [in] handle of the tracer
+	pCoreCbs *ZetCoreCallbacks, // pCoreCbs [in] pointer to table of 'core' callback function pointers
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetTracerExpSetEpilogues", uintptr(hTracer), uintptr(unsafe.Pointer(pCoreCbs)))
 }
 
 // ZetTracerExpSetEnabled Enables (or disables) the tracer
-/// 
-/// @details
-///     - @deprecated This function is not supported in L0 drivers and has been
-///       replaced by the Loader Tracing Layer. See the Loader Tracing
-///       documentation for more details.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hTracer`
+// /
+// / @details
+// /     - @deprecated This function is not supported in L0 drivers and has been
+// /       replaced by the Loader Tracing Layer. See the Loader Tracing
+// /       documentation for more details.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hTracer`
 func ZetTracerExpSetEnabled(
-	hTracer ZetTracerExpHandle,	// hTracer [in] handle of the tracer
-	enable ZeBool,	// enable [in] enable the tracer if true; disable if false
+	hTracer ZetTracerExpHandle, // hTracer [in] handle of the tracer
+	enable ZeBool, // enable [in] enable the tracer if true; disable if false
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetTracerExpSetEnabled", uintptr(hTracer), uintptr(enable))
 }
-

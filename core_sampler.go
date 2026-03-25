@@ -21,111 +21,112 @@ import (
 
 // ZeSamplerAddressMode (ze_sampler_address_mode_t) Sampler addressing modes
 type ZeSamplerAddressMode uintptr
+
 const (
-	ZE_SAMPLER_ADDRESS_MODE_NONE ZeSamplerAddressMode = 0	// ZE_SAMPLER_ADDRESS_MODE_NONE No coordinate modifications for out-of-bounds image access.
-	ZE_SAMPLER_ADDRESS_MODE_REPEAT ZeSamplerAddressMode = 1	// ZE_SAMPLER_ADDRESS_MODE_REPEAT Out-of-bounds coordinates are wrapped back around.
-	ZE_SAMPLER_ADDRESS_MODE_CLAMP ZeSamplerAddressMode = 2	// ZE_SAMPLER_ADDRESS_MODE_CLAMP Out-of-bounds coordinates are clamped to edge.
-	ZE_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER ZeSamplerAddressMode = 3	// ZE_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER Out-of-bounds coordinates are clamped to border color which is (0.0f,
+	ZE_SAMPLER_ADDRESS_MODE_NONE            ZeSamplerAddressMode = 0 // ZE_SAMPLER_ADDRESS_MODE_NONE No coordinate modifications for out-of-bounds image access.
+	ZE_SAMPLER_ADDRESS_MODE_REPEAT          ZeSamplerAddressMode = 1 // ZE_SAMPLER_ADDRESS_MODE_REPEAT Out-of-bounds coordinates are wrapped back around.
+	ZE_SAMPLER_ADDRESS_MODE_CLAMP           ZeSamplerAddressMode = 2 // ZE_SAMPLER_ADDRESS_MODE_CLAMP Out-of-bounds coordinates are clamped to edge.
+	ZE_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER ZeSamplerAddressMode = 3 // ZE_SAMPLER_ADDRESS_MODE_CLAMP_TO_BORDER Out-of-bounds coordinates are clamped to border color which is (0.0f,
 
 	///< 0.0f, 0.0f, 0.0f) if image format swizzle contains alpha, otherwise
 	///< (0.0f, 0.0f, 0.0f, 1.0f).
 
-	ZE_SAMPLER_ADDRESS_MODE_MIRROR ZeSamplerAddressMode = 4	// ZE_SAMPLER_ADDRESS_MODE_MIRROR Out-of-bounds coordinates are mirrored starting from edge.
-	ZE_SAMPLER_ADDRESS_MODE_FORCE_UINT32 ZeSamplerAddressMode = 0x7fffffff	// ZE_SAMPLER_ADDRESS_MODE_FORCE_UINT32 Value marking end of ZE_SAMPLER_ADDRESS_MODE_* ENUMs
+	ZE_SAMPLER_ADDRESS_MODE_MIRROR       ZeSamplerAddressMode = 4          // ZE_SAMPLER_ADDRESS_MODE_MIRROR Out-of-bounds coordinates are mirrored starting from edge.
+	ZE_SAMPLER_ADDRESS_MODE_FORCE_UINT32 ZeSamplerAddressMode = 0x7fffffff // ZE_SAMPLER_ADDRESS_MODE_FORCE_UINT32 Value marking end of ZE_SAMPLER_ADDRESS_MODE_* ENUMs
 
 )
 
 // ZeSamplerFilterMode (ze_sampler_filter_mode_t) Sampler filtering modes
 type ZeSamplerFilterMode uintptr
+
 const (
-	ZE_SAMPLER_FILTER_MODE_NEAREST ZeSamplerFilterMode = 0	// ZE_SAMPLER_FILTER_MODE_NEAREST No coordinate modifications for out of bounds image access.
-	ZE_SAMPLER_FILTER_MODE_LINEAR ZeSamplerFilterMode = 1	// ZE_SAMPLER_FILTER_MODE_LINEAR Out-of-bounds coordinates are wrapped back around.
-	ZE_SAMPLER_FILTER_MODE_FORCE_UINT32 ZeSamplerFilterMode = 0x7fffffff	// ZE_SAMPLER_FILTER_MODE_FORCE_UINT32 Value marking end of ZE_SAMPLER_FILTER_MODE_* ENUMs
+	ZE_SAMPLER_FILTER_MODE_NEAREST      ZeSamplerFilterMode = 0          // ZE_SAMPLER_FILTER_MODE_NEAREST No coordinate modifications for out of bounds image access.
+	ZE_SAMPLER_FILTER_MODE_LINEAR       ZeSamplerFilterMode = 1          // ZE_SAMPLER_FILTER_MODE_LINEAR Out-of-bounds coordinates are wrapped back around.
+	ZE_SAMPLER_FILTER_MODE_FORCE_UINT32 ZeSamplerFilterMode = 0x7fffffff // ZE_SAMPLER_FILTER_MODE_FORCE_UINT32 Value marking end of ZE_SAMPLER_FILTER_MODE_* ENUMs
 
 )
 
 // ZeSamplerDesc (ze_sampler_desc_t) Sampler descriptor
 type ZeSamplerDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Addressmode ZeSamplerAddressMode	// Addressmode [in] Sampler addressing mode to determine how out-of-bounds coordinates are handled.
-	Filtermode ZeSamplerFilterMode	// Filtermode [in] Sampler filter mode to determine how samples are filtered.
-	Isnormalized ZeBool	// Isnormalized [in] Are coordinates normalized [0, 1] or not.
+	Stype        ZeStructureType      // Stype [in] type of this structure
+	Pnext        unsafe.Pointer       // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Addressmode  ZeSamplerAddressMode // Addressmode [in] Sampler addressing mode to determine how out-of-bounds coordinates are handled.
+	Filtermode   ZeSamplerFilterMode  // Filtermode [in] Sampler filter mode to determine how samples are filtered.
+	Isnormalized ZeBool               // Isnormalized [in] Are coordinates normalized [0, 1] or not.
 
 }
 
 // ZeSamplerCreate Creates sampler on the context.
-/// 
-/// @details
-///     - The application must only use the sampler for the device, or its
-///       sub-devices, which was provided during creation.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == phSampler`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZE_SAMPLER_ADDRESS_MODE_MIRROR < desc->addressMode`
-///         + `::ZE_SAMPLER_FILTER_MODE_LINEAR < desc->filterMode`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - The application must only use the sampler for the device, or its
+// /       sub-devices, which was provided during creation.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == phSampler`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZE_SAMPLER_ADDRESS_MODE_MIRROR < desc->addressMode`
+// /         + `::ZE_SAMPLER_FILTER_MODE_LINEAR < desc->filterMode`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeSamplerCreate(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	desc *ZeSamplerDesc,	// desc [in] pointer to sampler descriptor
-	phSampler *ZeSamplerHandle,	// phSampler [out] handle of the sampler
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	desc *ZeSamplerDesc, // desc [in] pointer to sampler descriptor
+	phSampler *ZeSamplerHandle, // phSampler [out] handle of the sampler
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeSamplerCreate", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phSampler)))
 }
 
 // ZeSamplerDestroy Destroys sampler object
-/// 
-/// @details
-///     - The application must ensure the device is not currently referencing
-///       the sampler before it is deleted.
-///     - The implementation of this function may immediately free all Host and
-///       Device allocations associated with this sampler.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same sampler handle.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hSampler`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The application must ensure the device is not currently referencing
+// /       the sampler before it is deleted.
+// /     - The implementation of this function may immediately free all Host and
+// /       Device allocations associated with this sampler.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same sampler handle.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hSampler`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeSamplerDestroy(
-	hSampler ZeSamplerHandle,	// hSampler [in][release] handle of the sampler
+	hSampler ZeSamplerHandle, // hSampler [in][release] handle of the sampler
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeSamplerDestroy", uintptr(hSampler))
 }
-

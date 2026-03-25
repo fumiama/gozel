@@ -24,10 +24,11 @@ const ZET_METRICS_TRACER_EXP_NAME = "ZET_experimental_metric_tracer"
 
 // ZetMetricTracerExpVersion (zet_metric_tracer_exp_version_t) Metric Tracer Experimental Extension Version(s)
 type ZetMetricTracerExpVersion uintptr
+
 const (
-	ZET_METRIC_TRACER_EXP_VERSION_1_0 ZetMetricTracerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_METRIC_TRACER_EXP_VERSION_1_0 version 1.0
-	ZET_METRIC_TRACER_EXP_VERSION_CURRENT ZetMetricTracerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZET_METRIC_TRACER_EXP_VERSION_CURRENT latest known version
-	ZET_METRIC_TRACER_EXP_VERSION_FORCE_UINT32 ZetMetricTracerExpVersion = 0x7fffffff	// ZET_METRIC_TRACER_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_METRIC_TRACER_EXP_VERSION_* ENUMs
+	ZET_METRIC_TRACER_EXP_VERSION_1_0          ZetMetricTracerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRIC_TRACER_EXP_VERSION_1_0 version 1.0
+	ZET_METRIC_TRACER_EXP_VERSION_CURRENT      ZetMetricTracerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRIC_TRACER_EXP_VERSION_CURRENT latest known version
+	ZET_METRIC_TRACER_EXP_VERSION_FORCE_UINT32 ZetMetricTracerExpVersion = 0x7fffffff                                                   // ZET_METRIC_TRACER_EXP_VERSION_FORCE_UINT32 Value marking end of ZET_METRIC_TRACER_EXP_VERSION_* ENUMs
 
 )
 
@@ -39,324 +40,323 @@ type ZetMetricDecoderExpHandle uintptr
 
 // ZetMetricTracerExpDesc (zet_metric_tracer_exp_desc_t) Metric tracer descriptor
 type ZetMetricTracerExpDesc struct {
-	Stype ZetStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Notifyeverynbytes uint32	// Notifyeverynbytes [in,out] number of collected bytes after which notification event will be signaled. If the requested value is not supported exactly, then the driver may use a value that is the closest supported approximation and shall update this member during ::zetMetricTracerCreateExp.
+	Stype             ZetStructureType // Stype [in] type of this structure
+	Pnext             unsafe.Pointer   // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Notifyeverynbytes uint32           // Notifyeverynbytes [in,out] number of collected bytes after which notification event will be signaled. If the requested value is not supported exactly, then the driver may use a value that is the closest supported approximation and shall update this member during ::zetMetricTracerCreateExp.
 
 }
 
 // ZetMetricEntryExp (zet_metric_entry_exp_t) Decoded metric entry
 type ZetMetricEntryExp struct {
-	Value ZetValue	// Value [out] value of the decodable metric entry or event. Number is meaningful based on the metric type.
-	Timestamp uint64	// Timestamp [out] timestamp at which the event happened.
-	Metricindex uint32	// Metricindex [out] index to the decodable metric handle in the input array (phMetric) in ::zetMetricTracerDecodeExp().
-	Onsubdevice ZeBool	// Onsubdevice [out] True if the event occurred on a sub-device; false means the device on which the metric tracer was opened does not have sub-devices.
-	Subdeviceid uint32	// Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device.
+	Value       ZetValue // Value [out] value of the decodable metric entry or event. Number is meaningful based on the metric type.
+	Timestamp   uint64   // Timestamp [out] timestamp at which the event happened.
+	Metricindex uint32   // Metricindex [out] index to the decodable metric handle in the input array (phMetric) in ::zetMetricTracerDecodeExp().
+	Onsubdevice ZeBool   // Onsubdevice [out] True if the event occurred on a sub-device; false means the device on which the metric tracer was opened does not have sub-devices.
+	Subdeviceid uint32   // Subdeviceid [out] If onSubdevice is true, this gives the ID of the sub-device.
 
 }
 
 // ZetMetricTracerCreateExp Create a metric tracer for a device.
-/// 
-/// @details
-///     - The notification event must have been created from an event pool that
-///       was created using ::ZE_EVENT_POOL_FLAG_HOST_VISIBLE flag.
-///     - The duration of the signal event created from an event pool that was
-///       created using ::ZE_EVENT_POOL_FLAG_KERNEL_TIMESTAMP flag is undefined.
-///       However, for consistency and orthogonality the event will report
-///       correctly as signaled when used by other event API functionality.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same device handle.
-///     - The metric tracer is created in disabled state
-///     - Metric groups must support sampling type
-///       ZET_METRIC_SAMPLING_TYPE_EXP_FLAG_TRACER_BASED
-///     - All metric groups must be first activated
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phMetricGroups`
-///         + `nullptr == desc`
-///         + `nullptr == phMetricTracer`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /
+// / @details
+// /     - The notification event must have been created from an event pool that
+// /       was created using ::ZE_EVENT_POOL_FLAG_HOST_VISIBLE flag.
+// /     - The duration of the signal event created from an event pool that was
+// /       created using ::ZE_EVENT_POOL_FLAG_KERNEL_TIMESTAMP flag is undefined.
+// /       However, for consistency and orthogonality the event will report
+// /       correctly as signaled when used by other event API functionality.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same device handle.
+// /     - The metric tracer is created in disabled state
+// /     - Metric groups must support sampling type
+// /       ZET_METRIC_SAMPLING_TYPE_EXP_FLAG_TRACER_BASED
+// /     - All metric groups must be first activated
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phMetricGroups`
+// /         + `nullptr == desc`
+// /         + `nullptr == phMetricTracer`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
 func ZetMetricTracerCreateExp(
-	hContext ZetContextHandle,	// hContext [in] handle of the context object
-	hDevice ZetDeviceHandle,	// hDevice [in] handle of the device
-	metricGroupCount uint32,	// metricGroupCount [in] metric group count
-	phMetricGroups *ZetMetricGroupHandle,	// phMetricGroups [in][range(0, metricGroupCount )] handles of the metric groups to trace
-	desc *ZetMetricTracerExpDesc,	// desc [in,out] metric tracer descriptor
-	hNotificationEvent ZeEventHandle,	// hNotificationEvent [in][optional] event used for report availability notification. Note: If buffer is not drained when the event it flagged, there is a risk of HW event buffer being overrun
-	phMetricTracer *ZetMetricTracerExpHandle,	// phMetricTracer [out] handle of the metric tracer
+	hContext ZetContextHandle, // hContext [in] handle of the context object
+	hDevice ZetDeviceHandle, // hDevice [in] handle of the device
+	metricGroupCount uint32, // metricGroupCount [in] metric group count
+	phMetricGroups *ZetMetricGroupHandle, // phMetricGroups [in][range(0, metricGroupCount )] handles of the metric groups to trace
+	desc *ZetMetricTracerExpDesc, // desc [in,out] metric tracer descriptor
+	hNotificationEvent ZeEventHandle, // hNotificationEvent [in][optional] event used for report availability notification. Note: If buffer is not drained when the event it flagged, there is a risk of HW event buffer being overrun
+	phMetricTracer *ZetMetricTracerExpHandle, // phMetricTracer [out] handle of the metric tracer
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerCreateExp", uintptr(hContext), uintptr(hDevice), uintptr(metricGroupCount), uintptr(unsafe.Pointer(phMetricGroups)), uintptr(unsafe.Pointer(desc)), uintptr(hNotificationEvent), uintptr(unsafe.Pointer(phMetricTracer)))
 }
 
 // ZetMetricTracerDestroyExp Destroy a metric tracer.
-/// 
-/// @details
-///     - The application must **not** call this function from simultaneous
-///       threads with the same metric tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricTracer`
+// /
+// / @details
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same metric tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricTracer`
 func ZetMetricTracerDestroyExp(
-	hMetricTracer ZetMetricTracerExpHandle,	// hMetricTracer [in] handle of the metric tracer
+	hMetricTracer ZetMetricTracerExpHandle, // hMetricTracer [in] handle of the metric tracer
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerDestroyExp", uintptr(hMetricTracer))
 }
 
 // ZetMetricTracerEnableExp Start events collection
-/// 
-/// @details
-///     - Driver implementations must make this API call have as minimal
-///       overhead as possible, to allow applications start/stop event
-///       collection at any point during execution
-///     - The application must **not** call this function from simultaneous
-///       threads with the same metric tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricTracer`
+// /
+// / @details
+// /     - Driver implementations must make this API call have as minimal
+// /       overhead as possible, to allow applications start/stop event
+// /       collection at any point during execution
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same metric tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricTracer`
 func ZetMetricTracerEnableExp(
-	hMetricTracer ZetMetricTracerExpHandle,	// hMetricTracer [in] handle of the metric tracer
-	synchronous ZeBool,	// synchronous [in] request synchronous behavior. Confirmation of successful asynchronous operation is done by calling ::zetMetricTracerReadDataExp() and checking the return status: ::ZE_RESULT_NOT_READY will be returned when the tracer is inactive. ::ZE_RESULT_SUCCESS will be returned when the tracer is active.
+	hMetricTracer ZetMetricTracerExpHandle, // hMetricTracer [in] handle of the metric tracer
+	synchronous ZeBool, // synchronous [in] request synchronous behavior. Confirmation of successful asynchronous operation is done by calling ::zetMetricTracerReadDataExp() and checking the return status: ::ZE_RESULT_NOT_READY will be returned when the tracer is inactive. ::ZE_RESULT_SUCCESS will be returned when the tracer is active.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerEnableExp", uintptr(hMetricTracer), uintptr(synchronous))
 }
 
 // ZetMetricTracerDisableExp Stop events collection
-/// 
-/// @details
-///     - Driver implementations must make this API call have as minimal
-///       overhead as possible, to allow applications start/stop event
-///       collection at any point during execution
-///     - The application must **not** call this function from simultaneous
-///       threads with the same metric tracer handle.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricTracer`
+// /
+// / @details
+// /     - Driver implementations must make this API call have as minimal
+// /       overhead as possible, to allow applications start/stop event
+// /       collection at any point during execution
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same metric tracer handle.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricTracer`
 func ZetMetricTracerDisableExp(
-	hMetricTracer ZetMetricTracerExpHandle,	// hMetricTracer [in] handle of the metric tracer
-	synchronous ZeBool,	// synchronous [in] request synchronous behavior. Confirmation of successful asynchronous operation is done by calling ::zetMetricTracerReadDataExp() and checking the return status: ::ZE_RESULT_SUCCESS will be returned when the tracer is active or when it is inactive but still has data. ::ZE_RESULT_NOT_READY will be returned when the tracer is inactive and has no more data to be retrieved.
+	hMetricTracer ZetMetricTracerExpHandle, // hMetricTracer [in] handle of the metric tracer
+	synchronous ZeBool, // synchronous [in] request synchronous behavior. Confirmation of successful asynchronous operation is done by calling ::zetMetricTracerReadDataExp() and checking the return status: ::ZE_RESULT_SUCCESS will be returned when the tracer is active or when it is inactive but still has data. ::ZE_RESULT_NOT_READY will be returned when the tracer is inactive and has no more data to be retrieved.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerDisableExp", uintptr(hMetricTracer), uintptr(synchronous))
 }
 
 // ZetMetricTracerReadDataExp Read data from the metric tracer
-/// 
-/// @details
-///     - The application must **not** call this function from simultaneous
-///       threads with the same metric tracer handle.
-///     - Data can be retrieved after tracer is disabled. When buffers are
-///       drained ::ZE_RESULT_NOT_READY will be returned
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricTracer`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pRawDataSize`
-///     - ::ZE_RESULT_WARNING_DROPPED_DATA
-///         + Metric tracer data may have been dropped.
-///     - ::ZE_RESULT_NOT_READY
-///         + Metric tracer is disabled and no data is available to read.
+// /
+// / @details
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same metric tracer handle.
+// /     - Data can be retrieved after tracer is disabled. When buffers are
+// /       drained ::ZE_RESULT_NOT_READY will be returned
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricTracer`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pRawDataSize`
+// /     - ::ZE_RESULT_WARNING_DROPPED_DATA
+// /         + Metric tracer data may have been dropped.
+// /     - ::ZE_RESULT_NOT_READY
+// /         + Metric tracer is disabled and no data is available to read.
 func ZetMetricTracerReadDataExp(
-	hMetricTracer ZetMetricTracerExpHandle,	// hMetricTracer [in] handle of the metric tracer
-	pRawDataSize *uintptr,	// pRawDataSize [in,out] pointer to size in bytes of raw data requested to read. if size is zero, then the driver will update the value with the total size in bytes needed for all data available. if size is non-zero, then driver will only retrieve that amount of data. if size is larger than size needed for all data, then driver will update the value with the actual size needed.
-	pRawData *uint8,	// pRawData [in,out][optional][range(0, *pRawDataSize)] buffer containing tracer data in raw format
+	hMetricTracer ZetMetricTracerExpHandle, // hMetricTracer [in] handle of the metric tracer
+	pRawDataSize *uintptr, // pRawDataSize [in,out] pointer to size in bytes of raw data requested to read. if size is zero, then the driver will update the value with the total size in bytes needed for all data available. if size is non-zero, then driver will only retrieve that amount of data. if size is larger than size needed for all data, then driver will update the value with the actual size needed.
+	pRawData *uint8, // pRawData [in,out][optional][range(0, *pRawDataSize)] buffer containing tracer data in raw format
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerReadDataExp", uintptr(hMetricTracer), uintptr(unsafe.Pointer(pRawDataSize)), uintptr(unsafe.Pointer(pRawData)))
 }
 
 // ZetMetricDecoderCreateExp Create a metric decoder for a given metric tracer.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricTracer`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phMetricDecoder`
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricTracer`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phMetricDecoder`
 func ZetMetricDecoderCreateExp(
-	hMetricTracer ZetMetricTracerExpHandle,	// hMetricTracer [in] handle of the metric tracer
-	phMetricDecoder *ZetMetricDecoderExpHandle,	// phMetricDecoder [out] handle of the metric decoder object
+	hMetricTracer ZetMetricTracerExpHandle, // hMetricTracer [in] handle of the metric tracer
+	phMetricDecoder *ZetMetricDecoderExpHandle, // phMetricDecoder [out] handle of the metric decoder object
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricDecoderCreateExp", uintptr(hMetricTracer), uintptr(unsafe.Pointer(phMetricDecoder)))
 }
 
 // ZetMetricDecoderDestroyExp Destroy a metric decoder.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == phMetricDecoder`
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == phMetricDecoder`
 func ZetMetricDecoderDestroyExp(
-	phMetricDecoder ZetMetricDecoderExpHandle,	// phMetricDecoder [in] handle of the metric decoder object
+	phMetricDecoder ZetMetricDecoderExpHandle, // phMetricDecoder [in] handle of the metric decoder object
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricDecoderDestroyExp", uintptr(phMetricDecoder))
 }
 
 // ZetMetricDecoderGetDecodableMetricsExp Return the list of the decodable metrics from the decoder.
-/// 
-/// @details
-///     - The decodable metrics handles returned by this API are defined by the
-///       metric groups in the tracer on which the decoder was created.
-///     - The decodable metrics handles returned by this API are only valid to
-///       decode metrics raw data with ::zetMetricTracerDecodeExp(). Decodable
-///       metric handles are not valid to compare with metrics handles included
-///       in metric groups.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hMetricDecoder`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
-///         + `nullptr == phMetrics`
+// /
+// / @details
+// /     - The decodable metrics handles returned by this API are defined by the
+// /       metric groups in the tracer on which the decoder was created.
+// /     - The decodable metrics handles returned by this API are only valid to
+// /       decode metrics raw data with ::zetMetricTracerDecodeExp(). Decodable
+// /       metric handles are not valid to compare with metrics handles included
+// /       in metric groups.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hMetricDecoder`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
+// /         + `nullptr == phMetrics`
 func ZetMetricDecoderGetDecodableMetricsExp(
-	hMetricDecoder ZetMetricDecoderExpHandle,	// hMetricDecoder [in] handle of the metric decoder object
-	pCount *uint32,	// pCount [in,out] pointer to number of decodable metric in the hMetricDecoder handle. If count is zero, then the driver shall update the value with the total number of decodable metrics available in the decoder. if count is greater than zero but less than the total number of decodable metrics available in the decoder, then only that number will be returned. if count is greater than the number of decodable metrics available in the decoder, then the driver shall update the value with the actual number of decodable metrics available.
-	phMetrics *ZetMetricHandle,	// phMetrics [in,out] [range(0, *pCount)] array of handles of decodable metrics in the hMetricDecoder handle provided.
+	hMetricDecoder ZetMetricDecoderExpHandle, // hMetricDecoder [in] handle of the metric decoder object
+	pCount *uint32, // pCount [in,out] pointer to number of decodable metric in the hMetricDecoder handle. If count is zero, then the driver shall update the value with the total number of decodable metrics available in the decoder. if count is greater than zero but less than the total number of decodable metrics available in the decoder, then only that number will be returned. if count is greater than the number of decodable metrics available in the decoder, then the driver shall update the value with the actual number of decodable metrics available.
+	phMetrics *ZetMetricHandle, // phMetrics [in,out] [range(0, *pCount)] array of handles of decodable metrics in the hMetricDecoder handle provided.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricDecoderGetDecodableMetricsExp", uintptr(hMetricDecoder), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(phMetrics)))
 }
 
 // ZetMetricTracerDecodeExp Decode raw events collected from a tracer.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == phMetricDecoder`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pRawDataSize`
-///         + `nullptr == phMetrics`
-///         + `nullptr == pSetCount`
-///         + `nullptr == pMetricEntriesCount`
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == phMetricDecoder`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pRawDataSize`
+// /         + `nullptr == phMetrics`
+// /         + `nullptr == pSetCount`
+// /         + `nullptr == pMetricEntriesCount`
 func ZetMetricTracerDecodeExp(
-	phMetricDecoder ZetMetricDecoderExpHandle,	// phMetricDecoder [in] handle of the metric decoder object
-	pRawDataSize *uintptr,	// pRawDataSize [in,out] size in bytes of raw data buffer. If pMetricEntriesCount is greater than zero but less than total number of decodable metrics available in the raw data buffer, then driver shall update this value with actual number of raw data bytes processed.
-	pRawData *uint8,	// pRawData [in,out][optional][range(0, *pRawDataSize)] buffer containing tracer data in raw format
-	metricsCount uint32,	// metricsCount [in] number of decodable metrics in the tracer for which the hMetricDecoder handle was provided. See ::zetMetricDecoderGetDecodableMetricsExp(). If metricCount is greater than zero but less than the number decodable metrics available in the raw data buffer, then driver shall only decode those.
-	phMetrics *ZetMetricHandle,	// phMetrics [in] [range(0, metricsCount)] array of handles of decodable metrics in the decoder for which the hMetricDecoder handle was provided. Metrics handles are expected to be for decodable metrics, see ::zetMetricDecoderGetDecodableMetricsExp()
-	pSetCount *uint32,	// pSetCount [in,out] pointer to number of metric sets. If count is zero, then the driver shall update the value with the total number of metric sets to be decoded. If count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be decoded. There is a 1:1 relation between the number of sets and sub-devices returned in the decoded entries.
-	pMetricEntriesCountPerSet *uint32,	// pMetricEntriesCountPerSet [in,out][optional][range(0, *pSetCount)] buffer of metric entries counts per metric set, one value per set.
-	pMetricEntriesCount *uint32,	// pMetricEntriesCount [in,out]  pointer to the total number of metric entries decoded, for all metric sets. If count is zero, then the driver shall update the value with the total number of metric entries to be decoded. If count is greater than zero but less than the total number of metric entries available in the raw data, then user provided number will be decoded. If count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of decodable metric entries decoded. If set to null, then driver will only update the value of pSetCount.
-	pMetricEntries *ZetMetricEntryExp,	// pMetricEntries [in,out][optional][range(0, *pMetricEntriesCount)] buffer containing decoded metric entries
+	phMetricDecoder ZetMetricDecoderExpHandle, // phMetricDecoder [in] handle of the metric decoder object
+	pRawDataSize *uintptr, // pRawDataSize [in,out] size in bytes of raw data buffer. If pMetricEntriesCount is greater than zero but less than total number of decodable metrics available in the raw data buffer, then driver shall update this value with actual number of raw data bytes processed.
+	pRawData *uint8, // pRawData [in,out][optional][range(0, *pRawDataSize)] buffer containing tracer data in raw format
+	metricsCount uint32, // metricsCount [in] number of decodable metrics in the tracer for which the hMetricDecoder handle was provided. See ::zetMetricDecoderGetDecodableMetricsExp(). If metricCount is greater than zero but less than the number decodable metrics available in the raw data buffer, then driver shall only decode those.
+	phMetrics *ZetMetricHandle, // phMetrics [in] [range(0, metricsCount)] array of handles of decodable metrics in the decoder for which the hMetricDecoder handle was provided. Metrics handles are expected to be for decodable metrics, see ::zetMetricDecoderGetDecodableMetricsExp()
+	pSetCount *uint32, // pSetCount [in,out] pointer to number of metric sets. If count is zero, then the driver shall update the value with the total number of metric sets to be decoded. If count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of metric sets to be decoded. There is a 1:1 relation between the number of sets and sub-devices returned in the decoded entries.
+	pMetricEntriesCountPerSet *uint32, // pMetricEntriesCountPerSet [in,out][optional][range(0, *pSetCount)] buffer of metric entries counts per metric set, one value per set.
+	pMetricEntriesCount *uint32, // pMetricEntriesCount [in,out]  pointer to the total number of metric entries decoded, for all metric sets. If count is zero, then the driver shall update the value with the total number of metric entries to be decoded. If count is greater than zero but less than the total number of metric entries available in the raw data, then user provided number will be decoded. If count is greater than the number available in the raw data buffer, then the driver shall update the value with the actual number of decodable metric entries decoded. If set to null, then driver will only update the value of pSetCount.
+	pMetricEntries *ZetMetricEntryExp, // pMetricEntries [in,out][optional][range(0, *pMetricEntriesCount)] buffer containing decoded metric entries
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zetMetricTracerDecodeExp", uintptr(phMetricDecoder), uintptr(unsafe.Pointer(pRawDataSize)), uintptr(unsafe.Pointer(pRawData)), uintptr(metricsCount), uintptr(unsafe.Pointer(phMetrics)), uintptr(unsafe.Pointer(pSetCount)), uintptr(unsafe.Pointer(pMetricEntriesCountPerSet)), uintptr(unsafe.Pointer(pMetricEntriesCount)), uintptr(unsafe.Pointer(pMetricEntries)))
 }
-

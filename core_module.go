@@ -21,853 +21,858 @@ import (
 
 // ZeModuleFormat (ze_module_format_t) Supported module creation input formats
 type ZeModuleFormat uintptr
+
 const (
-	ZE_MODULE_FORMAT_IL_SPIRV ZeModuleFormat = 0	// ZE_MODULE_FORMAT_IL_SPIRV Format is SPIRV IL format
-	ZE_MODULE_FORMAT_NATIVE ZeModuleFormat = 1	// ZE_MODULE_FORMAT_NATIVE Format is device native format
-	ZE_MODULE_FORMAT_FORCE_UINT32 ZeModuleFormat = 0x7fffffff	// ZE_MODULE_FORMAT_FORCE_UINT32 Value marking end of ZE_MODULE_FORMAT_* ENUMs
+	ZE_MODULE_FORMAT_IL_SPIRV     ZeModuleFormat = 0          // ZE_MODULE_FORMAT_IL_SPIRV Format is SPIRV IL format
+	ZE_MODULE_FORMAT_NATIVE       ZeModuleFormat = 1          // ZE_MODULE_FORMAT_NATIVE Format is device native format
+	ZE_MODULE_FORMAT_FORCE_UINT32 ZeModuleFormat = 0x7fffffff // ZE_MODULE_FORMAT_FORCE_UINT32 Value marking end of ZE_MODULE_FORMAT_* ENUMs
 
 )
 
 // ZeModuleConstants (ze_module_constants_t) Specialization constants - User defined constants
 type ZeModuleConstants struct {
-	Numconstants uint32	// Numconstants [in] Number of specialization constants.
-	Pconstantids *uint32	// Pconstantids [in][range(0, numConstants)] Array of IDs that is sized to numConstants.
-	Pconstantvalues *unsafe.Pointer	// Pconstantvalues [in][range(0, numConstants)] Array of pointers to values that is sized to numConstants.
+	Numconstants    uint32          // Numconstants [in] Number of specialization constants.
+	Pconstantids    *uint32         // Pconstantids [in][range(0, numConstants)] Array of IDs that is sized to numConstants.
+	Pconstantvalues *unsafe.Pointer // Pconstantvalues [in][range(0, numConstants)] Array of pointers to values that is sized to numConstants.
 
 }
 
 // ZeModuleDesc (ze_module_desc_t) Module descriptor
 type ZeModuleDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Format ZeModuleFormat	// Format [in] Module format passed in with pInputModule
-	Inputsize uintptr	// Inputsize [in] size of input IL or ISA from pInputModule.
-	Pinputmodule *uint8	// Pinputmodule [in] pointer to IL or ISA
-	Pbuildflags *byte	// Pbuildflags [in][optional] string containing one or more (comma-separated) compiler flags. If unsupported, flag is ignored with a warning.  - "-ze-opt-disable"       - Disable optimizations  - "-ze-opt-level"       - Specifies optimization level for compiler. Levels are implementation specific.           - 0 is no optimizations (equivalent to -ze-opt-disable)           - 1 is optimize minimally (may be the same as 2)           - 2 is optimize more (default)  - "-ze-opt-greater-than-4GB-buffer-required"       - Use 64-bit offset calculations for buffers.  - "-ze-opt-large-register-file"       - Increase number of registers available to threads.  - "-ze-opt-has-buffer-offset-arg"       - Extend stateless to stateful optimization to more         cases with the use of additional offset (e.g. 64-bit         pointer to binding table with 32-bit offset).  - "-g"       - Include debugging information.
-	Pconstants *ZeModuleConstants	// Pconstants [in][optional] pointer to specialization constants. Valid only for SPIR-V input. This must be set to nullptr if no specialization constants are provided.
+	Stype        ZeStructureType    // Stype [in] type of this structure
+	Pnext        unsafe.Pointer     // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Format       ZeModuleFormat     // Format [in] Module format passed in with pInputModule
+	Inputsize    uintptr            // Inputsize [in] size of input IL or ISA from pInputModule.
+	Pinputmodule *uint8             // Pinputmodule [in] pointer to IL or ISA
+	Pbuildflags  *byte              // Pbuildflags [in][optional] string containing one or more (comma-separated) compiler flags. If unsupported, flag is ignored with a warning.  - "-ze-opt-disable"       - Disable optimizations  - "-ze-opt-level"       - Specifies optimization level for compiler. Levels are implementation specific.           - 0 is no optimizations (equivalent to -ze-opt-disable)           - 1 is optimize minimally (may be the same as 2)           - 2 is optimize more (default)  - "-ze-opt-greater-than-4GB-buffer-required"       - Use 64-bit offset calculations for buffers.  - "-ze-opt-large-register-file"       - Increase number of registers available to threads.  - "-ze-opt-has-buffer-offset-arg"       - Extend stateless to stateful optimization to more         cases with the use of additional offset (e.g. 64-bit         pointer to binding table with 32-bit offset).  - "-g"       - Include debugging information.
+	Pconstants   *ZeModuleConstants // Pconstants [in][optional] pointer to specialization constants. Valid only for SPIR-V input. This must be set to nullptr if no specialization constants are provided.
 
 }
 
 // ZeCommandListAppendLaunchKernelParamCooperativeDesc (ze_command_list_append_launch_kernel_param_cooperative_desc_t) Append launch kernel with parameters cooperative descriptor
 type ZeCommandListAppendLaunchKernelParamCooperativeDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Iscooperative ZeBool	// Iscooperative [in] When true, kernel is treated as cooperative.
+	Stype         ZeStructureType // Stype [in] type of this structure
+	Pnext         unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Iscooperative ZeBool          // Iscooperative [in] When true, kernel is treated as cooperative.
 
 }
 
 // ZeModuleCreate Creates a module on the context.
-/// 
-/// @details
-///     - Compiles the module for execution on the device.
-///     - The application must only use the module for the device, or its
-///       sub-devices, which was provided during creation.
-///     - The module can be copied to other devices and contexts within the same
-///       driver instance by using ::zeModuleGetNativeBinary.
-///     - A build log can optionally be returned to the caller. The caller is
-///       responsible for destroying build log using ::zeModuleBuildLogDestroy.
-///     - The module descriptor constants are only supported for SPIR-V
-///       specialization constants.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hDevice`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == desc->pInputModule`
-///         + `nullptr == phModule`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `::ZE_MODULE_FORMAT_NATIVE < desc->format`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_NATIVE_BINARY
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `0 == desc->inputSize`
-///     - ::ZE_RESULT_ERROR_MODULE_BUILD_FAILURE
+// /
+// / @details
+// /     - Compiles the module for execution on the device.
+// /     - The application must only use the module for the device, or its
+// /       sub-devices, which was provided during creation.
+// /     - The module can be copied to other devices and contexts within the same
+// /       driver instance by using ::zeModuleGetNativeBinary.
+// /     - A build log can optionally be returned to the caller. The caller is
+// /       responsible for destroying build log using ::zeModuleBuildLogDestroy.
+// /     - The module descriptor constants are only supported for SPIR-V
+// /       specialization constants.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hDevice`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == desc->pInputModule`
+// /         + `nullptr == phModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `::ZE_MODULE_FORMAT_NATIVE < desc->format`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_NATIVE_BINARY
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `0 == desc->inputSize`
+// /     - ::ZE_RESULT_ERROR_MODULE_BUILD_FAILURE
 func ZeModuleCreate(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	hDevice ZeDeviceHandle,	// hDevice [in] handle of the device
-	desc *ZeModuleDesc,	// desc [in] pointer to module descriptor
-	phModule *ZeModuleHandle,	// phModule [out] pointer to handle of module object created
-	phBuildLog *ZeModuleBuildLogHandle,	// phBuildLog [out][optional] pointer to handle of module's build log.
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	hDevice ZeDeviceHandle, // hDevice [in] handle of the device
+	desc *ZeModuleDesc, // desc [in] pointer to module descriptor
+	phModule *ZeModuleHandle, // phModule [out] pointer to handle of module object created
+	phBuildLog *ZeModuleBuildLogHandle, // phBuildLog [out][optional] pointer to handle of module's build log.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleCreate", uintptr(hContext), uintptr(hDevice), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phModule)), uintptr(unsafe.Pointer(phBuildLog)))
 }
 
 // ZeModuleDestroy Destroys module
-/// 
-/// @details
-///     - The application must destroy all kernel handles created from the
-///       module before destroying the module itself.
-///     - The application must ensure the device is not currently referencing
-///       the module before it is deleted.
-///     - The implementation of this function may immediately free all Host and
-///       Device allocations associated with this module.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same module handle.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The application must destroy all kernel handles created from the
+// /       module before destroying the module itself.
+// /     - The application must ensure the device is not currently referencing
+// /       the module before it is deleted.
+// /     - The implementation of this function may immediately free all Host and
+// /       Device allocations associated with this module.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same module handle.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeModuleDestroy(
-	hModule ZeModuleHandle,	// hModule [in][release] handle of the module
+	hModule ZeModuleHandle, // hModule [in][release] handle of the module
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleDestroy", uintptr(hModule))
 }
 
 // ZeModuleDynamicLink Dynamically link modules together that share import/export linkage
-///        dependencies.
-/// 
-/// @details
-///     - Modules support SPIR-V import and export linkage types for functions
-///       and global variables. See the SPIR-V specification for linkage
-///       details.
-///     - Modules can have both import and export linkage.
-///     - Modules that do not have any imports or exports do not need to be
-///       linked.
-///     - All module import requirements must be satisfied via linking before
-///       kernel objects can be created from them.
-///     - Modules cannot be partially linked. Unsatisfiable import dependencies
-///       in the set of modules passed to ::zeModuleDynamicLink will result in 
-///       ::ZE_RESULT_ERROR_MODULE_LINK_FAILURE being returned.
-///     - Modules will only be linked once. A module can be used in multiple
-///       link calls if it has exports but its imports will not be re-linked.
-///     - Ambiguous dependencies, where multiple modules satisfy the same import
-///       dependencies for a module, are not allowed.
-///     - The application must ensure the modules being linked were created on
-///       the same context.
-///     - The application may call this function from simultaneous threads as
-///       long as the import modules being linked are not the same.
-///     - ModuleGetNativeBinary can be called on any module regardless of
-///       whether it is linked or not.
-///     - A link log can optionally be returned to the caller. The caller is
-///       responsible for destroying the link log using
-///       ::zeModuleBuildLogDestroy.
-///     - The link log may contain a list of the unresolved import dependencies
-///       if present.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phModules`
-///     - ::ZE_RESULT_ERROR_MODULE_LINK_FAILURE
+// /        dependencies.
+// /
+// / @details
+// /     - Modules support SPIR-V import and export linkage types for functions
+// /       and global variables. See the SPIR-V specification for linkage
+// /       details.
+// /     - Modules can have both import and export linkage.
+// /     - Modules that do not have any imports or exports do not need to be
+// /       linked.
+// /     - All module import requirements must be satisfied via linking before
+// /       kernel objects can be created from them.
+// /     - Modules cannot be partially linked. Unsatisfiable import dependencies
+// /       in the set of modules passed to ::zeModuleDynamicLink will result in
+// /       ::ZE_RESULT_ERROR_MODULE_LINK_FAILURE being returned.
+// /     - Modules will only be linked once. A module can be used in multiple
+// /       link calls if it has exports but its imports will not be re-linked.
+// /     - Ambiguous dependencies, where multiple modules satisfy the same import
+// /       dependencies for a module, are not allowed.
+// /     - The application must ensure the modules being linked were created on
+// /       the same context.
+// /     - The application may call this function from simultaneous threads as
+// /       long as the import modules being linked are not the same.
+// /     - ModuleGetNativeBinary can be called on any module regardless of
+// /       whether it is linked or not.
+// /     - A link log can optionally be returned to the caller. The caller is
+// /       responsible for destroying the link log using
+// /       ::zeModuleBuildLogDestroy.
+// /     - The link log may contain a list of the unresolved import dependencies
+// /       if present.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phModules`
+// /     - ::ZE_RESULT_ERROR_MODULE_LINK_FAILURE
 func ZeModuleDynamicLink(
-	numModules uint32,	// numModules [in] number of modules to be linked pointed to by phModules.
-	phModules *ZeModuleHandle,	// phModules [in][range(0, numModules)] pointer to an array of modules to dynamically link together.
-	phLinkLog *ZeModuleBuildLogHandle,	// phLinkLog [out][optional] pointer to handle of dynamic link log.
+	numModules uint32, // numModules [in] number of modules to be linked pointed to by phModules.
+	phModules *ZeModuleHandle, // phModules [in][range(0, numModules)] pointer to an array of modules to dynamically link together.
+	phLinkLog *ZeModuleBuildLogHandle, // phLinkLog [out][optional] pointer to handle of dynamic link log.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleDynamicLink", uintptr(numModules), uintptr(unsafe.Pointer(phModules)), uintptr(unsafe.Pointer(phLinkLog)))
 }
 
 // ZeModuleBuildLogDestroy Destroys module build log object
-/// 
-/// @details
-///     - The implementation of this function may immediately free all Host
-///       allocations associated with this object.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same build log handle.
-///     - The implementation of this function should be lock-free.
-///     - This function can be called before or after ::zeModuleDestroy for the
-///       associated module.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModuleBuildLog`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The implementation of this function may immediately free all Host
+// /       allocations associated with this object.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same build log handle.
+// /     - The implementation of this function should be lock-free.
+// /     - This function can be called before or after ::zeModuleDestroy for the
+// /       associated module.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModuleBuildLog`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeModuleBuildLogDestroy(
-	hModuleBuildLog ZeModuleBuildLogHandle,	// hModuleBuildLog [in][release] handle of the module build log object.
+	hModuleBuildLog ZeModuleBuildLogHandle, // hModuleBuildLog [in][release] handle of the module build log object.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleBuildLogDestroy", uintptr(hModuleBuildLog))
 }
 
 // ZeModuleBuildLogGetString Retrieves text string for build log.
-/// 
-/// @details
-///     - The caller can pass nullptr for pBuildLog when querying only for size.
-///     - The caller must provide memory for build log.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModuleBuildLog`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /
+// / @details
+// /     - The caller can pass nullptr for pBuildLog when querying only for size.
+// /     - The caller must provide memory for build log.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModuleBuildLog`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZeModuleBuildLogGetString(
-	hModuleBuildLog ZeModuleBuildLogHandle,	// hModuleBuildLog [in] handle of the module build log object.
-	pSize *uintptr,	// pSize [in,out] size of build log string.
-	pBuildLog *byte,	// pBuildLog [in,out][optional] pointer to null-terminated string of the log.
+	hModuleBuildLog ZeModuleBuildLogHandle, // hModuleBuildLog [in] handle of the module build log object.
+	pSize *uintptr, // pSize [in,out] size of build log string.
+	pBuildLog *byte, // pBuildLog [in,out][optional] pointer to null-terminated string of the log.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleBuildLogGetString", uintptr(hModuleBuildLog), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pBuildLog)))
 }
 
 // ZeModuleGetNativeBinary Retrieve native binary from Module.
-/// 
-/// @details
-///     - The native binary output can be cached to disk and new modules can be
-///       later constructed from the cached copy.
-///     - The native binary will retain debugging information that is associated
-///       with a module.
-///     - The caller can pass nullptr for pModuleNativeBinary when querying only
-///       for size.
-///     - The implementation will copy the native binary into a buffer supplied
-///       by the caller.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /
+// / @details
+// /     - The native binary output can be cached to disk and new modules can be
+// /       later constructed from the cached copy.
+// /     - The native binary will retain debugging information that is associated
+// /       with a module.
+// /     - The caller can pass nullptr for pModuleNativeBinary when querying only
+// /       for size.
+// /     - The implementation will copy the native binary into a buffer supplied
+// /       by the caller.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZeModuleGetNativeBinary(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	pSize *uintptr,	// pSize [in,out] size of native binary in bytes.
-	pModuleNativeBinary *uint8,	// pModuleNativeBinary [in,out][optional] byte pointer to native binary
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	pSize *uintptr, // pSize [in,out] size of native binary in bytes.
+	pModuleNativeBinary *uint8, // pModuleNativeBinary [in,out][optional] byte pointer to native binary
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleGetNativeBinary", uintptr(hModule), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pModuleNativeBinary)))
 }
 
 // ZeModuleGetGlobalPointer Retrieve global variable pointer from Module.
-/// 
-/// @details
-///     - The application may query global pointer from any module that either
-///       exports or imports it.
-///     - The application must dynamically link a module that imports a global
-///       before the global pointer can be queried from it.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pGlobalName`
-///     - ::ZE_RESULT_ERROR_INVALID_GLOBAL_NAME
+// /
+// / @details
+// /     - The application may query global pointer from any module that either
+// /       exports or imports it.
+// /     - The application must dynamically link a module that imports a global
+// /       before the global pointer can be queried from it.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pGlobalName`
+// /     - ::ZE_RESULT_ERROR_INVALID_GLOBAL_NAME
 func ZeModuleGetGlobalPointer(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	pGlobalName *byte,	// pGlobalName [in] name of global variable in module
-	pSize *uintptr,	// pSize [in,out][optional] size of global variable
-	pptr *unsafe.Pointer,	// pptr [in,out][optional] device visible pointer
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	pGlobalName *byte, // pGlobalName [in] name of global variable in module
+	pSize *uintptr, // pSize [in,out][optional] size of global variable
+	pptr *unsafe.Pointer, // pptr [in,out][optional] device visible pointer
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleGetGlobalPointer", uintptr(hModule), uintptr(unsafe.Pointer(pGlobalName)), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pptr)))
 }
 
 // ZeModuleGetKernelNames Retrieve all kernel names in the module.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
 func ZeModuleGetKernelNames(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	pCount *uint32,	// pCount [in,out] pointer to the number of names. if count is zero, then the driver shall update the value with the total number of names available. if count is greater than the number of names available, then the driver shall update the value with the correct number of names available.
-	pNames **byte,	// pNames [in,out][optional][range(0, *pCount)] array of names of functions. if count is less than the number of names available, then driver shall only retrieve that number of names.
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	pCount *uint32, // pCount [in,out] pointer to the number of names. if count is zero, then the driver shall update the value with the total number of names available. if count is greater than the number of names available, then the driver shall update the value with the correct number of names available.
+	pNames **byte, // pNames [in,out][optional][range(0, *pCount)] array of names of functions. if count is less than the number of names available, then driver shall only retrieve that number of names.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleGetKernelNames", uintptr(hModule), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pNames)))
 }
 
 // ZeModulePropertyFlags (ze_module_property_flags_t) Supported module property flags
 type ZeModulePropertyFlags uint32
+
 const (
-	ZE_MODULE_PROPERTY_FLAG_IMPORTS ZeModulePropertyFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_MODULE_PROPERTY_FLAG_IMPORTS Module has imports (i.e. imported global variables and/or kernels).
+	ZE_MODULE_PROPERTY_FLAG_IMPORTS ZeModulePropertyFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_MODULE_PROPERTY_FLAG_IMPORTS Module has imports (i.e. imported global variables and/or kernels).
 
 	///< See ::zeModuleDynamicLink.
 
-	ZE_MODULE_PROPERTY_FLAG_FORCE_UINT32 ZeModulePropertyFlags = 0x7fffffff	// ZE_MODULE_PROPERTY_FLAG_FORCE_UINT32 Value marking end of ZE_MODULE_PROPERTY_FLAG_* ENUMs
+	ZE_MODULE_PROPERTY_FLAG_FORCE_UINT32 ZeModulePropertyFlags = 0x7fffffff // ZE_MODULE_PROPERTY_FLAG_FORCE_UINT32 Value marking end of ZE_MODULE_PROPERTY_FLAG_* ENUMs
 
 )
 
 // ZeModuleProperties (ze_module_properties_t) Module properties
 type ZeModuleProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeModulePropertyFlags	// Flags [out] 0 (none) or a valid combination of ::ze_module_property_flag_t
+	Stype ZeStructureType       // Stype [in] type of this structure
+	Pnext unsafe.Pointer        // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags ZeModulePropertyFlags // Flags [out] 0 (none) or a valid combination of ::ze_module_property_flag_t
 
 }
 
 // ZeModuleGetProperties Retrieve module properties.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pModuleProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pModuleProperties`
 func ZeModuleGetProperties(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	pModuleProperties *ZeModuleProperties,	// pModuleProperties [in,out] query result for module properties.
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	pModuleProperties *ZeModuleProperties, // pModuleProperties [in,out] query result for module properties.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleGetProperties", uintptr(hModule), uintptr(unsafe.Pointer(pModuleProperties)))
 }
 
 // ZeKernelFlags (ze_kernel_flags_t) Supported kernel creation flags
 type ZeKernelFlags uint32
+
 const (
-	ZE_KERNEL_FLAG_FORCE_RESIDENCY ZeKernelFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_KERNEL_FLAG_FORCE_RESIDENCY force all device allocations to be resident during execution
-	ZE_KERNEL_FLAG_EXPLICIT_RESIDENCY ZeKernelFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_KERNEL_FLAG_EXPLICIT_RESIDENCY application is responsible for all residency of device allocations.
+	ZE_KERNEL_FLAG_FORCE_RESIDENCY    ZeKernelFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_KERNEL_FLAG_FORCE_RESIDENCY force all device allocations to be resident during execution
+	ZE_KERNEL_FLAG_EXPLICIT_RESIDENCY ZeKernelFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_KERNEL_FLAG_EXPLICIT_RESIDENCY application is responsible for all residency of device allocations.
 
 	///< driver may disable implicit residency management.
 
-	ZE_KERNEL_FLAG_FORCE_UINT32 ZeKernelFlags = 0x7fffffff	// ZE_KERNEL_FLAG_FORCE_UINT32 Value marking end of ZE_KERNEL_FLAG_* ENUMs
+	ZE_KERNEL_FLAG_FORCE_UINT32 ZeKernelFlags = 0x7fffffff // ZE_KERNEL_FLAG_FORCE_UINT32 Value marking end of ZE_KERNEL_FLAG_* ENUMs
 
 )
 
 // ZeKernelDesc (ze_kernel_desc_t) Kernel descriptor
 type ZeKernelDesc struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Flags ZeKernelFlags	// Flags [in] creation flags. must be 0 (default) or a valid combination of ::ze_kernel_flag_t; default behavior may use driver-based residency.
-	Pkernelname *byte	// Pkernelname [in] null-terminated name of kernel in module
+	Stype       ZeStructureType // Stype [in] type of this structure
+	Pnext       unsafe.Pointer  // Pnext [in][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Flags       ZeKernelFlags   // Flags [in] creation flags. must be 0 (default) or a valid combination of ::ze_kernel_flag_t; default behavior may use driver-based residency.
+	Pkernelname *byte           // Pkernelname [in] null-terminated name of kernel in module
 
 }
 
 // ZeKernelCreate Create a kernel from the module.
-/// 
-/// @details
-///     - Modules that have unresolved imports need to be dynamically linked
-///       before a kernel can be created from them. (See ::zeModuleDynamicLink)
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == desc`
-///         + `nullptr == desc->pKernelName`
-///         + `nullptr == phKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < desc->flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_INVALID_KERNEL_NAME
-///     - ::ZE_RESULT_ERROR_INVALID_MODULE_UNLINKED
+// /
+// / @details
+// /     - Modules that have unresolved imports need to be dynamically linked
+// /       before a kernel can be created from them. (See ::zeModuleDynamicLink)
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == desc`
+// /         + `nullptr == desc->pKernelName`
+// /         + `nullptr == phKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < desc->flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_INVALID_KERNEL_NAME
+// /     - ::ZE_RESULT_ERROR_INVALID_MODULE_UNLINKED
 func ZeKernelCreate(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	desc *ZeKernelDesc,	// desc [in] pointer to kernel descriptor
-	phKernel *ZeKernelHandle,	// phKernel [out] handle of the Function object
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	desc *ZeKernelDesc, // desc [in] pointer to kernel descriptor
+	phKernel *ZeKernelHandle, // phKernel [out] handle of the Function object
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelCreate", uintptr(hModule), uintptr(unsafe.Pointer(desc)), uintptr(unsafe.Pointer(phKernel)))
 }
 
 // ZeKernelDestroy Destroys a kernel object
-/// 
-/// @details
-///     - The application must ensure the device is not currently referencing
-///       the kernel before it is deleted.
-///     - The implementation of this function may immediately free all Host and
-///       Device allocations associated with this kernel.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same kernel handle.
-///     - The implementation of this function must be thread-safe.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
+// /
+// / @details
+// /     - The application must ensure the device is not currently referencing
+// /       the kernel before it is deleted.
+// /     - The implementation of this function may immediately free all Host and
+// /       Device allocations associated with this kernel.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same kernel handle.
+// /     - The implementation of this function must be thread-safe.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_HANDLE_OBJECT_IN_USE
 func ZeKernelDestroy(
-	hKernel ZeKernelHandle,	// hKernel [in][release] handle of the kernel object
+	hKernel ZeKernelHandle, // hKernel [in][release] handle of the kernel object
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelDestroy", uintptr(hKernel))
 }
 
 // ZeModuleGetFunctionPointer Retrieve a function pointer from a module by name
-/// 
-/// @details
-///     - The function pointer is unique for the device on which the module was
-///       created.
-///     - The function pointer is no longer valid if module is destroyed.
-///     - The function name should only refer to callable functions within the
-///       module.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hModule`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pFunctionName`
-///         + `nullptr == pfnFunction`
-///     - ::ZE_RESULT_ERROR_INVALID_FUNCTION_NAME
+// /
+// / @details
+// /     - The function pointer is unique for the device on which the module was
+// /       created.
+// /     - The function pointer is no longer valid if module is destroyed.
+// /     - The function name should only refer to callable functions within the
+// /       module.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hModule`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pFunctionName`
+// /         + `nullptr == pfnFunction`
+// /     - ::ZE_RESULT_ERROR_INVALID_FUNCTION_NAME
 func ZeModuleGetFunctionPointer(
-	hModule ZeModuleHandle,	// hModule [in] handle of the module
-	pFunctionName *byte,	// pFunctionName [in] Name of function to retrieve function pointer for.
-	pfnFunction *unsafe.Pointer,	// pfnFunction [out] pointer to function.
+	hModule ZeModuleHandle, // hModule [in] handle of the module
+	pFunctionName *byte, // pFunctionName [in] Name of function to retrieve function pointer for.
+	pfnFunction *unsafe.Pointer, // pfnFunction [out] pointer to function.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeModuleGetFunctionPointer", uintptr(hModule), uintptr(unsafe.Pointer(pFunctionName)), uintptr(unsafe.Pointer(pfnFunction)))
 }
 
 // ZeKernelSetGroupSize Set group size for a kernel.
-/// 
-/// @details
-///     - The group size will be used when a ::zeCommandListAppendLaunchKernel
-///       variant is called.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION
+// /
+// / @details
+// /     - The group size will be used when a ::zeCommandListAppendLaunchKernel
+// /       variant is called.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION
 func ZeKernelSetGroupSize(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	groupSizeX uint32,	// groupSizeX [in] group size for X dimension to use for this kernel
-	groupSizeY uint32,	// groupSizeY [in] group size for Y dimension to use for this kernel
-	groupSizeZ uint32,	// groupSizeZ [in] group size for Z dimension to use for this kernel
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	groupSizeX uint32, // groupSizeX [in] group size for X dimension to use for this kernel
+	groupSizeY uint32, // groupSizeY [in] group size for Y dimension to use for this kernel
+	groupSizeZ uint32, // groupSizeZ [in] group size for Z dimension to use for this kernel
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSetGroupSize", uintptr(hKernel), uintptr(groupSizeX), uintptr(groupSizeY), uintptr(groupSizeZ))
 }
 
 // ZeKernelSuggestGroupSize Query a suggested group size for a kernel given a global size for each
-///        dimension.
-/// 
-/// @details
-///     - This function ignores the group size that is set using
-///       ::zeKernelSetGroupSize.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == groupSizeX`
-///         + `nullptr == groupSizeY`
-///         + `nullptr == groupSizeZ`
-///     - ::ZE_RESULT_ERROR_INVALID_GLOBAL_WIDTH_DIMENSION
+// /        dimension.
+// /
+// / @details
+// /     - This function ignores the group size that is set using
+// /       ::zeKernelSetGroupSize.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == groupSizeX`
+// /         + `nullptr == groupSizeY`
+// /         + `nullptr == groupSizeZ`
+// /     - ::ZE_RESULT_ERROR_INVALID_GLOBAL_WIDTH_DIMENSION
 func ZeKernelSuggestGroupSize(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	globalSizeX uint32,	// globalSizeX [in] global width for X dimension
-	globalSizeY uint32,	// globalSizeY [in] global width for Y dimension
-	globalSizeZ uint32,	// globalSizeZ [in] global width for Z dimension
-	groupSizeX *uint32,	// groupSizeX [out] recommended size of group for X dimension
-	groupSizeY *uint32,	// groupSizeY [out] recommended size of group for Y dimension
-	groupSizeZ *uint32,	// groupSizeZ [out] recommended size of group for Z dimension
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	globalSizeX uint32, // globalSizeX [in] global width for X dimension
+	globalSizeY uint32, // globalSizeY [in] global width for Y dimension
+	globalSizeZ uint32, // globalSizeZ [in] global width for Z dimension
+	groupSizeX *uint32, // groupSizeX [out] recommended size of group for X dimension
+	groupSizeY *uint32, // groupSizeY [out] recommended size of group for Y dimension
+	groupSizeZ *uint32, // groupSizeZ [out] recommended size of group for Z dimension
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSuggestGroupSize", uintptr(hKernel), uintptr(globalSizeX), uintptr(globalSizeY), uintptr(globalSizeZ), uintptr(unsafe.Pointer(groupSizeX)), uintptr(unsafe.Pointer(groupSizeY)), uintptr(unsafe.Pointer(groupSizeZ)))
 }
 
 // ZeKernelSuggestMaxCooperativeGroupCount Query a suggested max group count for a cooperative kernel.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-///     - Applications are recommended to use ::zeKernelSuggestGroupSize and
-///       ::zeKernelSetGroupSize first before calling this function and
-///       launching cooperative kernels. Otherwise, implementation may return
-///       ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == totalGroupCount`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /     - Applications are recommended to use ::zeKernelSuggestGroupSize and
+// /       ::zeKernelSetGroupSize first before calling this function and
+// /       launching cooperative kernels. Otherwise, implementation may return
+// /       ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == totalGroupCount`
 func ZeKernelSuggestMaxCooperativeGroupCount(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	totalGroupCount *uint32,	// totalGroupCount [out] recommended total group count.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	totalGroupCount *uint32, // totalGroupCount [out] recommended total group count.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSuggestMaxCooperativeGroupCount", uintptr(hKernel), uintptr(unsafe.Pointer(totalGroupCount)))
 }
 
 // ZeKernelSetArgumentValue Set kernel argument for a kernel.
-/// 
-/// @details
-///     - The argument values will be used when a
-///       ::zeCommandListAppendLaunchKernel variant is called.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same kernel handle.
-///     - The implementation of this function should be lock-free.
-///     - If argument is SLM (size), then SLM size in bytes for this resource is
-///       provided as argument size and argument value is null
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_INDEX
-///     - ::ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_SIZE
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT
+// /
+// / @details
+// /     - The argument values will be used when a
+// /       ::zeCommandListAppendLaunchKernel variant is called.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /     - If argument is SLM (size), then SLM size in bytes for this resource is
+// /       provided as argument size and argument value is null
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_INDEX
+// /     - ::ZE_RESULT_ERROR_INVALID_KERNEL_ARGUMENT_SIZE
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT
 func ZeKernelSetArgumentValue(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	argIndex uint32,	// argIndex [in] argument index in range [0, num args - 1]
-	argSize uintptr,	// argSize [in] size of argument type
-	pArgValue unsafe.Pointer,	// pArgValue [in][optional] argument value represented as matching arg type. If null then argument value is considered null.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	argIndex uint32, // argIndex [in] argument index in range [0, num args - 1]
+	argSize uintptr, // argSize [in] size of argument type
+	pArgValue unsafe.Pointer, // pArgValue [in][optional] argument value represented as matching arg type. If null then argument value is considered null.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSetArgumentValue", uintptr(hKernel), uintptr(argIndex), uintptr(argSize), uintptr(unsafe.Pointer(pArgValue)))
 }
 
 // ZeKernelIndirectAccessFlags (ze_kernel_indirect_access_flags_t) Kernel indirect access flags
 type ZeKernelIndirectAccessFlags uint32
+
 const (
-	ZE_KERNEL_INDIRECT_ACCESS_FLAG_HOST ZeKernelIndirectAccessFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_KERNEL_INDIRECT_ACCESS_FLAG_HOST Indicates that the kernel accesses host allocations indirectly.
-	ZE_KERNEL_INDIRECT_ACCESS_FLAG_DEVICE ZeKernelIndirectAccessFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_KERNEL_INDIRECT_ACCESS_FLAG_DEVICE Indicates that the kernel accesses device allocations indirectly.
-	ZE_KERNEL_INDIRECT_ACCESS_FLAG_SHARED ZeKernelIndirectAccessFlags = /* ZE_BIT(2) */(( 1 << 2 ))	// ZE_KERNEL_INDIRECT_ACCESS_FLAG_SHARED Indicates that the kernel accesses shared allocations indirectly.
-	ZE_KERNEL_INDIRECT_ACCESS_FLAG_FORCE_UINT32 ZeKernelIndirectAccessFlags = 0x7fffffff	// ZE_KERNEL_INDIRECT_ACCESS_FLAG_FORCE_UINT32 Value marking end of ZE_KERNEL_INDIRECT_ACCESS_FLAG_* ENUMs
+	ZE_KERNEL_INDIRECT_ACCESS_FLAG_HOST         ZeKernelIndirectAccessFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_KERNEL_INDIRECT_ACCESS_FLAG_HOST Indicates that the kernel accesses host allocations indirectly.
+	ZE_KERNEL_INDIRECT_ACCESS_FLAG_DEVICE       ZeKernelIndirectAccessFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_KERNEL_INDIRECT_ACCESS_FLAG_DEVICE Indicates that the kernel accesses device allocations indirectly.
+	ZE_KERNEL_INDIRECT_ACCESS_FLAG_SHARED       ZeKernelIndirectAccessFlags = /* ZE_BIT(2) */ (1 << 2) // ZE_KERNEL_INDIRECT_ACCESS_FLAG_SHARED Indicates that the kernel accesses shared allocations indirectly.
+	ZE_KERNEL_INDIRECT_ACCESS_FLAG_FORCE_UINT32 ZeKernelIndirectAccessFlags = 0x7fffffff               // ZE_KERNEL_INDIRECT_ACCESS_FLAG_FORCE_UINT32 Value marking end of ZE_KERNEL_INDIRECT_ACCESS_FLAG_* ENUMs
 
 )
 
 // ZeKernelSetIndirectAccess Sets kernel indirect access flags.
-/// 
-/// @details
-///     - The application should specify which allocations will be indirectly
-///       accessed by the kernel to allow driver to optimize which allocations
-///       are made resident
-///     - This function may **not** be called from simultaneous threads with the
-///       same Kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x7 < flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /
+// / @details
+// /     - The application should specify which allocations will be indirectly
+// /       accessed by the kernel to allow driver to optimize which allocations
+// /       are made resident
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same Kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x7 < flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
 func ZeKernelSetIndirectAccess(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	flags ZeKernelIndirectAccessFlags,	// flags [in] kernel indirect access flags
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	flags ZeKernelIndirectAccessFlags, // flags [in] kernel indirect access flags
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSetIndirectAccess", uintptr(hKernel), uintptr(flags))
 }
 
 // ZeKernelGetIndirectAccess Retrieve kernel indirect access flags.
-/// 
-/// @details
-///     - This function may be called from simultaneous threads with the same
-///       Kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pFlags`
+// /
+// / @details
+// /     - This function may be called from simultaneous threads with the same
+// /       Kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pFlags`
 func ZeKernelGetIndirectAccess(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pFlags *ZeKernelIndirectAccessFlags,	// pFlags [out] query result for kernel indirect access flags.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pFlags *ZeKernelIndirectAccessFlags, // pFlags [out] query result for kernel indirect access flags.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelGetIndirectAccess", uintptr(hKernel), uintptr(unsafe.Pointer(pFlags)))
 }
 
 // ZeKernelGetSourceAttributes Retrieve all declared kernel attributes (i.e. can be specified with
-///        __attribute__ in runtime language).
-/// 
-/// @details
-///     - This function may be called from simultaneous threads with the same
-///       Kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /        __attribute__ in runtime language).
+// /
+// / @details
+// /     - This function may be called from simultaneous threads with the same
+// /       Kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZeKernelGetSourceAttributes(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pSize *uint32,	// pSize [in,out] pointer to size of string in bytes, including null-terminating character.
-	pString **byte,	// pString [in,out][optional] pointer to application-managed character array (string data). If NULL, the string length of the kernel source attributes, including a null-terminating character, is returned in pSize. Otherwise, pString must point to valid application memory that is greater than or equal to *pSize bytes in length, and on return the pointed-to string will contain a space-separated list of kernel source attributes. Note: This API was originally intended to ship with a char *pString, however this typo was introduced. Thus the API has to stay this way for backwards compatible reasons. It can be corrected in v2.0. Suggestion is to create your own char *pString and then pass to this API with &pString.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pSize *uint32, // pSize [in,out] pointer to size of string in bytes, including null-terminating character.
+	pString **byte, // pString [in,out][optional] pointer to application-managed character array (string data). If NULL, the string length of the kernel source attributes, including a null-terminating character, is returned in pSize. Otherwise, pString must point to valid application memory that is greater than or equal to *pSize bytes in length, and on return the pointed-to string will contain a space-separated list of kernel source attributes. Note: This API was originally intended to ship with a char *pString, however this typo was introduced. Thus the API has to stay this way for backwards compatible reasons. It can be corrected in v2.0. Suggestion is to create your own char *pString and then pass to this API with &pString.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelGetSourceAttributes", uintptr(hKernel), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pString)))
 }
 
 // ZeCacheConfigFlags (ze_cache_config_flags_t) Supported Cache Config flags
 type ZeCacheConfigFlags uint32
+
 const (
-	ZE_CACHE_CONFIG_FLAG_LARGE_SLM ZeCacheConfigFlags = /* ZE_BIT(0) */(( 1 << 0 ))	// ZE_CACHE_CONFIG_FLAG_LARGE_SLM Large SLM size
-	ZE_CACHE_CONFIG_FLAG_LARGE_DATA ZeCacheConfigFlags = /* ZE_BIT(1) */(( 1 << 1 ))	// ZE_CACHE_CONFIG_FLAG_LARGE_DATA Large General Data size
-	ZE_CACHE_CONFIG_FLAG_FORCE_UINT32 ZeCacheConfigFlags = 0x7fffffff	// ZE_CACHE_CONFIG_FLAG_FORCE_UINT32 Value marking end of ZE_CACHE_CONFIG_FLAG_* ENUMs
+	ZE_CACHE_CONFIG_FLAG_LARGE_SLM    ZeCacheConfigFlags = /* ZE_BIT(0) */ (1 << 0) // ZE_CACHE_CONFIG_FLAG_LARGE_SLM Large SLM size
+	ZE_CACHE_CONFIG_FLAG_LARGE_DATA   ZeCacheConfigFlags = /* ZE_BIT(1) */ (1 << 1) // ZE_CACHE_CONFIG_FLAG_LARGE_DATA Large General Data size
+	ZE_CACHE_CONFIG_FLAG_FORCE_UINT32 ZeCacheConfigFlags = 0x7fffffff               // ZE_CACHE_CONFIG_FLAG_FORCE_UINT32 Value marking end of ZE_CACHE_CONFIG_FLAG_* ENUMs
 
 )
 
 // ZeKernelSetCacheConfig Sets the preferred cache configuration.
-/// 
-/// @details
-///     - The cache configuration will be used when a
-///       ::zeCommandListAppendLaunchKernel variant is called.
-///     - The application must **not** call this function from simultaneous
-///       threads with the same kernel handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
-///         + `0x3 < flags`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /
+// / @details
+// /     - The cache configuration will be used when a
+// /       ::zeCommandListAppendLaunchKernel variant is called.
+// /     - The application must **not** call this function from simultaneous
+// /       threads with the same kernel handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_ENUMERATION
+// /         + `0x3 < flags`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_ENUMERATION
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
 func ZeKernelSetCacheConfig(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	flags ZeCacheConfigFlags,	// flags [in] cache configuration. must be 0 (default configuration) or a valid combination of ::ze_cache_config_flag_t.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	flags ZeCacheConfigFlags, // flags [in] cache configuration. must be 0 (default configuration) or a valid combination of ::ze_cache_config_flag_t.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelSetCacheConfig", uintptr(hKernel), uintptr(flags))
 }
@@ -880,437 +885,436 @@ const ZE_MAX_MODULE_UUID_SIZE = 16
 
 // ZeKernelUuid (ze_kernel_uuid_t) Kernel universal unique id (UUID)
 type ZeKernelUuid struct {
-	Kid [ZE_MAX_KERNEL_UUID_SIZE]uint8	// Kid [out] opaque data representing a kernel UUID
-	Mid [ZE_MAX_MODULE_UUID_SIZE]uint8	// Mid [out] opaque data representing the kernel's module UUID
+	Kid [ZE_MAX_KERNEL_UUID_SIZE]uint8 // Kid [out] opaque data representing a kernel UUID
+	Mid [ZE_MAX_MODULE_UUID_SIZE]uint8 // Mid [out] opaque data representing the kernel's module UUID
 
 }
 
 // ZeKernelProperties (ze_kernel_properties_t) Kernel properties
 type ZeKernelProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Numkernelargs uint32	// Numkernelargs [out] number of kernel arguments.
-	Requiredgroupsizex uint32	// Requiredgroupsizex [out] required group size in the X dimension, or zero if there is no required group size
-	Requiredgroupsizey uint32	// Requiredgroupsizey [out] required group size in the Y dimension, or zero if there is no required group size
-	Requiredgroupsizez uint32	// Requiredgroupsizez [out] required group size in the Z dimension, or zero if there is no required group size
-	Requirednumsubgroups uint32	// Requirednumsubgroups [out] required number of subgroups per thread group, or zero if there is no required number of subgroups
-	Requiredsubgroupsize uint32	// Requiredsubgroupsize [out] required subgroup size, or zero if there is no required subgroup size
-	Maxsubgroupsize uint32	// Maxsubgroupsize [out] maximum subgroup size
-	Maxnumsubgroups uint32	// Maxnumsubgroups [out] maximum number of subgroups per thread group
-	Localmemsize uint32	// Localmemsize [out] local memory size used by each thread group
-	Privatememsize uint32	// Privatememsize [out] private memory size allocated by compiler used by each thread
-	Spillmemsize uint32	// Spillmemsize [out] spill memory size allocated by compiler
-	Uuid ZeKernelUuid	// Uuid [out] universal unique identifier.
+	Stype                ZeStructureType // Stype [in] type of this structure
+	Pnext                unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Numkernelargs        uint32          // Numkernelargs [out] number of kernel arguments.
+	Requiredgroupsizex   uint32          // Requiredgroupsizex [out] required group size in the X dimension, or zero if there is no required group size
+	Requiredgroupsizey   uint32          // Requiredgroupsizey [out] required group size in the Y dimension, or zero if there is no required group size
+	Requiredgroupsizez   uint32          // Requiredgroupsizez [out] required group size in the Z dimension, or zero if there is no required group size
+	Requirednumsubgroups uint32          // Requirednumsubgroups [out] required number of subgroups per thread group, or zero if there is no required number of subgroups
+	Requiredsubgroupsize uint32          // Requiredsubgroupsize [out] required subgroup size, or zero if there is no required subgroup size
+	Maxsubgroupsize      uint32          // Maxsubgroupsize [out] maximum subgroup size
+	Maxnumsubgroups      uint32          // Maxnumsubgroups [out] maximum number of subgroups per thread group
+	Localmemsize         uint32          // Localmemsize [out] local memory size used by each thread group
+	Privatememsize       uint32          // Privatememsize [out] private memory size allocated by compiler used by each thread
+	Spillmemsize         uint32          // Spillmemsize [out] spill memory size allocated by compiler
+	Uuid                 ZeKernelUuid    // Uuid [out] universal unique identifier.
 
 }
 
 // ZeKernelPreferredGroupSizeProperties (ze_kernel_preferred_group_size_properties_t) Additional kernel preferred group size properties
-/// 
-/// @details
-///     - This structure may be passed to ::zeKernelGetProperties, via the
-///       `pNext` member of ::ze_kernel_properties_t, to query additional kernel
-///       preferred group size properties.
+// /
+// / @details
+// /     - This structure may be passed to ::zeKernelGetProperties, via the
+// /       `pNext` member of ::ze_kernel_properties_t, to query additional kernel
+// /       preferred group size properties.
 type ZeKernelPreferredGroupSizeProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Preferredmultiple uint32	// Preferredmultiple [out] preferred group size multiple
+	Stype             ZeStructureType // Stype [in] type of this structure
+	Pnext             unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Preferredmultiple uint32          // Preferredmultiple [out] preferred group size multiple
 
 }
 
 // ZeKernelGetProperties Retrieve kernel properties.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pKernelProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pKernelProperties`
 func ZeKernelGetProperties(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pKernelProperties *ZeKernelProperties,	// pKernelProperties [in,out] query result for kernel properties.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pKernelProperties *ZeKernelProperties, // pKernelProperties [in,out] query result for kernel properties.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelGetProperties", uintptr(hKernel), uintptr(unsafe.Pointer(pKernelProperties)))
 }
 
 // ZeKernelGetName Retrieve kernel name from Kernel.
-/// 
-/// @details
-///     - The caller can pass nullptr for pName when querying only for size.
-///     - The implementation will copy the kernel name into a buffer supplied by
-///       the caller.
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pSize`
+// /
+// / @details
+// /     - The caller can pass nullptr for pName when querying only for size.
+// /     - The implementation will copy the kernel name into a buffer supplied by
+// /       the caller.
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pSize`
 func ZeKernelGetName(
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pSize *uintptr,	// pSize [in,out] size of kernel name string, including null terminator, in bytes.
-	pName *byte,	// pName [in,out][optional] char pointer to kernel name.
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pSize *uintptr, // pSize [in,out] size of kernel name string, including null terminator, in bytes.
+	pName *byte, // pName [in,out][optional] char pointer to kernel name.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeKernelGetName", uintptr(hKernel), uintptr(unsafe.Pointer(pSize)), uintptr(unsafe.Pointer(pName)))
 }
 
 // ZeGroupCount (ze_group_count_t) Kernel dispatch group count.
 type ZeGroupCount struct {
-	Groupcountx uint32	// Groupcountx [in] number of thread groups in X dimension
-	Groupcounty uint32	// Groupcounty [in] number of thread groups in Y dimension
-	Groupcountz uint32	// Groupcountz [in] number of thread groups in Z dimension
+	Groupcountx uint32 // Groupcountx [in] number of thread groups in X dimension
+	Groupcounty uint32 // Groupcounty [in] number of thread groups in Y dimension
+	Groupcountz uint32 // Groupcountz [in] number of thread groups in Z dimension
 
 }
 
 // ZeCommandListAppendLaunchKernel Launch kernel over one or more work groups.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - The application must ensure the command list, kernel and events were
-///       created on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pLaunchFuncArgs`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - The application must ensure the command list, kernel and events were
+// /       created on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pLaunchFuncArgs`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendLaunchKernel(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pLaunchFuncArgs *ZeGroupCount,	// pLaunchFuncArgs [in] thread group launch arguments
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pLaunchFuncArgs *ZeGroupCount, // pLaunchFuncArgs [in] thread group launch arguments
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchKernel", uintptr(hCommandList), uintptr(hKernel), uintptr(unsafe.Pointer(pLaunchFuncArgs)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendLaunchKernelWithParameters Launch kernel over one or more work groups and allow to pass
-///        additional parameters.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - The application must ensure the command list, kernel and events were
-///       created on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-///     - This function allows to pass additional parameters in the form of
-///       `${x}_base_desc_t`
-///     - This function can replace ::zeCommandListAppendLaunchCooperativeKernel
-///       with additional parameter
-///       `${x}_command_list_append_launch_kernel_param_cooperative_desc_t`
-///     - This function supports both immediate and regular command lists.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pGroupCounts`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + when passed additional parameters are invalid or incompatible with the device or command list
+// /        additional parameters.
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - The application must ensure the command list, kernel and events were
+// /       created on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /     - This function allows to pass additional parameters in the form of
+// /       `${x}_base_desc_t`
+// /     - This function can replace ::zeCommandListAppendLaunchCooperativeKernel
+// /       with additional parameter
+// /       `${x}_command_list_append_launch_kernel_param_cooperative_desc_t`
+// /     - This function supports both immediate and regular command lists.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pGroupCounts`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + when passed additional parameters are invalid or incompatible with the device or command list
 func ZeCommandListAppendLaunchKernelWithParameters(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pGroupCounts *ZeGroupCount,	// pGroupCounts [in] thread group launch arguments
-	pNext unsafe.Pointer,	// pNext [in][optional] additional parameters passed to the function
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pGroupCounts *ZeGroupCount, // pGroupCounts [in] thread group launch arguments
+	pNext unsafe.Pointer, // pNext [in][optional] additional parameters passed to the function
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchKernelWithParameters", uintptr(hCommandList), uintptr(hKernel), uintptr(unsafe.Pointer(pGroupCounts)), uintptr(unsafe.Pointer(pNext)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeGroupSize (ze_group_size_t) Kernel dispatch group sizes.
 type ZeGroupSize struct {
-	Groupsizex uint32	// Groupsizex [in] size of thread group in X dimension
-	Groupsizey uint32	// Groupsizey [in] size of thread group in Y dimension
-	Groupsizez uint32	// Groupsizez [in] size of thread group in Z dimension
+	Groupsizex uint32 // Groupsizex [in] size of thread group in X dimension
+	Groupsizey uint32 // Groupsizey [in] size of thread group in Y dimension
+	Groupsizez uint32 // Groupsizez [in] size of thread group in Z dimension
 
 }
 
 // ZeCommandListAppendLaunchKernelWithArguments Launch kernel over one or more work groups with specifying work group
-///        size and all kernel arguments and allow to pass additional extensions.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - The application must ensure the command list, kernel and events were
-///       created on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-///     - This function supports both immediate and regular command lists.
-///     - This function changes kernel state as if separate
-///       ${x}KernelSetGroupSize and ${x}KernelSetArgumentValue functions were
-///       called.
-///     - This function allows to pass additional extensions in the form of
-///       `${x}_base_desc_t`
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///         + when passed additional extensions are invalid or incompatible with the device or command list
-///     - ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION - "as per ${x}KernelSetGroupSize"
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT - "as per ${x}KernelSetArgumentValue"
+// /        size and all kernel arguments and allow to pass additional extensions.
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - The application must ensure the command list, kernel and events were
+// /       created on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /     - This function supports both immediate and regular command lists.
+// /     - This function changes kernel state as if separate
+// /       ${x}KernelSetGroupSize and ${x}KernelSetArgumentValue functions were
+// /       called.
+// /     - This function allows to pass additional extensions in the form of
+// /       `${x}_base_desc_t`
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /         + when passed additional extensions are invalid or incompatible with the device or command list
+// /     - ::ZE_RESULT_ERROR_INVALID_GROUP_SIZE_DIMENSION - "as per ${x}KernelSetGroupSize"
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_IMAGE_FORMAT - "as per ${x}KernelSetArgumentValue"
 func ZeCommandListAppendLaunchKernelWithArguments(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	groupCounts *ZeGroupCount,	// groupCounts [in] thread group counts (gozel hack: converted to a hidden pointer from a struct value)
-	groupSizes *ZeGroupSize,	// groupSizes [in] thread group sizes (gozel hack: converted to a hidden pointer from a struct value)
-	pArguments *unsafe.Pointer,	// pArguments [in]pointer to an array of pointers
-	pNext unsafe.Pointer,	// pNext [in][optional] additional extensions passed to the function
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	groupCounts *ZeGroupCount, // groupCounts [in] thread group counts (gozel hack: converted to a hidden pointer from a struct value)
+	groupSizes *ZeGroupSize, // groupSizes [in] thread group sizes (gozel hack: converted to a hidden pointer from a struct value)
+	pArguments *unsafe.Pointer, // pArguments [in]pointer to an array of pointers
+	pNext unsafe.Pointer, // pNext [in][optional] additional extensions passed to the function
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchKernelWithArguments", uintptr(hCommandList), uintptr(hKernel), uintptr(unsafe.Pointer(groupCounts)), uintptr(unsafe.Pointer(groupSizes)), uintptr(unsafe.Pointer(pArguments)), uintptr(unsafe.Pointer(pNext)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendLaunchCooperativeKernel Launch kernel cooperatively over one or more work groups.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - This may only be used for a command list that are submitted to command
-///       queue with cooperative flag set.
-///     - The application must ensure the command list, kernel and events were
-///       created on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-///     - Use ::zeKernelSuggestMaxCooperativeGroupCount to recommend max group
-///       count for device for cooperative functions that device supports.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pLaunchFuncArgs`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - This may only be used for a command list that are submitted to command
+// /       queue with cooperative flag set.
+// /     - The application must ensure the command list, kernel and events were
+// /       created on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /     - Use ::zeKernelSuggestMaxCooperativeGroupCount to recommend max group
+// /       count for device for cooperative functions that device supports.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pLaunchFuncArgs`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendLaunchCooperativeKernel(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pLaunchFuncArgs *ZeGroupCount,	// pLaunchFuncArgs [in] thread group launch arguments
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pLaunchFuncArgs *ZeGroupCount, // pLaunchFuncArgs [in] thread group launch arguments
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchCooperativeKernel", uintptr(hCommandList), uintptr(hKernel), uintptr(unsafe.Pointer(pLaunchFuncArgs)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendLaunchKernelIndirect Launch kernel over one or more work groups using indirect arguments.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - The application must ensure the launch arguments are visible to the
-///       device on which the command list was created.
-///     - The implementation must not access the contents of the launch
-///       arguments as they are free to be modified by either the Host or device
-///       up until execution.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - The application must ensure the command list, kernel and events were
-///       created, and the memory was allocated, on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///         + `nullptr == hKernel`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pLaunchArgumentsBuffer`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - The application must ensure the launch arguments are visible to the
+// /       device on which the command list was created.
+// /     - The implementation must not access the contents of the launch
+// /       arguments as they are free to be modified by either the Host or device
+// /       up until execution.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - The application must ensure the command list, kernel and events were
+// /       created, and the memory was allocated, on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /         + `nullptr == hKernel`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pLaunchArgumentsBuffer`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendLaunchKernelIndirect(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	hKernel ZeKernelHandle,	// hKernel [in] handle of the kernel object
-	pLaunchArgumentsBuffer *ZeGroupCount,	// pLaunchArgumentsBuffer [in] pointer to device buffer that will contain thread group launch arguments
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	hKernel ZeKernelHandle, // hKernel [in] handle of the kernel object
+	pLaunchArgumentsBuffer *ZeGroupCount, // pLaunchArgumentsBuffer [in] pointer to device buffer that will contain thread group launch arguments
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchKernelIndirect", uintptr(hCommandList), uintptr(hKernel), uintptr(unsafe.Pointer(pLaunchArgumentsBuffer)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
 
 // ZeCommandListAppendLaunchMultipleKernelsIndirect Launch multiple kernels over one or more work groups using an array of
-///        indirect arguments.
-/// 
-/// @details
-///     - The application must ensure the kernel and events are accessible by
-///       the device on which the command list was created.
-///     - The application must ensure the array of launch arguments and count
-///       buffer are visible to the device on which the command list was
-///       created.
-///     - The implementation must not access the contents of the array of launch
-///       arguments or count buffer as they are free to be modified by either
-///       the Host or device up until execution.
-///     - This may **only** be called for a command list created with command
-///       queue group ordinal that supports compute.
-///     - The application must enusre the command list, kernel and events were
-///       created, and the memory was allocated, on the same context.
-///     - This function may **not** be called from simultaneous threads with the
-///       same command list handle.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hCommandList`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == phKernels`
-///         + `nullptr == pCountBuffer`
-///         + `nullptr == pLaunchArgumentsBuffer`
-///     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
-///     - ::ZE_RESULT_ERROR_INVALID_SIZE
-///         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
+// /        indirect arguments.
+// /
+// / @details
+// /     - The application must ensure the kernel and events are accessible by
+// /       the device on which the command list was created.
+// /     - The application must ensure the array of launch arguments and count
+// /       buffer are visible to the device on which the command list was
+// /       created.
+// /     - The implementation must not access the contents of the array of launch
+// /       arguments or count buffer as they are free to be modified by either
+// /       the Host or device up until execution.
+// /     - This may **only** be called for a command list created with command
+// /       queue group ordinal that supports compute.
+// /     - The application must enusre the command list, kernel and events were
+// /       created, and the memory was allocated, on the same context.
+// /     - This function may **not** be called from simultaneous threads with the
+// /       same command list handle.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hCommandList`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == phKernels`
+// /         + `nullptr == pCountBuffer`
+// /         + `nullptr == pLaunchArgumentsBuffer`
+// /     - ::ZE_RESULT_ERROR_INVALID_SYNCHRONIZATION_OBJECT
+// /     - ::ZE_RESULT_ERROR_INVALID_SIZE
+// /         + `(nullptr == phWaitEvents) && (0 < numWaitEvents)`
 func ZeCommandListAppendLaunchMultipleKernelsIndirect(
-	hCommandList ZeCommandListHandle,	// hCommandList [in] handle of the command list
-	numKernels uint32,	// numKernels [in] maximum number of kernels to launch
-	phKernels *ZeKernelHandle,	// phKernels [in][range(0, numKernels)] handles of the kernel objects
-	pCountBuffer *uint32,	// pCountBuffer [in] pointer to device memory location that will contain the actual number of kernels to launch; value must be less than or equal to numKernels
-	pLaunchArgumentsBuffer *ZeGroupCount,	// pLaunchArgumentsBuffer [in][range(0, numKernels)] pointer to device buffer that will contain a contiguous array of thread group launch arguments
-	hSignalEvent ZeEventHandle,	// hSignalEvent [in][optional] handle of the event to signal on completion
-	numWaitEvents uint32,	// numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
-	phWaitEvents *ZeEventHandle,	// phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
+	hCommandList ZeCommandListHandle, // hCommandList [in] handle of the command list
+	numKernels uint32, // numKernels [in] maximum number of kernels to launch
+	phKernels *ZeKernelHandle, // phKernels [in][range(0, numKernels)] handles of the kernel objects
+	pCountBuffer *uint32, // pCountBuffer [in] pointer to device memory location that will contain the actual number of kernels to launch; value must be less than or equal to numKernels
+	pLaunchArgumentsBuffer *ZeGroupCount, // pLaunchArgumentsBuffer [in][range(0, numKernels)] pointer to device buffer that will contain a contiguous array of thread group launch arguments
+	hSignalEvent ZeEventHandle, // hSignalEvent [in][optional] handle of the event to signal on completion
+	numWaitEvents uint32, // numWaitEvents [in][optional] number of events to wait on before launching; must be 0 if `nullptr == phWaitEvents`
+	phWaitEvents *ZeEventHandle, // phWaitEvents [in][optional][range(0, numWaitEvents)] handle of the events to wait on before launching
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeCommandListAppendLaunchMultipleKernelsIndirect", uintptr(hCommandList), uintptr(numKernels), uintptr(unsafe.Pointer(phKernels)), uintptr(unsafe.Pointer(pCountBuffer)), uintptr(unsafe.Pointer(pLaunchArgumentsBuffer)), uintptr(hSignalEvent), uintptr(numWaitEvents), uintptr(unsafe.Pointer(phWaitEvents)))
 }
-

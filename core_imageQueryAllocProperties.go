@@ -24,51 +24,51 @@ const ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_NAME = "ZE_extension_image_query_alloc
 
 // ZeImageQueryAllocPropertiesExtVersion (ze_image_query_alloc_properties_ext_version_t) Image Query Allocation Properties Extension Version(s)
 type ZeImageQueryAllocPropertiesExtVersion uintptr
+
 const (
-	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0 ZeImageQueryAllocPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0 version 1.0
-	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_CURRENT ZeImageQueryAllocPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_CURRENT latest known version
-	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_FORCE_UINT32 ZeImageQueryAllocPropertiesExtVersion = 0x7fffffff	// ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_* ENUMs
+	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0          ZeImageQueryAllocPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0 version 1.0
+	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_CURRENT      ZeImageQueryAllocPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_CURRENT latest known version
+	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_FORCE_UINT32 ZeImageQueryAllocPropertiesExtVersion = 0x7fffffff                                                   // ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_FORCE_UINT32 Value marking end of ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_* ENUMs
 
 )
 
 // ZeImageAllocationExtProperties (ze_image_allocation_ext_properties_t) Image allocation properties queried using
-///        ::zeImageGetAllocPropertiesExt
+// /        ::zeImageGetAllocPropertiesExt
 type ZeImageAllocationExtProperties struct {
-	Stype ZeStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Id uint64	// Id [out] identifier for this allocation
+	Stype ZeStructureType // Stype [in] type of this structure
+	Pnext unsafe.Pointer  // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Id    uint64          // Id [out] identifier for this allocation
 
 }
 
 // ZeImageGetAllocPropertiesExt Retrieves attributes of an image allocation
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hContext`
-///         + `nullptr == hImage`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pImageAllocProperties`
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hContext`
+// /         + `nullptr == hImage`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pImageAllocProperties`
 func ZeImageGetAllocPropertiesExt(
-	hContext ZeContextHandle,	// hContext [in] handle of the context object
-	hImage ZeImageHandle,	// hImage [in] handle of image object to query
-	pImageAllocProperties *ZeImageAllocationExtProperties,	// pImageAllocProperties [in,out] query result for image allocation properties
+	hContext ZeContextHandle, // hContext [in] handle of the context object
+	hImage ZeImageHandle, // hImage [in] handle of image object to query
+	pImageAllocProperties *ZeImageAllocationExtProperties, // pImageAllocProperties [in,out] query result for image allocation properties
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zeImageGetAllocPropertiesExt", uintptr(hContext), uintptr(hImage), uintptr(unsafe.Pointer(pImageAllocProperties)))
 }
-

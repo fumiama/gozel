@@ -24,58 +24,58 @@ const ZES_ENGINE_ACTIVITY_EXT_NAME = "ZES_extension_engine_activity"
 
 // ZesEngineActivityExtVersion (zes_engine_activity_ext_version_t) Engine Activity Extension Version(s)
 type ZesEngineActivityExtVersion uintptr
+
 const (
-	ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0 ZesEngineActivityExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0 version 1.0
-	ZES_ENGINE_ACTIVITY_EXT_VERSION_CURRENT ZesEngineActivityExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */((( 1 << 16 )|( 0 & 0x0000ffff)))	// ZES_ENGINE_ACTIVITY_EXT_VERSION_CURRENT latest known version
-	ZES_ENGINE_ACTIVITY_EXT_VERSION_FORCE_UINT32 ZesEngineActivityExtVersion = 0x7fffffff	// ZES_ENGINE_ACTIVITY_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_ENGINE_ACTIVITY_EXT_VERSION_* ENUMs
+	ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0          ZesEngineActivityExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0 version 1.0
+	ZES_ENGINE_ACTIVITY_EXT_VERSION_CURRENT      ZesEngineActivityExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_ENGINE_ACTIVITY_EXT_VERSION_CURRENT latest known version
+	ZES_ENGINE_ACTIVITY_EXT_VERSION_FORCE_UINT32 ZesEngineActivityExtVersion = 0x7fffffff                                                   // ZES_ENGINE_ACTIVITY_EXT_VERSION_FORCE_UINT32 Value marking end of ZES_ENGINE_ACTIVITY_EXT_VERSION_* ENUMs
 
 )
 
 // ZesEngineExtProperties (zes_engine_ext_properties_t) Extension properties related to Engine Groups
-/// 
-/// @details
-///     - This structure may be passed to ::zesEngineGetProperties by having the
-///       pNext member of ::zes_engine_properties_t point at this struct.
-///     - Used for SRIOV per Virtual Function device utilization by
-///       ::zes_engine_group_t
+// /
+// / @details
+// /     - This structure may be passed to ::zesEngineGetProperties by having the
+// /       pNext member of ::zes_engine_properties_t point at this struct.
+// /     - Used for SRIOV per Virtual Function device utilization by
+// /       ::zes_engine_group_t
 type ZesEngineExtProperties struct {
-	Stype ZesStructureType	// Stype [in] type of this structure
-	Pnext unsafe.Pointer	// Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
-	Countofvirtualfunctioninstance uint32	// Countofvirtualfunctioninstance [out] Number of Virtual Function(VF) instances associated with engine to monitor the utilization of hardware across all Virtual Function from a Physical Function (PF) instance. These VF-by-VF views should provide engine group and individual engine level granularity. This count represents the number of VF instances that are actively using the resource represented by the engine handle.
+	Stype                          ZesStructureType // Stype [in] type of this structure
+	Pnext                          unsafe.Pointer   // Pnext [in,out][optional] must be null or a pointer to an extension-specific structure (i.e. contains stype and pNext).
+	Countofvirtualfunctioninstance uint32           // Countofvirtualfunctioninstance [out] Number of Virtual Function(VF) instances associated with engine to monitor the utilization of hardware across all Virtual Function from a Physical Function (PF) instance. These VF-by-VF views should provide engine group and individual engine level granularity. This count represents the number of VF instances that are actively using the resource represented by the engine handle.
 
 }
 
 // ZesEngineGetActivityExt Get activity stats for Physical Function (PF) and each Virtual
-///        Function (VF) associated with engine group.
-/// 
-/// @details
-///     - The application may call this function from simultaneous threads.
-///     - The implementation of this function should be lock-free.
-/// 
-/// @returns
-///     - ::ZE_RESULT_SUCCESS
-///     - ::ZE_RESULT_ERROR_UNINITIALIZED
-///     - ::ZE_RESULT_ERROR_DEVICE_LOST
-///     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
-///     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
-///     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
-///     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
-///     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
-///     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
-///     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
-///     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
-///     - ::ZE_RESULT_ERROR_UNKNOWN
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
-///         + `nullptr == hEngine`
-///     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
-///         + `nullptr == pCount`
-///     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE - "Engine activity extension is not supported in the environment."
+// /        Function (VF) associated with engine group.
+// /
+// / @details
+// /     - The application may call this function from simultaneous threads.
+// /     - The implementation of this function should be lock-free.
+// /
+// / @returns
+// /     - ::ZE_RESULT_SUCCESS
+// /     - ::ZE_RESULT_ERROR_UNINITIALIZED
+// /     - ::ZE_RESULT_ERROR_DEVICE_LOST
+// /     - ::ZE_RESULT_ERROR_OUT_OF_HOST_MEMORY
+// /     - ::ZE_RESULT_ERROR_OUT_OF_DEVICE_MEMORY
+// /     - ::ZE_RESULT_ERROR_INVALID_ARGUMENT
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE
+// /     - ::ZE_RESULT_ERROR_DEPENDENCY_UNAVAILABLE
+// /     - ::ZE_RESULT_ERROR_INSUFFICIENT_PERMISSIONS
+// /     - ::ZE_RESULT_ERROR_NOT_AVAILABLE
+// /     - ::ZE_RESULT_ERROR_DEVICE_REQUIRES_RESET
+// /     - ::ZE_RESULT_ERROR_DEVICE_IN_LOW_POWER_STATE
+// /     - ::ZE_RESULT_ERROR_UNKNOWN
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_HANDLE
+// /         + `nullptr == hEngine`
+// /     - ::ZE_RESULT_ERROR_INVALID_NULL_POINTER
+// /         + `nullptr == pCount`
+// /     - ::ZE_RESULT_ERROR_UNSUPPORTED_FEATURE - "Engine activity extension is not supported in the environment."
 func ZesEngineGetActivityExt(
-	hEngine ZesEngineHandle,	// hEngine [in] Handle for the component.
-	pCount *uint32,	// pCount [in,out] Pointer to the number of VF engine stats descriptors.  - if count is zero, the driver shall update the value with the total number of engine stats available.  - if count is greater than the total number of engine stats available, the driver shall update the value with the correct number of engine stats available.  - The count returned is the sum of number of VF instances currently available and the PF instance.
-	pStats *ZesEngineStats,	// pStats [in,out][optional][range(0, *pCount)] array of engine group activity counters.  - if count is less than the total number of engine stats available, then driver shall only retrieve that number of stats.  - the implementation shall populate the vector with engine stat for PF at index 0 of the vector followed by user provided pCount-1 number of VF engine stats.
+	hEngine ZesEngineHandle, // hEngine [in] Handle for the component.
+	pCount *uint32, // pCount [in,out] Pointer to the number of VF engine stats descriptors.  - if count is zero, the driver shall update the value with the total number of engine stats available.  - if count is greater than the total number of engine stats available, the driver shall update the value with the correct number of engine stats available.  - The count returned is the sum of number of VF instances currently available and the PF instance.
+	pStats *ZesEngineStats, // pStats [in,out][optional][range(0, *pCount)] array of engine group activity counters.  - if count is less than the total number of engine stats available, then driver shall only retrieve that number of stats.  - the implementation shall populate the vector with engine stat for PF at index 0 of the vector followed by user provided pCount-1 number of VF engine stats.
 ) (ZeResult, error) {
 	return zecall.Call[ZeResult]("zesEngineGetActivityExt", uintptr(hEngine), uintptr(unsafe.Pointer(pCount)), uintptr(unsafe.Pointer(pStats)))
 }
-
