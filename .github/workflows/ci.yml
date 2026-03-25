@@ -63,9 +63,9 @@ jobs:
 
       - name: Download SYCL Linux
         run: |
-          wget -q https://github.com/intel/llvm/releases/download/v6.3.0/sycl_linux.tar.gz
+          wget -q -O /tmp/sycl_linux.tar.gz https://github.com/intel/llvm/releases/download/v6.3.0/sycl_linux.tar.gz
           mkdir -p /tmp/sycl_linux
-          tar -xzf sycl_linux.tar.gz -C /tmp/sycl_linux
+          tar -xzf /tmp/sycl_linux.tar.gz -C /tmp/sycl_linux
 
       - name: Add SYCL bin to PATH
         run: |
