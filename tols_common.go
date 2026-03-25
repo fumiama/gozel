@@ -118,3 +118,13 @@ const (
 
 )
 
+// ZetValue (zet_value_t) Union of values
+type ZetValue [8]byte
+
+// ZetTypedValue (zet_typed_value_t) Typed value
+type ZetTypedValue struct {
+	Type ZetValueType	// Type [out] type of value
+	Value ZetValue	// Value [out] value
+
+}
+

@@ -31,6 +31,8 @@ import (
 	"github.com/fumiama/gozel/internal/zecall"
 )
 
+const debug = false
+
 func init() {
 `)
 }
@@ -38,7 +40,7 @@ func init() {
 func addAPI(name string) {
 	apif.WriteString("\n\tif err := zecall.Register(\"")
 	apif.WriteString(name)
-	apif.WriteString("\"); err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"[gozel.warn]\", err)\n\t}\n")
+	apif.WriteString("\"); debug && err != nil {\n\t\tfmt.Fprintln(os.Stderr, \"[gozel.warn]\", err)\n\t}\n")
 }
 
 func closeAPI() {

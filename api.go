@@ -19,1485 +19,1763 @@ import (
 	"github.com/fumiama/gozel/internal/zecall"
 )
 
+const debug = false
+
 func init() {
 
-	if err := zecall.Register("zeInit"); err != nil {
+	if err := zecall.Register("zeInit"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGet"); err != nil {
+	if err := zecall.Register("zeDriverGet"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeInitDrivers"); err != nil {
+	if err := zecall.Register("zeInitDrivers"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetApiVersion"); err != nil {
+	if err := zecall.Register("zeDriverGetApiVersion"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetProperties"); err != nil {
+	if err := zecall.Register("zeDriverGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetIpcProperties"); err != nil {
+	if err := zecall.Register("zeDriverGetIpcProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetExtensionProperties"); err != nil {
+	if err := zecall.Register("zeDriverGetExtensionProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetExtensionFunctionAddress"); err != nil {
+	if err := zecall.Register("zeDriverGetExtensionFunctionAddress"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetLastErrorDescription"); err != nil {
+	if err := zecall.Register("zeDriverGetLastErrorDescription"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverGetDefaultContext"); err != nil {
+	if err := zecall.Register("zeDriverGetDefaultContext"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGet"); err != nil {
+	if err := zecall.Register("zeDeviceGet"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetRootDevice"); err != nil {
+	if err := zecall.Register("zeDeviceGetRootDevice"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetSubDevices"); err != nil {
+	if err := zecall.Register("zeDeviceGetSubDevices"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetComputeProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetComputeProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetModuleProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetModuleProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetCommandQueueGroupProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetCommandQueueGroupProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetMemoryProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetMemoryProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetMemoryAccessProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetMemoryAccessProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetCacheProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetCacheProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetImageProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetImageProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetExternalMemoryProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetExternalMemoryProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetP2PProperties"); err != nil {
+	if err := zecall.Register("zeDeviceGetP2PProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceCanAccessPeer"); err != nil {
+	if err := zecall.Register("zeDeviceCanAccessPeer"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetStatus"); err != nil {
+	if err := zecall.Register("zeDeviceGetStatus"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetGlobalTimestamps"); err != nil {
+	if err := zecall.Register("zeDeviceGetGlobalTimestamps"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceSynchronize"); err != nil {
+	if err := zecall.Register("zeDeviceSynchronize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetAggregatedCopyOffloadIncrementValue"); err != nil {
+	if err := zecall.Register("zeDeviceGetAggregatedCopyOffloadIncrementValue"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextCreate"); err != nil {
+	if err := zecall.Register("zeContextCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextCreateEx"); err != nil {
+	if err := zecall.Register("zeContextCreateEx"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextDestroy"); err != nil {
+	if err := zecall.Register("zeContextDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextGetStatus"); err != nil {
+	if err := zecall.Register("zeContextGetStatus"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueCreate"); err != nil {
+	if err := zecall.Register("zeCommandQueueCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueDestroy"); err != nil {
+	if err := zecall.Register("zeCommandQueueDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueExecuteCommandLists"); err != nil {
+	if err := zecall.Register("zeCommandQueueExecuteCommandLists"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueSynchronize"); err != nil {
+	if err := zecall.Register("zeCommandQueueSynchronize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueGetOrdinal"); err != nil {
+	if err := zecall.Register("zeCommandQueueGetOrdinal"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandQueueGetIndex"); err != nil {
+	if err := zecall.Register("zeCommandQueueGetIndex"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListCreate"); err != nil {
+	if err := zecall.Register("zeCommandListCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListCreateImmediate"); err != nil {
+	if err := zecall.Register("zeCommandListCreateImmediate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListDestroy"); err != nil {
+	if err := zecall.Register("zeCommandListDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListClose"); err != nil {
+	if err := zecall.Register("zeCommandListClose"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListReset"); err != nil {
+	if err := zecall.Register("zeCommandListReset"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendWriteGlobalTimestamp"); err != nil {
+	if err := zecall.Register("zeCommandListAppendWriteGlobalTimestamp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListHostSynchronize"); err != nil {
+	if err := zecall.Register("zeCommandListHostSynchronize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListGetDeviceHandle"); err != nil {
+	if err := zecall.Register("zeCommandListGetDeviceHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListGetContextHandle"); err != nil {
+	if err := zecall.Register("zeCommandListGetContextHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListGetOrdinal"); err != nil {
+	if err := zecall.Register("zeCommandListGetOrdinal"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListImmediateGetIndex"); err != nil {
+	if err := zecall.Register("zeCommandListImmediateGetIndex"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListIsImmediate"); err != nil {
+	if err := zecall.Register("zeCommandListIsImmediate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendBarrier"); err != nil {
+	if err := zecall.Register("zeCommandListAppendBarrier"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryRangesBarrier"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryRangesBarrier"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextSystemBarrier"); err != nil {
+	if err := zecall.Register("zeContextSystemBarrier"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryCopy"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryCopy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryFill"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryFill"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryCopyRegion"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryCopyRegion"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryCopyFromContext"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryCopyFromContext"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopy"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopyRegion"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopyRegion"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopyToMemory"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopyToMemory"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopyFromMemory"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopyFromMemory"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemoryPrefetch"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemoryPrefetch"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendMemAdvise"); err != nil {
+	if err := zecall.Register("zeCommandListAppendMemAdvise"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolCreate"); err != nil {
+	if err := zecall.Register("zeEventPoolCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolDestroy"); err != nil {
+	if err := zecall.Register("zeEventPoolDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCreate"); err != nil {
+	if err := zecall.Register("zeEventCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCounterBasedCreate"); err != nil {
+	if err := zecall.Register("zeEventCounterBasedCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventDestroy"); err != nil {
+	if err := zecall.Register("zeEventDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolGetIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventPoolGetIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolPutIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventPoolPutIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolOpenIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventPoolOpenIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolCloseIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventPoolCloseIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCounterBasedGetIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventCounterBasedGetIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCounterBasedOpenIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventCounterBasedOpenIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCounterBasedCloseIpcHandle"); err != nil {
+	if err := zecall.Register("zeEventCounterBasedCloseIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventCounterBasedGetDeviceAddress"); err != nil {
+	if err := zecall.Register("zeEventCounterBasedGetDeviceAddress"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendSignalEvent"); err != nil {
+	if err := zecall.Register("zeCommandListAppendSignalEvent"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendWaitOnEvents"); err != nil {
+	if err := zecall.Register("zeCommandListAppendWaitOnEvents"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventHostSignal"); err != nil {
+	if err := zecall.Register("zeEventHostSignal"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventHostSynchronize"); err != nil {
+	if err := zecall.Register("zeEventHostSynchronize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventQueryStatus"); err != nil {
+	if err := zecall.Register("zeEventQueryStatus"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendEventReset"); err != nil {
+	if err := zecall.Register("zeCommandListAppendEventReset"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventHostReset"); err != nil {
+	if err := zecall.Register("zeEventHostReset"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventQueryKernelTimestamp"); err != nil {
+	if err := zecall.Register("zeEventQueryKernelTimestamp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendQueryKernelTimestamps"); err != nil {
+	if err := zecall.Register("zeCommandListAppendQueryKernelTimestamps"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventGetEventPool"); err != nil {
+	if err := zecall.Register("zeEventGetEventPool"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventGetSignalScope"); err != nil {
+	if err := zecall.Register("zeEventGetSignalScope"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventGetWaitScope"); err != nil {
+	if err := zecall.Register("zeEventGetWaitScope"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolGetContextHandle"); err != nil {
+	if err := zecall.Register("zeEventPoolGetContextHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventPoolGetFlags"); err != nil {
+	if err := zecall.Register("zeEventPoolGetFlags"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFenceCreate"); err != nil {
+	if err := zecall.Register("zeFenceCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFenceDestroy"); err != nil {
+	if err := zecall.Register("zeFenceDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFenceHostSynchronize"); err != nil {
+	if err := zecall.Register("zeFenceHostSynchronize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFenceQueryStatus"); err != nil {
+	if err := zecall.Register("zeFenceQueryStatus"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFenceReset"); err != nil {
+	if err := zecall.Register("zeFenceReset"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageGetProperties"); err != nil {
+	if err := zecall.Register("zeImageGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageCreate"); err != nil {
+	if err := zecall.Register("zeImageCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageDestroy"); err != nil {
+	if err := zecall.Register("zeImageDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemAllocShared"); err != nil {
+	if err := zecall.Register("zeMemAllocShared"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemAllocDevice"); err != nil {
+	if err := zecall.Register("zeMemAllocDevice"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemAllocHost"); err != nil {
+	if err := zecall.Register("zeMemAllocHost"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemFree"); err != nil {
+	if err := zecall.Register("zeMemFree"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetAllocProperties"); err != nil {
+	if err := zecall.Register("zeMemGetAllocProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetAddressRange"); err != nil {
+	if err := zecall.Register("zeMemGetAddressRange"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetIpcHandle"); err != nil {
+	if err := zecall.Register("zeMemGetIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetIpcHandleFromFileDescriptorExp"); err != nil {
+	if err := zecall.Register("zeMemGetIpcHandleFromFileDescriptorExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetFileDescriptorFromIpcHandleExp"); err != nil {
+	if err := zecall.Register("zeMemGetFileDescriptorFromIpcHandleExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemPutIpcHandle"); err != nil {
+	if err := zecall.Register("zeMemPutIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemOpenIpcHandle"); err != nil {
+	if err := zecall.Register("zeMemOpenIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemCloseIpcHandle"); err != nil {
+	if err := zecall.Register("zeMemCloseIpcHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemSetAtomicAccessAttributeExp"); err != nil {
+	if err := zecall.Register("zeMemSetAtomicAccessAttributeExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetAtomicAccessAttributeExp"); err != nil {
+	if err := zecall.Register("zeMemGetAtomicAccessAttributeExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleCreate"); err != nil {
+	if err := zecall.Register("zeModuleCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleDestroy"); err != nil {
+	if err := zecall.Register("zeModuleDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleDynamicLink"); err != nil {
+	if err := zecall.Register("zeModuleDynamicLink"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleBuildLogDestroy"); err != nil {
+	if err := zecall.Register("zeModuleBuildLogDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleBuildLogGetString"); err != nil {
+	if err := zecall.Register("zeModuleBuildLogGetString"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleGetNativeBinary"); err != nil {
+	if err := zecall.Register("zeModuleGetNativeBinary"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleGetGlobalPointer"); err != nil {
+	if err := zecall.Register("zeModuleGetGlobalPointer"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleGetKernelNames"); err != nil {
+	if err := zecall.Register("zeModuleGetKernelNames"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleGetProperties"); err != nil {
+	if err := zecall.Register("zeModuleGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelCreate"); err != nil {
+	if err := zecall.Register("zeKernelCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelDestroy"); err != nil {
+	if err := zecall.Register("zeKernelDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleGetFunctionPointer"); err != nil {
+	if err := zecall.Register("zeModuleGetFunctionPointer"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSetGroupSize"); err != nil {
+	if err := zecall.Register("zeKernelSetGroupSize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSuggestGroupSize"); err != nil {
+	if err := zecall.Register("zeKernelSuggestGroupSize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSuggestMaxCooperativeGroupCount"); err != nil {
+	if err := zecall.Register("zeKernelSuggestMaxCooperativeGroupCount"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSetArgumentValue"); err != nil {
+	if err := zecall.Register("zeKernelSetArgumentValue"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSetIndirectAccess"); err != nil {
+	if err := zecall.Register("zeKernelSetIndirectAccess"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetIndirectAccess"); err != nil {
+	if err := zecall.Register("zeKernelGetIndirectAccess"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetSourceAttributes"); err != nil {
+	if err := zecall.Register("zeKernelGetSourceAttributes"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSetCacheConfig"); err != nil {
+	if err := zecall.Register("zeKernelSetCacheConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetProperties"); err != nil {
+	if err := zecall.Register("zeKernelGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetName"); err != nil {
+	if err := zecall.Register("zeKernelGetName"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchKernel"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchKernel"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchKernelWithParameters"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchKernelWithParameters"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchKernelWithArguments"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchKernelWithArguments"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchCooperativeKernel"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchCooperativeKernel"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchKernelIndirect"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchKernelIndirect"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendLaunchMultipleKernelsIndirect"); err != nil {
+	if err := zecall.Register("zeCommandListAppendLaunchMultipleKernelsIndirect"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextMakeMemoryResident"); err != nil {
+	if err := zecall.Register("zeContextMakeMemoryResident"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextEvictMemory"); err != nil {
+	if err := zecall.Register("zeContextEvictMemory"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextMakeImageResident"); err != nil {
+	if err := zecall.Register("zeContextMakeImageResident"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeContextEvictImage"); err != nil {
+	if err := zecall.Register("zeContextEvictImage"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeSamplerCreate"); err != nil {
+	if err := zecall.Register("zeSamplerCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeSamplerDestroy"); err != nil {
+	if err := zecall.Register("zeSamplerDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemReserve"); err != nil {
+	if err := zecall.Register("zeVirtualMemReserve"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemFree"); err != nil {
+	if err := zecall.Register("zeVirtualMemFree"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemQueryPageSize"); err != nil {
+	if err := zecall.Register("zeVirtualMemQueryPageSize"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zePhysicalMemGetProperties"); err != nil {
+	if err := zecall.Register("zePhysicalMemGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zePhysicalMemCreate"); err != nil {
+	if err := zecall.Register("zePhysicalMemCreate"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zePhysicalMemDestroy"); err != nil {
+	if err := zecall.Register("zePhysicalMemDestroy"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemMap"); err != nil {
+	if err := zecall.Register("zeVirtualMemMap"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemUnmap"); err != nil {
+	if err := zecall.Register("zeVirtualMemUnmap"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemSetAccessAttribute"); err != nil {
+	if err := zecall.Register("zeVirtualMemSetAccessAttribute"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeVirtualMemGetAccessAttribute"); err != nil {
+	if err := zecall.Register("zeVirtualMemGetAccessAttribute"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSetGlobalOffsetExp"); err != nil {
+	if err := zecall.Register("zeKernelSetGlobalOffsetExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetBinaryExp"); err != nil {
+	if err := zecall.Register("zeKernelGetBinaryExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceImportExternalSemaphoreExt"); err != nil {
+	if err := zecall.Register("zeDeviceImportExternalSemaphoreExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceReleaseExternalSemaphoreExt"); err != nil {
+	if err := zecall.Register("zeDeviceReleaseExternalSemaphoreExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendSignalExternalSemaphoreExt"); err != nil {
+	if err := zecall.Register("zeCommandListAppendSignalExternalSemaphoreExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendWaitExternalSemaphoreExt"); err != nil {
+	if err := zecall.Register("zeCommandListAppendWaitExternalSemaphoreExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderCreateExt"); err != nil {
+	if err := zecall.Register("zeRTASBuilderCreateExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderGetBuildPropertiesExt"); err != nil {
+	if err := zecall.Register("zeRTASBuilderGetBuildPropertiesExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverRTASFormatCompatibilityCheckExt"); err != nil {
+	if err := zecall.Register("zeDriverRTASFormatCompatibilityCheckExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderBuildExt"); err != nil {
+	if err := zecall.Register("zeRTASBuilderBuildExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderCommandListAppendCopyExt"); err != nil {
+	if err := zecall.Register("zeRTASBuilderCommandListAppendCopyExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderDestroyExt"); err != nil {
+	if err := zecall.Register("zeRTASBuilderDestroyExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationCreateExt"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationCreateExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationGetPropertiesExt"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationGetPropertiesExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationJoinExt"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationJoinExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationDestroyExt"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationDestroyExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetVectorWidthPropertiesExt"); err != nil {
+	if err := zecall.Register("zeDeviceGetVectorWidthPropertiesExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelGetAllocationPropertiesExp"); err != nil {
+	if err := zecall.Register("zeKernelGetAllocationPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetIpcHandleWithProperties"); err != nil {
+	if err := zecall.Register("zeMemGetIpcHandleWithProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceReserveCacheExt"); err != nil {
+	if err := zecall.Register("zeDeviceReserveCacheExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceSetCacheAdviceExt"); err != nil {
+	if err := zecall.Register("zeDeviceSetCacheAdviceExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventQueryTimestampsExp"); err != nil {
+	if err := zecall.Register("zeEventQueryTimestampsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageGetMemoryPropertiesExp"); err != nil {
+	if err := zecall.Register("zeImageGetMemoryPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageViewCreateExt"); err != nil {
+	if err := zecall.Register("zeImageViewCreateExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageViewCreateExp"); err != nil {
+	if err := zecall.Register("zeImageViewCreateExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeKernelSchedulingHintExp"); err != nil {
+	if err := zecall.Register("zeKernelSchedulingHintExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDevicePciGetPropertiesExt"); err != nil {
+	if err := zecall.Register("zeDevicePciGetPropertiesExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopyToMemoryExt"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopyToMemoryExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListAppendImageCopyFromMemoryExt"); err != nil {
+	if err := zecall.Register("zeCommandListAppendImageCopyFromMemoryExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageGetAllocPropertiesExt"); err != nil {
+	if err := zecall.Register("zeImageGetAllocPropertiesExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeModuleInspectLinkageExt"); err != nil {
+	if err := zecall.Register("zeModuleInspectLinkageExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemFreeExt"); err != nil {
+	if err := zecall.Register("zeMemFreeExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricVertexGetExp"); err != nil {
+	if err := zecall.Register("zeFabricVertexGetExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricVertexGetSubVerticesExp"); err != nil {
+	if err := zecall.Register("zeFabricVertexGetSubVerticesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricVertexGetPropertiesExp"); err != nil {
+	if err := zecall.Register("zeFabricVertexGetPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricVertexGetDeviceExp"); err != nil {
+	if err := zecall.Register("zeFabricVertexGetDeviceExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDeviceGetFabricVertexExp"); err != nil {
+	if err := zecall.Register("zeDeviceGetFabricVertexExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricEdgeGetExp"); err != nil {
+	if err := zecall.Register("zeFabricEdgeGetExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricEdgeGetVerticesExp"); err != nil {
+	if err := zecall.Register("zeFabricEdgeGetVerticesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeFabricEdgeGetPropertiesExp"); err != nil {
+	if err := zecall.Register("zeFabricEdgeGetPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeEventQueryKernelTimestampsExt"); err != nil {
+	if err := zecall.Register("zeEventQueryKernelTimestampsExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderCreateExp"); err != nil {
+	if err := zecall.Register("zeRTASBuilderCreateExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderGetBuildPropertiesExp"); err != nil {
+	if err := zecall.Register("zeRTASBuilderGetBuildPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeDriverRTASFormatCompatibilityCheckExp"); err != nil {
+	if err := zecall.Register("zeDriverRTASFormatCompatibilityCheckExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderBuildExp"); err != nil {
+	if err := zecall.Register("zeRTASBuilderBuildExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASBuilderDestroyExp"); err != nil {
+	if err := zecall.Register("zeRTASBuilderDestroyExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationCreateExp"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationCreateExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationGetPropertiesExp"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationGetPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationJoinExp"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationJoinExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeRTASParallelOperationDestroyExp"); err != nil {
+	if err := zecall.Register("zeRTASParallelOperationDestroyExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeMemGetPitchFor2dImage"); err != nil {
+	if err := zecall.Register("zeMemGetPitchFor2dImage"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeImageGetDeviceOffsetExp"); err != nil {
+	if err := zecall.Register("zeImageGetDeviceOffsetExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListCreateCloneExp"); err != nil {
+	if err := zecall.Register("zeCommandListCreateCloneExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListImmediateAppendCommandListsExp"); err != nil {
+	if err := zecall.Register("zeCommandListImmediateAppendCommandListsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListGetNextCommandIdExp"); err != nil {
+	if err := zecall.Register("zeCommandListGetNextCommandIdExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListGetNextCommandIdWithKernelsExp"); err != nil {
+	if err := zecall.Register("zeCommandListGetNextCommandIdWithKernelsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListUpdateMutableCommandsExp"); err != nil {
+	if err := zecall.Register("zeCommandListUpdateMutableCommandsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListUpdateMutableCommandSignalEventExp"); err != nil {
+	if err := zecall.Register("zeCommandListUpdateMutableCommandSignalEventExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListUpdateMutableCommandWaitEventsExp"); err != nil {
+	if err := zecall.Register("zeCommandListUpdateMutableCommandWaitEventsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zeCommandListUpdateMutableCommandKernelsExp"); err != nil {
+	if err := zecall.Register("zeCommandListUpdateMutableCommandKernelsExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zerGetLastErrorDescription"); err != nil {
+	if err := zecall.Register("zerGetLastErrorDescription"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zerTranslateDeviceHandleToIdentifier"); err != nil {
+	if err := zecall.Register("zerTranslateDeviceHandleToIdentifier"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zerTranslateIdentifierToDeviceHandle"); err != nil {
+	if err := zecall.Register("zerTranslateIdentifierToDeviceHandle"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zerGetDefaultContext"); err != nil {
+	if err := zecall.Register("zerGetDefaultContext"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesInit"); err != nil {
+	if err := zecall.Register("zesInit"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverGet"); err != nil {
+	if err := zecall.Register("zesDriverGet"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverGetExtensionProperties"); err != nil {
+	if err := zecall.Register("zesDriverGetExtensionProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverGetExtensionFunctionAddress"); err != nil {
+	if err := zecall.Register("zesDriverGetExtensionFunctionAddress"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGet"); err != nil {
+	if err := zecall.Register("zesDeviceGet"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetProperties"); err != nil {
+	if err := zecall.Register("zesDeviceGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetState"); err != nil {
+	if err := zecall.Register("zesDeviceGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceReset"); err != nil {
+	if err := zecall.Register("zesDeviceReset"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceResetExt"); err != nil {
+	if err := zecall.Register("zesDeviceResetExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceProcessesGetState"); err != nil {
+	if err := zecall.Register("zesDeviceProcessesGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDevicePciGetProperties"); err != nil {
+	if err := zecall.Register("zesDevicePciGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDevicePciGetState"); err != nil {
+	if err := zecall.Register("zesDevicePciGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDevicePciGetBars"); err != nil {
+	if err := zecall.Register("zesDevicePciGetBars"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDevicePciGetStats"); err != nil {
+	if err := zecall.Register("zesDevicePciGetStats"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceSetOverclockWaiver"); err != nil {
+	if err := zecall.Register("zesDeviceSetOverclockWaiver"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetOverclockDomains"); err != nil {
+	if err := zecall.Register("zesDeviceGetOverclockDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetOverclockControls"); err != nil {
+	if err := zecall.Register("zesDeviceGetOverclockControls"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceResetOverclockSettings"); err != nil {
+	if err := zecall.Register("zesDeviceResetOverclockSettings"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceReadOverclockState"); err != nil {
+	if err := zecall.Register("zesDeviceReadOverclockState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumOverclockDomains"); err != nil {
+	if err := zecall.Register("zesDeviceEnumOverclockDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetDomainProperties"); err != nil {
+	if err := zecall.Register("zesOverclockGetDomainProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetDomainVFProperties"); err != nil {
+	if err := zecall.Register("zesOverclockGetDomainVFProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetDomainControlProperties"); err != nil {
+	if err := zecall.Register("zesOverclockGetDomainControlProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetControlCurrentValue"); err != nil {
+	if err := zecall.Register("zesOverclockGetControlCurrentValue"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetControlPendingValue"); err != nil {
+	if err := zecall.Register("zesOverclockGetControlPendingValue"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockSetControlUserValue"); err != nil {
+	if err := zecall.Register("zesOverclockSetControlUserValue"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetControlState"); err != nil {
+	if err := zecall.Register("zesOverclockGetControlState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockGetVFPointValues"); err != nil {
+	if err := zecall.Register("zesOverclockGetVFPointValues"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesOverclockSetVFPointValues"); err != nil {
+	if err := zecall.Register("zesOverclockSetVFPointValues"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumDiagnosticTestSuites"); err != nil {
+	if err := zecall.Register("zesDeviceEnumDiagnosticTestSuites"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDiagnosticsGetProperties"); err != nil {
+	if err := zecall.Register("zesDiagnosticsGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDiagnosticsGetTests"); err != nil {
+	if err := zecall.Register("zesDiagnosticsGetTests"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDiagnosticsRunTests"); err != nil {
+	if err := zecall.Register("zesDiagnosticsRunTests"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEccAvailable"); err != nil {
+	if err := zecall.Register("zesDeviceEccAvailable"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEccConfigurable"); err != nil {
+	if err := zecall.Register("zesDeviceEccConfigurable"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetEccState"); err != nil {
+	if err := zecall.Register("zesDeviceGetEccState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceSetEccState"); err != nil {
+	if err := zecall.Register("zesDeviceSetEccState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumEngineGroups"); err != nil {
+	if err := zecall.Register("zesDeviceEnumEngineGroups"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesEngineGetProperties"); err != nil {
+	if err := zecall.Register("zesEngineGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesEngineGetActivity"); err != nil {
+	if err := zecall.Register("zesEngineGetActivity"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEventRegister"); err != nil {
+	if err := zecall.Register("zesDeviceEventRegister"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverEventListen"); err != nil {
+	if err := zecall.Register("zesDriverEventListen"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverEventListenEx"); err != nil {
+	if err := zecall.Register("zesDriverEventListenEx"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumFabricPorts"); err != nil {
+	if err := zecall.Register("zesDeviceEnumFabricPorts"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetProperties"); err != nil {
+	if err := zecall.Register("zesFabricPortGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetLinkType"); err != nil {
+	if err := zecall.Register("zesFabricPortGetLinkType"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetConfig"); err != nil {
+	if err := zecall.Register("zesFabricPortGetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortSetConfig"); err != nil {
+	if err := zecall.Register("zesFabricPortSetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetState"); err != nil {
+	if err := zecall.Register("zesFabricPortGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetThroughput"); err != nil {
+	if err := zecall.Register("zesFabricPortGetThroughput"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetFabricErrorCounters"); err != nil {
+	if err := zecall.Register("zesFabricPortGetFabricErrorCounters"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFabricPortGetMultiPortThroughput"); err != nil {
+	if err := zecall.Register("zesFabricPortGetMultiPortThroughput"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumFans"); err != nil {
+	if err := zecall.Register("zesDeviceEnumFans"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanGetProperties"); err != nil {
+	if err := zecall.Register("zesFanGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanGetConfig"); err != nil {
+	if err := zecall.Register("zesFanGetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanSetDefaultMode"); err != nil {
+	if err := zecall.Register("zesFanSetDefaultMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanSetFixedSpeedMode"); err != nil {
+	if err := zecall.Register("zesFanSetFixedSpeedMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanSetSpeedTableMode"); err != nil {
+	if err := zecall.Register("zesFanSetSpeedTableMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFanGetState"); err != nil {
+	if err := zecall.Register("zesFanGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumFirmwares"); err != nil {
+	if err := zecall.Register("zesDeviceEnumFirmwares"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareGetProperties"); err != nil {
+	if err := zecall.Register("zesFirmwareGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareFlash"); err != nil {
+	if err := zecall.Register("zesFirmwareFlash"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareGetFlashProgress"); err != nil {
+	if err := zecall.Register("zesFirmwareGetFlashProgress"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareGetConsoleLogs"); err != nil {
+	if err := zecall.Register("zesFirmwareGetConsoleLogs"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumFrequencyDomains"); err != nil {
+	if err := zecall.Register("zesDeviceEnumFrequencyDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyGetProperties"); err != nil {
+	if err := zecall.Register("zesFrequencyGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyGetAvailableClocks"); err != nil {
+	if err := zecall.Register("zesFrequencyGetAvailableClocks"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyGetRange"); err != nil {
+	if err := zecall.Register("zesFrequencyGetRange"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencySetRange"); err != nil {
+	if err := zecall.Register("zesFrequencySetRange"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyGetState"); err != nil {
+	if err := zecall.Register("zesFrequencyGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyGetThrottleTime"); err != nil {
+	if err := zecall.Register("zesFrequencyGetThrottleTime"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetCapabilities"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetCapabilities"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetFrequencyTarget"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetFrequencyTarget"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcSetFrequencyTarget"); err != nil {
+	if err := zecall.Register("zesFrequencyOcSetFrequencyTarget"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetVoltageTarget"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetVoltageTarget"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcSetVoltageTarget"); err != nil {
+	if err := zecall.Register("zesFrequencyOcSetVoltageTarget"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcSetMode"); err != nil {
+	if err := zecall.Register("zesFrequencyOcSetMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetMode"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetIccMax"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetIccMax"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcSetIccMax"); err != nil {
+	if err := zecall.Register("zesFrequencyOcSetIccMax"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcGetTjMax"); err != nil {
+	if err := zecall.Register("zesFrequencyOcGetTjMax"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFrequencyOcSetTjMax"); err != nil {
+	if err := zecall.Register("zesFrequencyOcSetTjMax"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumLeds"); err != nil {
+	if err := zecall.Register("zesDeviceEnumLeds"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesLedGetProperties"); err != nil {
+	if err := zecall.Register("zesLedGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesLedGetState"); err != nil {
+	if err := zecall.Register("zesLedGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesLedSetState"); err != nil {
+	if err := zecall.Register("zesLedSetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesLedSetColor"); err != nil {
+	if err := zecall.Register("zesLedSetColor"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumMemoryModules"); err != nil {
+	if err := zecall.Register("zesDeviceEnumMemoryModules"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesMemoryGetProperties"); err != nil {
+	if err := zecall.Register("zesMemoryGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesMemoryGetState"); err != nil {
+	if err := zecall.Register("zesMemoryGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesMemoryGetBandwidth"); err != nil {
+	if err := zecall.Register("zesMemoryGetBandwidth"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumPerformanceFactorDomains"); err != nil {
+	if err := zecall.Register("zesDeviceEnumPerformanceFactorDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPerformanceFactorGetProperties"); err != nil {
+	if err := zecall.Register("zesPerformanceFactorGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPerformanceFactorGetConfig"); err != nil {
+	if err := zecall.Register("zesPerformanceFactorGetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPerformanceFactorSetConfig"); err != nil {
+	if err := zecall.Register("zesPerformanceFactorSetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumPowerDomains"); err != nil {
+	if err := zecall.Register("zesDeviceEnumPowerDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetCardPowerDomain"); err != nil {
+	if err := zecall.Register("zesDeviceGetCardPowerDomain"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerGetProperties"); err != nil {
+	if err := zecall.Register("zesPowerGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerGetEnergyCounter"); err != nil {
+	if err := zecall.Register("zesPowerGetEnergyCounter"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerGetLimits"); err != nil {
+	if err := zecall.Register("zesPowerGetLimits"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerSetLimits"); err != nil {
+	if err := zecall.Register("zesPowerSetLimits"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerGetEnergyThreshold"); err != nil {
+	if err := zecall.Register("zesPowerGetEnergyThreshold"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerSetEnergyThreshold"); err != nil {
+	if err := zecall.Register("zesPowerSetEnergyThreshold"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumPsus"); err != nil {
+	if err := zecall.Register("zesDeviceEnumPsus"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPsuGetProperties"); err != nil {
+	if err := zecall.Register("zesPsuGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPsuGetState"); err != nil {
+	if err := zecall.Register("zesPsuGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumRasErrorSets"); err != nil {
+	if err := zecall.Register("zesDeviceEnumRasErrorSets"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasGetProperties"); err != nil {
+	if err := zecall.Register("zesRasGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasGetConfig"); err != nil {
+	if err := zecall.Register("zesRasGetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasSetConfig"); err != nil {
+	if err := zecall.Register("zesRasSetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasGetState"); err != nil {
+	if err := zecall.Register("zesRasGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumSchedulers"); err != nil {
+	if err := zecall.Register("zesDeviceEnumSchedulers"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerGetProperties"); err != nil {
+	if err := zecall.Register("zesSchedulerGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerGetCurrentMode"); err != nil {
+	if err := zecall.Register("zesSchedulerGetCurrentMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerGetTimeoutModeProperties"); err != nil {
+	if err := zecall.Register("zesSchedulerGetTimeoutModeProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerGetTimesliceModeProperties"); err != nil {
+	if err := zecall.Register("zesSchedulerGetTimesliceModeProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerSetTimeoutMode"); err != nil {
+	if err := zecall.Register("zesSchedulerSetTimeoutMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerSetTimesliceMode"); err != nil {
+	if err := zecall.Register("zesSchedulerSetTimesliceMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerSetExclusiveMode"); err != nil {
+	if err := zecall.Register("zesSchedulerSetExclusiveMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesSchedulerSetComputeUnitDebugMode"); err != nil {
+	if err := zecall.Register("zesSchedulerSetComputeUnitDebugMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumStandbyDomains"); err != nil {
+	if err := zecall.Register("zesDeviceEnumStandbyDomains"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesStandbyGetProperties"); err != nil {
+	if err := zecall.Register("zesStandbyGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesStandbyGetMode"); err != nil {
+	if err := zecall.Register("zesStandbyGetMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesStandbySetMode"); err != nil {
+	if err := zecall.Register("zesStandbySetMode"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumTemperatureSensors"); err != nil {
+	if err := zecall.Register("zesDeviceEnumTemperatureSensors"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesTemperatureGetProperties"); err != nil {
+	if err := zecall.Register("zesTemperatureGetProperties"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesTemperatureGetConfig"); err != nil {
+	if err := zecall.Register("zesTemperatureGetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesTemperatureSetConfig"); err != nil {
+	if err := zecall.Register("zesTemperatureSetConfig"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesTemperatureGetState"); err != nil {
+	if err := zecall.Register("zesTemperatureGetState"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDevicePciLinkSpeedUpdateExt"); err != nil {
+	if err := zecall.Register("zesDevicePciLinkSpeedUpdateExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerGetLimitsExt"); err != nil {
+	if err := zecall.Register("zesPowerGetLimitsExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesPowerSetLimitsExt"); err != nil {
+	if err := zecall.Register("zesPowerSetLimitsExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesEngineGetActivityExt"); err != nil {
+	if err := zecall.Register("zesEngineGetActivityExt"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasGetStateExp"); err != nil {
+	if err := zecall.Register("zesRasGetStateExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesRasClearStateExp"); err != nil {
+	if err := zecall.Register("zesRasClearStateExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareGetSecurityVersionExp"); err != nil {
+	if err := zecall.Register("zesFirmwareGetSecurityVersionExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesFirmwareSetSecurityVersionExp"); err != nil {
+	if err := zecall.Register("zesFirmwareSetSecurityVersionExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceGetSubDevicePropertiesExp"); err != nil {
+	if err := zecall.Register("zesDeviceGetSubDevicePropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDriverGetDeviceByUuidExp"); err != nil {
+	if err := zecall.Register("zesDriverGetDeviceByUuidExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumActiveVFExp"); err != nil {
+	if err := zecall.Register("zesDeviceEnumActiveVFExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFPropertiesExp"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFPropertiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFMemoryUtilizationExp"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFMemoryUtilizationExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFEngineUtilizationExp"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFEngineUtilizationExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementSetVFTelemetryModeExp"); err != nil {
+	if err := zecall.Register("zesVFManagementSetVFTelemetryModeExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementSetVFTelemetrySamplingIntervalExp"); err != nil {
+	if err := zecall.Register("zesVFManagementSetVFTelemetrySamplingIntervalExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesDeviceEnumEnabledVFExp"); err != nil {
+	if err := zecall.Register("zesDeviceEnumEnabledVFExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFCapabilitiesExp"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFCapabilitiesExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFMemoryUtilizationExp2"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFMemoryUtilizationExp2"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFEngineUtilizationExp2"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFEngineUtilizationExp2"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 
-	if err := zecall.Register("zesVFManagementGetVFCapabilitiesExp2"); err != nil {
+	if err := zecall.Register("zesVFManagementGetVFCapabilitiesExp2"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetModuleGetDebugInfo"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDeviceGetDebugProperties"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugAttach"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugDetach"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugReadEvent"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugAcknowledgeEvent"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugInterrupt"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugResume"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugReadMemory"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugWriteMemory"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugGetRegisterSetProperties"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugGetThreadRegisterSetProperties"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugReadRegisters"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDebugWriteRegisters"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupGet"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupGetProperties"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupCalculateMetricValues"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGet"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGetProperties"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetContextActivateMetricGroups"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricStreamerOpen"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetCommandListAppendMetricStreamerMarker"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricStreamerClose"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricStreamerReadData"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryPoolCreate"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryPoolDestroy"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryCreate"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryDestroy"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryReset"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetCommandListAppendMetricQueryBegin"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetCommandListAppendMetricQueryEnd"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetCommandListAppendMetricMemoryBarrier"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricQueryGetData"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetKernelGetProfileInfo"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetTracerExpCreate"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetTracerExpDestroy"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetTracerExpSetPrologues"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetTracerExpSetEpilogues"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetTracerExpSetEnabled"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDeviceGetConcurrentMetricGroupsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerCreateExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerDestroyExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerEnableExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerDisableExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerReadDataExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricDecoderCreateExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricDecoderDestroyExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricDecoderGetDecodableMetricsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricTracerDecodeExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetCommandListAppendMarkerExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDeviceEnableMetricsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDeviceDisableMetricsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupCalculateMultipleMetricValuesExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupGetGlobalTimestampsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupGetExportDataExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupCalculateMetricExportDataExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricProgrammableGetExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricProgrammableGetPropertiesExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricProgrammableGetParamInfoExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricProgrammableGetParamValueInfoExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricCreateFromProgrammableExp2"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricCreateFromProgrammableExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetDeviceCreateMetricGroupsFromMetricsExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupCreateExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupAddMetricExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupRemoveMetricExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupCloseExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricGroupDestroyExp"); debug && err != nil {
+		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
+	}
+
+	if err := zecall.Register("zetMetricDestroyExp"); debug && err != nil {
 		fmt.Fprintln(os.Stderr, "[gozel.warn]", err)
 	}
 

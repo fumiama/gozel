@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strconv"
+	"strings"
+	"time"
 	"unsafe"
 
 	"github.com/fumiama/gozel"
@@ -22,18 +25,7 @@ import (
 //go:embed main.spv
 var kernelspv []byte
 
-const (
-	X, Y, Z = 64, 1, 1
-	N       = X * Y * Z
-	bufsz   = N * unsafe.Sizeof(float32(0))
-)
-
 func main() {
-	floatbuf := make([]float32, 2*N)
-	for i := range floatbuf {
-		floatbuf[i] = rand.Float32()
-	}
-
 	gpus, err := ze.InitGPUDrivers()
 	if err != nil {
 		panic(err)
@@ -56,6 +48,42 @@ func main() {
 		panic("no device available")
 	}
 	dev := devs[0]
+
+	prop, err := dev.DeviceGetProperties()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("===============  Device Basic Properties  ===============")
+	fmt.Println(
+		"Running on device: ID =", prop.Deviceid, ", Name =",
+		strings.TrimSpace(string(prop.Name[:])),
+		"@", strconv.FormatFloat(float64(prop.Coreclockrate)/1024/1024/1024, 'f', 2, 64), "GHz.",
+	)
+
+	cprop, err := dev.DeviceGetComputeProperties()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("=============== Device Compute Properties ===============")
+	fmt.Printf("%-28s (%d, %d, %d)\n", "Max Group Size (X, Y, Z):", cprop.Maxgroupsizex, cprop.Maxgroupsizey, cprop.Maxgroupsizez)
+	fmt.Printf("%-28s (%d, %d, %d)\n", "Max Group Count (X, Y, Z):", cprop.Maxgroupcountx, cprop.Maxgroupcounty, cprop.Maxgroupcountz)
+	fmt.Printf("%-28s %d\n", "Max Total Group Size:", cprop.Maxtotalgroupsize)
+	fmt.Printf("%-28s %d\n", "Max Shared Local Memory:", cprop.Maxsharedlocalmemory)
+	fmt.Printf("%-28s %d\n", "Num Subgroup Sizes:", cprop.Numsubgroupsizes)
+	fmt.Printf("%-28s %v\n", "Subgroup Sizes:", cprop.Subgroupsizes[:])
+
+	var (
+		X, Y, Z    = uintptr(cprop.Maxgroupsizex), uintptr(1), uintptr(1)
+		groupCount = uintptr(65536)
+		N          = X * groupCount
+		bufsz      = N * unsafe.Sizeof(float32(0))
+	)
+	fmt.Println("=============== Computation Configuration ===============")
+	fmt.Printf("%-28s (%d, %d, %d)\n", "Group Size (X, Y, Z):", X, Y, Z)
+	fmt.Printf("%-28s %d\n", "Group Count:", groupCount)
+	fmt.Printf("%-28s %d\n", "Total Elements (N):", N)
+	fmt.Printf("%-28s %d MiB\n", "Buffer Size:", bufsz/1024/1024)
 
 	q, err := ctx.CommandQueueCreate(dev)
 	if err != nil {
@@ -87,6 +115,11 @@ func main() {
 	}
 	defer ctx.MemFree(dbuf_v2)
 
+	floatbuf := make([]float32, 2*N)
+	for i := range floatbuf {
+		floatbuf[i] = rand.Float32()
+	}
+
 	zev1, zev2 := unsafe.Slice((*float32)(hbuf_v1), N), unsafe.Slice((*float32)(hbuf_v2), N)
 	copy(zev1, floatbuf[:N])
 	copy(zev2, floatbuf[N:])
@@ -111,62 +144,100 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	err = krn.SetGroupSize(X, Y, Z)
+	err = krn.SetGroupSize(uint32(X), uint32(Y), uint32(Z))
 	if err != nil {
 		panic(err)
 	}
 
-	lst, err := ctx.CommandListCreate(dev)
+	lstpre, err := ctx.CommandListCreate(dev)
 	if err != nil {
 		panic(err)
 	}
-	defer lst.Destroy()
+	defer lstpre.Destroy()
 
-	err = lst.AppendMemoryCopy(dbuf_v1, hbuf_v1, bufsz)
+	err = lstpre.AppendMemoryCopy(dbuf_v1, hbuf_v1, bufsz)
 	if err != nil {
 		panic(err)
 	}
-	err = lst.AppendMemoryCopy(dbuf_v2, hbuf_v2, bufsz)
-	if err != nil {
-		panic(err)
-	}
-
-	err = lst.AppendBarrier()
+	err = lstpre.AppendMemoryCopy(dbuf_v2, hbuf_v2, bufsz)
 	if err != nil {
 		panic(err)
 	}
 
-	err = lst.AppendLaunchKernel(krn, &gozel.ZeGroupCount{
-		Groupcountx: 1, Groupcounty: 1, Groupcountz: 1,
+	err = lstpre.AppendBarrier()
+	if err != nil {
+		panic(err)
+	}
+
+	err = lstpre.Close()
+	if err != nil {
+		panic(err)
+	}
+
+	lstcalc, err := ctx.CommandListCreate(dev)
+	if err != nil {
+		panic(err)
+	}
+	defer lstcalc.Destroy()
+
+	err = lstcalc.AppendLaunchKernel(krn, &gozel.ZeGroupCount{
+		Groupcountx: uint32(groupCount), Groupcounty: 1, Groupcountz: 1,
 	})
 	if err != nil {
 		panic(err)
 	}
 
-	err = lst.AppendBarrier()
+	err = lstcalc.AppendBarrier()
 	if err != nil {
 		panic(err)
 	}
 
-	err = lst.AppendMemoryCopy(hbuf_v1, dbuf_v1, bufsz)
+	err = lstcalc.Close()
 	if err != nil {
 		panic(err)
 	}
 
-	err = lst.Close()
+	lstpost, err := ctx.CommandListCreate(dev)
+	if err != nil {
+		panic(err)
+	}
+	defer lstpost.Destroy()
+
+	err = lstpost.AppendMemoryCopy(hbuf_v1, dbuf_v1, bufsz)
 	if err != nil {
 		panic(err)
 	}
 
-	err = q.ExecuteCommandLists(lst)
+	err = lstpost.Close()
 	if err != nil {
 		panic(err)
 	}
 
+	start := time.Now()
+	err = q.ExecuteCommandLists(lstpre, lstcalc, lstpost)
+	if err != nil {
+		panic(err)
+	}
 	err = q.Synchronize()
 	if err != nil {
 		panic(err)
 	}
+	elapsed := time.Since(start)
+
+	fmt.Println("===============    Calculation Results    ===============")
+	fmt.Printf("%-28s %.6f ms\n", "GPU Execution Time:", elapsed.Seconds()*1000)
+	fmt.Printf("%-28s %.2f GiB/s\n", "GPU Throughput:", float64(bufsz)/elapsed.Seconds()/1e9)
+
+	tmpbuf := make([]float32, N)
+	start = time.Now()
+	for i := range N {
+		tmpbuf[i] = floatbuf[i] + floatbuf[N+i]
+	}
+	elapsed = time.Since(start)
+
+	fmt.Println("===============    Validation Results    ===============")
+	fmt.Printf("%-28s %.6f ms\n", "CPU Execution Time:", elapsed.Seconds()*1000)
+	fmt.Printf("%-28s %.2f GiB/s\n", "CPU Throughput:", float64(bufsz)/elapsed.Seconds()/1e9)
 
 	fail := false
 	for i := range N {
@@ -175,11 +246,13 @@ func main() {
 			fail = true
 			fmt.Printf("[%05d] expect %f = %f + %f, got %f.\n", i, expect, floatbuf[i], floatbuf[N+i], zev1[i])
 		} else {
-			fmt.Printf("[%05d] valid  %f = %f + %f, got %f.\n", i, expect, floatbuf[i], floatbuf[N+i], zev1[i])
+			// fmt.Printf("[%05d] valid  %f = %f + %f, got %f.\n", i, expect, floatbuf[i], floatbuf[N+i], zev1[i])
 		}
 	}
 
 	if fail {
 		os.Exit(1)
 	}
+
+	fmt.Println("Test Passed!!!")
 }

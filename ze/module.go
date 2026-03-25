@@ -12,14 +12,14 @@ import (
 type ModuleHandle gozel.ZeModuleHandle
 
 // ModuleCreate creates a module from SPIR-V binary data on the given device.
-func (h ContextHandle) ModuleCreate(hDevice gozel.ZeDeviceHandle, data []byte) (
+func (h ContextHandle) ModuleCreate(hDevice DeviceHandle, data []byte) (
 	ModuleHandle, error,
 ) {
 	var (
 		m  gozel.ZeModuleHandle
 		lg gozel.ZeModuleBuildLogHandle
 	)
-	_, err := gozel.ZeModuleCreate(gozel.ZeContextHandle(h), hDevice, &gozel.ZeModuleDesc{
+	_, err := gozel.ZeModuleCreate(gozel.ZeContextHandle(h), gozel.ZeDeviceHandle(hDevice), &gozel.ZeModuleDesc{
 		Stype:        gozel.ZE_STRUCTURE_TYPE_MODULE_DESC,
 		Format:       gozel.ZE_MODULE_FORMAT_IL_SPIRV,
 		Inputsize:    uintptr(len(data)),

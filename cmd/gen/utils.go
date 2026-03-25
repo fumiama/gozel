@@ -66,7 +66,7 @@ func get1sentence(firstln string, scan *bufio.Scanner, ln int) (string, int) {
 		}
 		sb.WriteString(t)
 		content, _, _ := strings.Cut(t, "//")
-		if strings.Contains(content, ";") && bracedepth == 0 {
+		if bracedepth == 0 && strings.Contains(content, ";") {
 			return sb.String(), ln
 		}
 	}

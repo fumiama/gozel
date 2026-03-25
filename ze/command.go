@@ -2,6 +2,7 @@ package ze
 
 import (
 	"math"
+	"runtime"
 	"unsafe"
 
 	"github.com/fumiama/gozel"
@@ -11,11 +12,11 @@ import (
 type CommandQueueHandle gozel.ZeCommandQueueHandle
 
 // CommandQueueCreate creates a command queue on the given device with default mode and normal priority.
-func (h ContextHandle) CommandQueueCreate(hDevice gozel.ZeDeviceHandle) (
+func (h ContextHandle) CommandQueueCreate(hDevice DeviceHandle) (
 	CommandQueueHandle, error,
 ) {
 	var q gozel.ZeCommandQueueHandle
-	_, err := gozel.ZeCommandQueueCreate(gozel.ZeContextHandle(h), hDevice, &gozel.ZeCommandQueueDesc{
+	_, err := gozel.ZeCommandQueueCreate(gozel.ZeContextHandle(h), gozel.ZeDeviceHandle(hDevice), &gozel.ZeCommandQueueDesc{
 		Stype:    gozel.ZE_STRUCTURE_TYPE_COMMAND_QUEUE_DESC,
 		Mode:     gozel.ZE_COMMAND_QUEUE_MODE_DEFAULT,
 		Priority: gozel.ZE_COMMAND_QUEUE_PRIORITY_NORMAL,
@@ -24,9 +25,12 @@ func (h ContextHandle) CommandQueueCreate(hDevice gozel.ZeDeviceHandle) (
 }
 
 // ExecuteCommandLists submits the command list for execution on the command queue.
-func (h CommandQueueHandle) ExecuteCommandLists(hCommandList CommandListHandle) error {
-	cl := gozel.ZeCommandListHandle(hCommandList)
-	_, err := gozel.ZeCommandQueueExecuteCommandLists(gozel.ZeCommandQueueHandle(h), 1, &cl, 0)
+func (h CommandQueueHandle) ExecuteCommandLists(hCommandList ...CommandListHandle) error {
+	_, err := gozel.ZeCommandQueueExecuteCommandLists(
+		gozel.ZeCommandQueueHandle(h), uint32(len(hCommandList)),
+		(*gozel.ZeCommandListHandle)(&hCommandList[0]), 0,
+	)
+	runtime.KeepAlive(hCommandList)
 	return err
 }
 
@@ -46,11 +50,11 @@ func (h CommandQueueHandle) Destroy() error {
 type CommandListHandle gozel.ZeCommandListHandle
 
 // CommandListCreate creates a command list on the given device.
-func (h ContextHandle) CommandListCreate(hDevice gozel.ZeDeviceHandle) (
+func (h ContextHandle) CommandListCreate(hDevice DeviceHandle) (
 	CommandListHandle, error,
 ) {
 	var cl gozel.ZeCommandListHandle
-	_, err := gozel.ZeCommandListCreate(gozel.ZeContextHandle(h), hDevice, &gozel.ZeCommandListDesc{
+	_, err := gozel.ZeCommandListCreate(gozel.ZeContextHandle(h), gozel.ZeDeviceHandle(hDevice), &gozel.ZeCommandListDesc{
 		Stype: gozel.ZE_STRUCTURE_TYPE_COMMAND_LIST_DESC,
 	}, &cl)
 	return CommandListHandle(cl), err

@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"unicode"
 )
@@ -18,7 +19,9 @@ var (
 	typemap = map[string]string{
 		"char":          "byte",
 		"char*":         "*byte",
+		"char *":        "*byte",
 		"const char*":   "*byte",
+		"const char *":  "*byte",
 		"char**":        "**byte",
 		"const char**":  "**byte",
 		"char***":       "***byte",
@@ -51,6 +54,8 @@ var (
 		"core_globaloffset":        {},
 		"core_linkonceodr":         {},
 		"core_subgroups":           {},
+
+		"tols_metricRuntimeEnableDisable": {},
 	}
 	zecallExcludeRegions = map[string]struct{}{
 		"core_bandwidth":                    {},
@@ -86,7 +91,13 @@ var (
 		"sysm_memPageOfflineState":      {},
 		"sysm_powerDomainProperties":    {},
 
-		"tols_common": {},
+		"tols_common":             {},
+		"tols_metricExportMemory": {},
+	}
+	unionSizes = map[string]int{
+		"zet_value_t":            8,
+		"zet_debug_event_info_t": 32,
+		"zet_value_info_exp_t":   16,
 	}
 )
 
@@ -106,6 +117,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 	var regionfile *os.File
 	fileheadersb := strings.Builder{}
 	region := ""
+	fsz := int64(0)
 	for scan.Scan() {
 		ln++
 		t := scan.Text()
@@ -146,6 +158,11 @@ func scanHeader(name string, scan *bufio.Scanner) {
 				f.WriteString(sb.String())
 			}
 			regionfile = f
+			stat, err := f.Stat()
+			if err != nil {
+				panic(fmt.Sprintf("%s L%d: cannot stat region file %s, err: %v", name, ln, region, err))
+			}
+			fsz = stat.Size()
 		// block barrier
 		case strings.HasPrefix(t, "///////////////////////////////////////////////////////////////////////////////"):
 			fmt.Println("  [scan] enter", region, "block")
@@ -153,8 +170,18 @@ func scanHeader(name string, scan *bufio.Scanner) {
 			fmt.Println("  [scan] leave", region, "block")
 		// pragma end
 		case strings.HasPrefix(t, "#pragma endregion"):
-			fmt.Println(infh(name), "close region", regionfile.Name())
+			nm := regionfile.Name()
+			stat, err := regionfile.Stat()
+			if err != nil {
+				panic(fmt.Sprintf("%s L%d: cannot stat region file %s, err: %v", name, ln, region, err))
+			}
+			sz := stat.Size()
+			fmt.Println(infh(name), "close region", nm)
 			_ = regionfile.Close()
+			if fsz == sz {
+				fmt.Println("[warn] delete unchanged region file", nm)
+				_ = os.Remove(nm)
+			}
 			regionfile = nil
 		// skip outer #
 		case strings.HasPrefix(t, "#") || t == "" || strings.HasPrefix(t, "// ") ||
@@ -615,6 +642,7 @@ func scanTypedef(
 			f.WriteString(vars)
 			f.WriteString("\n)\n\n")
 			return ln
+			// tricky: fallthrough union to the single line though it is not
 		}
 	}
 	// single-line typedef, empty struct or type alias, replace with "type" statement
@@ -635,6 +663,13 @@ func scanTypedef(
 		typs = typs[1:]
 		typs[0] = "uintptr"
 		typs[1] = strings.TrimPrefix(strings.TrimSpace(typs[1]), "*")
+	} else if strings.TrimSpace(typs[0]) == "union" {
+		origtyp := strings.TrimSpace(strings.TrimSuffix(strings.TrimSpace(typs[len(typs)-1]), ";"))
+		sz, ok := unionSizes[origtyp]
+		if !ok {
+			panic(fmt.Sprintf("%s L%d: unknown union size of %s", name, ln, origtyp))
+		}
+		typs = []string{"[" + strconv.Itoa(sz) + "]byte", origtyp}
 	}
 	if len(typs) != 2 {
 		panic(fmt.Sprintf("%s L%d: unexpected typdef line %s", name, ln, firstln))
@@ -706,6 +741,9 @@ func scanFunc(
 			panic(fmt.Sprintf("%s L%d: unexpected short func arg line %s", name, ln, argln))
 		}
 		argnam := strings.TrimSpace(argtypnam[i+1:])
+		if argnam == "type" { // go keywords
+			argnam = "typ"
+		}
 		argsb.WriteString(", uintptr(")
 		argtyp := strings.TrimSpace(strings.ReplaceAll(argtypnam[:i], "const ", ""))
 		isp := strings.HasSuffix(argtyp, "*") // is pointer
@@ -719,7 +757,7 @@ func scanFunc(
 		}
 		if isp {
 			if !ok {
-				argtyp = pmark + argtyp[:len(argtyp)-len(pmark)]
+				argtyp = pmark + strings.TrimSpace(argtyp[:len(argtyp)-len(pmark)])
 			}
 			argsb.WriteString("unsafe.Pointer(")
 		} else {

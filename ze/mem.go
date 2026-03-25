@@ -7,13 +7,13 @@ import (
 )
 
 // MemAllocDevice allocates device memory on the given device with the specified size and alignment.
-func (h ContextHandle) MemAllocDevice(hDevice gozel.ZeDeviceHandle, size uintptr, alignment uintptr) (
+func (h ContextHandle) MemAllocDevice(hDevice DeviceHandle, size uintptr, alignment uintptr) (
 	unsafe.Pointer, error,
 ) {
 	var p unsafe.Pointer
 	_, err := gozel.ZeMemAllocDevice(gozel.ZeContextHandle(h), &gozel.ZeDeviceMemAllocDesc{
 		Stype: gozel.ZE_STRUCTURE_TYPE_DEVICE_MEM_ALLOC_DESC,
-	}, size, alignment, hDevice, &p)
+	}, size, alignment, gozel.ZeDeviceHandle(hDevice), &p)
 	return p, err
 }
 
