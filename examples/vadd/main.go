@@ -11,28 +11,27 @@ import (
 	"github.com/fumiama/gozel/ze"
 )
 
-//go:generate clang++ -fsycl -fsycl-device-only -fno-sycl-use-footer -faddrsig -Xclang -emit-llvm-bc main.cpp -o device_func.bc
+//go:generate clang++ -fsycl -fsycl-device-only -fsycl-targets=spirv64 -faddrsig -Xclang -emit-llvm-bc main.cpp -o device_func.bc
 //go:generate sycl-post-link -symbols -split=auto -o device_func.table device_func.bc
-//go:generate llvm-spirv -o device_func.spv device_func_0.bc
-//go:generate clang++ -target spir64-unknown-unknown -S -emit-llvm -x ir device_func_0.bc -o device_func.ll
+//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_func_0.bc -o device_func.ll
 //go:generate go run ../../cmd/func2kernel device_func.ll device_kern.ll
-//go:generate clang++ -target spir64-unknown-unknown -c -emit-llvm -x ir device_kern.ll -o device_kern.bc
+//go:generate clang++ -target spirv64-unknown-unknown -c -emit-llvm -x ir device_kern.ll -o device_kern.bc
 //go:generate llvm-spirv -o main.spv device_kern.bc
-//go:generate clang++ -target spir64-unknown-unknown -S -emit-llvm -x ir device_kern.bc -o main.ll
+//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern.bc -o main.ll
 
 //go:embed main.spv
 var kernelspv []byte
 
 const (
-	X, Y, Z = 1024, 1, 1
+	X, Y, Z = 64, 1, 1
 	N       = X * Y * Z
-	bufsz   = N * unsafe.Sizeof(float64(0))
+	bufsz   = N * unsafe.Sizeof(float32(0))
 )
 
 func main() {
-	floatbuf := make([]float64, 2*N)
+	floatbuf := make([]float32, 2*N)
 	for i := range floatbuf {
-		floatbuf[i] = rand.Float64()
+		floatbuf[i] = rand.Float32()
 	}
 
 	gpus, err := ze.InitGPUDrivers()
@@ -88,7 +87,7 @@ func main() {
 	}
 	defer ctx.MemFree(dbuf_v2)
 
-	zev1, zev2 := unsafe.Slice((*float64)(hbuf_v1), N), unsafe.Slice((*float64)(hbuf_v2), N)
+	zev1, zev2 := unsafe.Slice((*float32)(hbuf_v1), N), unsafe.Slice((*float32)(hbuf_v2), N)
 	copy(zev1, floatbuf[:N])
 	copy(zev2, floatbuf[N:])
 
