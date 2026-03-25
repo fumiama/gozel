@@ -1,0 +1,41 @@
+version: "2"
+
+linters:
+  default: none
+  enable:
+    - errcheck
+    - staticcheck
+    - govet
+    - ineffassign
+    - unused
+    - misspell
+    - unconvert
+    - revive
+  settings:
+    revive:
+      rules:
+        - name: exported
+          disabled: true
+  exclusions:
+    rules:
+      - path: ^cmd/
+        linters:
+          - errcheck
+          - staticcheck
+          - govet
+          - ineffassign
+          - unused
+          - misspell
+          - unconvert
+          - revive
+      - linters:
+          - errcheck
+        source: "^\\s*defer "
+
+formatters:
+  enable:
+    - gofmt
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0

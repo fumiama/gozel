@@ -245,8 +245,6 @@ func main() {
 		if zev1[i] != expect {
 			fail = true
 			fmt.Printf("[%05d] expect %f = %f + %f, got %f.\n", i, expect, floatbuf[i], floatbuf[N+i], zev1[i])
-		} else {
-			// fmt.Printf("[%05d] valid  %f = %f + %f, got %f.\n", i, expect, floatbuf[i], floatbuf[N+i], zev1[i])
 		}
 	}
 

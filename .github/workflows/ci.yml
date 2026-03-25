@@ -45,6 +45,11 @@ jobs:
       - name: Run tests
         run: go test -v -count=1 ./...
 
+      - name: Run golangci-lint
+        uses: golangci/golangci-lint-action@v9
+        with:
+          version: v2.11
+
   go-generate:
     name: Run all Generates & PR
     runs-on: ubuntu-latest
