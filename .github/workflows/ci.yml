@@ -74,27 +74,31 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y intel-level-zero-gpu level-zero
 
+          # Discover the actual install path of libze_loader.so and expose it
+          # to subsequent steps so the Go runtime can find it at process startup.
+          LIB_PATH=$(dirname "$(find /usr -name 'libze_loader.so*' -print -quit 2>/dev/null)")
+          echo "Found libze_loader at: ${LIB_PATH}"
+          echo "LD_LIBRARY_PATH=${LIB_PATH}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" >> "$GITHUB_ENV"
+
       - name: Install Intel Level Zero (Windows)
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
+          # The win-sdk zip only contains headers + import .lib files, no runtime DLLs.
+          # Build ze_loader.dll / ze_null.dll from source using the bundled MSVC toolchain.
           $release = Invoke-RestMethod "https://api.github.com/repos/oneapi-src/level-zero/releases/latest"
-          $asset = $release.assets | Where-Object { $_.name -match 'win.*\.zip$' } | Select-Object -First 1
-          if ($asset) {
-            Invoke-WebRequest -Uri $asset.browser_download_url -OutFile level-zero-win.zip
-            Expand-Archive level-zero-win.zip -DestinationPath level-zero-win
-            # Copy all DLLs: ze_loader.dll, ze_null.dll, ze_validation_layer.dll, etc.
-            $dlls = Get-ChildItem -Recurse -Filter "*.dll" -Path level-zero-win
-            if ($dlls) {
-              foreach ($dll in $dlls) {
-                Copy-Item $dll.FullName "$env:SystemRoot\System32\" -Force
-                Write-Host "Installed $($dll.Name) to System32"
-              }
-            } else {
-              Write-Warning "No DLLs found in downloaded archive"
-            }
-          } else {
-            Write-Warning "No Windows zip asset found in level-zero releases, skipping"
+          $tag = $release.tag_name
+          Write-Host "Building level-zero $tag from source"
+          git clone https://github.com/oneapi-src/level-zero.git --depth=1 --branch $tag level-zero-src
+          cmake -S level-zero-src -B level-zero-build `
+            -DCMAKE_BUILD_TYPE=Release `
+            -DBUILD_TESTING=OFF
+          cmake --build level-zero-build --config Release --parallel
+          # Install all produced DLLs (ze_loader, ze_null, ze_validation_layer, ze_tracing_layer)
+          $dlls = Get-ChildItem -Recurse -Filter "*.dll" -Path level-zero-build
+          foreach ($dll in $dlls) {
+            Copy-Item $dll.FullName "$env:SystemRoot\System32\" -Force
+            Write-Host "Installed $($dll.Name) to System32"
           }
 
       - name: Run examples
