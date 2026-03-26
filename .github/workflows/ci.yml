@@ -47,6 +47,70 @@ jobs:
         with:
           version: v2.11
 
+  test-examples:
+    name: Test examples
+    runs-on: ${{ matrix.os }}
+    needs: [vet_build_test]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Install Intel Level Zero (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | \
+            sudo gpg --dearmor -o /usr/share/keyrings/intel-graphics.gpg
+          . /etc/os-release
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] \
+            https://repositories.intel.com/gpu/ubuntu ${VERSION_CODENAME} unified" | \
+            sudo tee /etc/apt/sources.list.d/intel-gpu.list
+          sudo apt-get update
+          sudo apt-get install -y intel-level-zero-gpu level-zero
+
+      - name: Install Intel Level Zero (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $release = Invoke-RestMethod "https://api.github.com/repos/oneapi-src/level-zero/releases/latest"
+          $asset = $release.assets | Where-Object { $_.name -match 'win.*\.zip$' } | Select-Object -First 1
+          if ($asset) {
+            Invoke-WebRequest -Uri $asset.browser_download_url -OutFile level-zero-win.zip
+            Expand-Archive level-zero-win.zip -DestinationPath level-zero-win
+            # Copy all DLLs: ze_loader.dll, ze_null.dll, ze_validation_layer.dll, etc.
+            $dlls = Get-ChildItem -Recurse -Filter "*.dll" -Path level-zero-win
+            if ($dlls) {
+              foreach ($dll in $dlls) {
+                Copy-Item $dll.FullName "$env:SystemRoot\System32\" -Force
+                Write-Host "Installed $($dll.Name) to System32"
+              }
+            } else {
+              Write-Warning "No DLLs found in downloaded archive"
+            }
+          } else {
+            Write-Warning "No Windows zip asset found in level-zero releases, skipping"
+          }
+
+      - name: Run examples
+        shell: bash
+        env:
+          # Activate the Level Zero null driver (ze_null) so the loader
+          # can enumerate a fake device on runners without real Intel GPU hardware.
+          ZE_ENABLE_NULL_DRIVER: "1"
+        run: |
+          for dir in examples/*/; do
+            if [ -f "${dir}/main.go" ]; then
+              echo "==> Running ${dir}..."
+              go run "./${dir}/main.go" || true
+            fi
+          done
+
   go-generate:
     name: Run all Generates & Commit
     runs-on: ubuntu-latest
