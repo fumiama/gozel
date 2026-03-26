@@ -54,9 +54,9 @@ func main() {
 	}
 
 	fmt.Println("===============  Device Basic Properties  ===============")
+	name, _, _ := strings.Cut(string(prop.Name[:]), "\x00")
 	fmt.Println(
-		"Running on device: ID =", prop.Deviceid, ", Name =",
-		strings.TrimSpace(string(prop.Name[:])),
+		"Running on device: ID =", prop.Deviceid, ", Name =", name,
 		"@", strconv.FormatFloat(float64(prop.Coreclockrate)/1024/1024/1024, 'f', 2, 64), "GHz.",
 	)
 

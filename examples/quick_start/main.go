@@ -3,6 +3,7 @@ package main
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/fumiama/gozel/ze"
 )
@@ -17,7 +18,8 @@ func main() {
 	devs, _ := gpus[0].DeviceGet()
 	for _, d := range devs {
 		prop, _ := d.DeviceGetProperties()
-		fmt.Printf("  Device: %s\n", string(prop.Name[:]))
+		name, _, _ := strings.Cut(string(prop.Name[:]), "\x00")
+		fmt.Printf("  Device: %s\n", name)
 	}
 
 	// Found 1 GPU driver(s)

@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	zeLibraryName = "libze_loader.so"
+	zeLibraryName = "libze_loader.so.1"
 )
 
 var (

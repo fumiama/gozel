@@ -73,12 +73,7 @@ jobs:
             sudo tee /etc/apt/sources.list.d/intel-gpu.list
           sudo apt-get update
           sudo apt-get install -y intel-level-zero-gpu level-zero
-
-          # Discover the actual install path of libze_loader.so and expose it
-          # to subsequent steps so the Go runtime can find it at process startup.
-          LIB_PATH=$(dirname "$(find /usr -name 'libze_loader.so*' -print -quit 2>/dev/null)")
-          echo "Found libze_loader at: ${LIB_PATH}"
-          echo "LD_LIBRARY_PATH=${LIB_PATH}${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}" >> "$GITHUB_ENV"
+          sudo ldconfig
 
       - name: Install Intel Level Zero (Windows)
         if: runner.os == 'Windows'
@@ -111,7 +106,7 @@ jobs:
           for dir in examples/*/; do
             if [ -f "${dir}/main.go" ]; then
               echo "==> Running ${dir}..."
-              go run "./${dir}/main.go" || true
+              go run "./${dir}/main.go"
             fi
           done
 
