@@ -215,7 +215,6 @@ gozel/
 │   └── command.go            #   Command queues, lists, barriers
 ├── internal/zecall/          # purego FFI layer (loads ze_loader at runtime)
 ├── cmd/gen/                  # Code generator: parses L0 headers → Go source
-├── cmd/func2kernel/          # LLVM IR transformer for SPIR-V kernel preparation
 ├── spec/                     # Optional L0 SDK headers for dev purpose (input to cmd/gen)
 └── examples/
     ├── quick_start/          # The quick start shown in this README
@@ -267,17 +266,13 @@ This invokes `cmd/gen` with the local `spec/` directory as configured in `doc.go
 GPU kernels in the [examples](examples) folder are written in SYCL C++ and compiled to SPIR-V for embedding into Go programs, which is a little bit hacky. You can also use `ocloc`, which is a common practice and you can search for the build doc elsewhere. The build pipeline uses `go generate` directives:
 
 ```
-main.cpp ──clang++ -fsycl──▶ device_func.bc
+main.cpp ──clang++ -fsycl──▶ device_kern.bc
                               │
                         sycl-post-link
                               │
-                        ▼ device_func_0.bc
+                        ▼ device_kern_0.bc
                               │
                    clang++ -emit-llvm -S
-                              │
-                        ▼ device_func.ll
-                              │
-                     cmd/func2kernel        ← transforms spir_func → spir_kernel
                               │
                         ▼ device_kern.ll
                               │
@@ -297,5 +292,3 @@ cd examples/vadd
 go generate    # compiles main.cpp → main.spv
 go run main.go # runs vector addition on GPU
 ```
-
-The `cmd/func2kernel` tool handles the LLVM IR transformation (`spir_func` → `spir_kernel`, address space 4 → 1) required by the SPIR-V backend.

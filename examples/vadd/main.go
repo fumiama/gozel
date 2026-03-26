@@ -15,11 +15,9 @@ import (
 	"github.com/fumiama/gozel/ze"
 )
 
-//go:generate clang++ -fsycl -fsycl-device-only -fsycl-targets=spirv64 -faddrsig -Xclang -emit-llvm-bc main.cpp -o device_func.bc
-//go:generate sycl-post-link -symbols -split=auto -o device_func.table device_func.bc
-//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_func_0.bc -o device_func.ll
-//go:generate go run ../../cmd/func2kernel device_func.ll device_kern.ll
-//go:generate clang++ -target spirv64-unknown-unknown -c -emit-llvm -x ir device_kern.ll -o device_kern.bc
+//go:generate clang++ -fsycl -fsycl-device-only -fsycl-targets=spirv64 -Xclang -emit-llvm-bc main.cpp -o device_kern.bc
+//go:generate sycl-post-link -symbols -split=auto -o device_kern.table device_kern.bc
+//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern_0.bc -o device_kern.ll
 //go:generate llvm-spirv -o main.spv device_kern.bc
 //go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern.bc -o main.ll
 
@@ -131,7 +129,7 @@ func main() {
 	}
 	defer mod.Destroy()
 
-	krn, err := mod.KernelCreate("vector_add")
+	krn, err := mod.KernelCreate("__sycl_kernel_vector_add")
 	if err != nil {
 		panic(err)
 	}
