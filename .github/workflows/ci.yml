@@ -65,14 +65,19 @@ jobs:
       - name: Install Intel Level Zero (Linux)
         if: runner.os == 'Linux'
         run: |
-          wget -qO - https://repositories.intel.com/gpu/intel-graphics.key | \
-            sudo gpg --dearmor -o /usr/share/keyrings/intel-graphics.gpg
-          . /etc/os-release
-          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] \
-            https://repositories.intel.com/gpu/ubuntu ${VERSION_CODENAME} unified" | \
-            sudo tee /etc/apt/sources.list.d/intel-gpu.list
-          sudo apt-get update
-          sudo apt-get install -y intel-level-zero-gpu level-zero
+          # The apt runtime package (libze1) does NOT ship libze_null.so, which is
+          # required for ZE_ENABLE_NULL_DRIVER=1. Build from source instead so the
+          # loader and the null driver are both present, matching the Windows approach.
+          RELEASE=$(curl -sf https://api.github.com/repos/oneapi-src/level-zero/releases/latest \
+            | jq -r '.tag_name')
+          git clone https://github.com/oneapi-src/level-zero.git --depth=1 \
+            --branch "$RELEASE" level-zero-src
+          cmake -S level-zero-src -B level-zero-build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DCMAKE_INSTALL_PREFIX=/usr/local \
+            -DBUILD_TESTING=OFF
+          cmake --build level-zero-build --parallel
+          sudo cmake --install level-zero-build
           sudo ldconfig
 
       - name: Install Intel Level Zero (Windows)
