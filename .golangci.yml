@@ -1,5 +1,13 @@
 version: "2"
 
+run:
+  fix: true
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+
 linters:
   default: none
   enable:
