@@ -54,7 +54,6 @@ jobs:
           - os: ubuntu-latest
             name: Linux
             cmake_extra_args: -DCMAKE_INSTALL_PREFIX=/usr/local
-            build_args: --parallel 2
             install_cmd: >-
               sudo cmake --install level-zero-build &&
               sudo cp level-zero-build/lib/libze_null.so /usr/local/lib/ &&
@@ -62,7 +61,6 @@ jobs:
           - os: windows-latest
             name: Windows
             cmake_extra_args: ""
-            build_args: --parallel
             install_cmd: >-
               for dll in $(find level-zero-build -name "*.dll");
                 do cp "$dll" /c/Windows/System32/;
@@ -92,7 +90,7 @@ jobs:
             -DCMAKE_BUILD_TYPE=Release \
             -DBUILD_TESTING=OFF \
             ${{ matrix.cmake_extra_args }}
-          cmake --build level-zero-build --config Release ${{ matrix.build_args }}
+          cmake --build level-zero-build --config Release --parallel $(nproc)
           ${{ matrix.install_cmd }}
 
       - name: Run examples
@@ -144,6 +142,8 @@ jobs:
         with:
           version: v2.11
           args: --fix
+        env:
+          CGO_ENABLED: "0"
 
       - name: Check for changes
         id: diff
