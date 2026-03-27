@@ -48,7 +48,7 @@ jobs:
           version: v2.11
 
   test-examples:
-    name: Test examples
+    name: Test examples (${{ matrix.name }})
     runs-on: ${{ matrix.os }}
     needs: [vet_build_test]
     strategy:
@@ -56,9 +56,11 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
+            name: Linux
             cmake_extra_args: -DCMAKE_INSTALL_PREFIX=/usr/local
             install_cmd: sudo cmake --install level-zero-build && sudo ldconfig
           - os: windows-latest
+            name: Windows
             cmake_extra_args: ""
             install_cmd: 'for dll in $(find level-zero-build -name "*.dll"); do cp "$dll" /c/Windows/System32/; done'
     steps:
