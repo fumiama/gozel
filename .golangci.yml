@@ -18,6 +18,9 @@ linters:
     - revive
   exclusions:
     rules:
+      - path: \.cpp$
+        linters:
+          - typecheck
       - path: ^cmd/
         linters:
           - errcheck
