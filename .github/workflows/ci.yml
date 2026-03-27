@@ -55,12 +55,18 @@ jobs:
             name: Linux
             cmake_extra_args: -DCMAKE_INSTALL_PREFIX=/usr/local
             build_args: --parallel 2
-            install_cmd: sudo cmake --install level-zero-build && sudo ldconfig
+            install_cmd: >-
+              sudo cmake --install level-zero-build &&
+              sudo cp level-zero-build/lib/libze_null.so /usr/local/lib/ &&
+              sudo ldconfig
           - os: windows-latest
             name: Windows
             cmake_extra_args: ""
             build_args: --parallel
-            install_cmd: 'for dll in $(find level-zero-build -name "*.dll"); do cp "$dll" /c/Windows/System32/; done'
+            install_cmd: >-
+              for dll in $(find level-zero-build -name "*.dll");
+                do cp "$dll" /c/Windows/System32/;
+              done
     steps:
       - uses: actions/checkout@v4
 
