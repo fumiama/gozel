@@ -1,11 +1,14 @@
 package main
 
-import "os"
+import (
+	"os"
+	"path"
+)
 
 var apif *os.File
 
 func init() {
-	f, err := os.Create("api.go")
+	f, err := os.Create(path.Join("gozel", "api.go"))
 	if err != nil {
 		panic(err)
 	}
