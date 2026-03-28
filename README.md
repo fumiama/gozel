@@ -274,10 +274,6 @@ main.cpp ──clang++ -fsycl──▶ device_kern.bc
                               │
                         ▼ device_kern_0.bc
                               │
-                   clang++ -emit-llvm -S
-                              │
-                        ▼ device_kern.ll
-                              │
                      llvm-spirv
                               │
                         ▼ main.spv          ← embedded via //go:embed

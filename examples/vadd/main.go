@@ -18,9 +18,8 @@ import (
 
 //go:generate clang++ -fsycl -fsycl-device-only -fsycl-targets=spirv64 -Xclang -emit-llvm-bc main.cpp -o device_kern.bc
 //go:generate sycl-post-link -symbols -split=auto -o device_kern.table device_kern.bc
-//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern_0.bc -o device_kern.ll
-//go:generate llvm-spirv -o main.spv device_kern.bc
-//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern.bc -o main.ll
+//go:generate llvm-spirv -o main.spv device_kern_0.bc
+//go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern_0.bc -o main.ll
 
 //go:embed main.spv
 var kernelspv []byte
