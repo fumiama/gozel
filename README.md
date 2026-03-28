@@ -190,7 +190,8 @@ Contributions of all kinds are welcome. Some particularly impactful areas:
 
 ## License
 
-This project is licensed under the [GNU Affero General Public License v3.0](LICENSE).
+- This project is generally licensed under the [GNU Affero General Public License v3.0](LICENSE).
+- The files in [gozel](gozel) folder follows their original license, which is [MIT](https://github.com/oneapi-src/level-zero/blob/master/LICENSE).
 
 ---
 

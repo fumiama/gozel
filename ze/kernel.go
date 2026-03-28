@@ -1,10 +1,11 @@
 package ze
 
 import (
+	"reflect"
 	"runtime"
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // KernelHandle is a handle to a Level Zero kernel.
@@ -23,8 +24,15 @@ func (h ModuleHandle) KernelCreate(kernelName string) (KernelHandle, error) {
 }
 
 // SetArgumentValue sets the value of a kernel argument at the given index.
-func (h KernelHandle) SetArgumentValue(argIndex uint32, argSize uintptr, pArgValue unsafe.Pointer) error {
-	_, err := gozel.ZeKernelSetArgumentValue(gozel.ZeKernelHandle(h), argIndex, argSize, pArgValue)
+func (h KernelHandle) SetArgumentValue(argIndex uint32, arg any) error {
+	_, err := gozel.ZeKernelSetArgumentValue(
+		gozel.ZeKernelHandle(h), argIndex, reflect.TypeOf(arg).Size(),
+		*(*unsafe.Pointer)(
+			unsafe.Add(unsafe.Pointer(&arg),
+				unsafe.Sizeof(uintptr(0))),
+		),
+	)
+	runtime.KeepAlive(arg)
 	return err
 }
 

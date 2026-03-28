@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // ModuleHandle is a handle to a Level Zero module.
