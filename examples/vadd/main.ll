@@ -4,18 +4,21 @@ target datalayout = "e-i64:64-v16:16-v24:32-v32:32-v48:64-v96:128-v192:256-v256:
 target triple = "spirv64-unknown-unknown"
 
 @__spirv_BuiltInGlobalInvocationId = external local_unnamed_addr addrspace(1) constant <3 x i64>, align 32
+@__spirv_BuiltInGlobalOffset = external local_unnamed_addr addrspace(1) constant <3 x i64>, align 32
 
 ; Function Attrs: mustprogress nofree norecurse nosync nounwind willreturn memory(argmem: readwrite, inaccessiblemem: write)
 define spir_kernel void @__sycl_kernel_vector_add(ptr addrspace(1) noundef align 4 captures(none) %0, ptr addrspace(1) noundef readonly align 4 captures(none) %1) local_unnamed_addr #0 !kernel_arg_buffer_location !6 !sycl_fixed_targets !7 !sycl_kernel_omit_args !8 {
   %3 = load i64, ptr addrspace(1) @__spirv_BuiltInGlobalInvocationId, align 32, !noalias !9
-  %4 = icmp ult i64 %3, 2147483648
-  tail call void @llvm.assume(i1 %4)
-  %5 = getelementptr inbounds float, ptr addrspace(1) %1, i64 %3
-  %6 = load float, ptr addrspace(1) %5, align 4, !tbaa !16
-  %7 = getelementptr inbounds float, ptr addrspace(1) %0, i64 %3
-  %8 = load float, ptr addrspace(1) %7, align 4, !tbaa !16
-  %9 = fadd float %8, %6
-  store float %9, ptr addrspace(1) %7, align 4, !tbaa !16
+  %4 = load i64, ptr addrspace(1) @__spirv_BuiltInGlobalOffset, align 32, !noalias !16
+  %5 = sub i64 %3, %4
+  %6 = icmp ult i64 %5, 2147483648
+  tail call void @llvm.assume(i1 %6)
+  %7 = getelementptr inbounds float, ptr addrspace(1) %1, i64 %5
+  %8 = load float, ptr addrspace(1) %7, align 4, !tbaa !23
+  %9 = getelementptr inbounds float, ptr addrspace(1) %0, i64 %5
+  %10 = load float, ptr addrspace(1) %9, align 4, !tbaa !23
+  %11 = fadd float %10, %8
+  store float %11, ptr addrspace(1) %9, align 4, !tbaa !23
   ret void
 }
 
@@ -48,7 +51,14 @@ attributes #1 = { nocallback nofree nosync nounwind willreturn memory(inaccessib
 !13 = distinct !{!13, !"_ZN7__spirv22initGlobalInvocationIdILi1EN4sycl3_V12idILi1EEEEET0_v"}
 !14 = distinct !{!14, !15, !"_ZNK4sycl3_V17nd_itemILi1EE13get_global_idEv: argument 0"}
 !15 = distinct !{!15, !"_ZNK4sycl3_V17nd_itemILi1EE13get_global_idEv"}
-!16 = !{!17, !17, i64 0}
-!17 = !{!"float", !18, i64 0}
-!18 = !{!"omnipotent char", !19, i64 0}
-!19 = !{!"Simple C++ TBAA"}
+!16 = !{!17, !19, !21}
+!17 = distinct !{!17, !18, !"_ZN7__spirv23InitSizesSTGlobalOffsetILi1EN4sycl3_V12idILi1EEEE8initSizeEv: argument 0"}
+!18 = distinct !{!18, !"_ZN7__spirv23InitSizesSTGlobalOffsetILi1EN4sycl3_V12idILi1EEEE8initSizeEv"}
+!19 = distinct !{!19, !20, !"_ZN7__spirv16initGlobalOffsetILi1EN4sycl3_V12idILi1EEEEET0_v: argument 0"}
+!20 = distinct !{!20, !"_ZN7__spirv16initGlobalOffsetILi1EN4sycl3_V12idILi1EEEEET0_v"}
+!21 = distinct !{!21, !22, !"_ZNK4sycl3_V17nd_itemILi1EE10get_offsetEv: argument 0"}
+!22 = distinct !{!22, !"_ZNK4sycl3_V17nd_itemILi1EE10get_offsetEv"}
+!23 = !{!24, !24, i64 0}
+!24 = !{!"float", !25, i64 0}
+!25 = !{!"omnipotent char", !26, i64 0}
+!26 = !{!"Simple C++ TBAA"}
