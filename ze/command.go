@@ -69,9 +69,9 @@ func (h CommandListHandle) AppendLaunchKernel(
 	return err
 }
 
-// AppendLaunchKernel appends a kernel launch command to the command list with args.
+// AppendLaunchKernelWithArguments appends a kernel launch command to the command list with args.
 func (h CommandListHandle) AppendLaunchKernelWithArguments(
-	hKernel gozel.ZeKernelHandle, groupCounts *gozel.ZeGroupCount,
+	hKernel KernelHandle, groupCounts *gozel.ZeGroupCount,
 	groupSizes *gozel.ZeGroupSize, pArguments *unsafe.Pointer,
 ) error {
 	_, err := gozel.ZeCommandListAppendLaunchKernelWithArguments(
