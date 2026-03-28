@@ -128,6 +128,7 @@ Test Passed!!!
 | Example | Description | Source |
 |---|---|---|
 | **vadd** | Vector addition — GPU kernel launch, memory copy, validation | [examples/vadd](examples/vadd/) |
+| **vadd_event** | Vector addition with event — GPU kernel launch, memory copy, validation | [examples/vadd](examples/vadd_event/) |
 
 ## The `ze` Package — High-Level API
 
