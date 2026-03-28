@@ -7,6 +7,7 @@ import (
 	"github.com/fumiama/gozel/gozel"
 )
 
+// EventPoolHandle (ze_event_pool_handle_t) Handle of driver's event pool object
 type EventPoolHandle gozel.ZeEventPoolHandle
 
 // EventPoolCreate Creates a pool of events on the context.
@@ -30,9 +31,10 @@ func (h EventPoolHandle) Destroy() error {
 	return err
 }
 
+// EventHandle (ze_event_handle_t) Handle of driver's event object
 type EventHandle gozel.ZeEventHandle
 
-// ZeEventCreate Creates an event from the pool.
+// EventCreate Creates an event from the pool.
 func (h EventPoolHandle) EventCreate(
 	index uint32, signal, wait gozel.ZeEventScopeFlags,
 ) (eh EventHandle, err error) {
