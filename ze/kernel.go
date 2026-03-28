@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // KernelHandle is a handle to a Level Zero kernel.

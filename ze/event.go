@@ -4,7 +4,7 @@ import (
 	"runtime"
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 type EventPoolHandle gozel.ZeEventPoolHandle

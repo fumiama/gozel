@@ -5,7 +5,7 @@ import (
 	"runtime"
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // CommandQueueHandle is a handle to a Level Zero command queue.

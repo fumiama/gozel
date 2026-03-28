@@ -1,6 +1,6 @@
 package ze
 
-import "github.com/fumiama/gozel"
+import "github.com/fumiama/gozel/gozel"
 
 // DeviceHandle is a handle to a Level Zero driver's device object.
 type DeviceHandle gozel.ZeDeviceHandle

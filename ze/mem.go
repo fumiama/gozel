@@ -3,7 +3,7 @@ package ze
 import (
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // MemAllocDevice allocates device memory on the given device with the specified size and alignment.

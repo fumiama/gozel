@@ -3,7 +3,7 @@ package ze
 import (
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 )
 
 // DriverHandle is a handle to a Level Zero driver instance.

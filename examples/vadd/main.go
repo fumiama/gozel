@@ -12,7 +12,7 @@ import (
 	"time"
 	"unsafe"
 
-	"github.com/fumiama/gozel"
+	"github.com/fumiama/gozel/gozel"
 	"github.com/fumiama/gozel/ze"
 )
 

@@ -1,6 +1,6 @@
 package ze
 
-import "github.com/fumiama/gozel"
+import "github.com/fumiama/gozel/gozel"
 
 // ContextHandle is a handle to a Level Zero context.
 type ContextHandle gozel.ZeContextHandle

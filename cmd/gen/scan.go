@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"path"
 	"strconv"
 	"strings"
 	"unicode"
@@ -134,7 +135,7 @@ func scanHeader(name string, scan *bufio.Scanner) {
 			}
 			fmt.Println(infh(name), "scanning region", region)
 			k := fmt.Sprint(name, "_", region)
-			f, err := os.Create(fmt.Sprint(k, ".go"))
+			f, err := os.Create(path.Join("gozel", fmt.Sprint(k, ".go")))
 			if err != nil {
 				panic(fmt.Sprintf("%s L%d: cannot create region %s, err: %v", name, ln, region, err))
 			}
