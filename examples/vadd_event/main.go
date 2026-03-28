@@ -70,7 +70,8 @@ func main() {
 	fmt.Printf("%-28s (%d, %d, %d)\n", "Max Group Count (X, Y, Z):", cprop.Maxgroupcountx, cprop.Maxgroupcounty, cprop.Maxgroupcountz)
 	fmt.Printf("%-28s %d\n", "Max Total Group Size:", cprop.Maxtotalgroupsize)
 	fmt.Printf("%-28s %d\n", "Max Shared Local Memory:", cprop.Maxsharedlocalmemory)
-	fmt.Printf("%-28s %v\n", "Subgroup Sizes:", cprop.Subgroupsizes[:cprop.Numsubgroupsizes])
+	fmt.Printf("%-28s %d\n", "Num Subgroup Sizes:", cprop.Numsubgroupsizes)
+	fmt.Printf("%-28s %v\n", "Subgroup Sizes:", cprop.Subgroupsizes[:])
 
 	var (
 		X, Y, Z    = uintptr(cprop.Maxgroupsizex), uintptr(1), uintptr(1)
@@ -83,12 +84,6 @@ func main() {
 	fmt.Printf("%-28s %d\n", "Group Count:", groupCount)
 	fmt.Printf("%-28s %d\n", "Total Elements (N):", N)
 	fmt.Printf("%-28s %d MiB\n", "Buffer Size:", bufsz/1024/1024)
-
-	q, err := ctx.CommandQueueCreate(dev, gozel.ZE_COMMAND_QUEUE_MODE_DEFAULT)
-	if err != nil {
-		panic(err)
-	}
-	defer q.Destroy()
 
 	hbufV1, err := ctx.MemAllocHost(bufsz, 1)
 	if err != nil {
@@ -148,79 +143,60 @@ func main() {
 		panic(err)
 	}
 
-	lstpre, err := ctx.CommandListCreate(dev)
+	evp, err := ctx.EventPoolCreate(3, dev)
 	if err != nil {
 		panic(err)
 	}
-	defer lstpre.Destroy()
+	defer evp.Destroy()
 
-	err = lstpre.AppendMemoryCopy(dbufV1, hbufV1, bufsz, 0)
+	evcph2dv1, err := evp.EventCreate(0, gozel.ZE_EVENT_SCOPE_FLAG_HOST, 0)
 	if err != nil {
 		panic(err)
 	}
-	err = lstpre.AppendMemoryCopy(dbufV2, hbufV2, bufsz, 0)
+	defer evcph2dv1.Destroy()
+	evcph2dv2, err := evp.EventCreate(1, gozel.ZE_EVENT_SCOPE_FLAG_HOST, 0)
 	if err != nil {
 		panic(err)
 	}
-
-	err = lstpre.AppendBarrier(0)
-	if err != nil {
-		panic(err)
-	}
-
-	err = lstpre.Close()
-	if err != nil {
-		panic(err)
-	}
-
-	lstcalc, err := ctx.CommandListCreate(dev)
-	if err != nil {
-		panic(err)
-	}
-	defer lstcalc.Destroy()
-
-	err = lstcalc.AppendLaunchKernel(krn, &gozel.ZeGroupCount{
-		Groupcountx: uint32(groupCount), Groupcounty: 1, Groupcountz: 1,
-	}, 0)
-	if err != nil {
-		panic(err)
-	}
-
-	err = lstcalc.AppendBarrier(0)
-	if err != nil {
-		panic(err)
-	}
-
-	err = lstcalc.Close()
-	if err != nil {
-		panic(err)
-	}
-
-	lstpost, err := ctx.CommandListCreate(dev)
-	if err != nil {
-		panic(err)
-	}
-	defer lstpost.Destroy()
-
-	err = lstpost.AppendMemoryCopy(hbufV1, dbufV1, bufsz, 0)
-	if err != nil {
-		panic(err)
-	}
-
-	err = lstpost.Close()
-	if err != nil {
-		panic(err)
-	}
+	defer evcph2dv2.Destroy()
 
 	start := time.Now()
-	err = q.ExecuteCommandLists(lstpre, lstcalc, lstpost)
+
+	lst, err := ctx.CommandListCreateImmediate(dev, gozel.ZE_COMMAND_QUEUE_MODE_DEFAULT)
 	if err != nil {
 		panic(err)
 	}
-	err = q.Synchronize(math.MaxUint64)
+	err = lst.AppendMemoryCopy(dbufV1, hbufV1, bufsz, evcph2dv1)
 	if err != nil {
 		panic(err)
 	}
+	err = lst.AppendMemoryCopy(dbufV2, hbufV2, bufsz, evcph2dv2)
+	if err != nil {
+		panic(err)
+	}
+
+	evk, err := evp.EventCreate(2, gozel.ZE_EVENT_SCOPE_FLAG_HOST, 0)
+	if err != nil {
+		panic(err)
+	}
+	defer evk.Destroy()
+
+	err = lst.AppendLaunchKernel(krn, &gozel.ZeGroupCount{
+		Groupcountx: uint32(groupCount), Groupcounty: 1, Groupcountz: 1,
+	}, evk, evcph2dv1, evcph2dv2)
+	if err != nil {
+		panic(err)
+	}
+
+	err = lst.AppendMemoryCopy(hbufV1, dbufV1, bufsz, 0, evk)
+	if err != nil {
+		panic(err)
+	}
+	err = lst.HostSynchronize(math.MaxUint64)
+	if err != nil {
+		panic(err)
+	}
+
 	elapsed := time.Since(start)
 
 	fmt.Println("===============    Calculation Results    ===============")

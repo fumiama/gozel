@@ -2,7 +2,6 @@
 package ze
 
 import (
-	"math"
 	"runtime"
 	"unsafe"
 
@@ -13,13 +12,13 @@ import (
 type CommandQueueHandle gozel.ZeCommandQueueHandle
 
 // CommandQueueCreate creates a command queue on the given device with default mode and normal priority.
-func (h ContextHandle) CommandQueueCreate(hDevice DeviceHandle) (
+func (h ContextHandle) CommandQueueCreate(hDevice DeviceHandle, mode gozel.ZeCommandQueueMode) (
 	CommandQueueHandle, error,
 ) {
 	var q gozel.ZeCommandQueueHandle
 	_, err := gozel.ZeCommandQueueCreate(gozel.ZeContextHandle(h), gozel.ZeDeviceHandle(hDevice), &gozel.ZeCommandQueueDesc{
 		Stype:    gozel.ZE_STRUCTURE_TYPE_COMMAND_QUEUE_DESC,
-		Mode:     gozel.ZE_COMMAND_QUEUE_MODE_DEFAULT,
+		Mode:     mode,
 		Priority: gozel.ZE_COMMAND_QUEUE_PRIORITY_NORMAL,
 	}, &q)
 	return CommandQueueHandle(q), err
@@ -36,8 +35,8 @@ func (h CommandQueueHandle) ExecuteCommandLists(hCommandList ...CommandListHandl
 }
 
 // Synchronize blocks the host until all commands in the command queue have completed.
-func (h CommandQueueHandle) Synchronize() error {
-	_, err := gozel.ZeCommandQueueSynchronize(gozel.ZeCommandQueueHandle(h), math.MaxUint64)
+func (h CommandQueueHandle) Synchronize(timeout uint64) error {
+	_, err := gozel.ZeCommandQueueSynchronize(gozel.ZeCommandQueueHandle(h), timeout)
 	return err
 }
 
@@ -61,11 +60,30 @@ func (h ContextHandle) CommandListCreate(hDevice DeviceHandle) (
 	return CommandListHandle(cl), err
 }
 
+// CommandListCreateImmediate creates a command list on the given device, also creates an implicit command queue.
+func (h ContextHandle) CommandListCreateImmediate(hDevice DeviceHandle, mode gozel.ZeCommandQueueMode) (
+	CommandListHandle, error,
+) {
+	var cl gozel.ZeCommandListHandle
+	_, err := gozel.ZeCommandListCreateImmediate(gozel.ZeContextHandle(h), gozel.ZeDeviceHandle(hDevice), &gozel.ZeCommandQueueDesc{
+		Stype:    gozel.ZE_STRUCTURE_TYPE_COMMAND_QUEUE_DESC,
+		Mode:     mode,
+		Priority: gozel.ZE_COMMAND_QUEUE_PRIORITY_NORMAL,
+	}, &cl)
+	return CommandListHandle(cl), err
+}
+
 // AppendLaunchKernel appends a kernel launch command to the command list.
 func (h CommandListHandle) AppendLaunchKernel(
 	hKernel KernelHandle, pLaunchFuncArgs *gozel.ZeGroupCount,
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
 ) error {
-	_, err := gozel.ZeCommandListAppendLaunchKernel(gozel.ZeCommandListHandle(h), gozel.ZeKernelHandle(hKernel), pLaunchFuncArgs, 0, 0, nil)
+	_, err := gozel.ZeCommandListAppendLaunchKernel(
+		gozel.ZeCommandListHandle(h), gozel.ZeKernelHandle(hKernel),
+		pLaunchFuncArgs, gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
 	return err
 }
 
@@ -73,9 +91,15 @@ func (h CommandListHandle) AppendLaunchKernel(
 func (h CommandListHandle) AppendLaunchKernelWithArguments(
 	hKernel KernelHandle, groupCounts *gozel.ZeGroupCount,
 	groupSizes *gozel.ZeGroupSize, pArguments *unsafe.Pointer,
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
 ) error {
 	_, err := gozel.ZeCommandListAppendLaunchKernelWithArguments(
-		gozel.ZeCommandListHandle(h), gozel.ZeKernelHandle(hKernel), groupCounts, groupSizes, pArguments, nil, 0, 0, nil)
+		gozel.ZeCommandListHandle(h), gozel.ZeKernelHandle(hKernel),
+		groupCounts, groupSizes, pArguments,
+		nil, gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
 	return err
 }
 
@@ -88,8 +112,14 @@ func (h CommandListHandle) Close() error {
 // AppendMemoryCopy appends a memory copy command from srcptr to dstptr of the given size.
 func (h CommandListHandle) AppendMemoryCopy(
 	dstptr unsafe.Pointer, srcptr unsafe.Pointer, size uintptr,
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
 ) error {
-	_, err := gozel.ZeCommandListAppendMemoryCopy(gozel.ZeCommandListHandle(h), dstptr, srcptr, size, 0, 0, nil)
+	_, err := gozel.ZeCommandListAppendMemoryCopy(
+		gozel.ZeCommandListHandle(h), dstptr, srcptr, size,
+		gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
 	return err
 }
 
@@ -100,7 +130,21 @@ func (h CommandListHandle) Destroy() error {
 }
 
 // AppendBarrier appends an execution barrier to the command list.
-func (h CommandListHandle) AppendBarrier() error {
-	_, err := gozel.ZeCommandListAppendBarrier(gozel.ZeCommandListHandle(h), 0, 0, nil)
+func (h CommandListHandle) AppendBarrier(
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
+) error {
+	_, err := gozel.ZeCommandListAppendBarrier(
+		gozel.ZeCommandListHandle(h),
+		gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
+	return err
+}
+
+// HostSynchronize Synchronizes an immediate command list by waiting on the host for the
+// completion of all commands previously submitted to it.
+func (h CommandListHandle) HostSynchronize(timeout uint64) error {
+	_, err := gozel.ZeCommandListHostSynchronize(gozel.ZeCommandListHandle(h), timeout)
 	return err
 }
