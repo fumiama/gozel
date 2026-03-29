@@ -1,6 +1,6 @@
 # Vector Addition — Immediate Command List with Events
 
-> ![Tip]
+> ![Tips]
 > **SYCL** is used to write this kernel, which is not a common practice.
 > Please also have a look at the **OpenCL** kernel examples like [image_scale](../image_scale/).
 
