@@ -23,7 +23,7 @@ import (
 const ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_NAME = "ZES_extension_pci_link_speed_downgrade"
 
 // ZesPciLinkSpeedDowngradeExtVersion (zes_pci_link_speed_downgrade_ext_version_t) PCI Link Speed Downgrade Extension Version(s)
-type ZesPciLinkSpeedDowngradeExtVersion uintptr
+type ZesPciLinkSpeedDowngradeExtVersion uint32
 
 const (
 	ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0          ZesPciLinkSpeedDowngradeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_PCI_LINK_SPEED_DOWNGRADE_EXT_VERSION_1_0 version 1.0

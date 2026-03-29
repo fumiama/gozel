@@ -21,7 +21,7 @@ import (
 const ZE_BANDWIDTH_PROPERTIES_EXP_NAME = "ZE_experimental_bandwidth_properties"
 
 // ZeBandwidthPropertiesExpVersion (ze_bandwidth_properties_exp_version_t) Bandwidth Extension Version(s)
-type ZeBandwidthPropertiesExpVersion uintptr
+type ZeBandwidthPropertiesExpVersion uint32
 
 const (
 	ZE_BANDWIDTH_PROPERTIES_EXP_VERSION_1_0          ZeBandwidthPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_BANDWIDTH_PROPERTIES_EXP_VERSION_1_0 version 1.0

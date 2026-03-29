@@ -23,7 +23,7 @@ import (
 const ZES_RAS_GET_STATE_EXP_NAME = "ZES_extension_ras_state"
 
 // ZesRasStateExpVersion (zes_ras_state_exp_version_t) RAS Get State Extension Version(s)
-type ZesRasStateExpVersion uintptr
+type ZesRasStateExpVersion uint32
 
 const (
 	ZES_RAS_STATE_EXP_VERSION_1_0          ZesRasStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_RAS_STATE_EXP_VERSION_1_0 version 1.0
@@ -33,7 +33,7 @@ const (
 )
 
 // ZesRasErrorCategoryExp (zes_ras_error_category_exp_t) RAS error categories
-type ZesRasErrorCategoryExp uintptr
+type ZesRasErrorCategoryExp uint32
 
 const (
 	ZES_RAS_ERROR_CATEGORY_EXP_RESET              ZesRasErrorCategoryExp = 0 // ZES_RAS_ERROR_CATEGORY_EXP_RESET The number of accelerator engine resets attempted by the driver

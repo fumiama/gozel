@@ -17,7 +17,7 @@ package gozel
 const ZE_LINKONCE_ODR_EXT_NAME = "ZE_extension_linkonce_odr"
 
 // ZeLinkonceOdrExtVersion (ze_linkonce_odr_ext_version_t) Linkonce ODR Extension Version(s)
-type ZeLinkonceOdrExtVersion uintptr
+type ZeLinkonceOdrExtVersion uint32
 
 const (
 	ZE_LINKONCE_ODR_EXT_VERSION_1_0          ZeLinkonceOdrExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_LINKONCE_ODR_EXT_VERSION_1_0 version 1.0

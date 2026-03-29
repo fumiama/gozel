@@ -20,7 +20,7 @@ import (
 )
 
 // ZesDiagResult (zes_diag_result_t) Diagnostic results
-type ZesDiagResult uintptr
+type ZesDiagResult uint32
 
 const (
 	ZES_DIAG_RESULT_NO_ERRORS         ZesDiagResult = 0 // ZES_DIAG_RESULT_NO_ERRORS Diagnostic completed without finding errors to repair

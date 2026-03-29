@@ -20,7 +20,7 @@ import (
 )
 
 // ZesFreqDomain (zes_freq_domain_t) Frequency domains.
-type ZesFreqDomain uintptr
+type ZesFreqDomain uint32
 
 const (
 	ZES_FREQ_DOMAIN_GPU          ZesFreqDomain = 0          // ZES_FREQ_DOMAIN_GPU GPU Core Domain.
@@ -116,7 +116,7 @@ type ZesFreqThrottleTime struct {
 // /
 // / @details
 // /     - [DEPRECATED] No longer supported.
-type ZesOcMode uintptr
+type ZesOcMode uint32
 
 const (
 	ZES_OC_MODE_OFF ZesOcMode = 0 // ZES_OC_MODE_OFF Overclocking if off - hardware is running using factory default

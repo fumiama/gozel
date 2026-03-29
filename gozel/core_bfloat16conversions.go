@@ -17,7 +17,7 @@ package gozel
 const ZE_BFLOAT16_CONVERSIONS_EXT_NAME = "ZE_extension_bfloat16_conversions"
 
 // ZeBfloat16ConversionsExtVersion (ze_bfloat16_conversions_ext_version_t) Bfloat16 Conversions Extension Version(s)
-type ZeBfloat16ConversionsExtVersion uintptr
+type ZeBfloat16ConversionsExtVersion uint32
 
 const (
 	ZE_BFLOAT16_CONVERSIONS_EXT_VERSION_1_0          ZeBfloat16ConversionsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_BFLOAT16_CONVERSIONS_EXT_VERSION_1_0 version 1.0

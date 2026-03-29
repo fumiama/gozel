@@ -77,7 +77,7 @@ const (
 )
 
 // ZesRepairStatus (zes_repair_status_t) Device repair status
-type ZesRepairStatus uintptr
+type ZesRepairStatus uint32
 
 const (
 	ZES_REPAIR_STATUS_UNSUPPORTED   ZesRepairStatus = 0          // ZES_REPAIR_STATUS_UNSUPPORTED The device does not support in-field repairs.
@@ -101,7 +101,7 @@ const (
 )
 
 // ZesResetType (zes_reset_type_t) Device reset type
-type ZesResetType uintptr
+type ZesResetType uint32
 
 const (
 	ZES_RESET_TYPE_WARM         ZesResetType = 0          // ZES_RESET_TYPE_WARM Apply warm reset
@@ -136,7 +136,7 @@ type ZesUuid struct {
 }
 
 // ZesDeviceType (zes_device_type_t) Supported device types
-type ZesDeviceType uintptr
+type ZesDeviceType uint32
 
 const (
 	ZES_DEVICE_TYPE_GPU          ZesDeviceType = 1          // ZES_DEVICE_TYPE_GPU Graphics Processing Unit
@@ -417,7 +417,7 @@ type ZesPciProperties struct {
 }
 
 // ZesPciLinkStatus (zes_pci_link_status_t) PCI link status
-type ZesPciLinkStatus uintptr
+type ZesPciLinkStatus uint32
 
 const (
 	ZES_PCI_LINK_STATUS_UNKNOWN          ZesPciLinkStatus = 0 // ZES_PCI_LINK_STATUS_UNKNOWN The link status could not be determined
@@ -462,7 +462,7 @@ type ZesPciState struct {
 }
 
 // ZesPciBarType (zes_pci_bar_type_t) PCI bar types
-type ZesPciBarType uintptr
+type ZesPciBarType uint32
 
 const (
 	ZES_PCI_BAR_TYPE_MMIO         ZesPciBarType = 0          // ZES_PCI_BAR_TYPE_MMIO MMIO registers

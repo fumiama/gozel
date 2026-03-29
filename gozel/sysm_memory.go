@@ -20,7 +20,7 @@ import (
 )
 
 // ZesMemType (zes_mem_type_t) Memory module types
-type ZesMemType uintptr
+type ZesMemType uint32
 
 const (
 	ZES_MEM_TYPE_HBM          ZesMemType = 0          // ZES_MEM_TYPE_HBM HBM memory
@@ -48,7 +48,7 @@ const (
 )
 
 // ZesMemLoc (zes_mem_loc_t) Memory module location
-type ZesMemLoc uintptr
+type ZesMemLoc uint32
 
 const (
 	ZES_MEM_LOC_SYSTEM       ZesMemLoc = 0          // ZES_MEM_LOC_SYSTEM System memory
@@ -58,7 +58,7 @@ const (
 )
 
 // ZesMemHealth (zes_mem_health_t) Memory health
-type ZesMemHealth uintptr
+type ZesMemHealth uint32
 
 const (
 	ZES_MEM_HEALTH_UNKNOWN  ZesMemHealth = 0 // ZES_MEM_HEALTH_UNKNOWN The memory health cannot be determined.

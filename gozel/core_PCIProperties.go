@@ -23,7 +23,7 @@ import (
 const ZE_PCI_PROPERTIES_EXT_NAME = "ZE_extension_pci_properties"
 
 // ZePciPropertiesExtVersion (ze_pci_properties_ext_version_t) PCI Properties Extension Version(s)
-type ZePciPropertiesExtVersion uintptr
+type ZePciPropertiesExtVersion uint32
 
 const (
 	ZE_PCI_PROPERTIES_EXT_VERSION_1_0          ZePciPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_PCI_PROPERTIES_EXT_VERSION_1_0 version 1.0

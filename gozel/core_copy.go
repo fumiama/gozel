@@ -543,7 +543,7 @@ func ZeCommandListAppendMemoryPrefetch(
 }
 
 // ZeMemoryAdvice (ze_memory_advice_t) Supported memory advice hints
-type ZeMemoryAdvice uintptr
+type ZeMemoryAdvice uint32
 
 const (
 	ZE_MEMORY_ADVICE_SET_READ_MOSTLY                        ZeMemoryAdvice = 0 // ZE_MEMORY_ADVICE_SET_READ_MOSTLY hint that memory will be read from frequently and written to rarely

@@ -21,7 +21,7 @@ import (
 const ZE_EVENT_POOL_COUNTER_BASED_EXP_NAME = "ZE_experimental_event_pool_counter_based"
 
 // ZeEventPoolCounterBasedExpVersion (ze_event_pool_counter_based_exp_version_t) Counter-based Event Pools Extension Version(s)
-type ZeEventPoolCounterBasedExpVersion uintptr
+type ZeEventPoolCounterBasedExpVersion uint32
 
 const (
 	ZE_EVENT_POOL_COUNTER_BASED_EXP_VERSION_1_0          ZeEventPoolCounterBasedExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EVENT_POOL_COUNTER_BASED_EXP_VERSION_1_0 version 1.0

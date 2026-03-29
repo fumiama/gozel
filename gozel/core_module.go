@@ -20,7 +20,7 @@ import (
 )
 
 // ZeModuleFormat (ze_module_format_t) Supported module creation input formats
-type ZeModuleFormat uintptr
+type ZeModuleFormat uint32
 
 const (
 	ZE_MODULE_FORMAT_IL_SPIRV     ZeModuleFormat = 0          // ZE_MODULE_FORMAT_IL_SPIRV Format is SPIRV IL format

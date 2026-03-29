@@ -30,7 +30,7 @@ const (
 )
 
 // ZeImageType (ze_image_type_t) Supported image types
-type ZeImageType uintptr
+type ZeImageType uint32
 
 const (
 	ZE_IMAGE_TYPE_1D           ZeImageType = 0          // ZE_IMAGE_TYPE_1D 1D
@@ -44,7 +44,7 @@ const (
 )
 
 // ZeImageFormatLayout (ze_image_format_layout_t) Supported image format layouts
-type ZeImageFormatLayout uintptr
+type ZeImageFormatLayout uint32
 
 const (
 	ZE_IMAGE_FORMAT_LAYOUT_8            ZeImageFormatLayout = 0          // ZE_IMAGE_FORMAT_LAYOUT_8 8-bit single component layout
@@ -98,7 +98,7 @@ const (
 )
 
 // ZeImageFormatType (ze_image_format_type_t) Supported image format types
-type ZeImageFormatType uintptr
+type ZeImageFormatType uint32
 
 const (
 	ZE_IMAGE_FORMAT_TYPE_UINT         ZeImageFormatType = 0          // ZE_IMAGE_FORMAT_TYPE_UINT Unsigned integer
@@ -111,7 +111,7 @@ const (
 )
 
 // ZeImageFormatSwizzle (ze_image_format_swizzle_t) Supported image format component swizzle into channel
-type ZeImageFormatSwizzle uintptr
+type ZeImageFormatSwizzle uint32
 
 const (
 	ZE_IMAGE_FORMAT_SWIZZLE_R            ZeImageFormatSwizzle = 0          // ZE_IMAGE_FORMAT_SWIZZLE_R Red component

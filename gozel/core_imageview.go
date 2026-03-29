@@ -23,7 +23,7 @@ import (
 const ZE_IMAGE_VIEW_EXT_NAME = "ZE_extension_image_view"
 
 // ZeImageViewExtVersion (ze_image_view_ext_version_t) Image View Extension Version(s)
-type ZeImageViewExtVersion uintptr
+type ZeImageViewExtVersion uint32
 
 const (
 	ZE_IMAGE_VIEW_EXT_VERSION_1_0          ZeImageViewExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_EXT_VERSION_1_0 version 1.0
@@ -91,7 +91,7 @@ func ZeImageViewCreateExt(
 const ZE_IMAGE_VIEW_EXP_NAME = "ZE_experimental_image_view"
 
 // ZeImageViewExpVersion (ze_image_view_exp_version_t) Image View Extension Version(s)
-type ZeImageViewExpVersion uintptr
+type ZeImageViewExpVersion uint32
 
 const (
 	ZE_IMAGE_VIEW_EXP_VERSION_1_0          ZeImageViewExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_EXP_VERSION_1_0 version 1.0

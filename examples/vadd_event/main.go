@@ -16,10 +16,11 @@ import (
 	"github.com/fumiama/gozel/ze"
 )
 
-//go:generate clang++ -fsycl -fsycl-device-only -fsycl-targets=spirv64 -Xclang -emit-llvm-bc main.cpp -o device_kern.bc
-//go:generate sycl-post-link -symbols -split=auto -o device_kern.table device_kern.bc
-//go:generate llvm-spirv -o main.spv device_kern_0.bc
+//go:generate clang++ -fsycl -fsycl-device-only -fno-sycl-instrument-device-code -fsycl-targets=spirv64 -Xclang -emit-llvm-bc main.cpp -o device_kern.bc
+//go:generate sycl-post-link -symbols -split=auto -emit-param-info -properties -o device_kern.table device_kern.bc
+//go:generate llvm-spirv --sycl-opt -o main.spv device_kern_0.bc
 //go:generate clang++ -target spirv64-unknown-unknown -S -emit-llvm -x ir device_kern_0.bc -o main.ll
+//go:generate llvm-spirv -to-text main.spv -o main.spt
 
 //go:embed main.spv
 var kernelspv []byte

@@ -20,7 +20,7 @@ import (
 )
 
 // ZesFanSpeedMode (zes_fan_speed_mode_t) Fan resource speed mode
-type ZesFanSpeedMode uintptr
+type ZesFanSpeedMode uint32
 
 const (
 	ZES_FAN_SPEED_MODE_DEFAULT ZesFanSpeedMode = 0 // ZES_FAN_SPEED_MODE_DEFAULT The fan speed is operating using the hardware default settings
@@ -34,7 +34,7 @@ const (
 )
 
 // ZesFanSpeedUnits (zes_fan_speed_units_t) Fan speed units
-type ZesFanSpeedUnits uintptr
+type ZesFanSpeedUnits uint32
 
 const (
 	ZES_FAN_SPEED_UNITS_RPM          ZesFanSpeedUnits = 0          // ZES_FAN_SPEED_UNITS_RPM The fan speed is in units of revolutions per minute (rpm)

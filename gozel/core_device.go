@@ -138,7 +138,7 @@ func ZeDeviceGetSubDevices(
 }
 
 // ZeDeviceType (ze_device_type_t) Supported device types
-type ZeDeviceType uintptr
+type ZeDeviceType uint32
 
 const (
 	ZE_DEVICE_TYPE_GPU          ZeDeviceType = 1          // ZE_DEVICE_TYPE_GPU Graphics Processing Unit

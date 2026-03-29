@@ -8,6 +8,10 @@
 
 Built on [purego](https://github.com/ebitengine/purego) and Windows syscall, gozel loads `ze_loader` at runtime via FFI, avoiding all C compiler dependencies. The entire API surface is auto-generated from the official Level Zero SDK headers, keeping bindings always in sync with upstream.
 
+| Before Scaling (1272 x 855) | After Scaling (512 x 344) |
+|:--:|:--:|
+|![暖笺贺春.webp](examples/image_scale/暖笺贺春.webp)|![small.png](examples/image_scale/small.png)|
+
 ---
 
 ## Table of Contents
@@ -127,8 +131,9 @@ Test Passed!!!
 
 | Example | Description | Source |
 |---|---|---|
-| **vadd** | Vector addition — GPU kernel launch, memory copy, validation | [examples/vadd](examples/vadd/) |
-| **vadd_event** | Vector addition with event — GPU kernel launch, memory copy, validation | [examples/vadd_event](examples/vadd_event/) |
+| **vadd** | Vector addition | [examples/vadd](examples/vadd/) |
+| **vadd_event** | Vector addition with event | [examples/vadd_event](examples/vadd_event/) |
+| **image_scale** | Scale image using hardware sampler | [examples/image_scale](examples/image_scale/) |
 
 ## The `ze` Package — High-Level API
 

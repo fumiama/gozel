@@ -132,6 +132,15 @@ jobs:
           ls -hl /tmp/sycl_linux
           echo "/tmp/sycl_linux/bin" >> $GITHUB_PATH
 
+      - name: Install ocloc
+        run: |
+          wget -qO- https://repositories.intel.com/gpu/intel-graphics.key \
+            | sudo gpg --dearmor --output /usr/share/keyrings/intel-graphics.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) unified" \
+            | sudo tee /etc/apt/sources.list.d/intel-gpu.list
+          sudo apt-get update -q
+          sudo apt-get install -y intel-ocloc libigdfcl2 libigc2
+
       - name: Run go generate
         run: |
           go generate ./...

@@ -211,7 +211,7 @@ func ZeInitDrivers(
 // / @details
 // /     - API versions contain major and minor attributes, use
 // /       ::ZE_MAJOR_VERSION and ::ZE_MINOR_VERSION
-type ZeApiVersion uintptr
+type ZeApiVersion uint32
 
 const (
 	ZE_API_VERSION_1_0          ZeApiVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff))   // ZE_API_VERSION_1_0 version 1.0

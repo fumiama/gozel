@@ -21,7 +21,7 @@ import (
 const ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_NAME = "ZET_experimental_metrics_runtime_enable_disable"
 
 // ZetMetricsRuntimeEnableDisableExpVersion (zet_metrics_runtime_enable_disable_exp_version_t) Runtime Enabling and Disabling Metrics Extension Version(s)
-type ZetMetricsRuntimeEnableDisableExpVersion uintptr
+type ZetMetricsRuntimeEnableDisableExpVersion uint32
 
 const (
 	ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0          ZetMetricsRuntimeEnableDisableExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRICS_RUNTIME_ENABLE_DISABLE_EXP_VERSION_1_0 version 1.0

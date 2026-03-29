@@ -23,7 +23,7 @@ import (
 const ZE_GET_KERNEL_ALLOCATION_PROPERTIES_EXP_NAME = "ZE_experimental_kernel_allocation_properties"
 
 // ZeKernelGetAllocationPropertiesExpVersion (ze_kernel_get_allocation_properties_exp_version_t) Get Kernel Allocation Properties Extension Version(s)
-type ZeKernelGetAllocationPropertiesExpVersion uintptr
+type ZeKernelGetAllocationPropertiesExpVersion uint32
 
 const (
 	ZE_KERNEL_GET_ALLOCATION_PROPERTIES_EXP_VERSION_1_0          ZeKernelGetAllocationPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_KERNEL_GET_ALLOCATION_PROPERTIES_EXP_VERSION_1_0 version 1.0

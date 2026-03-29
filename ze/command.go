@@ -148,3 +148,31 @@ func (h CommandListHandle) HostSynchronize(timeout uint64) error {
 	_, err := gozel.ZeCommandListHostSynchronize(gozel.ZeCommandListHandle(h), timeout)
 	return err
 }
+
+// AppendImageCopyFromMemory Copies to an image from device or shared memory.
+func (h CommandListHandle) AppendImageCopyFromMemory(
+	hDstImage ImageHandle, srcptr unsafe.Pointer, pDstRegion *gozel.ZeImageRegion,
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
+) error {
+	_, err := gozel.ZeCommandListAppendImageCopyFromMemory(
+		gozel.ZeCommandListHandle(h), gozel.ZeImageHandle(hDstImage), srcptr, pDstRegion,
+		gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
+	return err
+}
+
+// AppendImageCopyToMemory Copies from an image to device or shared memory.
+func (h CommandListHandle) AppendImageCopyToMemory(
+	dstptr unsafe.Pointer, hSrcImage ImageHandle, pSrcRegion *gozel.ZeImageRegion,
+	hSignalEvent EventHandle, waitEvents ...EventHandle,
+) error {
+	_, err := gozel.ZeCommandListAppendImageCopyToMemory(
+		gozel.ZeCommandListHandle(h), dstptr, gozel.ZeImageHandle(hSrcImage), pSrcRegion,
+		gozel.ZeEventHandle(hSignalEvent), uint32(len(waitEvents)),
+		(*gozel.ZeEventHandle)(unsafe.SliceData(waitEvents)),
+	)
+	runtime.KeepAlive(waitEvents)
+	return err
+}

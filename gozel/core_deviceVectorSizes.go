@@ -23,7 +23,7 @@ import (
 const ZE_DEVICE_VECTOR_SIZES_EXT_NAME = "ZE_extension_device_vector_sizes"
 
 // ZeDeviceVectorSizesExtVersion (ze_device_vector_sizes_ext_version_t) Device Vector Sizes Query Extension Version(s)
-type ZeDeviceVectorSizesExtVersion uintptr
+type ZeDeviceVectorSizesExtVersion uint32
 
 const (
 	ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0          ZeDeviceVectorSizesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_VECTOR_SIZES_EXT_VERSION_1_0 version 1.0

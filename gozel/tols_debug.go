@@ -142,7 +142,7 @@ const (
 )
 
 // ZetDebugEventType (zet_debug_event_type_t) Supported debug event types.
-type ZetDebugEventType uintptr
+type ZetDebugEventType uint32
 
 const (
 	ZET_DEBUG_EVENT_TYPE_INVALID            ZetDebugEventType = 0          // ZET_DEBUG_EVENT_TYPE_INVALID The event is invalid
@@ -159,7 +159,7 @@ const (
 )
 
 // ZetDebugDetachReason (zet_debug_detach_reason_t) Supported debug detach reasons.
-type ZetDebugDetachReason uintptr
+type ZetDebugDetachReason uint32
 
 const (
 	ZET_DEBUG_DETACH_REASON_INVALID      ZetDebugDetachReason = 0          // ZET_DEBUG_DETACH_REASON_INVALID The detach reason is not valid
@@ -192,7 +192,7 @@ type ZetDebugEventInfoThreadStopped struct {
 }
 
 // ZetDebugPageFaultReason (zet_debug_page_fault_reason_t) Page fault reasons.
-type ZetDebugPageFaultReason uintptr
+type ZetDebugPageFaultReason uint32
 
 const (
 	ZET_DEBUG_PAGE_FAULT_REASON_INVALID          ZetDebugPageFaultReason = 0          // ZET_DEBUG_PAGE_FAULT_REASON_INVALID The page fault reason is not valid
@@ -331,7 +331,7 @@ func ZetDebugResume(
 }
 
 // ZetDebugMemorySpaceType (zet_debug_memory_space_type_t) Supported device memory space types.
-type ZetDebugMemorySpaceType uintptr
+type ZetDebugMemorySpaceType uint32
 
 const (
 	ZET_DEBUG_MEMORY_SPACE_TYPE_DEFAULT      ZetDebugMemorySpaceType = 0          // ZET_DEBUG_MEMORY_SPACE_TYPE_DEFAULT default memory space (attribute may be omitted)

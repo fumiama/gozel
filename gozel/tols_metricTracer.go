@@ -23,7 +23,7 @@ import (
 const ZET_METRICS_TRACER_EXP_NAME = "ZET_experimental_metric_tracer"
 
 // ZetMetricTracerExpVersion (zet_metric_tracer_exp_version_t) Metric Tracer Experimental Extension Version(s)
-type ZetMetricTracerExpVersion uintptr
+type ZetMetricTracerExpVersion uint32
 
 const (
 	ZET_METRIC_TRACER_EXP_VERSION_1_0          ZetMetricTracerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRIC_TRACER_EXP_VERSION_1_0 version 1.0

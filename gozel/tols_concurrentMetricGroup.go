@@ -23,7 +23,7 @@ import (
 const ZET_CONCURRENT_METRIC_GROUPS_EXP_NAME = "ZET_experimental_concurrent_metric_groups"
 
 // ZetConcurrentMetricGroupsExpVersion (zet_concurrent_metric_groups_exp_version_t) Concurrent Metric Groups Experimental Extension Version(s)
-type ZetConcurrentMetricGroupsExpVersion uintptr
+type ZetConcurrentMetricGroupsExpVersion uint32
 
 const (
 	ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0          ZetConcurrentMetricGroupsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_CONCURRENT_METRIC_GROUPS_EXP_VERSION_1_0 version 1.0

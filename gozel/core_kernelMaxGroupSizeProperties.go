@@ -21,7 +21,7 @@ import (
 const ZE_KERNEL_MAX_GROUP_SIZE_PROPERTIES_EXT_NAME = "ZE_extension_kernel_max_group_size_properties"
 
 // ZeKernelMaxGroupSizePropertiesExtVersion (ze_kernel_max_group_size_properties_ext_version_t) Kernel Max Group Size Properties Extension Version(s)
-type ZeKernelMaxGroupSizePropertiesExtVersion uintptr
+type ZeKernelMaxGroupSizePropertiesExtVersion uint32
 
 const (
 	ZE_KERNEL_MAX_GROUP_SIZE_PROPERTIES_EXT_VERSION_1_0          ZeKernelMaxGroupSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_KERNEL_MAX_GROUP_SIZE_PROPERTIES_EXT_VERSION_1_0 version 1.0

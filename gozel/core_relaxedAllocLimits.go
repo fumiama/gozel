@@ -21,7 +21,7 @@ import (
 const ZE_RELAXED_ALLOCATION_LIMITS_EXP_NAME = "ZE_experimental_relaxed_allocation_limits"
 
 // ZeRelaxedAllocationLimitsExpVersion (ze_relaxed_allocation_limits_exp_version_t) Relaxed Allocation Limits Extension Version(s)
-type ZeRelaxedAllocationLimitsExpVersion uintptr
+type ZeRelaxedAllocationLimitsExpVersion uint32
 
 const (
 	ZE_RELAXED_ALLOCATION_LIMITS_EXP_VERSION_1_0          ZeRelaxedAllocationLimitsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_RELAXED_ALLOCATION_LIMITS_EXP_VERSION_1_0 version 1.0

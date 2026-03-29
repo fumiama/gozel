@@ -23,7 +23,7 @@ import (
 const ZET_EXPORT_METRICS_DATA_EXP_NAME = "ZET_experimental_metric_export_data"
 
 // ZetExportMetricDataExpVersion (zet_export_metric_data_exp_version_t) Exporting Metrics Data Experimental Extension Version(s)
-type ZetExportMetricDataExpVersion uintptr
+type ZetExportMetricDataExpVersion uint32
 
 const (
 	ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0          ZetExportMetricDataExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_EXPORT_METRIC_DATA_EXP_VERSION_1_0 version 1.0

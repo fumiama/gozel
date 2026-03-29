@@ -21,7 +21,7 @@ import (
 const ZE_MODULE_PROGRAM_EXP_NAME = "ZE_experimental_module_program"
 
 // ZeModuleProgramExpVersion (ze_module_program_exp_version_t) Module Program Extension Version(s)
-type ZeModuleProgramExpVersion uintptr
+type ZeModuleProgramExpVersion uint32
 
 const (
 	ZE_MODULE_PROGRAM_EXP_VERSION_1_0          ZeModuleProgramExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_MODULE_PROGRAM_EXP_VERSION_1_0 version 1.0

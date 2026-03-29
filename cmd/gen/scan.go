@@ -629,7 +629,7 @@ func scanTypedef(
 			if !redirect {
 				f.WriteString("type ")
 				f.WriteString(val)
-				f.WriteString(" uintptr\nconst (")
+				f.WriteString(" uint32\nconst (")
 				replaces = " " + val + " ="
 			} else {
 				_, _ = f.Seek(-1, io.SeekCurrent)

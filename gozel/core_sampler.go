@@ -20,7 +20,7 @@ import (
 )
 
 // ZeSamplerAddressMode (ze_sampler_address_mode_t) Sampler addressing modes
-type ZeSamplerAddressMode uintptr
+type ZeSamplerAddressMode uint32
 
 const (
 	ZE_SAMPLER_ADDRESS_MODE_NONE            ZeSamplerAddressMode = 0 // ZE_SAMPLER_ADDRESS_MODE_NONE No coordinate modifications for out-of-bounds image access.
@@ -37,7 +37,7 @@ const (
 )
 
 // ZeSamplerFilterMode (ze_sampler_filter_mode_t) Sampler filtering modes
-type ZeSamplerFilterMode uintptr
+type ZeSamplerFilterMode uint32
 
 const (
 	ZE_SAMPLER_FILTER_MODE_NEAREST      ZeSamplerFilterMode = 0          // ZE_SAMPLER_FILTER_MODE_NEAREST No coordinate modifications for out of bounds image access.

@@ -21,7 +21,7 @@ import (
 const ZE_SRGB_EXT_NAME = "ZE_extension_srgb"
 
 // ZeSrgbExtVersion (ze_srgb_ext_version_t) sRGB Extension Version(s)
-type ZeSrgbExtVersion uintptr
+type ZeSrgbExtVersion uint32
 
 const (
 	ZE_SRGB_EXT_VERSION_1_0          ZeSrgbExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SRGB_EXT_VERSION_1_0 version 1.0

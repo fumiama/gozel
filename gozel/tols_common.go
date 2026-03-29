@@ -57,7 +57,7 @@ type ZetTracerExpHandle uintptr
 type ZetDebugSessionHandle uintptr
 
 // ZetStructureType (zet_structure_type_t) Defines structure types
-type ZetStructureType uintptr
+type ZetStructureType uint32
 
 const (
 	ZET_STRUCTURE_TYPE_METRIC_GROUP_PROPERTIES                  ZetStructureType = 0x1 // ZET_STRUCTURE_TYPE_METRIC_GROUP_PROPERTIES ::zet_metric_group_properties_t
@@ -105,7 +105,7 @@ type ZetBaseDesc struct {
 }
 
 // ZetValueType (zet_value_type_t) Supported value types
-type ZetValueType uintptr
+type ZetValueType uint32
 
 const (
 	ZET_VALUE_TYPE_UINT32       ZetValueType = 0          // ZET_VALUE_TYPE_UINT32 32-bit unsigned-integer

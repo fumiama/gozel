@@ -21,7 +21,7 @@ import (
 const ZES_MEM_PAGE_OFFLINE_STATE_EXP_NAME = "ZES_extension_mem_state"
 
 // ZesMemPageOfflineStateExpVersion (zes_mem_page_offline_state_exp_version_t) Memory State Extension Version(s)
-type ZesMemPageOfflineStateExpVersion uintptr
+type ZesMemPageOfflineStateExpVersion uint32
 
 const (
 	ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0          ZesMemPageOfflineStateExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_MEM_PAGE_OFFLINE_STATE_EXP_VERSION_1_0 version 1.0

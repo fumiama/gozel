@@ -262,7 +262,7 @@ func ZeMemFree(
 }
 
 // ZeMemoryType (ze_memory_type_t) Memory allocation type
-type ZeMemoryType uintptr
+type ZeMemoryType uint32
 
 const (
 	ZE_MEMORY_TYPE_UNKNOWN       ZeMemoryType = 0 // ZE_MEMORY_TYPE_UNKNOWN the memory pointed to is of unknown type

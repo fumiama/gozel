@@ -23,7 +23,7 @@ import (
 const ZE_IMAGE_MEMORY_PROPERTIES_EXP_NAME = "ZE_experimental_image_memory_properties"
 
 // ZeImageMemoryPropertiesExpVersion (ze_image_memory_properties_exp_version_t) Image Memory Properties Extension Version(s)
-type ZeImageMemoryPropertiesExpVersion uintptr
+type ZeImageMemoryPropertiesExpVersion uint32
 
 const (
 	ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0          ZeImageMemoryPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_MEMORY_PROPERTIES_EXP_VERSION_1_0 version 1.0

@@ -21,7 +21,7 @@ import (
 const ZE_CACHELINE_SIZE_EXT_NAME = "ZE_extension_device_cache_line_size"
 
 // ZeDeviceCacheLineSizeExtVersion (ze_device_cache_line_size_ext_version_t) CacheLine Size Extension Version(s)
-type ZeDeviceCacheLineSizeExtVersion uintptr
+type ZeDeviceCacheLineSizeExtVersion uint32
 
 const (
 	ZE_DEVICE_CACHE_LINE_SIZE_EXT_VERSION_1_0          ZeDeviceCacheLineSizeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_CACHE_LINE_SIZE_EXT_VERSION_1_0 version 1.0

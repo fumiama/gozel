@@ -23,7 +23,7 @@ import (
 const ZE_IPC_MEM_HANDLE_TYPE_EXT_NAME = "ZE_extension_ipc_mem_handle_type"
 
 // ZeIpcMemHandleTypeExtVersion (ze_ipc_mem_handle_type_ext_version_t) IPC Memory Handle Type Extension Version(s)
-type ZeIpcMemHandleTypeExtVersion uintptr
+type ZeIpcMemHandleTypeExtVersion uint32
 
 const (
 	ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0          ZeIpcMemHandleTypeExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IPC_MEM_HANDLE_TYPE_EXT_VERSION_1_0 version 1.0

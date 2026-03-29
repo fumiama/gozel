@@ -23,7 +23,7 @@ import (
 const ZET_METRIC_GROUP_MARKER_EXP_NAME = "ZET_experimental_metric_group_marker"
 
 // ZetMetricGroupMarkerExpVersion (zet_metric_group_marker_exp_version_t) Marker Support Using MetricGroup Experimental Extension Version(s)
-type ZetMetricGroupMarkerExpVersion uintptr
+type ZetMetricGroupMarkerExpVersion uint32
 
 const (
 	ZET_METRIC_GROUP_MARKER_EXP_VERSION_1_0          ZetMetricGroupMarkerExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_METRIC_GROUP_MARKER_EXP_VERSION_1_0 version 1.0

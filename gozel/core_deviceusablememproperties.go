@@ -21,7 +21,7 @@ import (
 const ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_NAME = "ZE_extension_device_usablemem_size_properties"
 
 // ZeDeviceUsablememSizePropertiesExtVersion (ze_device_usablemem_size_properties_ext_version_t) Device Usable Mem Size  Extension Version(s)
-type ZeDeviceUsablememSizePropertiesExtVersion uintptr
+type ZeDeviceUsablememSizePropertiesExtVersion uint32
 
 const (
 	ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0          ZeDeviceUsablememSizePropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_USABLEMEM_SIZE_PROPERTIES_EXT_VERSION_1_0 version 1.0

@@ -23,7 +23,7 @@ import (
 const ZET_MULTI_METRICS_EXP_NAME = "ZET_experimental_calculate_multiple_metrics"
 
 // ZeCalculateMultipleMetricsExpVersion (ze_calculate_multiple_metrics_exp_version_t) Calculating Multiple Metrics Experimental Extension Version(s)
-type ZeCalculateMultipleMetricsExpVersion uintptr
+type ZeCalculateMultipleMetricsExpVersion uint32
 
 const (
 	ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0          ZeCalculateMultipleMetricsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_CALCULATE_MULTIPLE_METRICS_EXP_VERSION_1_0 version 1.0

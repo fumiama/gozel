@@ -42,7 +42,7 @@ type ZetProfileProperties struct {
 }
 
 // ZetProfileTokenType (zet_profile_token_type_t) Supported profile token types
-type ZetProfileTokenType uintptr
+type ZetProfileTokenType uint32
 
 const (
 	ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER ZetProfileTokenType = 0          // ZET_PROFILE_TOKEN_TYPE_FREE_REGISTER GRF info

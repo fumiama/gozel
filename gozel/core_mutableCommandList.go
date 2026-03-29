@@ -23,7 +23,7 @@ import (
 const ZE_MUTABLE_COMMAND_LIST_EXP_NAME = "ZE_experimental_mutable_command_list"
 
 // ZeMutableCommandListExpVersion (ze_mutable_command_list_exp_version_t) Mutable Command List Extension Version(s)
-type ZeMutableCommandListExpVersion uintptr
+type ZeMutableCommandListExpVersion uint32
 
 const (
 	ZE_MUTABLE_COMMAND_LIST_EXP_VERSION_1_0          ZeMutableCommandListExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_MUTABLE_COMMAND_LIST_EXP_VERSION_1_0 version 1.0

@@ -23,7 +23,7 @@ import (
 const ZES_ENGINE_ACTIVITY_EXT_NAME = "ZES_extension_engine_activity"
 
 // ZesEngineActivityExtVersion (zes_engine_activity_ext_version_t) Engine Activity Extension Version(s)
-type ZesEngineActivityExtVersion uintptr
+type ZesEngineActivityExtVersion uint32
 
 const (
 	ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0          ZesEngineActivityExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_ENGINE_ACTIVITY_EXT_VERSION_1_0 version 1.0

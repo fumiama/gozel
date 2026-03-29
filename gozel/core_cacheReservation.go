@@ -23,7 +23,7 @@ import (
 const ZE_CACHE_RESERVATION_EXT_NAME = "ZE_extension_cache_reservation"
 
 // ZeCacheReservationExtVersion (ze_cache_reservation_ext_version_t) Cache_Reservation Extension Version(s)
-type ZeCacheReservationExtVersion uintptr
+type ZeCacheReservationExtVersion uint32
 
 const (
 	ZE_CACHE_RESERVATION_EXT_VERSION_1_0          ZeCacheReservationExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_CACHE_RESERVATION_EXT_VERSION_1_0 version 1.0
@@ -33,7 +33,7 @@ const (
 )
 
 // ZeCacheExtRegion (ze_cache_ext_region_t) Cache Reservation Region
-type ZeCacheExtRegion uintptr
+type ZeCacheExtRegion uint32
 
 const (
 	ZE_CACHE_EXT_REGION_ZE_CACHE_REGION_DEFAULT ZeCacheExtRegion = 0 // ZE_CACHE_EXT_REGION_ZE_CACHE_REGION_DEFAULT [DEPRECATED] utilize driver default scheme. Use

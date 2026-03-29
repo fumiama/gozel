@@ -23,7 +23,7 @@ import (
 const ZES_VIRTUAL_FUNCTION_MANAGEMENT_EXP_NAME = "ZES_experimental_virtual_function_management"
 
 // ZesVfManagementExpVersion (zes_vf_management_exp_version_t) Virtual Function Management Extension Version(s)
-type ZesVfManagementExpVersion uintptr
+type ZesVfManagementExpVersion uint32
 
 const (
 	ZES_VF_MANAGEMENT_EXP_VERSION_1_0          ZesVfManagementExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_VF_MANAGEMENT_EXP_VERSION_1_0 version 1.0 (deprecated)

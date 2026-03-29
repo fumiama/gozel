@@ -20,7 +20,7 @@ import (
 )
 
 // ZetModuleDebugInfoFormat (zet_module_debug_info_format_t) Supported module debug info formats.
-type ZetModuleDebugInfoFormat uintptr
+type ZetModuleDebugInfoFormat uint32
 
 const (
 	ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF    ZetModuleDebugInfoFormat = 0          // ZET_MODULE_DEBUG_INFO_FORMAT_ELF_DWARF Format is ELF/DWARF

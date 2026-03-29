@@ -23,7 +23,7 @@ import (
 const ZES_FIRMWARE_SECURITY_VERSION_EXP_NAME = "ZES_experimental_firmware_security_version"
 
 // ZesFirmwareSecurityExpVersion (zes_firmware_security_exp_version_t) Firmware security version Extension Version(s)
-type ZesFirmwareSecurityExpVersion uintptr
+type ZesFirmwareSecurityExpVersion uint32
 
 const (
 	ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0          ZesFirmwareSecurityExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_FIRMWARE_SECURITY_EXP_VERSION_1_0 version 1.0
