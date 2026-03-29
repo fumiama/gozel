@@ -23,7 +23,7 @@ import (
 const ZET_GLOBAL_METRICS_TIMESTAMPS_EXP_NAME = "ZET_experimental_global_metric_timestamps"
 
 // ZeMetricGlobalTimestampsExpVersion (ze_metric_global_timestamps_exp_version_t) Global Metric Timestamps Experimental Extension Version(s)
-type ZeMetricGlobalTimestampsExpVersion uintptr
+type ZeMetricGlobalTimestampsExpVersion uint32
 
 const (
 	ZE_METRIC_GLOBAL_TIMESTAMPS_EXP_VERSION_1_0          ZeMetricGlobalTimestampsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_METRIC_GLOBAL_TIMESTAMPS_EXP_VERSION_1_0 version 1.0

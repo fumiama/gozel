@@ -21,7 +21,7 @@ import (
 const ZE_IMAGE_VIEW_PLANAR_EXT_NAME = "ZE_extension_image_view_planar"
 
 // ZeImageViewPlanarExtVersion (ze_image_view_planar_ext_version_t) Image View Planar Extension Version(s)
-type ZeImageViewPlanarExtVersion uintptr
+type ZeImageViewPlanarExtVersion uint32
 
 const (
 	ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0          ZeImageViewPlanarExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXT_VERSION_1_0 version 1.0
@@ -42,7 +42,7 @@ type ZeImageViewPlanarExtDesc struct {
 const ZE_IMAGE_VIEW_PLANAR_EXP_NAME = "ZE_experimental_image_view_planar"
 
 // ZeImageViewPlanarExpVersion (ze_image_view_planar_exp_version_t) Image View Planar Extension Version(s)
-type ZeImageViewPlanarExpVersion uintptr
+type ZeImageViewPlanarExpVersion uint32
 
 const (
 	ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0          ZeImageViewPlanarExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_VIEW_PLANAR_EXP_VERSION_1_0 version 1.0

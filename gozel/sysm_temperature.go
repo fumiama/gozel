@@ -20,7 +20,7 @@ import (
 )
 
 // ZesTempSensors (zes_temp_sensors_t) Temperature sensors
-type ZesTempSensors uintptr
+type ZesTempSensors uint32
 
 const (
 	ZES_TEMP_SENSORS_GLOBAL            ZesTempSensors = 0          // ZES_TEMP_SENSORS_GLOBAL The maximum temperature across all device sensors

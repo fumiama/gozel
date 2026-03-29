@@ -23,7 +23,7 @@ import (
 const ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_NAME = "ZE_extension_image_query_alloc_properties"
 
 // ZeImageQueryAllocPropertiesExtVersion (ze_image_query_alloc_properties_ext_version_t) Image Query Allocation Properties Extension Version(s)
-type ZeImageQueryAllocPropertiesExtVersion uintptr
+type ZeImageQueryAllocPropertiesExtVersion uint32
 
 const (
 	ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0          ZeImageQueryAllocPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_QUERY_ALLOC_PROPERTIES_EXT_VERSION_1_0 version 1.0

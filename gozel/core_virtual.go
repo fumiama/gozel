@@ -20,7 +20,7 @@ import (
 )
 
 // ZeMemoryAccessAttribute (ze_memory_access_attribute_t) Virtual memory page access attributes
-type ZeMemoryAccessAttribute uintptr
+type ZeMemoryAccessAttribute uint32
 
 const (
 	ZE_MEMORY_ACCESS_ATTRIBUTE_NONE         ZeMemoryAccessAttribute = 0          // ZE_MEMORY_ACCESS_ATTRIBUTE_NONE Indicates the memory page is inaccessible.

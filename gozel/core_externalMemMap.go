@@ -21,7 +21,7 @@ import (
 const ZE_EXTERNAL_MEMORY_MAPPING_EXT_NAME = "ZE_extension_external_memmap_sysmem"
 
 // ZeExternalMemmapSysmemExtVersion (ze_external_memmap_sysmem_ext_version_t) External Memory Mapping Extension Version(s)
-type ZeExternalMemmapSysmemExtVersion uintptr
+type ZeExternalMemmapSysmemExtVersion uint32
 
 const (
 	ZE_EXTERNAL_MEMMAP_SYSMEM_EXT_VERSION_1_0          ZeExternalMemmapSysmemExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EXTERNAL_MEMMAP_SYSMEM_EXT_VERSION_1_0 version 1.0

@@ -36,6 +36,12 @@ func (h KernelHandle) SetArgumentValue(argIndex uint32, arg any) error {
 	return err
 }
 
+// SuggestGroupSize queries a suggested group size for the kernel given a global size for each dimension.
+func (h KernelHandle) SuggestGroupSize(globalSizeX, globalSizeY, globalSizeZ uint32) (groupSizeX, groupSizeY, groupSizeZ uint32, err error) {
+	_, err = gozel.ZeKernelSuggestGroupSize(gozel.ZeKernelHandle(h), globalSizeX, globalSizeY, globalSizeZ, &groupSizeX, &groupSizeY, &groupSizeZ)
+	return
+}
+
 // SetGroupSize sets the thread group size for the kernel.
 func (h KernelHandle) SetGroupSize(groupSizeX uint32, groupSizeY uint32, groupSizeZ uint32) error {
 	_, err := gozel.ZeKernelSetGroupSize(gozel.ZeKernelHandle(h), groupSizeX, groupSizeY, groupSizeZ)

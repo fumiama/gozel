@@ -23,7 +23,7 @@ import (
 const ZES_SYSMAN_DEVICE_MAPPING_EXP_NAME = "ZES_experimental_sysman_device_mapping"
 
 // ZesSysmanDeviceMappingExpVersion (zes_sysman_device_mapping_exp_version_t) Sysman Device Mapping Extension Version(s)
-type ZesSysmanDeviceMappingExpVersion uintptr
+type ZesSysmanDeviceMappingExpVersion uint32
 
 const (
 	ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0          ZesSysmanDeviceMappingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_SYSMAN_DEVICE_MAPPING_EXP_VERSION_1_0 version 1.0

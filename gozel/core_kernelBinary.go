@@ -23,7 +23,7 @@ import (
 const ZE_GET_KERNEL_BINARY_EXP_NAME = "ZE_extension_kernel_binary_exp"
 
 // ZeKernelGetBinaryExpVersion (ze_kernel_get_binary_exp_version_t) Get Kernel Binary Extension Version(s)
-type ZeKernelGetBinaryExpVersion uintptr
+type ZeKernelGetBinaryExpVersion uint32
 
 const (
 	ZE_KERNEL_GET_BINARY_EXP_VERSION_1_0          ZeKernelGetBinaryExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_KERNEL_GET_BINARY_EXP_VERSION_1_0 version 1.0

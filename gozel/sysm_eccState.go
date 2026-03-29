@@ -21,7 +21,7 @@ import (
 const ZES_DEVICE_ECC_DEFAULT_PROPERTIES_EXT_NAME = "ZES_extension_device_ecc_default_properties"
 
 // ZesDeviceEccDefaultPropertiesExtVersion (zes_device_ecc_default_properties_ext_version_t) Device ECC default properties Extension Version(s)
-type ZesDeviceEccDefaultPropertiesExtVersion uintptr
+type ZesDeviceEccDefaultPropertiesExtVersion uint32
 
 const (
 	ZES_DEVICE_ECC_DEFAULT_PROPERTIES_EXT_VERSION_1_0          ZesDeviceEccDefaultPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_DEVICE_ECC_DEFAULT_PROPERTIES_EXT_VERSION_1_0 version 1.0

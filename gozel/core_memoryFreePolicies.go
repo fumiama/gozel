@@ -23,7 +23,7 @@ import (
 const ZE_MEMORY_FREE_POLICIES_EXT_NAME = "ZE_extension_memory_free_policies"
 
 // ZeMemoryFreePoliciesExtVersion (ze_memory_free_policies_ext_version_t) Memory Free Policies Extension Version(s)
-type ZeMemoryFreePoliciesExtVersion uintptr
+type ZeMemoryFreePoliciesExtVersion uint32
 
 const (
 	ZE_MEMORY_FREE_POLICIES_EXT_VERSION_1_0          ZeMemoryFreePoliciesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_MEMORY_FREE_POLICIES_EXT_VERSION_1_0 version 1.0

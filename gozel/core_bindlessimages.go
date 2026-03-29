@@ -23,7 +23,7 @@ import (
 const ZE_BINDLESS_IMAGE_EXP_NAME = "ZE_experimental_bindless_image"
 
 // ZeBindlessImageExpVersion (ze_bindless_image_exp_version_t) Bindless Image Extension Version(s)
-type ZeBindlessImageExpVersion uintptr
+type ZeBindlessImageExpVersion uint32
 
 const (
 	ZE_BINDLESS_IMAGE_EXP_VERSION_1_0          ZeBindlessImageExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_BINDLESS_IMAGE_EXP_VERSION_1_0 version 1.0

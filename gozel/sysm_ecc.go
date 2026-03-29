@@ -20,7 +20,7 @@ import (
 )
 
 // ZesDeviceEccState (zes_device_ecc_state_t) ECC State
-type ZesDeviceEccState uintptr
+type ZesDeviceEccState uint32
 
 const (
 	ZES_DEVICE_ECC_STATE_UNAVAILABLE  ZesDeviceEccState = 0          // ZES_DEVICE_ECC_STATE_UNAVAILABLE None
@@ -31,7 +31,7 @@ const (
 )
 
 // ZesDeviceAction (zes_device_action_t) State Change Requirements
-type ZesDeviceAction uintptr
+type ZesDeviceAction uint32
 
 const (
 	ZES_DEVICE_ACTION_NONE               ZesDeviceAction = 0          // ZES_DEVICE_ACTION_NONE No action.

@@ -55,7 +55,7 @@ const (
 )
 
 // ZeCommandQueueMode (ze_command_queue_mode_t) Supported command queue modes
-type ZeCommandQueueMode uintptr
+type ZeCommandQueueMode uint32
 
 const (
 	ZE_COMMAND_QUEUE_MODE_DEFAULT     ZeCommandQueueMode = 0 // ZE_COMMAND_QUEUE_MODE_DEFAULT implicit default behavior; uses driver-based heuristics
@@ -72,7 +72,7 @@ const (
 )
 
 // ZeCommandQueuePriority (ze_command_queue_priority_t) Supported command queue priorities
-type ZeCommandQueuePriority uintptr
+type ZeCommandQueuePriority uint32
 
 const (
 	ZE_COMMAND_QUEUE_PRIORITY_NORMAL        ZeCommandQueuePriority = 0          // ZE_COMMAND_QUEUE_PRIORITY_NORMAL [default] normal priority

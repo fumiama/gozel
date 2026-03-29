@@ -104,7 +104,7 @@ func ZE_BIT[T ~int | ~uint32 | ~uint64 | ~uintptr](_i T) T {
 }
 
 // ZeResult (ze_result_t) Defines Return/Error codes
-type ZeResult uintptr
+type ZeResult uint32
 
 const (
 	ZE_RESULT_SUCCESS                         ZeResult = 0          // ZE_RESULT_SUCCESS [Core] success
@@ -206,7 +206,7 @@ const (
 )
 
 // ZeStructureType (ze_structure_type_t) Defines structure types
-type ZeStructureType uintptr
+type ZeStructureType uint32
 
 const (
 	ZE_STRUCTURE_TYPE_DRIVER_PROPERTIES                                    ZeStructureType = 0x1        // ZE_STRUCTURE_TYPE_DRIVER_PROPERTIES ::ze_driver_properties_t
@@ -348,7 +348,7 @@ const (
 )
 
 // ZeBandwidthUnit (ze_bandwidth_unit_t) Bandwidth unit
-type ZeBandwidthUnit uintptr
+type ZeBandwidthUnit uint32
 
 const (
 	ZE_BANDWIDTH_UNIT_UNKNOWN           ZeBandwidthUnit = 0          // ZE_BANDWIDTH_UNIT_UNKNOWN The unit used for bandwidth is unknown
@@ -359,7 +359,7 @@ const (
 )
 
 // ZeLatencyUnit (ze_latency_unit_t) Latency unit
-type ZeLatencyUnit uintptr
+type ZeLatencyUnit uint32
 
 const (
 	ZE_LATENCY_UNIT_UNKNOWN ZeLatencyUnit = 0 // ZE_LATENCY_UNIT_UNKNOWN The unit used for latency is unknown

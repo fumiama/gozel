@@ -23,7 +23,7 @@ import (
 const ZE_FABRIC_EXP_NAME = "ZE_experimental_fabric"
 
 // ZeFabricExpVersion (ze_fabric_exp_version_t) Fabric Topology Discovery Extension Version(s)
-type ZeFabricExpVersion uintptr
+type ZeFabricExpVersion uint32
 
 const (
 	ZE_FABRIC_EXP_VERSION_1_0          ZeFabricExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_FABRIC_EXP_VERSION_1_0 version 1.0
@@ -36,7 +36,7 @@ const (
 const ZE_MAX_FABRIC_EDGE_MODEL_EXP_SIZE = 256
 
 // ZeFabricVertexExpType (ze_fabric_vertex_exp_type_t) Fabric Vertex types
-type ZeFabricVertexExpType uintptr
+type ZeFabricVertexExpType uint32
 
 const (
 	ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN      ZeFabricVertexExpType = 0          // ZE_FABRIC_VERTEX_EXP_TYPE_UNKNOWN Fabric vertex type is unknown
@@ -48,7 +48,7 @@ const (
 )
 
 // ZeFabricEdgeExpDuplexity (ze_fabric_edge_exp_duplexity_t) Fabric edge duplexity
-type ZeFabricEdgeExpDuplexity uintptr
+type ZeFabricEdgeExpDuplexity uint32
 
 const (
 	ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN     ZeFabricEdgeExpDuplexity = 0 // ZE_FABRIC_EDGE_EXP_DUPLEXITY_UNKNOWN Fabric edge duplexity is unknown

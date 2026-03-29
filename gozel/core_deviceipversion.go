@@ -21,7 +21,7 @@ import (
 const ZE_DEVICE_IP_VERSION_EXT_NAME = "ZE_extension_device_ip_version"
 
 // ZeDeviceIpVersionVersion (ze_device_ip_version_version_t) Device IP Version Extension Version(s)
-type ZeDeviceIpVersionVersion uintptr
+type ZeDeviceIpVersionVersion uint32
 
 const (
 	ZE_DEVICE_IP_VERSION_VERSION_1_0          ZeDeviceIpVersionVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_IP_VERSION_VERSION_1_0 version 1.0

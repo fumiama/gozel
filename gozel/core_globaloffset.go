@@ -21,7 +21,7 @@ import (
 const ZE_GLOBAL_OFFSET_EXP_NAME = "ZE_experimental_global_offset"
 
 // ZeGlobalOffsetExpVersion (ze_global_offset_exp_version_t) Global Offset Extension Version(s)
-type ZeGlobalOffsetExpVersion uintptr
+type ZeGlobalOffsetExpVersion uint32
 
 const (
 	ZE_GLOBAL_OFFSET_EXP_VERSION_1_0          ZeGlobalOffsetExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_GLOBAL_OFFSET_EXP_VERSION_1_0 version 1.0

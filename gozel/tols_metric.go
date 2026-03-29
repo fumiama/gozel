@@ -110,7 +110,7 @@ func ZetMetricGroupGetProperties(
 }
 
 // ZetMetricType (zet_metric_type_t) Metric types
-type ZetMetricType uintptr
+type ZetMetricType uint32
 
 const (
 	ZET_METRIC_TYPE_DURATION                        ZetMetricType = 0          // ZET_METRIC_TYPE_DURATION Metric type: duration
@@ -142,7 +142,7 @@ const (
 )
 
 // ZetMetricGroupCalculationType (zet_metric_group_calculation_type_t) Metric group calculation type
-type ZetMetricGroupCalculationType uintptr
+type ZetMetricGroupCalculationType uint32
 
 const (
 	ZET_METRIC_GROUP_CALCULATION_TYPE_METRIC_VALUES     ZetMetricGroupCalculationType = 0          // ZET_METRIC_GROUP_CALCULATION_TYPE_METRIC_VALUES Calculated metric values from raw data.
@@ -473,7 +473,7 @@ func ZetMetricStreamerReadData(
 }
 
 // ZetMetricQueryPoolType (zet_metric_query_pool_type_t) Metric query pool types
-type ZetMetricQueryPoolType uintptr
+type ZetMetricQueryPoolType uint32
 
 const (
 	ZET_METRIC_QUERY_POOL_TYPE_PERFORMANCE  ZetMetricQueryPoolType = 0          // ZET_METRIC_QUERY_POOL_TYPE_PERFORMANCE Performance metric query pool.

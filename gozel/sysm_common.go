@@ -75,7 +75,7 @@ type ZesOverclockHandle uintptr
 type ZesVfHandle uintptr
 
 // ZesStructureType (zes_structure_type_t) Defines structure types
-type ZesStructureType uintptr
+type ZesStructureType uint32
 
 const (
 	ZES_STRUCTURE_TYPE_DEVICE_PROPERTIES                         ZesStructureType = 0x1        // ZES_STRUCTURE_TYPE_DEVICE_PROPERTIES ::zes_device_properties_t

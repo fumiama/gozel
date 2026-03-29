@@ -23,7 +23,7 @@ import (
 const ZET_PROGRAMMABLE_METRICS_EXP_NAME = "ZET_experimental_programmable_metrics"
 
 // ZetMetricProgrammableExpVersion (zet_metric_programmable_exp_version_t) Programmable Metrics Experimental Extension Version(s)
-type ZetMetricProgrammableExpVersion uintptr
+type ZetMetricProgrammableExpVersion uint32
 
 const (
 	ZET_METRIC_PROGRAMMABLE_EXP_VERSION_1_1          ZetMetricProgrammableExpVersion = /* ZE_MAKE_VERSION( 1, 1 ) */ ((1 << 16) | (1 & 0x0000ffff)) // ZET_METRIC_PROGRAMMABLE_EXP_VERSION_1_1 version 1.1
@@ -79,7 +79,7 @@ type ZetMetricProgrammableExpProperties struct {
 }
 
 // ZetMetricProgrammableParamTypeExp (zet_metric_programmable_param_type_exp_t) Metric Programmable Parameter types
-type ZetMetricProgrammableParamTypeExp uintptr
+type ZetMetricProgrammableParamTypeExp uint32
 
 const (
 	ZET_METRIC_PROGRAMMABLE_PARAM_TYPE_EXP_DISAGGREGATION            ZetMetricProgrammableParamTypeExp = 0 // ZET_METRIC_PROGRAMMABLE_PARAM_TYPE_EXP_DISAGGREGATION Metric is disaggregated.
@@ -97,7 +97,7 @@ const (
 )
 
 // ZetValueInfoTypeExp (zet_value_info_type_exp_t) Supported value info types
-type ZetValueInfoTypeExp uintptr
+type ZetValueInfoTypeExp uint32
 
 const (
 	ZET_VALUE_INFO_TYPE_EXP_UINT32        ZetValueInfoTypeExp = 0          // ZET_VALUE_INFO_TYPE_EXP_UINT32 32-bit unsigned-integer

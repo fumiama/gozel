@@ -20,7 +20,7 @@ import (
 )
 
 // ZesSchedMode (zes_sched_mode_t) Scheduler mode
-type ZesSchedMode uintptr
+type ZesSchedMode uint32
 
 const (
 	ZES_SCHED_MODE_TIMEOUT ZesSchedMode = 0 // ZES_SCHED_MODE_TIMEOUT Multiple applications or contexts are submitting work to the hardware.

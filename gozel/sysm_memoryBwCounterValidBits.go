@@ -21,7 +21,7 @@ import (
 const ZES_MEMORY_BANDWIDTH_COUNTER_BITS_EXP_PROPERTIES_NAME = "ZES_extension_mem_bandwidth_counter_bits_properties"
 
 // ZesMemBandwidthCounterBitsExpVersion (zes_mem_bandwidth_counter_bits_exp_version_t) Memory Bandwidth Counter Valid Bits Extension Version(s)
-type ZesMemBandwidthCounterBitsExpVersion uintptr
+type ZesMemBandwidthCounterBitsExpVersion uint32
 
 const (
 	ZES_MEM_BANDWIDTH_COUNTER_BITS_EXP_VERSION_1_0          ZesMemBandwidthCounterBitsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_MEM_BANDWIDTH_COUNTER_BITS_EXP_VERSION_1_0 version 1.0

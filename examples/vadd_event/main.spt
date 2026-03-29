@@ -1,0 +1,79 @@
+119734787 66560 393230 34 0 
+2 Capability Addresses 
+2 Capability Linkage 
+2 Capability Kernel 
+2 Capability Int64 
+5 ExtInstImport 1 "OpenCL.std" 
+3 MemoryModel 2 2 
+12 EntryPoint 6 29 "__sycl_kernel_vector_add" 5 6 
+3 ExecutionMode 29 31 
+3 Source 4 100000 
+11 Name 5 "__spirv_BuiltInGlobalInvocationId" 
+9 Name 6 "__spirv_BuiltInGlobalOffset" 
+9 Name 11 "__sycl_kernel_vector_add" 
+
+13 Decorate 5 LinkageAttributes "__spirv_BuiltInGlobalInvocationId" Import 
+3 Decorate 5 Constant 
+4 Decorate 5 BuiltIn 28 
+4 Decorate 5 Alignment 32 
+11 Decorate 6 LinkageAttributes "__spirv_BuiltInGlobalOffset" Import 
+3 Decorate 6 Constant 
+4 Decorate 6 BuiltIn 33 
+4 Decorate 6 Alignment 32 
+11 Decorate 11 LinkageAttributes "__sycl_kernel_vector_add" Export 
+4 Decorate 12 FuncParamAttr 5 
+4 Decorate 12 Alignment 4 
+4 Decorate 13 FuncParamAttr 5 
+4 Decorate 13 FuncParamAttr 6 
+4 Decorate 13 Alignment 4 
+4 Decorate 30 FuncParamAttr 5 
+4 Decorate 30 Alignment 4 
+4 Decorate 31 FuncParamAttr 5 
+4 Decorate 31 FuncParamAttr 6 
+4 Decorate 31 Alignment 4 
+4 TypeInt 2 64 0 
+5 Constant 2 21 2147483648 0 
+4 TypeVector 3 2 3 
+4 TypePointer 4 5 3 
+2 TypeVoid 7 
+3 TypeFloat 8 32 
+4 TypePointer 9 5 8 
+5 TypeFunction 10 7 9 9 
+4 TypePointer 15 5 2 
+2 TypeBool 22 
+4 Variable 4 5 5 
+4 Variable 4 6 5 
+
+
+
+5 Function 7 11 0 10 
+3 FunctionParameter 9 12 
+3 FunctionParameter 9 13 
+
+2 Label 14 
+4 Bitcast 15 16 5 
+6 Load 2 17 16 2 32 
+4 Bitcast 15 18 6 
+6 Load 2 19 18 2 32 
+5 ISub 2 20 17 19 
+5 ULessThan 22 23 20 21 
+5 InBoundsPtrAccessChain 9 24 13 20 
+6 Load 8 25 24 2 4 
+5 InBoundsPtrAccessChain 9 26 12 20 
+6 Load 8 27 26 2 4 
+5 FAdd 8 28 27 25 
+5 Store 26 28 2 4 
+1 Return 
+
+1 FunctionEnd 
+
+5 Function 7 29 0 10 
+3 FunctionParameter 9 30 
+3 FunctionParameter 9 31 
+
+2 Label 32 
+6 FunctionCall 7 33 11 30 31 
+1 Return 
+
+1 FunctionEnd 
+

@@ -21,7 +21,7 @@ import (
 const ZE_CONTEXT_POWER_SAVING_HINT_EXP_NAME = "ZE_experimental_power_saving_hint"
 
 // ZePowerSavingHintExpVersion (ze_power_saving_hint_exp_version_t) Power Saving Hint Extension Version(s)
-type ZePowerSavingHintExpVersion uintptr
+type ZePowerSavingHintExpVersion uint32
 
 const (
 	ZE_POWER_SAVING_HINT_EXP_VERSION_1_0          ZePowerSavingHintExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_POWER_SAVING_HINT_EXP_VERSION_1_0 version 1.0
@@ -31,7 +31,7 @@ const (
 )
 
 // ZePowerSavingHintType (ze_power_saving_hint_type_t) Supported device types
-type ZePowerSavingHintType uintptr
+type ZePowerSavingHintType uint32
 
 const (
 	ZE_POWER_SAVING_HINT_TYPE_MIN ZePowerSavingHintType = 0 // ZE_POWER_SAVING_HINT_TYPE_MIN Minumum power savings. The device will make no attempt to save power

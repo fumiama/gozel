@@ -20,7 +20,7 @@ import (
 )
 
 // ZesPsuVoltageStatus (zes_psu_voltage_status_t) PSU voltage status
-type ZesPsuVoltageStatus uintptr
+type ZesPsuVoltageStatus uint32
 
 const (
 	ZES_PSU_VOLTAGE_STATUS_UNKNOWN ZesPsuVoltageStatus = 0 // ZES_PSU_VOLTAGE_STATUS_UNKNOWN The status of the power supply voltage controllers cannot be

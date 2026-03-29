@@ -20,7 +20,7 @@ import (
 )
 
 // ZesPowerDomain (zes_power_domain_t) Power Domain
-type ZesPowerDomain uintptr
+type ZesPowerDomain uint32
 
 const (
 	ZES_POWER_DOMAIN_UNKNOWN      ZesPowerDomain = 0          // ZES_POWER_DOMAIN_UNKNOWN The PUnit power domain level cannot be determined.
@@ -34,7 +34,7 @@ const (
 )
 
 // ZesPowerLevel (zes_power_level_t) Power Level Type
-type ZesPowerLevel uintptr
+type ZesPowerLevel uint32
 
 const (
 	ZES_POWER_LEVEL_UNKNOWN   ZesPowerLevel = 0 // ZES_POWER_LEVEL_UNKNOWN The PUnit power monitoring duration cannot be determined.
@@ -62,7 +62,7 @@ const (
 )
 
 // ZesPowerSource (zes_power_source_t) Power Source Type
-type ZesPowerSource uintptr
+type ZesPowerSource uint32
 
 const (
 	ZES_POWER_SOURCE_ANY ZesPowerSource = 0 // ZES_POWER_SOURCE_ANY Limit active no matter whether the power source is mains powered or
@@ -76,7 +76,7 @@ const (
 )
 
 // ZesLimitUnit (zes_limit_unit_t) Limit Unit
-type ZesLimitUnit uintptr
+type ZesLimitUnit uint32
 
 const (
 	ZES_LIMIT_UNIT_UNKNOWN      ZesLimitUnit = 0          // ZES_LIMIT_UNIT_UNKNOWN The PUnit power monitoring unit cannot be determined.

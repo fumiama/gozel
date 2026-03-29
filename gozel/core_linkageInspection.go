@@ -23,7 +23,7 @@ import (
 const ZE_LINKAGE_INSPECTION_EXT_NAME = "ZE_extension_linkage_inspection"
 
 // ZeLinkageInspectionExtVersion (ze_linkage_inspection_ext_version_t) Linkage Inspection Extension Version(s)
-type ZeLinkageInspectionExtVersion uintptr
+type ZeLinkageInspectionExtVersion uint32
 
 const (
 	ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0          ZeLinkageInspectionExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_LINKAGE_INSPECTION_EXT_VERSION_1_0 version 1.0

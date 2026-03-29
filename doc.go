@@ -2,4 +2,4 @@
 package gozel
 
 //go:generate go run ./cmd/gen
-//go:generate gofmt -w .
+//go:generate gofmt -w -s .

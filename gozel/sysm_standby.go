@@ -20,7 +20,7 @@ import (
 )
 
 // ZesStandbyType (zes_standby_type_t) Standby hardware components
-type ZesStandbyType uintptr
+type ZesStandbyType uint32
 
 const (
 	ZES_STANDBY_TYPE_GLOBAL       ZesStandbyType = 0          // ZES_STANDBY_TYPE_GLOBAL Control the overall standby policy of the device/sub-device
@@ -39,7 +39,7 @@ type ZesStandbyProperties struct {
 }
 
 // ZesStandbyPromoMode (zes_standby_promo_mode_t) Standby promotion modes
-type ZesStandbyPromoMode uintptr
+type ZesStandbyPromoMode uint32
 
 const (
 	ZES_STANDBY_PROMO_MODE_DEFAULT ZesStandbyPromoMode = 0 // ZES_STANDBY_PROMO_MODE_DEFAULT Best compromise between performance and energy savings.

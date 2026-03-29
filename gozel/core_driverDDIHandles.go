@@ -21,7 +21,7 @@ import (
 const ZE_DRIVER_DDI_HANDLES_EXT_NAME = "ZE_extension_driver_ddi_handles"
 
 // ZeDriverDdiHandlesExtVersion (ze_driver_ddi_handles_ext_version_t) Driver Direct Device Interface (DDI) Handles Extension Version(s)
-type ZeDriverDdiHandlesExtVersion uintptr
+type ZeDriverDdiHandlesExtVersion uint32
 
 const (
 	ZE_DRIVER_DDI_HANDLES_EXT_VERSION_1_0          ZeDriverDdiHandlesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DRIVER_DDI_HANDLES_EXT_VERSION_1_0 version 1.0

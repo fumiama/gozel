@@ -21,7 +21,7 @@ import (
 const ZES_POWER_DOMAIN_PROPERTIES_EXP_NAME = "ZES_extension_power_domain_properties"
 
 // ZesPowerDomainPropertiesExpVersion (zes_power_domain_properties_exp_version_t) Power Domain Properties Extension Version(s)
-type ZesPowerDomainPropertiesExpVersion uintptr
+type ZesPowerDomainPropertiesExpVersion uint32
 
 const (
 	ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0          ZesPowerDomainPropertiesExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_DOMAIN_PROPERTIES_EXP_VERSION_1_0 version 1.0

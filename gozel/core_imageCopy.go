@@ -23,7 +23,7 @@ import (
 const ZE_IMAGE_COPY_EXT_NAME = "ZE_extension_image_copy"
 
 // ZeImageCopyExtVersion (ze_image_copy_ext_version_t) Image Copy Extension Version(s)
-type ZeImageCopyExtVersion uintptr
+type ZeImageCopyExtVersion uint32
 
 const (
 	ZE_IMAGE_COPY_EXT_VERSION_1_0          ZeImageCopyExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_COPY_EXT_VERSION_1_0 version 1.0

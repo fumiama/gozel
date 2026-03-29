@@ -23,7 +23,7 @@ import (
 const ZE_EXTERNAL_SEMAPHORES_EXTENSION_NAME = "ZE_extension_external_semaphores"
 
 // ZeExternalSemaphoreExtVersion (ze_external_semaphore_ext_version_t) External Semaphores Extension Version
-type ZeExternalSemaphoreExtVersion uintptr
+type ZeExternalSemaphoreExtVersion uint32
 
 const (
 	ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0          ZeExternalSemaphoreExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EXTERNAL_SEMAPHORE_EXT_VERSION_1_0 version 1.0

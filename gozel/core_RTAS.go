@@ -23,7 +23,7 @@ import (
 const ZE_RTAS_EXT_NAME = "ZE_extension_rtas"
 
 // ZeRtasBuilderExtVersion (ze_rtas_builder_ext_version_t) Ray Tracing Acceleration Structure Builder Extension Version(s)
-type ZeRtasBuilderExtVersion uintptr
+type ZeRtasBuilderExtVersion uint32
 
 const (
 	ZE_RTAS_BUILDER_EXT_VERSION_1_0          ZeRtasBuilderExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_RTAS_BUILDER_EXT_VERSION_1_0 version 1.0
@@ -46,7 +46,7 @@ const (
 // / @details
 // /     - This is an opaque ray tracing acceleration structure format
 // /       identifier.
-type ZeRtasFormatExt uintptr
+type ZeRtasFormatExt uint32
 
 const (
 	ZE_RTAS_FORMAT_EXT_INVALID      ZeRtasFormatExt = 0x0        // ZE_RTAS_FORMAT_EXT_INVALID Invalid acceleration structure format code
@@ -141,7 +141,7 @@ const (
 // /     - Higher ray tracing performance can be achieved by using a high-quality
 // /       build, but acceleration structure build performance might be
 // /       significantly reduced.
-type ZeRtasBuilderBuildQualityHintExt uintptr
+type ZeRtasBuilderBuildQualityHintExt uint32
 
 const (
 	ZE_RTAS_BUILDER_BUILD_QUALITY_HINT_EXT_LOW          ZeRtasBuilderBuildQualityHintExt = 0          // ZE_RTAS_BUILDER_BUILD_QUALITY_HINT_EXT_LOW build low-quality acceleration structure (fast)
@@ -152,7 +152,7 @@ const (
 )
 
 // ZeRtasBuilderGeometryTypeExt (ze_rtas_builder_geometry_type_ext_t) Ray tracing acceleration structure builder geometry type
-type ZeRtasBuilderGeometryTypeExt uintptr
+type ZeRtasBuilderGeometryTypeExt uint32
 
 const (
 	ZE_RTAS_BUILDER_GEOMETRY_TYPE_EXT_TRIANGLES    ZeRtasBuilderGeometryTypeExt = 0          // ZE_RTAS_BUILDER_GEOMETRY_TYPE_EXT_TRIANGLES triangle mesh geometry type
@@ -173,7 +173,7 @@ type ZeRtasBuilderPackedGeometryTypeExt uint8
 // /     - Specifies the format of data buffer elements.
 // /     - Data buffers may contain instancing transform matrices, triangle/quad
 // /       vertex indices, etc...
-type ZeRtasBuilderInputDataFormatExt uintptr
+type ZeRtasBuilderInputDataFormatExt uint32
 
 const (
 	ZE_RTAS_BUILDER_INPUT_DATA_FORMAT_EXT_FLOAT3                ZeRtasBuilderInputDataFormatExt = 0 // ZE_RTAS_BUILDER_INPUT_DATA_FORMAT_EXT_FLOAT3 3-component float vector (see ::ze_rtas_float3_ext_t)

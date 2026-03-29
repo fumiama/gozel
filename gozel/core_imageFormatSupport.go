@@ -21,7 +21,7 @@ import (
 const ZE_IMAGE_FORMAT_SUPPORT_EXT_NAME = "ZE_extension_image_format_support"
 
 // ZeImageFormatSupportExtVersion (ze_image_format_support_ext_version_t) Image Format Support Extension Version(s)
-type ZeImageFormatSupportExtVersion uintptr
+type ZeImageFormatSupportExtVersion uint32
 
 const (
 	ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0          ZeImageFormatSupportExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMAGE_FORMAT_SUPPORT_EXT_VERSION_1_0 version 1.0

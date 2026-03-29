@@ -23,7 +23,7 @@ import (
 const ZE_COMMAND_LIST_CLONE_EXP_NAME = "ZE_experimental_command_list_clone"
 
 // ZeCommandListCloneExpVersion (ze_command_list_clone_exp_version_t) Command List Clone Extension Version(s)
-type ZeCommandListCloneExpVersion uintptr
+type ZeCommandListCloneExpVersion uint32
 
 const (
 	ZE_COMMAND_LIST_CLONE_EXP_VERSION_1_0          ZeCommandListCloneExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_COMMAND_LIST_CLONE_EXP_VERSION_1_0 version 1.0

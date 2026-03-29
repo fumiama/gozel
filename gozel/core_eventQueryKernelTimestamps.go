@@ -23,7 +23,7 @@ import (
 const ZE_EVENT_QUERY_KERNEL_TIMESTAMPS_EXT_NAME = "ZE_extension_event_query_kernel_timestamps"
 
 // ZeEventQueryKernelTimestampsExtVersion (ze_event_query_kernel_timestamps_ext_version_t) Event Query Kernel Timestamps Extension Version(s)
-type ZeEventQueryKernelTimestampsExtVersion uintptr
+type ZeEventQueryKernelTimestampsExtVersion uint32
 
 const (
 	ZE_EVENT_QUERY_KERNEL_TIMESTAMPS_EXT_VERSION_1_0          ZeEventQueryKernelTimestampsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EVENT_QUERY_KERNEL_TIMESTAMPS_EXT_VERSION_1_0 version 1.0

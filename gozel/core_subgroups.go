@@ -17,7 +17,7 @@ package gozel
 const ZE_SUBGROUPS_EXT_NAME = "ZE_extension_subgroups"
 
 // ZeSubgroupExtVersion (ze_subgroup_ext_version_t) Subgroups Extension Version(s)
-type ZeSubgroupExtVersion uintptr
+type ZeSubgroupExtVersion uint32
 
 const (
 	ZE_SUBGROUP_EXT_VERSION_1_0          ZeSubgroupExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SUBGROUP_EXT_VERSION_1_0 version 1.0

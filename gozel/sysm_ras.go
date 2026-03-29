@@ -20,7 +20,7 @@ import (
 )
 
 // ZesRasErrorType (zes_ras_error_type_t) RAS error type
-type ZesRasErrorType uintptr
+type ZesRasErrorType uint32
 
 const (
 	ZES_RAS_ERROR_TYPE_CORRECTABLE   ZesRasErrorType = 0          // ZES_RAS_ERROR_TYPE_CORRECTABLE Errors were corrected by hardware
@@ -30,7 +30,7 @@ const (
 )
 
 // ZesRasErrorCat (zes_ras_error_cat_t) RAS error categories
-type ZesRasErrorCat uintptr
+type ZesRasErrorCat uint32
 
 const (
 	ZES_RAS_ERROR_CAT_RESET              ZesRasErrorCat = 0 // ZES_RAS_ERROR_CAT_RESET The number of accelerator engine resets attempted by the driver

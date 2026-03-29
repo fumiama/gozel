@@ -21,7 +21,7 @@ import (
 const ZE_MEMORY_COMPRESSION_HINTS_EXT_NAME = "ZE_extension_memory_compression_hints"
 
 // ZeMemoryCompressionHintsExtVersion (ze_memory_compression_hints_ext_version_t) Memory Compression Hints Extension Version(s)
-type ZeMemoryCompressionHintsExtVersion uintptr
+type ZeMemoryCompressionHintsExtVersion uint32
 
 const (
 	ZE_MEMORY_COMPRESSION_HINTS_EXT_VERSION_1_0          ZeMemoryCompressionHintsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_MEMORY_COMPRESSION_HINTS_EXT_VERSION_1_0 version 1.0

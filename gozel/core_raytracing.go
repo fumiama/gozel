@@ -21,7 +21,7 @@ import (
 const ZE_RAYTRACING_EXT_NAME = "ZE_extension_raytracing"
 
 // ZeRaytracingExtVersion (ze_raytracing_ext_version_t) Raytracing Extension Version(s)
-type ZeRaytracingExtVersion uintptr
+type ZeRaytracingExtVersion uint32
 
 const (
 	ZE_RAYTRACING_EXT_VERSION_1_0          ZeRaytracingExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_RAYTRACING_EXT_VERSION_1_0 version 1.0

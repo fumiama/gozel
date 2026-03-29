@@ -23,7 +23,7 @@ import (
 const ZES_POWER_LIMITS_EXT_NAME = "ZES_extension_power_limits"
 
 // ZesPowerLimitsExtVersion (zes_power_limits_ext_version_t) Power Limits Extension Version(s)
-type ZesPowerLimitsExtVersion uintptr
+type ZesPowerLimitsExtVersion uint32
 
 const (
 	ZES_POWER_LIMITS_EXT_VERSION_1_0          ZesPowerLimitsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZES_POWER_LIMITS_EXT_VERSION_1_0 version 1.0

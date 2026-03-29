@@ -27,7 +27,7 @@ const ZES_MAX_FABRIC_PORT_MODEL_SIZE = 256
 const ZES_MAX_FABRIC_LINK_TYPE_SIZE = 256
 
 // ZesFabricPortStatus (zes_fabric_port_status_t) Fabric port status
-type ZesFabricPortStatus uintptr
+type ZesFabricPortStatus uint32
 
 const (
 	ZES_FABRIC_PORT_STATUS_UNKNOWN  ZesFabricPortStatus = 0 // ZES_FABRIC_PORT_STATUS_UNKNOWN The port status cannot be determined

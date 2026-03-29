@@ -21,7 +21,7 @@ import (
 const ZE_FLOAT_ATOMICS_EXT_NAME = "ZE_extension_float_atomics"
 
 // ZeFloatAtomicsExtVersion (ze_float_atomics_ext_version_t) Floating-Point Atomics Extension Version(s)
-type ZeFloatAtomicsExtVersion uintptr
+type ZeFloatAtomicsExtVersion uint32
 
 const (
 	ZE_FLOAT_ATOMICS_EXT_VERSION_1_0          ZeFloatAtomicsExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_FLOAT_ATOMICS_EXT_VERSION_1_0 version 1.0

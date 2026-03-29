@@ -23,7 +23,7 @@ import (
 const ZET_API_TRACING_EXP_NAME = "ZET_experimental_api_tracing"
 
 // ZetApiTracingExpVersion (zet_api_tracing_exp_version_t) API Tracing Experimental Extension Version(s)
-type ZetApiTracingExpVersion uintptr
+type ZetApiTracingExpVersion uint32
 
 const (
 	ZET_API_TRACING_EXP_VERSION_1_0          ZetApiTracingExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZET_API_TRACING_EXP_VERSION_1_0 version 1.0

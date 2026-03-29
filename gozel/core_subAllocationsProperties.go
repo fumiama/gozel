@@ -21,7 +21,7 @@ import (
 const ZE_SUB_ALLOCATIONS_EXP_NAME = "ZE_experimental_sub_allocations"
 
 // ZeSubAllocationsExpVersion (ze_sub_allocations_exp_version_t) Sub-Allocations Properties Extension Version(s)
-type ZeSubAllocationsExpVersion uintptr
+type ZeSubAllocationsExpVersion uint32
 
 const (
 	ZE_SUB_ALLOCATIONS_EXP_VERSION_1_0          ZeSubAllocationsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SUB_ALLOCATIONS_EXP_VERSION_1_0 version 1.0

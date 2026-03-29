@@ -20,7 +20,7 @@ import (
 )
 
 // ZesEngineGroup (zes_engine_group_t) Accelerator engine groups
-type ZesEngineGroup uintptr
+type ZesEngineGroup uint32
 
 const (
 	ZES_ENGINE_GROUP_ALL         ZesEngineGroup = 0 // ZES_ENGINE_GROUP_ALL Access information about all engines combined.

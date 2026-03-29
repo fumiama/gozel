@@ -23,7 +23,7 @@ import (
 const ZE_KERNEL_SCHEDULING_HINTS_EXP_NAME = "ZE_experimental_scheduling_hints"
 
 // ZeSchedulingHintsExpVersion (ze_scheduling_hints_exp_version_t) Kernel Scheduling Hints Extension Version(s)
-type ZeSchedulingHintsExpVersion uintptr
+type ZeSchedulingHintsExpVersion uint32
 
 const (
 	ZE_SCHEDULING_HINTS_EXP_VERSION_1_0          ZeSchedulingHintsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_SCHEDULING_HINTS_EXP_VERSION_1_0 version 1.0

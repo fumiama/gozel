@@ -20,7 +20,7 @@ import (
 )
 
 // ZesOverclockDomain (zes_overclock_domain_t) Overclock domains.
-type ZesOverclockDomain uintptr
+type ZesOverclockDomain uint32
 
 const (
 	ZES_OVERCLOCK_DOMAIN_CARD               ZesOverclockDomain = 1          // ZES_OVERCLOCK_DOMAIN_CARD Overclocking card level properties such as temperature limits.
@@ -37,7 +37,7 @@ const (
 )
 
 // ZesOverclockControl (zes_overclock_control_t) Overclock controls.
-type ZesOverclockControl uintptr
+type ZesOverclockControl uint32
 
 const (
 	ZES_OVERCLOCK_CONTROL_VF          ZesOverclockControl = 1 // ZES_OVERCLOCK_CONTROL_VF This control permits setting a custom V-F curve.
@@ -66,7 +66,7 @@ const (
 )
 
 // ZesOverclockMode (zes_overclock_mode_t) Overclock modes.
-type ZesOverclockMode uintptr
+type ZesOverclockMode uint32
 
 const (
 	ZES_OVERCLOCK_MODE_MODE_OFF         ZesOverclockMode = 0 // ZES_OVERCLOCK_MODE_MODE_OFF Overclock mode is off
@@ -82,7 +82,7 @@ const (
 )
 
 // ZesControlState (zes_control_state_t) Overclock control states.
-type ZesControlState uintptr
+type ZesControlState uint32
 
 const (
 	ZES_CONTROL_STATE_STATE_UNSET ZesControlState = 0 // ZES_CONTROL_STATE_STATE_UNSET No overclock control has not been changed by the driver since the last
@@ -99,7 +99,7 @@ const (
 )
 
 // ZesPendingAction (zes_pending_action_t) Overclock pending actions.
-type ZesPendingAction uintptr
+type ZesPendingAction uint32
 
 const (
 	ZES_PENDING_ACTION_PENDING_NONE       ZesPendingAction = 0 // ZES_PENDING_ACTION_PENDING_NONE There no pending actions. .
@@ -114,7 +114,7 @@ const (
 )
 
 // ZesVfProgramType (zes_vf_program_type_t) Overclock V-F curve programing.
-type ZesVfProgramType uintptr
+type ZesVfProgramType uint32
 
 const (
 	ZES_VF_PROGRAM_TYPE_VF_ARBITRARY ZesVfProgramType = 0 // ZES_VF_PROGRAM_TYPE_VF_ARBITRARY Can program an arbitrary number of V-F points up to the maximum number
@@ -135,7 +135,7 @@ const (
 )
 
 // ZesVfType (zes_vf_type_t) VF type
-type ZesVfType uintptr
+type ZesVfType uint32
 
 const (
 	ZES_VF_TYPE_VOLT         ZesVfType = 0          // ZES_VF_TYPE_VOLT VF Voltage point
@@ -145,7 +145,7 @@ const (
 )
 
 // ZesVfArrayType (zes_vf_array_type_t) VF type
-type ZesVfArrayType uintptr
+type ZesVfArrayType uint32
 
 const (
 	ZES_VF_ARRAY_TYPE_USER_VF_ARRAY    ZesVfArrayType = 0          // ZES_VF_ARRAY_TYPE_USER_VF_ARRAY User V-F array

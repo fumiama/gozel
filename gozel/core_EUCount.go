@@ -21,7 +21,7 @@ import (
 const ZE_EU_COUNT_EXT_NAME = "ZE_extension_eu_count"
 
 // ZeEuCountExtVersion (ze_eu_count_ext_version_t) EU Count Extension Version(s)
-type ZeEuCountExtVersion uintptr
+type ZeEuCountExtVersion uint32
 
 const (
 	ZE_EU_COUNT_EXT_VERSION_1_0          ZeEuCountExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EU_COUNT_EXT_VERSION_1_0 version 1.0

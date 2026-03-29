@@ -21,7 +21,7 @@ import (
 const ZE_DEVICE_MEMORY_PROPERTIES_EXT_NAME = "ZE_extension_device_memory_properties"
 
 // ZeDeviceMemoryPropertiesExtVersion (ze_device_memory_properties_ext_version_t) Device Memory Properties Extension Version(s)
-type ZeDeviceMemoryPropertiesExtVersion uintptr
+type ZeDeviceMemoryPropertiesExtVersion uint32
 
 const (
 	ZE_DEVICE_MEMORY_PROPERTIES_EXT_VERSION_1_0          ZeDeviceMemoryPropertiesExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_MEMORY_PROPERTIES_EXT_VERSION_1_0 version 1.0
@@ -31,7 +31,7 @@ const (
 )
 
 // ZeDeviceMemoryExtType (ze_device_memory_ext_type_t) Memory module types
-type ZeDeviceMemoryExtType uintptr
+type ZeDeviceMemoryExtType uint32
 
 const (
 	ZE_DEVICE_MEMORY_EXT_TYPE_HBM          ZeDeviceMemoryExtType = 0          // ZE_DEVICE_MEMORY_EXT_TYPE_HBM HBM memory

@@ -23,7 +23,7 @@ import (
 const ZE_IMMEDIATE_COMMAND_LIST_APPEND_EXP_NAME = "ZE_experimental_immediate_command_list_append"
 
 // ZeImmediateCommandListAppendExpVersion (ze_immediate_command_list_append_exp_version_t) Immediate Command List Append Extension Version(s)
-type ZeImmediateCommandListAppendExpVersion uintptr
+type ZeImmediateCommandListAppendExpVersion uint32
 
 const (
 	ZE_IMMEDIATE_COMMAND_LIST_APPEND_EXP_VERSION_1_0          ZeImmediateCommandListAppendExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_IMMEDIATE_COMMAND_LIST_APPEND_EXP_VERSION_1_0 version 1.0

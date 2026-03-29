@@ -23,7 +23,7 @@ import (
 const ZE_EVENT_QUERY_TIMESTAMPS_EXP_NAME = "ZE_experimental_event_query_timestamps"
 
 // ZeEventQueryTimestampsExpVersion (ze_event_query_timestamps_exp_version_t) Event Query Timestamps Extension Version(s)
-type ZeEventQueryTimestampsExpVersion uintptr
+type ZeEventQueryTimestampsExpVersion uint32
 
 const (
 	ZE_EVENT_QUERY_TIMESTAMPS_EXP_VERSION_1_0          ZeEventQueryTimestampsExpVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_EVENT_QUERY_TIMESTAMPS_EXP_VERSION_1_0 version 1.0

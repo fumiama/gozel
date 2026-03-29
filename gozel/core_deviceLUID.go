@@ -21,7 +21,7 @@ import (
 const ZE_DEVICE_LUID_EXT_NAME = "ZE_extension_device_luid"
 
 // ZeDeviceLuidExtVersion (ze_device_luid_ext_version_t) Device Local Identifier (LUID) Extension Version(s)
-type ZeDeviceLuidExtVersion uintptr
+type ZeDeviceLuidExtVersion uint32
 
 const (
 	ZE_DEVICE_LUID_EXT_VERSION_1_0          ZeDeviceLuidExtVersion = /* ZE_MAKE_VERSION( 1, 0 ) */ ((1 << 16) | (0 & 0x0000ffff)) // ZE_DEVICE_LUID_EXT_VERSION_1_0 version 1.0
