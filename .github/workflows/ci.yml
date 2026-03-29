@@ -121,19 +121,19 @@ jobs:
         with:
           go-version-file: go.mod
 
-      - name: Download SYCL Linux
+      - name: Install Intel oneAPI
         run: |
-          wget -q -O /tmp/sycl_linux.tar.gz https://github.com/intel/llvm/releases/download/v6.3.0/sycl_linux.tar.gz
-          mkdir -p /tmp/sycl_linux
-          tar -xzf /tmp/sycl_linux.tar.gz -C /tmp/sycl_linux
-
-      - name: Add SYCL bin to PATH
-        run: |
-          ls -hl /tmp/sycl_linux
-          echo "/tmp/sycl_linux/bin" >> $GITHUB_PATH
+          wget -qO- https://apt.repos.intel.com/intel-gpg-keys/GPG-PUB-KEY-INTEL-SW-PRODUCTS.PUB \
+            | gpg --dearmor \
+            | sudo tee /usr/share/keyrings/oneapi-archive-keyring.gpg > /dev/null
+          echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
+            | sudo tee /etc/apt/sources.list.d/oneAPI.list
+          sudo apt-get update -q
+          sudo apt-get install -y intel-oneapi-compiler-dpcpp-cpp
 
       - name: Run go generate
         run: |
+          source /opt/intel/oneapi/setvars.sh
           go generate ./...
           gofmt -w .
 
