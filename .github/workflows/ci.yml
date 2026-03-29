@@ -140,7 +140,7 @@ jobs:
           echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) unified" \
             | sudo tee /etc/apt/sources.list.d/intel-gpu.list
           sudo apt-get update -q
-          sudo apt-get install -y intel-ocloc
+          sudo apt-get install -y intel-ocloc intel-igc-core intel-igc-opencl
 
       - name: Run go generate
         run: |
