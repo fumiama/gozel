@@ -140,7 +140,7 @@ jobs:
           echo "deb [signed-by=/usr/share/keyrings/oneapi-archive-keyring.gpg] https://apt.repos.intel.com/oneapi all main" \
             | sudo tee /etc/apt/sources.list.d/oneAPI.list
           sudo apt-get update -q
-          sudo apt-get install -y intel-ocloc intel-oneapi-compiler-dpcpp-cpp-common
+          sudo apt-get install -y intel-ocloc intel-oneapi-compiler-opencl
 
       - name: Run go generate
         run: |
