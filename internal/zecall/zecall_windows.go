@@ -10,6 +10,7 @@ const (
 
 var (
 	libZeLoader *syscall.DLL
+	noZeLib     = false
 	procMap     = map[string]*syscall.Proc{}
 )
 
@@ -19,14 +20,15 @@ func init() {
 	}
 	h, err := syscall.LoadLibrary(zeLibraryName)
 	if err != nil {
-		panic(err)
+		noZeLib = true
+		return
 	}
 	libZeLoader = &syscall.DLL{Handle: h, Name: zeLibraryName}
 }
 
 // Register a process for calling. For generated init only. Not thread-safe.
 func Register(name string) error {
-	if libZeLoader == nil {
+	if libZeLoader == nil || noZeLib {
 		return ErrZeCallNotInit
 	}
 	proc, err := libZeLoader.FindProc(name)
@@ -43,6 +45,9 @@ func Register(name string) error {
 //
 //go:uintptrescapes
 func Syscall(name string, args ...uintptr) (r1, r2 uintptr, err error) {
+	if libZeLoader == nil || noZeLib {
+		return 0, 0, ErrZeCallNotInit
+	}
 	fn, ok := procMap[name]
 	if !ok {
 		return 0, 0, ErrNoSuchProcess

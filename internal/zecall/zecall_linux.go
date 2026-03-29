@@ -21,14 +21,15 @@ func init() {
 	}
 	h, err := purego.Dlopen(zeLibraryName, purego.RTLD_LAZY|purego.RTLD_GLOBAL)
 	if err != nil {
-		panic(err)
+		libZeLoader = ^uintptr(0)
+		return
 	}
 	libZeLoader = h
 }
 
 // Register a process for calling. For generated init only. Not thread-safe.
 func Register(name string) error {
-	if libZeLoader == 0 {
+	if libZeLoader == 0 || ^libZeLoader == 0 {
 		return ErrZeCallNotInit
 	}
 	sym, err := purego.Dlsym(libZeLoader, name)
@@ -45,6 +46,9 @@ func Register(name string) error {
 //
 //go:uintptrescapes
 func Syscall(name string, args ...uintptr) (r1, r2 uintptr, err error) {
+	if libZeLoader == 0 || ^libZeLoader == 0 {
+		return 0, 0, ErrZeCallNotInit
+	}
 	fn, ok := procMap[name]
 	if !ok {
 		return 0, 0, ErrNoSuchProcess
