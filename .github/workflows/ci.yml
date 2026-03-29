@@ -137,6 +137,8 @@ jobs:
           wget -qO- https://repositories.intel.com/gpu/intel-graphics.key \
             | gpg --dearmor \
             | sudo tee /usr/share/keyrings/intel-graphics.gpg > /dev/null
+          echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/graphics/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) arc' \
+            | sudo tee /etc/apt/sources.list.d/intel.graphics.list
           echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu $(. /etc/os-release && echo $VERSION_CODENAME) unified" \
             | sudo tee /etc/apt/sources.list.d/intel-gpu.list
           sudo apt-get update -q
