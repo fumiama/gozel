@@ -128,10 +128,10 @@ func main() {
 		Y           = uintptr(gY)
 		groupCountX = uint32(math.Ceil(float64(dstw) / float64(X)))
 		groupCountY = uint32(math.Ceil(float64(dsth) / float64(Y)))
-		srcN        = width * height * 4                                      // 4 for RGBA
+		srcN        = uintptr(width * height * 4)                             // 4 for RGBA
 		dstN        = X * uintptr(groupCountX) * Y * uintptr(groupCountY) * 4 // 4 for RGBA
-		srcbufsz    = uintptr(srcN) * unsafe.Sizeof(uint8(0))
-		dstbufsz    = uintptr(dstN) * unsafe.Sizeof(uint8(0))
+		srcbufsz    = srcN * unsafe.Sizeof(uint8(0))
+		dstbufsz    = dstN * unsafe.Sizeof(uint8(0))
 	)
 	fmt.Println("=============== Computation Configuration ===============")
 	fmt.Printf("%-28s (%d, %d, %d)\n", "Group Size (X, Y, Z):", X, Y, 1)

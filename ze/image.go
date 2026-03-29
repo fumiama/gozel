@@ -2,6 +2,7 @@ package ze
 
 import "github.com/fumiama/gozel/gozel"
 
+// ImageHandle (ze_image_handle_t) Handle of driver's image object.
 type ImageHandle gozel.ZeImageHandle
 
 // ImageCreate Creates a 2D image on the context.
