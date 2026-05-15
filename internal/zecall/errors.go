@@ -8,7 +8,7 @@ import (
 
 var (
 	// ErrNotImplemented is a stub error.
-	ErrNotImplemented = errors.New("zecall is not implemtent on" + runtime.GOOS + " " + runtime.GOARCH)
+	ErrNotImplemented = errors.New("zecall is not implemtented on " + runtime.GOOS + " " + runtime.GOARCH)
 	// ErrZeCallNotInit please call Init() first.
 	ErrZeCallNotInit = errors.New("zecall not init")
 	// ErrNoSuchProcess please register the process first.
